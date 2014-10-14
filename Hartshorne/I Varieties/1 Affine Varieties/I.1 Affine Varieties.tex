@@ -165,6 +165,7 @@
   \end{enuma}
 \end{problem}
 \begin{proof}[Proof of $(a)$]
+
   Mapping $k[x,y] \to k[t]$ by $x \mapsto t,y \mapsto t^2$, we have a
   surjective map with kernel $(y - x^2)$, and so $k[x,y]/(y-x^2) \cong k[t]$.
   Thus, $(y-x^2)$ is a prime ideal since $k[t]$ is a domain, and in particular
@@ -506,6 +507,22 @@
   Since the minimal prime ideals correspond to irreducible components of $Y \cap
   H$ by Cor.~1.4, we then see that the dimension of each irreducible component
   is $r-1$ by Thm.~1.8A$(b)$.
+\end{proof}
+
+\begin{problem}
+\end{problem}
+
+\begin{problem} \mbox{}
+  \begin{enuma}
+    \item If $Y$ is any subset of a topological space $X$ then $\dim Y \leq \dim X$. 
+	\item If $X$ is a topological space which is covered by a family of open subsets $\{U_{i}\}$, then $\dim X = \sup \dim U_i$.
+	\item Give an example of a topological space $X$ and a dense open subset $U$ with $\dim U < dim X$. 
+	\item If Y is a closed subset of an irreducible finite-dimensional topological space $X$, and if $\dim Y = dim X$, then $Y= X$. 
+	\item Give an example of a noetherian topological space of infinite dimension.  
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+Let $\dim Y = n$ and $Y_0 \subsetneq Y_1 \subsetneq \cdots \subsetneq Y_n \subset Y$ be a chain of distinct irreducible closed subsets of Y. Take a closure of each $Y_i$. By Example 1.1.2, each $\overline{Y_i}$ is irreducible. Hence, we see that 
+$\overline{Y_0} \subsetneq \overline{Y_1} \subsetneq \cdots \subsetneq \overline{Y_n}$ is an ascending chain of distinct irreducible closed subsets of X. ($\overline{Y_i} \neq \overline{Y_{i+1}}$ as if the two are equal, $Y_i = \overline{Y_i} \cap Y = \overline{Y_{i+1}} \cap Y = Y_{i+1}$, which is a contradiction). Hence $\dim X \geq n = \dim Y$. 
 \end{proof}
 
 \printbibliography

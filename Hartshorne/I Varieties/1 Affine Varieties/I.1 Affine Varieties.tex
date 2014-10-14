@@ -479,12 +479,33 @@
   Then every irreducible component of $Y \cap H$ has dimension $r-1$.
 \end{problem}
 \begin{proof}
-  $Y$ is irreducible, with affine coordinate ring
-  $A(Y) = k[x_1,\ldots,x_n]/I(Y)$ with dimension $r$ by Prop.~1.7, where
-  $I(Y)$ is prime by Cor.~1.4.
-  Since $H$ is a hypersurface, $H = Z(f)$ for some irreducible polynomial
-  $f \in k[x_1,\ldots,x_n]$.
-  Now $Y \cap H = Z(I(Y) \cup \{f\}) = Z(I(Y) + (f))$ as on p.~2. Now
+  Let $Y$ be irreducible, with affine coordinate ring $A(Y)$.
+  Let $A = k[x_1,\ldots,x_n]$.
+  Then, $\dim A(Y) = r$ by Prop.~1.7, and $Y \cap H = Z(I(Y) + (f))$ by the
+  proof of Prop.~1.1, and so $I(Y \cap H) = \sqrt{I(Y) + (f)}$ by Prop.~1.2.
+  Note that $I(Y) + f \ne I(Y)$ by the assumpton $Y \not\subseteq H$ and
+  Prop.~1.2.
+  To find the dimension of each irreducible component in $Y \cap H$, we note by
+  Cor.~1.4 that the irreducible components of $Y \cap H$ corresond to the
+  minimal primes in $A(Y \cap H)$, and that their dimension corresponds to the
+  coheight of their corresponding prime ideals by Thm.~1.8A$(b)$.
+  So it suffices to find the coheights of the minimal ideals in $A(Y \cap H)$.
+  But $A(Y \cap H) = A/\sqrt{I(Y) + (f)}$ by the above, and by
+  \cite[Prop.~1.1]{AM69}, the minimal primes in $A(Y \cap H)$ correspond to
+  minimal primes containing $I(Y) + (f)$ in 
+
+  We note $I(Y \cap H) = \sqrt{I(Y) + (f)}$.
+  Now $A(Y \cap H) = k[x_1,\ldots,x_n]/\sqrt{I(Y) + (f)} \cong
+  A(Y)/\sqrt{(f)} = A(Y)/(f)$, where $H = Z(f)$ and we can assume without
+  loss of generality $(f)$ is radical; note that the condition $Y
+  \not\subseteq H$ says that quotienting by $f$ is nontrivial.
+  By Cor.~1.4, the closed irreducible subsets of $Y \cap H$ correspond to the
+  prime ideals of $A(Y \cap H) \cong A(Y)/(f)$; by the Hauptidealsatz and by
+  \cite[Prop.~1.1]{AM69}, the minimal prime ideals of $A(Y)/(f)$ correspond to
+  height one primes in $A(Y)$.
+  Since the minimal prime ideals correspond to irreducible components of $Y \cap
+  H$ by Cor.~1.4, we then see that the dimension of each irreducible component
+  is $r-1$ by Thm.~1.8A$(b)$.
 \end{proof}
 
 \printbibliography

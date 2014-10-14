@@ -151,129 +151,297 @@
 \setcounter{section}{1}
 \begin{problem}\mbox{}\label{exc:I.1.1}
   \begin{enuma}
-    \item Let $Y$ be the plane curve $y = x^2$ (i.e., $Y$ is the zero set of the polynomial $f = y - x^2$). Show that $A(Y)$ is isomorphic to a polynomial ring in one variable over $k$.
-    \item Let $Z$ be the plane curve $xy = 1$. Show that $A(Z)$ is not isomorphic to a polynomial ring in one variable over $k$.
-    \item Let $f$ be any irreducible quadratic polynomial in $k[x,y]$, and let $W$ be the conic defined by $f$. Show that $A(W)$ is isomorphic to $A(Y)$ or $A(Z)$. Which one is it when?
+    \item Let $Y$ be the plane curve $y = x^2$ (i.e., $Y$ is the zero set of
+      the polynomial $f = y - x^2$).
+      Show that $A(Y)$ is isomorphic to a polynomial ring in one variable over
+      $k$.
+    \item Let $Z$ be the plane curve $xy = 1$.
+      Show that $A(Z)$ is not isomorphic to a polynomial ring in one variable
+      over $k$.
+    \item Let $f$ be any irreducible quadratic polynomial in $k[x,y]$, and let
+      $W$ be the conic defined by $f$.
+      Show that $A(W)$ is isomorphic to $A(Y)$ or $A(Z)$.
+      Which one is it when?
   \end{enuma}
 \end{problem}
 \begin{proof}[Proof of $(a)$]
-  Mapping $k[x,y] \to k[t]$ by $x \mapsto t,y \mapsto t^2$, we have a surjective map with kernel $(y - x^2)$, and so $k[x,y]/(y-x^2) \cong k[t]$. Thus, $(y-x^2)$ is a prime ideal since $k[t]$ is a domain, and in particular it is radical; thus $I(Y) = (y-x^2)$, and $A(Y) = k[x,y]/(y-x^2) \cong k[t]$.
+  Mapping $k[x,y] \to k[t]$ by $x \mapsto t,y \mapsto t^2$, we have a
+  surjective map with kernel $(y - x^2)$, and so $k[x,y]/(y-x^2) \cong k[t]$.
+  Thus, $(y-x^2)$ is a prime ideal since $k[t]$ is a domain, and in particular
+  it is radical; thus $I(Y) = (y-x^2)$, and $A(Y) = k[x,y]/(y-x^2) \cong k[t]$.
 \end{proof}
 \begin{proof}[Proof of $(b)$]
-  $k[x,y]/(xy-1) \cong k[s,s^{-1}]$ by the map $x \mapsto s,y \mapsto s^{-1}$, which is a domain, hence $(xy-1)$ is prime, and in particular it is radical. Thus, $I(Z) = (xy-1)$, and $A(Z) \cong k[s,s^{-1}]$. This is not isomorphic to a polynomial ring, for any homomorphism $\varphi\colon k[s,s^{-1}] \to k[t]$ must have $\varphi(r) \in k$ for any $r \in k$ or $r \in \{s,s^{-1}\}$ since they are units, and so $\varphi(k[s,s^{-1}]) \subset k$.
+  $k[x,y]/(xy-1) \cong k[s,s^{-1}]$ by the map $x \mapsto s,y \mapsto s^{-1}$,
+  which is a domain, hence $(xy-1)$ is prime, and in particular it is radical.
+  Thus, $I(Z) = (xy-1)$, and $A(Z) \cong k[s,s^{-1}]$.
+  This is not isomorphic to a polynomial ring, for any homomorphism
+  $\varphi\colon k[s,s^{-1}] \to k[t]$ must have $\varphi(r) \in k$ for any
+  $r \in k$ or $r \in \{s,s^{-1}\}$ since they are units, and so
+  $\varphi(k[s,s^{-1}]) \subset k$.
 \end{proof}
 \begin{claim}[$c$]
-  Let $\Char k \ne 2$, and let $f = a_{11}x^2 + a_{12}xy + a_{22}y^2 + b_1x + b_2y + c$, where is irreducible. Consider the matrix
+  Let $\Char k \ne 2$, and let
+  $f = a_{11}x^2 + a_{12}xy + a_{22}y^2 + b_1x + b_2y + c$,
+  where is irreducible. Consider the matrix
   \begin{equation*}
     M = \begin{pmatrix}
       a_{11} & \dfrac{a_{12}}{2}\\
       \dfrac{a_{12}}{2} & a_{22}
     \end{pmatrix}
   \end{equation*}
-  Then, $A(W) \cong A(Y)$ if $\det M = 0$, and $A(W) \cong A(Z)$ if $\det M \ne 0$.
-  \par If $\Char k =2$, then $A(W) \cong A(Y)$ if $a_{12} = 0$, and $A(W) \cong A(Z)$ if $a_{12} \ne 0$.
+  Then, $A(W) \cong A(Y)$ if $\det M = 0$, and $A(W) \cong A(Z)$ if
+  $\det M \ne 0$.
+  \par If $\Char k =2$, then $A(W) \cong A(Y)$ if $a_{12} = 0$, and
+  $A(W) \cong A(Z)$ if $a_{12} \ne 0$.
 \end{claim}
 \begin{proof}[Proof of $(c)$]
-  By the structure theorem for symmetric bilinear forms \cite[Ch.~XV, Thm.~3.1]{Lan02}, we can assume after change of coordinates in $\AA^2$ that $a_{12} = 0$. Since (after possibly interchanging $x \leftrightarrow y$) $a_{11} \ne 0$, changing coordinates $x \mapsto x - b_1/2a_{11}$ cancels out the $x$ term in $f$. If $a_{22} \ne 0$, we can do the same process to $y$ to eliminate the $y$ term; otherwise, we can eliminate the $c$ term by replacing $y \mapsto y - c/b_2$. Thus, up to change in coordinates $f$ has one of the following two forms:
+  By the structure theorem for symmetric bilinear forms
+  \cite[Ch.~XV, Thm.~3.1]{Lan02}, we can assume after change of coordinates
+  in $\AA^2$ that $a_{12} = 0$.
+  Since (after possibly interchanging $x \leftrightarrow y$) $a_{11} \ne 0$,
+  changing coordinates $x \mapsto x - b_1/2a_{11}$ cancels out the $x$ term in
+  $f$.
+  If $a_{22} \ne 0$, we can do the same process to $y$ to eliminate the $y$
+  term; otherwise, we can eliminate the $c$ term by replacing
+  $y \mapsto y - c/b_2$.
+  Thus, up to change in coordinates $f$ has one of the following two forms:
   \begin{equation*}
     a_{11}x^2 + a_{22}y^2 + c, \qquad a_{11}x^2 + b_2y.
   \end{equation*}
-  We note in the first case that $c \ne 0$ for otherwise $f$ would be reducible (recalling that $k$ is algebraically closed), and that this corresponds to the case when $\det M \ne 0$. We note in the second case that $a_{11} \ne 0$ for $f$ was assumed to be quadratic, and $b_2 \ne 0$ for otherwise $f$ would be reducible; this corresponds to the case when $\det M = 0$.
-  \par It remains to show the isomorphisms in either case. Note that since none of our coefficients above are zero, we can re-normalize our variables to get $x^2 - y^2 - 1$ and $x^2 - y$ (recalling again that $k$ is algebraically closed). In the latter case, we clearly have that $A(W) \cong A(Y)$, and so the former case remains. In former case, substituting $x \mapsto (x+y)/2$ and $y \mapsto (x-y)/2$ gives that $f$ is of the form $xy - 1$, and so we have that $A(W) \cong A(Z)$.
-  \par Finally, we show the claim for when $\Char k = 2$. First consider the case $a_{12} \ne 0$. Let $\alpha$ such that $\alpha^2 + a_{12}\alpha + a_{22} = 0$, which exists since $k$ is algebraically closed. Then, changing coordinates $x \mapsto x - \alpha y$,
+  We note in the first case that $c \ne 0$ for otherwise $f$ would be
+  reducible (recalling that $k$ is algebraically closed), and that this
+  corresponds to the case when $\det M \ne 0$.
+  We note in the second case that $a_{11} \ne 0$ for $f$ was assumed to be
+  quadratic, and $b_2 \ne 0$ for otherwise $f$ would be reducible; this
+  corresponds to the case when $\det M = 0$.
+  \par It remains to show the isomorphisms in either case.
+  Note that since none of our coefficients above are zero, we can re-normalize
+  our variables to get $x^2 - y^2 - 1$ and $x^2 - y$ (recalling again that $k$
+  is algebraically closed).
+  In the latter case, we clearly have that $A(W) \cong A(Y)$, and so the former
+  case remains.
+  In the former case, substituting $x \mapsto (x+y)/2$ and $y \mapsto (x-y)/2$
+  gives that $f$ is of the form $xy - 1$, and so we have that $A(W) \cong A(Z)$.
+  \par Finally, we show the claim for when $\Char k = 2$. First consider the
+  case $a_{12} \ne 0$. Let $\alpha$ such that
+  $\alpha^2 + a_{12}\alpha + a_{22} = 0$, which exists since $k$ is
+  algebraically closed.
+  Then, changing coordinates $x \mapsto x - \alpha y$,
   \begin{equation*}
     a_{11}x^2 + a_{12}xy + a_{22}y^2 \mapsto a_{11}x^2 + \alpha y^2 + a_{12}xy + a_{12}\alpha y^2 + a_{22}y^2 = a_{11}x^2 + a_{12}xy,
   \end{equation*}
-  and so we can assume $a_{22} = 0$. Then, replacing $y \mapsto y + (a_{11}/a_{12})x$, we get
+  and so we can assume $a_{22} = 0$.
+  Then, replacing $y \mapsto y + (a_{11}/a_{12})x$, we get
   \begin{equation*}
     a_{11}x^2 + a_{12}xy \mapsto a_{11}x^2 + a_{12}xy + a_{11}x^2 = a_{12}xy,
   \end{equation*}
-  and so we can moreover assume $a_{11} = 0$. Finally, replacing $x \mapsto x - (b_2/a_{12}$ and $y \mapsto y - (b_1/a_{12})$, which we note are $k$-algebra isomorphisms, we get $f \mapsto a_{12}xy + c$ for some $c$. If $c = 0$ then $f$ was originally the union of two lines up to affine transformation, hence we have $c \ne 0$. So, $A(W)$ is isomorphic to $k[x,y]/(xy - 1) \cong A(Z)$ after rescaling of $x,y$.
-  \par Now consider when $a_{12} = 0$; then, one of $a_{11},a_{22} \ne 0$. Suppose both are nonzero; then, changing coordinates $x \mapsto x + \sqrt{a_{22}/a_{11}}y$, we have
+  and so we can moreover assume $a_{11} = 0$.
+  Finally, replacing $x \mapsto x - (b_2/a_{12}$ and
+  $y \mapsto y - (b_1/a_{12})$, which we note are $k$-algebra isomorphisms,
+  we get $f \mapsto a_{12}xy + c$ for some $c$.
+  If $c = 0$ then $f$ was originally the union of two lines up to affine
+  transformation, hence we have $c \ne 0$.
+  So, $A(W)$ is isomorphic to $k[x,y]/(xy - 1) \cong A(Z)$ after rescaling
+  of $x,y$.
+  \par Now consider when $a_{12} = 0$; then, one of $a_{11},a_{22} \ne 0$.
+  Suppose both are nonzero; then, changing coordinates
+  $x \mapsto x + \sqrt{a_{22}/a_{11}}y$, we have
   \begin{equation*}
     a_{11}x^2 + a_{22}y^2 \mapsto a_{11}x^2 + a_{22}y^2 + a_{22}y^2 = a_{11}x^2,
   \end{equation*}
-  and so we can assume $a_{22} = 0$, i.e., $f = a_{11}x^2 + b_1x + b_2y + c$. If $b_2 = 0$, then $f$ is a reducible polynomial defining one or two lines, a contradiction, so $b_2 \ne 0$. Then, changing coordinates $y \mapsto y + (b_1/b_2)x$, we have
+  and so we can assume $a_{22} = 0$, i.e., $f = a_{11}x^2 + b_1x + b_2y + c$.
+  If $b_2 = 0$, then $f$ is a reducible polynomial defining one or two lines,
+  a contradiction, so $b_2 \ne 0$.
+  Then, changing coordinates $y \mapsto y + (b_1/b_2)x$, we have
   \begin{equation*}
     b_1x + b_2y \mapsto b_1x + b_2y + b_1x = b_2y,
   \end{equation*}
-  and so we can assume $b_1 = 0$. Changing coordinates again such that $x \mapsto x + \sqrt{c}$,
+  and so we can assume $b_1 = 0$.
+  Changing coordinates again such that $x \mapsto x + \sqrt{c}$,
   \begin{equation*}
     a_{11}x^2 + b_2y + c \mapsto a_{11}x^2 + c + b_2y + c = a_{11}x^2 + b_2y,
   \end{equation*}
-  so renormalizing gives $f$ in the form $y - x^2$. Finally, this implies that $A(Z) = k[x,y]/(y-x^2) \cong A(Y)$.
+  so renormalizing gives $f$ in the form $y - x^2$.
+  Finally, this implies that $A(Z) = k[x,y]/(y-x^2) \cong A(Y)$.
 \end{proof}
 
 \begin{problem}[The Twisted Cubic Curve]
-  Let $Y \subseteq \AA^3$ be the set $Y = \{(t,t^2,t^3) \mid t \in k\}$. Show that $Y$ is an affine variety of dimension $1$. Find generators for the ideal $I(Y)$. Show that $A(Y)$ is isomorphic to a polynomial ring in one variable over $k$. We say that $Y$ is given by the \emph{parametric representation} $x =t$, $y = t^2$, $z = t^3$.
+  Let $Y \subseteq \AA^3$ be the set $Y = \{(t,t^2,t^3) \mid t \in k\}$.
+  Show that $Y$ is an affine variety of dimension $1$.
+  Find generators for the ideal $I(Y)$.
+  Show that $A(Y)$ is isomorphic to a polynomial ring in one variable over $k$.
+  We say that $Y$ is given by the \emph{parametric representation} $x =t$,
+  $y = t^2$, $z = t^3$.
 \end{problem}
 \begin{proof}
-  We first show $\mathfrak{a} = (y - x^2,z - x^3)$ is prime and in particular, radical in $k[x,y,z]$. Define the $k$-algebra homomorphism $k[x,y,z] \to k[t]$ by $x \mapsto t,y\mapsto t^2,z \mapsto t^3$; clearly the kernel of this map contains $\mathfrak{a}$, and so this induces a map $\varphi\colon k[x,y,z]/\mathfrak{a} \to k[t]$. We claim $\varphi$ is injective. For suppose $f +\mathfrak{a} \mapsto 0$. By replacing $z$ with $xy$ and $y$ with $x^2$ in the expression for a particular representative $f$, $f + \mathfrak{a}$ is equivalent to a polynomial purely in $x\bmod\mathfrak{a}$. But any polynomial in $x$ maps to $0$ through $\varphi$ if and only if it is zero, hence $\varphi$ is injective. Since it was defined as the quotient of a surjective map, $\varphi$ is also an isomorphism of $k$-algebras, and so $\mathfrak{a}$ is prime and also radical since $k[t]$ is a domain.
-  \par Now we claim $I(Y) = \mathfrak{a}$. $\supset$ is trivial since if $f \in \mathfrak{a}$, then $f(t,t^2,t^3) = 0$ for any $t \in k$ since the relations $y - x^2,z - x^3$ are all satisfied when $x=t,y=t^2,z=t^3$. $\subset$. We first show $Y \supset Z(\mathfrak{a})$. Suppose $(x,y,z)$ satisfy $y - x^2,z - x^3$. Then, $(x,y,z) = (x,x^2,x^3)$ by using the relations repeatedly, and so $(x,y,z) \in Y$. Now by Prop.~$1.2$, $Y \supset Z(\mathfrak{a})$ implies $I(Y) \subset I(Z(\mathfrak{a})) = \sqrt{\mathfrak{a}} = \mathfrak{a}$ since $\mathfrak{a}$ is radical from above. 
-  \par We check that $Y$ is closed; however, $\overline{Y} = Z(I(Y)) = Z(\mathfrak{a})$, and any point $(x,y,z)$ satisfying $y - x^2,z - x^3$ can be written $(x,x^2,x^3)$ as above, hence $Y \supset Z(\mathfrak{a})$, and so $Y = \overline{Y}$ is closed.
-  \par Finally, by the first paragraph, $A(Y) = k[x,y,z]/I(Y) = k[x,y,z]/\mathfrak{a} \cong k[t]$, and so since $I(Y) = \mathfrak{a}$ is prime by the above with $Z(\mathfrak{a}) = Y$ and $k[t]$ is of dimension $1$, $Y$ is an affine variety of dimension $1$ by Cor.~1.4 and Prop.~1.7.
+  We first show $\mathfrak{a} = (y - x^2,z - x^3)$ is prime and in particular,
+  radical in $k[x,y,z]$. Define the $k$-algebra homomorphism
+  $k[x,y,z] \to k[t]$ by $x \mapsto t,y\mapsto t^2,z \mapsto t^3$; clearly the
+  kernel of this map contains $\mathfrak{a}$, and so this induces a map
+  $\varphi\colon k[x,y,z]/\mathfrak{a} \to k[t]$.
+  We claim $\varphi$ is injective. For suppose $f +\mathfrak{a} \mapsto 0$.
+  By replacing $z$ with $xy$ and $y$ with $x^2$ in the expression for a
+  particular representative $f$, $f + \mathfrak{a}$ is equivalent to a
+  polynomial purely in $x\bmod\mathfrak{a}$.
+  But any polynomial in $x$ maps to $0$ through $\varphi$ if and only if it is
+  zero, hence $\varphi$ is injective.
+  Since it was defined as the quotient of a surjective map, $\varphi$ is also
+  an isomorphism of $k$-algebras, and so $\mathfrak{a}$ is prime and also
+  radical since $k[t]$ is a domain.
+  \par Now we claim $I(Y) = \mathfrak{a}$.
+  $\supset$ is trivial since if $f \in \mathfrak{a}$, then $f(t,t^2,t^3) = 0$
+  for any $t \in k$ since the relations $y - x^2,z - x^3$ are all satisfied
+  when $x=t,y=t^2,z=t^3$.
+  $\subset$. We first show $Y \supset Z(\mathfrak{a})$.
+  Suppose $(x,y,z)$ satisfy $y - x^2,z - x^3$.
+  Then, $(x,y,z) = (x,x^2,x^3)$ by using the relations repeatedly, and so
+  $(x,y,z) \in Y$.
+  Now by Prop.~$1.2$, $Y \supset Z(\mathfrak{a})$ implies
+  $I(Y) \subset I(Z(\mathfrak{a})) = \sqrt{\mathfrak{a}} = \mathfrak{a}$
+  since $\mathfrak{a}$ is radical from above. 
+  \par We check that $Y$ is closed; however,
+  $\overline{Y} = Z(I(Y)) = Z(\mathfrak{a})$, and any point $(x,y,z)$
+  satisfying $y - x^2,z - x^3$ can be written $(x,x^2,x^3)$ as above, hence
+  $Y \supset Z(\mathfrak{a})$, and so $Y = \overline{Y}$ is closed.
+  \par Finally, by the first paragraph,
+  $A(Y) = k[x,y,z]/I(Y) = k[x,y,z]/\mathfrak{a} \cong k[t]$, and so since
+  $I(Y) = \mathfrak{a}$ is prime by the above with $Z(\mathfrak{a}) = Y$ and
+  $k[t]$ is of dimension $1$, $Y$ is an affine variety of dimension $1$ by
+  Cor.~1.4 and Prop.~1.7.
 \end{proof}
 
 \begin{problem}
-  Let $Y$ be the algebraic set in $\AA^3$ defined by the two polynomials $x^2 - yz$ and $xz - x$. Show that $Y$ is a union of three irreducible components. Describe them and find their prime ideals.
+  Let $Y$ be the algebraic set in $\AA^3$ defined by the two polynomials
+  $x^2 - yz$ and $xz - x$.
+  Show that $Y$ is a union of three irreducible components.
+  Describe them and find their prime ideals.
 \end{problem}
 \begin{proof}
   We first know $Y = Z(x^2-yz,x(z-1))$, and so we claim
   \begin{equation*}
     Y = Z(x^2-yz,x(z-1)) = Z(yz,x) \cup Z(x^2-y,z-1).
   \end{equation*}
-  $\subset$. If $P = (x,y,z) \in Z(x^2-yz,x(z-1))$, then either $x=0$ or $z-1=0$. In the former case, this implies $yz =0$ as well, hence $P \in Z(yz,x)$. In the latter case, this implies $x^2-y$ as well, hence $P \in Z(x^2-y,z-1)$. $\supset$. If $P \in Z(yz,x)$, then clearly $x^2-yz$ and $x(z-1)$ are satisfied; similarly, if $P \in Z(x^2-y,z-1)$, then $x^2-yz$ and $z-1$ are clearly satisfied.
-  \par We now claim that $Z(yz,x) = Z(y,x) \cup Z(z,x)$. $\subset$ is clear since $x=0$ and one of $y = 0$ or $z=0$ must hold, so any point $P \in Z(yz,x)$ is in either $Z(y,x)$ or $Z(z,x)$. $\supset$ is trivial.
+  $\subset$. If $P = (x,y,z) \in Z(x^2-yz,x(z-1))$, then either $x=0$ or
+  $z-1=0$.
+  In the former case, this implies $yz =0$ as well, hence $P \in Z(yz,x)$.
+  In the latter case, this implies $x^2-y$ as well, hence $P \in Z(x^2-y,z-1)$.
+  $\supset$. If $P \in Z(yz,x)$, then clearly $x^2-yz$ and $x(z-1)$ are
+  satisfied; similarly, if $P \in Z(x^2-y,z-1)$, then $x^2-yz$ and $z-1$ are
+  clearly satisfied.
+  \par We now claim that $Z(yz,x) = Z(y,x) \cup Z(z,x)$. $\subset$ is clear
+  since $x=0$ and one of $y = 0$ or $z=0$ must hold, so any point
+  $P \in Z(yz,x)$ is in either $Z(y,x)$ or $Z(z,x)$.
+  $\supset$ is trivial.
   \par We therefore have
   \begin{equation*}
     Y = Z(x,y) \cup Z(x,z) \cup Z(x^2-y,z-1).
   \end{equation*}
-  We claim each component is irreducible. It suffices to show by Cor.~1.4 that each of the defining ideals is prime. $(x,y)$ is prime since $k[x,y,z]/(x,y) \cong k[z]$; similarly, $(x,z)$ is prime since $k[x,y,z]/(x,z) \cong k[y]$. $x^2-y,z-1$ is also prime since $k[x,y,z]/(x^2-y,z-1) \cong k[x,y]/(x^2-y) \cong k[t]$ as in Problem $\ref{exc:I.1.1}(a)$.
-  \par We finally note that $Z(x,y)$ is the $z$-axis in $\AA^3$, $Z(x,z)$ is the $y$-axis in $\AA^3$, and $Z(x^2-y,z-1)$ is the parabola $x^2-y$ lying on the $z=1$ hyperplane.
+  We claim each component is irreducible.
+  It suffices to show by Cor.~1.4 that each of the defining ideals is prime.
+  $(x,y)$ is prime since $k[x,y,z]/(x,y) \cong k[z]$; similarly, $(x,z)$ is
+  prime since $k[x,y,z]/(x,z) \cong k[y]$.
+  $x^2-y,z-1$ is also prime since
+  $k[x,y,z]/(x^2-y,z-1) \cong k[x,y]/(x^2-y) \cong k[t]$ as in Problem
+  $\ref{exc:I.1.1}(a)$.
+  \par We finally note that $Z(x,y)$ is the $z$-axis in $\AA^3$, $Z(x,z)$ is
+  the $y$-axis in $\AA^3$, and $Z(x^2-y,z-1)$ is the parabola $x^2-y$ lying on
+  the $z=1$ hyperplane.
 \end{proof}
 
 \begin{problem}
-  If we identify $\AA^2$ with $\AA^1 \times \AA^1$ in the natural way, show that the Zariski topology on $\AA^2$ is not the product topology of the Zariski topologies on the two copies of $\AA^1$.
+  If we identify $\AA^2$ with $\AA^1 \times \AA^1$ in the natural way, show
+  that the Zariski topology on $\AA^2$ is not the product topology of the
+  Zariski topologies on the two copies of $\AA^1$.
 \end{problem}
 \begin{proof}
-  $Z(x-y) \subset \AA^2$ is closed. Now suppose $\AA^2$ had the product topology; then, by \cite[Exc.~17.13]{Mun00}, this would imply $\AA^1$ is Hausdorff, contradicting Ex.~1.1.1.
+  $Z(x-y) \subset \AA^2$ is closed. Now suppose $\AA^2$ had the product
+  topology; then, by \cite[Exc.~17.13]{Mun00}, this would imply $\AA^1$ is
+  Hausdorff, contradicting Ex.~1.1.1.
 \end{proof}
 
 \begin{problem}
-  Show that a $k$-algebra $B$ is isomorphic to the affine coordinate ring of some algebraic set in $\AA^n$, for some $n$, if and only if $B$ is a finitely generated $k$-algebra with no nilpotent elements.
+  Show that a $k$-algebra $B$ is isomorphic to the affine coordinate ring of
+  some algebraic set in $\AA^n$, for some $n$, if and only if $B$ is a
+  finitely generated $k$-algebra with no nilpotent elements.
 \end{problem}
 \begin{proof}
-  $\Leftarrow$. Suppose $B$ is a finitely generated $k$-algebra with no nilpotent elements. By definition of finitely-generated $k$-algebras, $B \cong k[x_1,\ldots,x_n]/I$ for some ideal $I \subset k[x_1,\ldots,x_n] \eqqcolon A$. Since $B$ has no nilpotent elements, $\sqrt{I} = \pi^{-1}(\mathfrak{N}_{A/I}) = I$ so $A(Z(I)) = A/I(Z(I)) = A/\sqrt{I} = A/I = B$ by Prop.~1.2.
-  \par $\Rightarrow$. Suppose $B \cong A(X)$ for some algebraic set $X \subset \AA^n$. Then, $B \cong A/I(X)$, where $A$ is as before, hence $B$ is a finitely generated $k$-algebra. Now suppose $f + I(X) \in B$ were nilpotent, i.e., $(f + I(X))^r = 0$ for some $r$. Then, $f^r + I(X) = 0$, hence $f^r \in I(X)$ and so $f \in I(X)$ by Cor.~1.4 since $I(X)$ is radical, and so $f = 0$ in $B$. Thus, $B$ has no nilpotent elements.
+  $\Leftarrow$. Suppose $B$ is a finitely generated $k$-algebra with no
+  nilpotent elements.
+  By definition of finitely-generated $k$-algebras,
+  $B \cong k[x_1,\ldots,x_n]/I$ for some ideal
+  $I \subset k[x_1,\ldots,x_n] \eqqcolon A$.
+  Since $B$ has no nilpotent elements,
+  $\sqrt{I} = \pi^{-1}(\mathfrak{N}_{A/I}) = I$ so
+  $A(Z(I)) = A/I(Z(I)) = A/\sqrt{I} = A/I = B$ by Prop.~1.2.
+  \par $\Rightarrow$. Suppose $B \cong A(X)$ for some algebraic set
+  $X \subset \AA^n$.
+  Then, $B \cong A/I(X)$, where $A$ is as before, hence $B$ is a finitely
+  generated $k$-algebra.
+  Now suppose $f + I(X) \in B$ were nilpotent, i.e., $(f + I(X))^r = 0$ for
+  some $r$.
+  Then, $f^r + I(X) = 0$, hence $f^r \in I(X)$ and so $f \in I(X)$ by
+  Cor.~1.4 since $I(X)$ is radical, and so $f = 0$ in $B$.
+  Thus, $B$ has no nilpotent elements.
 \end{proof}
 
 \begin{problem}
-  Any nonempty open subset of an irreducible topological space is dense and irreducible. If $Y$ is a subset of a topological space $X$, which is irreducible in its induced topology, then the closure $\overline{Y}$ is also irreducible.
+  Any nonempty open subset of an irreducible topological space is dense and
+  irreducible.
+  If $Y$ is a subset of a topological space $X$, which is irreducible in its
+  induced topology, then the closure $\overline{Y}$ is also irreducible.
 \end{problem}
 \begin{remark}
-  By definition, $X$ is irreducible if and only if in any decomposition $X = A \cup B$ for $A,B$ closed subsets of $X$, we have either $X = A$ or $X = B$.
+  By definition, $X$ is irreducible if and only if in any decomposition
+  $X = A \cup B$ for $A,B$ closed subsets of $X$, we have either $X = A$ or
+  $X = B$.
 \end{remark}
 \begin{proof}
-  Let $U \subset X$ be a nonempty open subset. Then, $X = (X \setminus U) \cup \overline{U}$, and since $X \setminus U$ is a proper subset of $X$, irreducibility of $X$ implies $X = \overline{U}$.
-  \par Now let $U \subset X$ be an open subset of $X$, and let $A,B \subset X$ be closed such that $U = (A \cap U) \cup (B \cap U) = (A \cup B) \cap U$. By the previous paragraph, $X = \overline{U} = \overline{(A \cup B) \cap U} = A \cup B$, hence by irreducibility of $X$, without loss of generality $A \supset U$, and so $U = U \cap A$, i.e., $U$ is irreducible.
-  \par Finally, suppose $\overline{Y} = A \cup B$ for $A,B$ closed in $\overline{Y}$. Then, $Y = (Y \cap A) \cup (Y \cap B)$, and since $Y$ is irreducible, without loss of generality $Y = Y \cap A$. Then, $\overline{Y} = \overline{Y \cap A} = A$, hence $\overline{Y}$ is irreducible.
+  Let $U \subset X$ be a nonempty open subset.
+  Then, $X = (X \setminus U) \cup \overline{U}$, and since $X \setminus U$ is
+  a proper subset of $X$, irreducibility of $X$ implies $X = \overline{U}$.
+  \par Now let $U \subset X$ be an open subset of $X$, and let $A,B \subset X$
+  be closed such that $U = (A \cap U) \cup (B \cap U) = (A \cup B) \cap U$.
+  By the previous paragraph,
+  $X = \overline{U} = \overline{(A \cup B) \cap U} = A \cup B$, hence by
+  irreducibility of $X$, without loss of generality $A \supset U$, and so
+  $U = U \cap A$, i.e., $U$ is irreducible.
+  \par Finally, suppose $\overline{Y} = A \cup B$ for $A,B$ closed in
+  $\overline{Y}$.
+  Then, $Y = (Y \cap A) \cup (Y \cap B)$, and since $Y$ is irreducible, without
+  loss of generality $Y = Y \cap A$.
+  Then, $\overline{Y} = \overline{Y \cap A} = A$, hence $\overline{Y}$ is
+  irreducible.
 \end{proof}
 
 \begin{problem}\mbox{}
   \begin{enuma}
-    \item Show that the following conditions are equivalent for a topological space $X$: $(i)$ $X$ is noetherian; $(ii)$ every nonempty family of closed subsets has a minimal element; $(iii)$ $X$ satisfies the ascending chain condition for open subsets; $(iv)$ every nonempty family of open subsets has a maximal element.
-    \item A noetherian topological space is \emph{quasi-compact,} i.e., every open cover has a finite subcover.
-    \item Any subset of a noetherian topological space is noetherian in its induced topology.
-    \item A noetherian space which is also Hausdorff must be a finite set with the discrete topology.
+    \item Show that the following conditions are equivalent for a topological
+      space $X$: $(i)$ $X$ is noetherian; $(ii)$ every nonempty family of
+      closed subsets has a minimal element; $(iii)$ $X$ satisfies the ascending
+      chain condition for open subsets; $(iv)$ every nonempty family of open
+      subsets has a maximal element.
+    \item A noetherian topological space is \emph{quasi-compact,} i.e., every
+      open cover has a finite subcover.
+    \item Any subset of a noetherian topological space is noetherian in its
+      induced topology.
+    \item A noetherian space which is also Hausdorff must be a finite set with
+      the discrete topology.
   \end{enuma}
 \end{problem}
 \begin{proof}[Proof of $(a)$]
-  $(i) \Rightarrow (ii)$. If we had a nonempty family of closed subsets with no minimal element, then we could inductively construct a non-terminating strictly decreasing sequence of closed subsets of $X$, contradicting that $X$ is noetherian.
-  \par $(ii) \Rightarrow (i)$. Any descending chain of closed subsets $Y_1 \supset Y_2 \supset \cdots$ has a minimal element $Y_r$, i.e., $Y_r = Y_{r+1} = \cdots$, hence $X$ is noetherian.
-  \par $(i) \Leftrightarrow (iii)$ and $(ii) \Leftrightarrow (iv)$ follow by taking complements.
+  $(i) \Rightarrow (ii)$. If we had a nonempty family of closed subsets with
+  no minimal element, then we could inductively construct a non-terminating
+  strictly decreasing sequence of closed subsets of $X$, contradicting that
+  $X$ is noetherian.
+  \par $(ii) \Rightarrow (i)$. Any descending chain of closed subsets
+  $Y_1 \supset Y_2 \supset \cdots$ has a minimal element $Y_r$, i.e.,
+  $Y_r = Y_{r+1} = \cdots$, hence $X$ is noetherian.
+  \par $(i) \Leftrightarrow (iii)$ and $(ii) \Leftrightarrow (iv)$ follow by
+  taking complements.
 \end{proof}
 \begin{proof}[Proof of $(b)$]
-  Let $\{X_i\}_{i \in I}$ be an open cover, and choose a well ordering on $I$. Then, consider the decreasing sequence of closed sets
+  Let $\{X_i\}_{i \in I}$ be an open cover, and choose a well ordering on $I$.
+  Then, consider the decreasing sequence of closed sets
   \begin{equation*}
     X \setminus X_1 \supseteq X \setminus (X_1 \cup X_2) \supseteq X \setminus (X_1 \cup X_2 \cup X_3) \supseteq \cdots.
   \end{equation*}
@@ -284,17 +452,39 @@
   hence $X_1,\ldots,X_r$ is a finite subcover of $\{X_i\}_{i \in I}$.
 \end{proof}
 \begin{proof}[Proof of $(c)$]
-  Let $A_1 \supset A_2 \supset \cdots$ be a descending chain of closed sets in $Y \subset X$; writing $A_i = Y \cap B_i$ for closed subsets $B_i \subset X$, we have that $B_1 \supset B_2 \supset \cdots$ stabilizes since $X$ is noetherian, so $A_1 \supset A_2 \supset \cdots$ does as well.
+  Let $A_1 \supset A_2 \supset \cdots$ be a descending chain of closed sets
+  in $Y \subset X$; writing $A_i = Y \cap B_i$ for closed subsets
+  $B_i \subset X$, we have that $B_1 \supset B_2 \supset \cdots$ stabilizes
+  since $X$ is noetherian, so $A_1 \supset A_2 \supset \cdots$ does as well.
 \end{proof}
 \begin{proof}[Proof of $(d)$]
-  Let $X$ be noetherian and Hausdorff. Hausdorff implies every finite point set is closed \cite[Thm.~17.8]{Mun00}, hence it suffices to show $X$ is finite. So suppose $X$ is infinite; let $\Sigma$ be the family of infinite closed subsets, which is nonempty since $X \in \Sigma$. $\Sigma$ has a minimal element $Z$ by property $(ii)$ from $(a)$. Let $p,q \in Z$; since $X$ is Hausdorff there exist $U,V$ disjoint that contain $p,q$ respectively. We then have $X = (X \setminus U) \cup (X \setminus V)$, and so $Z = (Z \cap (X \setminus U) \cup Z\cap(X \setminus V))$. Then each of $Z \cap (X \setminus U)$ and $Z \cap (X \setminus V)$ are closed and strictly contained in $Z$, hence are finite by minimality of $Z$. This implies $Z$ is also finite, a contradiction.
+  Let $X$ be noetherian and Hausdorff.
+  Hausdorff implies every finite point set is closed \cite[Thm.~17.8]{Mun00},
+  hence it suffices to show $X$ is finite.
+  So suppose $X$ is infinite; let $\Sigma$ be the family of infinite closed
+  subsets, which is nonempty since $X \in \Sigma$.
+  $\Sigma$ has a minimal element $Z$ by property $(ii)$ from $(a)$.
+  Let $p,q \in Z$; since $X$ is Hausdorff there exist $U,V$ disjoint that
+  contain $p,q$ respectively.
+  We then have $X = (X \setminus U) \cup (X \setminus V)$, and so
+  $Z = (Z \cap (X \setminus U) \cup Z\cap(X \setminus V))$.
+  Then each of $Z \cap (X \setminus U)$ and $Z \cap (X \setminus V)$ are
+  closed and strictly contained in $Z$, hence are finite by minimality of $Z$.
+  This implies $Z$ is also finite, a contradiction.
 \end{proof}
 
 \begin{problem}
-  Let $Y$ be an affine variety of dimension $r$ in $\AA^n$. Let $H$ be a hypersurface in $\AA^n$, and assume $Y \not\subseteq H$. Then every irreducible component of $Y \cap H$ has dimension $r-1$.
+  Let $Y$ be an affine variety of dimension $r$ in $\AA^n$.
+  Let $H$ be a hypersurface in $\AA^n$, and assume $Y \not\subseteq H$.
+  Then every irreducible component of $Y \cap H$ has dimension $r-1$.
 \end{problem}
 \begin{proof}
-  $Y$ is irreducible, with affine coordinate ring $A(Y) = k[x_1,\ldots,x_n]/I(Y)$ with dimension $r$ by Prop.~1.7, where $I(Y)$ is prime by Cor.~1.4. Since $H$ is a hypersurface, $H = Z(f)$ for some irreducible polynomial $f \in k[x_1,\ldots,x_n]$. Now $Y \cap H = Z(I(Y) \cup \{f\}) = Z(I(Y) + (f))$ as on p.~2. Now
+  $Y$ is irreducible, with affine coordinate ring
+  $A(Y) = k[x_1,\ldots,x_n]/I(Y)$ with dimension $r$ by Prop.~1.7, where
+  $I(Y)$ is prime by Cor.~1.4.
+  Since $H$ is a hypersurface, $H = Z(f)$ for some irreducible polynomial
+  $f \in k[x_1,\ldots,x_n]$.
+  Now $Y \cap H = Z(I(Y) \cup \{f\}) = Z(I(Y) + (f))$ as on p.~2. Now
 \end{proof}
 
 \printbibliography

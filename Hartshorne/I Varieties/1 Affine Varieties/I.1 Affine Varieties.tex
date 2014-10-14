@@ -480,33 +480,22 @@
   Then every irreducible component of $Y \cap H$ has dimension $r-1$.
 \end{problem}
 \begin{proof}
-  Let $Y$ be irreducible, with affine coordinate ring $A(Y)$.
   Let $A = k[x_1,\ldots,x_n]$.
-  Then, $\dim A(Y) = r$ by Prop.~1.7, and $Y \cap H = Z(I(Y) + (f))$ by the
-  proof of Prop.~1.1, and so $I(Y \cap H) = \sqrt{I(Y) + (f)}$ by Prop.~1.2.
-  Note that $I(Y) + f \ne I(Y)$ by the assumpton $Y \not\subseteq H$ and
-  Prop.~1.2.
-  To find the dimension of each irreducible component in $Y \cap H$, we note by
-  Cor.~1.4 that the irreducible components of $Y \cap H$ corresond to the
-  minimal primes in $A(Y \cap H)$, and that their dimension corresponds to the
-  coheight of their corresponding prime ideals by Thm.~1.8A$(b)$.
-  So it suffices to find the coheights of the minimal ideals in $A(Y \cap H)$.
-  But $A(Y \cap H) = A/\sqrt{I(Y) + (f)}$ by the above, and by
-  \cite[Prop.~1.1]{AM69}, the minimal primes in $A(Y \cap H)$ correspond to
-  minimal primes containing $I(Y) + (f)$ in 
-
-  We note $I(Y \cap H) = \sqrt{I(Y) + (f)}$.
-  Now $A(Y \cap H) = k[x_1,\ldots,x_n]/\sqrt{I(Y) + (f)} \cong
-  A(Y)/\sqrt{(f)} = A(Y)/(f)$, where $H = Z(f)$ and we can assume without
-  loss of generality $(f)$ is radical; note that the condition $Y
-  \not\subseteq H$ says that quotienting by $f$ is nontrivial.
-  By Cor.~1.4, the closed irreducible subsets of $Y \cap H$ correspond to the
-  prime ideals of $A(Y \cap H) \cong A(Y)/(f)$; by the Hauptidealsatz and by
-  \cite[Prop.~1.1]{AM69}, the minimal prime ideals of $A(Y)/(f)$ correspond to
-  height one primes in $A(Y)$.
-  Since the minimal prime ideals correspond to irreducible components of $Y \cap
-  H$ by Cor.~1.4, we then see that the dimension of each irreducible component
-  is $r-1$ by Thm.~1.8A$(b)$.
+  By Cor.~1.4, the irreducible components of $Y \cap H$ correspond to the
+  minimal primes of $A(Y \cap H)$, and in particular, the dimension of an
+  irreducible component is equal to the coheight of its corresponding minimal
+  prime by Thm.~1.8A$(b)$.
+  Now $Y \cap H = Z(I(Y) + (f))$ by the proof of Prop.~1.1, hence $I(Y \cap H) =
+  \sqrt{I(Y) + (f)}$ by Prop.~$1.2(d)$.
+  The minimal primes in $A(Y \cap H) = A/I(Y \cap H)$ correspond to the
+  minimal primes in $A$ containing $\sqrt{I(Y) + (f)}$; by
+  \cite[Prop.~1.14]{AM69} these are the minimal primes containing $I(Y)
+  + (f)$.
+  By \cite[Prop.~1.1]{AM69}, these are the minimal primes in $A(Y)$
+  containing $f$, which by Krull's Hauptidealsatz (Thm.~1.11A) have height $1$
+  hence coheight $r-1$ in $A(Y)$.
+  By the reductions above, every irreducible component of $Y \cap
+  H$ thus has dimension $r-1$.
 \end{proof}
 
 \begin{problem}
@@ -584,7 +573,8 @@
 
 \begin{proof}[Proof of $(e)$]
 
-	Let $X = \mathbb{N}$. Let $\tau = \{ \emptyset, X, \{2,3,\cdots\}, \{3,4,\cdots\}, \cdots}$. 
+	Let $X = \mathbb{N}$. Let $\tau = \{ \emptyset, X, \{2,3,\cdots\},
+  \{3,4,\cdots\}, \cdots\}$. 
 	$(X, \tau)$ is a topological space. Let $Y_1 \supset Y_2 \subset \cdots$ be any sequence of closed subsets. $X$ is noetherian because there exists an integer $r$ such that $Y_r = Y_{r+1} = \cdots$ by well-ordering principle. 
 	
 	Now, we show that the dimension of $X$ is infinite. We note that any closed set $\{n, n+1, \cdots\}$ is irreducible, so we have an infinite chain of closed irreducible subsets of $X$: $X \supsetneq \{2,3,4,\cdots\}\supsetneq \{3,4,5,\cdots\} \cdots $. Hence $\dim X = \infty$. 

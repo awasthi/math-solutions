@@ -527,8 +527,7 @@
       subsets $\{U_{i}\}$, then $\dim X = \sup \dim U_i$.
     \item Give an example of a topological space $X$ and a dense open subset $U$
       with $\dim U < \dim X$. 
-    \item If Y is a closed subset of an irreducible finite-dimensional
-      topological space $X$, and if $\dim Y = \dim X$, then $Y= X$. 
+    \item If Y is a closed subset of an irreducible finite-dimensional topological space $X$, and if $\dim Y = \dim X$, then $Y= X$. 
     \item Give an example of a noetherian topological space of infinite dimension.  
   \end{enuma}
 \end{problem}
@@ -543,6 +542,35 @@
   $Y_i = \overline{Y_i} \cap Y = \overline{Y_{i+1}} \cap Y = Y_{i+1}$,
   which is a contradiction).
   Hence $\dim X \geq n = \dim Y$. 
+\end{proof}
+
+\begin{proof}[Proof of $(b)$]
+  	Let $\dim X = n$. 
+  	From (a), $\dim U_i \leq \dim X$. Hence, $\sup \dim U_i \leq \dim X$.
+  	Now, consider an ascending chain $X_0 \subsetneq X_1 \subsetneq \cdots \subsetneq X_n$ of distinct irreducible closed subsets of $X$. Choose an open set $U_i$ such that $X_0 \cap U_i \neq \emptyset$. We can choose such $U_i$ because $\{U_i\}$ covers $X$. 
+	Then, $U_i \cap X_j \neq \emptyset$ because $X_j \supset X_0$. Hence, $X_0 \cap U_i \subsetneq \cdots \subsetneq X_n \cap U_i$ is an ascending chain of irreducible closed subsets (with respect to the subspace topology) of $U_i$. Hence, $\sup \dim U_i \geq \dim X$.
+
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+	Let $X = {0,1}$, and $\tau = \{ \emptyset, X, \{0\}\}$ be the set of open sets of $X$. This is a topology. 
+	Now, $\overline{\{0\}} = X$ so $U = {0}$ is dense in $X$. Note that ${0},{1}, {1,2}$ are all irreducible sets as it cannot be written as the union of two proper closed subsets with respect to the subspace topology.
+	The dimension of $U$ is 0 as the only irreducible closed set (with respect to the subspace topology) of $U$ is $U$ itself. However, as ${1}$ is irreducible, we have an ascending chain of closed irreducible subsets of $X$ with length $1$, which is ${1} \subsetneq {0,1}$.  
+\end{proof}
+
+\begin{proof}[Proof of $(d)$]
+	Let Y be a closed subset of an irreducible finite-dimensional topological space $X$ with $\dim Y = \dim X$. 
+	Assume that $Y \subsetneq X$. Let $Y_0 \subsetneq \cdots \subsetneq Y_n \subset Y$ be the ascending chain of irreducible closed sets. Then, $Y_i$ is irreducible closed subset of $X$ as Y is closed. Because $X$ is also irreducible we have $Y_0 \subsetneq \cdots \subsetneq Y_n \subsetneq X$, so $\dim X geq n+1 > \dim Y$, which is a contradiction. Hence $X = Y$. 
+
+\end{proof}
+
+\begin{proof}[Proof of $(e)$]
+
+	Let $X = \mathbb{N}$. Let $\tau = \{ \emptyset, X, \{2,3,\cdots\}, \{3,4,\cdots\}, \cdots}$. 
+	
+	$(X, \tau)$ is a topological space. Let $Y_1 \supset Y_2 \subset \cdots$ be any sequence of closed subsets. $X$ is noetherian because there exists an integer $r$ such that $Y_r = Y_{r+1} = \cdots$ by well-ordering principle. 
+	
+	Now, we show that the dimension of $X$ is infinite. We note that any closed set $\{n, n+1, \cdots}$ is irreducible, so we have $X \supsetneq \{2,3,4,\cdots\}\supsetneq \{3,4,5,\cdots\} \cdots $. Hence $\dim X = \infty$. 
+
 \end{proof}
 
 \printbibliography

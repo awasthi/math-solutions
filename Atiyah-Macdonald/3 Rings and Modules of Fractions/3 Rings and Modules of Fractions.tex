@@ -1,0 +1,383 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{decorations.markings}
+\tikzset{
+  open/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} },
+  closed/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; } }, postaction = {decorate} },
+  imm/.style = {decoration = {markings, mark = at position 0.3 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; }, mark = at position 0.6 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} }
+}
+
+\usepackage{braket}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../../References}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumacounter}
+\newenvironment{enuma}
+{\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumicounter}
+\newenvironment{enumi}
+{\begin{list}{$\roman{enumicounter})$}{\usecounter{enumicounter} \parsep=0em \itemsep=0em \leftmargin=2.25em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumnumcounter}
+\newenvironment{enumnum}
+{\begin{list}{$(\arabic{enumnumcounter})$}{\usecounter{enumnumcounter} \parsep=0em \itemsep=0em \leftmargin=2.25em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{universalproperty}{Universal Property}
+\newtheorem{problem}{Exercise}[section]
+\newtheorem{subproblem}{Problem}[problem]
+\newtheorem{lemma}{Lemma}%[section]
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{property}{Property}[problem]
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{figure}{problem}
+\numberwithin{equation}{section}
+
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Ass}{Ass}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\WeakAss}{\widetilde{Ass}}
+\let\Im\relax
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\SPEC}{\mathbf{Spec}}
+\DeclareMathOperator{\Sp}{sp}
+\DeclareMathOperator{\Max}{Max}
+\DeclareMathOperator{\maxSpec}{maxSpec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Soc}{Soc}
+\DeclareMathOperator{\Ht}{ht}
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\V}{\mathbf{V}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\stimes}{\text{\footnotesize\textcircled{s}}}
+\DeclareMathOperator{\End}{End}
+\let\ker\relax
+\DeclareMathOperator{\ker}{Ker}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{Coker}
+\DeclareMathOperator{\LCM}{LCM}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\dv}{div}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\trd}{tr.d.}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\lt}{lt}
+\DeclareMathOperator{\lc}{lc}
+\newcommand{\GR}{\mathbb{G}\mathrm{r}}
+\newcommand{\gR}{\mathrm{Gr}}
+\newcommand{\EE}{\mathscr{E}}
+\newcommand{\FF}{\mathscr{F}}
+\newcommand{\GG}{\mathscr{G}}
+\newcommand{\HH}{\mathscr{H}}
+\newcommand{\II}{\mathscr{I}}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\MM}{\mathscr{M}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\Ss}{\mathscr{S}}
+\newcommand{\Af}{\mathfrak{A}}
+\newcommand{\Aa}{\mathscr{A}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\Sh}{\mathfrak{Sh}}
+\newcommand{\Psh}{\mathfrak{Psh}}
+\newcommand{\LRS}{\mathsf{LRS}}
+\newcommand{\Sch}{\mathfrak{Sch}}
+\newcommand{\Var}{\mathfrak{Var}}
+\newcommand{\Rings}{\mathfrak{Rings}}
+\DeclareMathOperator{\In}{in}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Spe}{Sp\acute{e}}
+\DeclareMathOperator{\HHom}{\mathscr{H}\!\mathit{om}}
+\newcommand{\isoto}{\overset{\sim}{\to}}
+\newcommand{\isolongto}{\overset{\sim}{\longrightarrow}}
+\newcommand{\Mod}{\mathsf{mod}\mathchar`-}
+\newcommand{\MOD}{\mathsf{Mod}\mathchar`-}
+\newcommand{\gr}{\mathsf{gr}\mathchar`-}
+\newcommand{\qgr}{\mathsf{qgr}\mathchar`-}
+\newcommand{\uqgr}{\underline{\mathsf{qgr}}\mathchar`-}
+\newcommand{\qcoh}{\mathsf{qcoh}\mathchar`-}
+\newcommand{\Alg}{\mathsf{Alg}\mathchar`-}
+\newcommand{\coh}{\mathsf{coh}\mathchar`-}
+\newcommand{\vect}{\mathsf{vect}\mathchar`-}
+\newcommand{\imm}[1][imm]{\hspace{0.75ex}\raisebox{0.58ex}{%
+\begin{tikzpicture}[commutative diagrams/every diagram]
+\draw[commutative diagrams/.cd, every arrow, every label,hook,{#1}] (0,0ex) -- (2.25ex,0ex);
+\end{tikzpicture}}\hspace{0.75ex}}
+\newcommand{\dashto}[2]{\smash{\hspace{-0.7em}\begin{tikzcd}[column sep=small,ampersand replacement=\&] {#1} \rar[dashed] \& {#2} \end{tikzcd}\hspace{-0.7em}}}
+
+%\usepackage{todonotes}
+%\usepackage[notref,notcite]{showkeys}
+
+\title{Atiyah-Macdonald Ch.~2 Modules}
+\author{Takumi Murayama}
+
+\begin{document}
+\maketitle
+\setcounter{section}{3}
+\begin{problem}[AM Exercise 3.2]
+  Let $\mathfrak{a}$ be an ideal of a ring $A$, and let $S = 1 + \mathfrak{a}$. Show that $S^{-1}\mathfrak{a}$ is contained in the Jacobson radical of $S^{-1}A$.
+  \par Use this result and Nakayama's lemma to give a proof of $(2.5)$ which does not depend on determinants.
+\end{problem}
+\begin{proof}[Proof of first claim]
+  Suppose $x \in S^{-1}\mathfrak{a}$; recall that for $x \in \mathfrak{R}_{S^{-1}A}$ it suffices to show $1-xy$ is a unit in $S^{-1}A$ for all $y \in S^{-1}A$ by AM Proposition $1.9$. Then, $x = m/(1+a)$ for $m,a \in \mathfrak{a}$. Let $y = n/(1+a')$ for $a' \in \mathfrak{a},n \in A$, then
+  \begin{equation*}
+    1 - xy = 1 - \frac{m}{1+a} \cdot \frac{n}{1+a'} = 1 - \frac{mn}{1+a''} = \frac{1 + a''-mn}{1+a''} = \frac{1 + a'''}{1+a''},
+  \end{equation*}
+  for some $a'',a''' \in \mathfrak{a}$, since $S$ is multiplicative and $a''-mn \in \mathfrak{a}$. Thus, we see that $(1+a'')/(1+a''') \in S^{-1}A$ is the inverse of $1-xy$, and so $x \in \mathfrak{R}_{S^{-1}A}$.
+\end{proof}
+\begin{corollary}[AM Corollary $2.5$]
+  Let $M$ be a finitely generated $A$-module and let $\mathfrak{a}$ be an ideal of $A$ such that $\mathfrak{a}M = M$. Then there exists $x \equiv 1\pmod{\mathfrak{a}}$ such that $xM = 0$.
+\end{corollary}
+\begin{proof}[Proof of Corollary]
+  Since $M = \mathfrak{a}M$, we first have that $M \ni m = am' \in \mathfrak{a}M$ for some $m' \in M$. Then, we have $S^{-1}M = (S^{-1}\mathfrak{a})(S^{-1}M)$, by having $m/s = (a/1)(m'/s)$ as above. Since $S^{-1}\mathfrak{a} \in \mathfrak{R}_{S^{-1}A}$ by the first part of the problem, we apply Nakayama to get that $S^{-1}M = 0$. By AM Exercise $3.1$, we see that there is then $x \in S^{-1}$ such that $xM = 0$, and $x \equiv 1 \pmod{\mathfrak{a}}$ by definition of $S$.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.5]
+  Let $A$ be a ring. Suppose that, for each prime ideal $\mathfrak{p}$, the local ring $A_\mathfrak{p}$ has no nilpotent element $\ne 0$. Show that $A$ has no nilpotent element $\ne 0$. If each $A_\mathfrak{p}$ is an integral domain, is $A$ necessarily an integral domain?
+\end{problem}
+\begin{proof}
+  Suppose $A$ has a nilpotent element, i.e., $\mathfrak{N} \ne 0$. Then, by AM Corollary $3.12$, the nilradical of $A_\mathfrak{p}$ is $\mathfrak{N}_\mathfrak{p}$. But $\mathfrak{N} \ni x \ne 0 \implies x/1 \in \mathfrak{N}_\mathfrak{p}$, which is a contradiction.
+  \par Now consider $A = k \times k$; clearly this is not an integral domain, for $(a,0)\cdot(0,b) = 0$. Note $\mathfrak{p} = k \times 0$ and $\mathfrak{q} = 0 \times k$ are the only non-trivial prime ideals of $A$. Now consider $\mathfrak{p}_\mathfrak{p}$; for any $a/b \in \mathfrak{p}_\mathfrak{p}$, we claim $a/b \equiv 0/1 = 0$. For, $a(0,1) = 0$ and $(0,1) \in A \setminus \mathfrak{p}$ and by definition of the equivalence relation. But recall from AM Example $1$ from p.~$38$ that this ideal $0$ is maximal in $A_\mathfrak{p}$, and so $A_\mathfrak{p}$ is a field. Since the same argument applies for $A_\mathfrak{q}$, we see that each $A_\mathfrak{p}$ being an integral domain does not imply $A$ is an integral domain.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.7]
+  A multiplicatively closed subset $S$ of a ring $A$ is said to be \emph{saturated} if
+  \begin{equation*}
+    xy \in S \iff x \in S~\text{and}~y \in S.
+  \end{equation*}
+  Prove that
+  \begin{enumi}
+    \item $S$ is saturated $\iff A - S$ is a union of prime ideals.
+    \item If $S$ is any multiplicatively closed subset of $A$, there is a unique smallest saturated multiplicatively closed subset $\overline{S}$ containing $S$, and that $\overline{S}$ is the complement in $A$ of the union of the prime ideals which do not meet $S$. ($\overline{S}$ is called the \emph{saturation} of $S$.)
+  \end{enumi}
+  If $S = 1 + \mathfrak{a}$, where $\mathfrak{a}$ is an ideal of $A$, find $\overline{S}$.
+\end{problem}
+\begin{proof}[Proof $i)$]
+  Suppose $A \setminus S = \bigcup \mathfrak{p}_i$ for some prime $\{\mathfrak{p}_i\}$. Then, if $xy \in A \setminus S$, we have that $xy \in \mathfrak{p}_i$ for some $i$, and so $x \in \mathfrak{p}_i \subseteq A \setminus S \lor y\in \mathfrak{p}_i \subseteq A \setminus S$, i.e., $x \notin S \lor y \notin S$. Conversely, if $x \notin S \lor y \notin S$, then $x \in \mathfrak{p}_i \lor y\in \mathfrak{p}_i$ for some $i$. But then, since $\mathfrak{p}_i$ is an ideal, $xy \in \mathfrak{p}_i \subseteq A \setminus S$, i.e., $xy \notin S$.
+  \par Now suppose $S$ is saturated; we want to show that all $x \notin S$ are in some prime ideal disjoint from $S$. We see that $(x) \cap S = \emptyset$, for $S$ is saturated, and so is a proper ideal. Moreover, $(x)^e \subseteq S^{-1}A$ is not $(1)$, for $x/1$ is not a unit in $S^{-1}A$. Then, there exists a maximal ideal $\mathfrak{m} \supseteq (x)^e$ by AM Corollary $1.4$. We see by AM Proposition $3.11iv)$ implies $\mathfrak{m}^c \subseteq A$ is a prime ideal that does not intersect $S$, and $x \in \mathfrak{m}^c$.
+\end{proof}
+\begin{proof}[Proof of $ii)$]
+  Let $\mathcal{S}$ be the set of saturated multiplicatively closed subsets of $A$ containing $S$, which is non-empty since it contains $A$. We claim $\overline{S} = \bigcap_{S \in \mathcal{S}} S$ works. Clearly it is unique. Since $A \setminus \overline{S} = A \setminus \bigcap_{S \in \mathcal{S}} S = \bigcup_{S \in \mathcal{S}} A \setminus S = \bigcup_{S \in \mathcal{S}} \bigcup \mathfrak{p}_i$, where the last union is over the prime ideals in the complement of each $S$ shown to exist in part $i)$, and each $\mathfrak{p}_i$ does not intersect $\overline{S}$. Moreover, if there is any $\mathfrak{p}$ that does not intersect $\overline{S}$, $A \setminus \mathfrak{p} \in \mathcal{S}$, and so $\mathfrak{p} \subseteq A \setminus \overline{S}$.
+\end{proof}
+\begin{proof}[Solution for last statement]
+  First note $\mathfrak{p} \cap S \ne \emptyset \iff \exists a \in \mathfrak{a}$ such that $1 + a \in \mathfrak{p} \iff 1 \in \mathfrak{p} + \mathfrak{a}$. By part $ii)$, then, $A \setminus \overline{S} = \bigcup \mathfrak{p}$, where the union is taken over $\mathfrak{p}$ such that $1 \notin \mathfrak{p} + \mathfrak{a}$.
+  \par We claim this equals the union $\bigcup \mathfrak{m}$ taken over maximal ideals $\mathfrak{m} \supseteq \mathfrak{a}$. Clearly, $1 \notin \mathfrak{m} + \mathfrak{a}$ since $\mathfrak{m}$ is proper yet contains $\mathfrak{a}$. Likewise, if $\mathfrak{p}$ is such that $1 \notin \mathfrak{p} + \mathfrak{a}$, we can find a maximal ideal $\mathfrak{m} \supseteq \mathfrak{p} + \mathfrak{a}$ by AM Corollary $1.4$, and we see $1 \notin \mathfrak{m} + \mathfrak{a}$. Thus, $\overline{S} = A \setminus \bigcup_{\mathfrak{m} \supseteq \mathfrak{a}} \mathfrak{m}$.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.8]
+  Let $S,T$ be multiplicatively closed subsets of $A$, such that $S \subseteq T$. Let $\phi : S^{-1}A \to T^{-1}A$ be the homomorphism which maps each $a/s \in S^{-1}A$ to $a/s$ considered as an element of $T^{-1}A$. Show that the following statements are equivalent:
+  \begin{enumi}
+    \item $\phi$ is bijective.
+    \item For each $t \in T$, $t/1$ is a unit in $S^{-1}A$.
+    \item For each $t \in T$ there exists $x \in A$ such that $xt \in S$.
+    \item $T$ is contained in the saturation of $S$ (Exercise $7$).
+    \item Every prime ideal which meets $T$ also meets $S$.
+  \end{enumi}
+\end{problem}
+\begin{proof}
+  $i) \Rightarrow ii)$. $(t/1)(1/t) = 1$ in $T^{-1}A$. $\phi$ has an inverse $\phi^{-1}$ so $1 = \phi^{-1}(1) = \phi^{-1}(t/1)\phi^{-1}(1/t) = t/1\phi^{-1}(1/t)$ in $S^{-1}A$, i.e., $t/1$ is a unit.
+  \par $ii) \Rightarrow iii)$. Let $a/b = (t/1)^{-1} \in S^{-1}A$; then, $(a/b)(t/1) = 1$, i.e., $c(at-b) = 0$ for some $c \in S$. Then, $act = bc \in S$, and $ac \in A$; thus, $x = ac$ works.
+  \par $iii) \Rightarrow iv)$. $t \in T \implies \exists x \in A$ such that $xt \in S \subseteq \overline{S} \implies t \in \overline{S}$.
+  \par $iv) \Rightarrow v)$. Suppose $\mathfrak{p} \cap S \ne \emptyset$; then, $\mathfrak{p} \cap \overline{S} = \emptyset$ by AM Exercise $3.7ii)$, and so $\mathfrak{p} \cap T = \emptyset$ by $iv)$. This proves the contrapositive.
+  \par $v) \Rightarrow iii)$. Suppose $iii)$ does not hold. Then, $(t) \cap S = \emptyset$ for some $t \in T$; note that $t$ is not a unit otherwise $(t) = A$. We then see that $(t)^e$ is contained in some maximal ideal $\mathfrak{m}$ of $S^{-1}A$ by AM Corollary $1.4$, and so $\mathfrak{m}^c \subseteq A$ is a prime ideal that does not intersect $S$. But then, $\mathfrak{m}^c \cap S = \emptyset$ while $t \in \mathfrak{m}^c \cap T$, a contradiction.
+  \par $iii) \Rightarrow ii)$. Consider $t/1 \in S^{-1}A$. Since there exists $x \in A$ such that $xt \in S$, we see that $t/1 = xt/x$, and $x/xt \in S^{-1}A$ is the inverse of $t/1$.
+  \par $ii) \Rightarrow i)$. Suppose $\phi(a/s) = \phi(a'/s')$ in $T^{-1}A$, i.e., there exists $t \in T$ such that $t(as'-a's) = 0$. Choosing $x \in A$ such that $xt \in S$, which we have since we have already shown $ii) \Rightarrow iii)$, we see that $xt(as'-a's) = 0$, and so $a/s = a'/s'$ in $S^{-1}A$, i.e., $\phi$ is injective.
+  \par Now let $t \in T$ and let $a/s \in S^{-1}A$ such that $(t/1)(a/s) = 1$, i.e., $x(at-s) = 0$ for some $x \in S$. But since $S \subseteq T$, wesee that this implies $1/t = a/s$ in $T^{-1}A$. This implies $\phi$ is surjective since all elements of the form $1/t$ are in the image of $\phi$.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.9]
+  The set $S_0$ of all non-zero-divisors in $A$ is a saturated multiplicatively closed subset of $A$. Hence the set $D$ of zero-divisors in $A$ is a union of prime ideals (see Chapter $1$, Exercise $14$). Show that every minimal prime ideal of $A$ is contained in $D$. %Use Exercise 6
+  \par The ring $S_0^{-1}A$ is called the \emph{total ring of fractions of $A$}. Prove that
+  \begin{enumi}
+    \item $S_0$ is the largest multiplicatively closed subset of $A$ for which the homomorphism $A \to S_0^{-1}A$ is injective.
+    \item Every element in $S_0^{-1}A$ is either a zero-divisor or a unit.
+    \item Every ring in which every non-unit is a zero-divisor is equal to its total ring of fractions (i.e., $A \to S_0^{-1}A$ is bijective).
+  \end{enumi}
+\end{problem}
+\begin{proof}[Proof of first claim]
+  We first show $S_0$ is saturated. Suppose $xy \in S_0$ but $x \notin S_0 \lor y \notin S_0$. Then, there is $z \ne 0$ such that $xz = 0 \lor yz = 0$, and so $xyz = 0$, so then $xy \notin S_0$. Now if $xy \notin S_0$, then there exists $z \ne 0$ such that $xyz = 0$. If $yz = 0$ then $y \notin S_0$, and if $yz \ne 0$ then $x \notin S_0$. $D = A \setminus S_0$ is then a union of prime ideals by AM Exercise $3.7i)$.
+  \par We now show that every minimal prime ideal of $A$ is contained in $D$. So suppose not; then, there exists prime and minimal $\mathfrak{p}$ which contains some $x$ which is not a zero-divisor. Consider $A \setminus \mathfrak{p}$, which is a multiplicatively closed subset of $A$. Then, $\{x^iy \mid y \in A \setminus \mathfrak{p}, i \in \mathbb{N}\} \supsetneq A\setminus\mathfrak{p}$, and so we see that $A \setminus \mathfrak{p}$ is not maximal, which implies that $\mathfrak{p}$ is not a minimal prime ideal of $A$ by AM Exercise $3.6$, a contradiction.
+\end{proof}
+\begin{proof}[Proof of $i)$]
+  Let $\varphi : A \to S_0^{-1}A$, and $S$ be the largest multiplicatively closed subset of $A$ for which $\varphi$ is injective. Suppose $a/1 = 0/1$ in $S_0^{-1}A$. Then, $sa = 0$ for some $s \in S_0$. But $s \in S_0 \implies a = 0$, and so $\varphi$ is injective. Thus, $S_0 \subseteq S$.
+  \par Now we show the reverse inclusion by assuming $\varphi$ is injective. $a/1 = 0/1$ in $S^{-1}A$ implies that $sa = 0$ for some $s \in S$. But then, $a=0$ by the injectivity of $\varphi$, and so $s$ is a non-zero-divisor. Thus, $S \subseteq S_0$.
+\end{proof}
+\begin{proof}[Proof of $ii)$]
+  $a/s \in S_0^{-1}A \implies a \in S_0 \lor a \notin S_0$. $a \in S_0 \implies (a/s)^{-1} = s/a \in S_0^{-1}A$, i.e., $a/s$ is a unit. $a \notin S_0 \implies \exists x \in A$ such that $ax = 0 \implies (a/s)(x/1) = 0$, i.e., $a/s$ is a zero-divisor.
+\end{proof}
+\begin{proof}[Proof of $iii)$]
+  $\varphi : A \hookrightarrow S_0^{-1}A$, and so it suffices to show $\varphi$ is surjective. $S_0^{-1}A \ni a/x = ax^{-1}/xx^{-1} = ax^{-1}/1 = \varphi(ax^{-1})$, where $x^{-1}$ exists since $S_0$ consists of units.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.12]
+  Let $A$ be an integral domain and $M$ an $A$-module. An element $x \in M$ is a \emph{torsion element} of $M$ if $\Ann(x) \ne 0$, that is if $x$ is killed by some non-zero element of $A$. Show that the torsion elements of $M$ form a submodule of $M$. This submodule is called the \emph{torsion submodule} of $M$ and is denoted by $T(M)$. If $T(M) = 0$, the module $M$ is said to be torsion-free. Show that
+  \begin{enumi}
+    \item If $M$ is any $A$-module, then $M/T(M)$ is torsion-free.
+    \item If $f : M \to N$ is a module homomorphism, then $f(T(M)) \subseteq T(N)$.
+    \item If $0 \to M' \to M \to M''$ is an exact sequence, then the sequence $0 \to T(M') \to T(M) \to T(M'')$ is exact.
+    \item If $M$ is any $A$-module, then $T(M)$ is the kernel of the mapping $x \mapsto 1 \otimes x$ of $M$ into $K \otimes_A M$, where $K$ is the field of fractions of $A$.
+  \end{enumi}
+\end{problem}
+\begin{proof}[Proof of first claim]
+  Let $x,y \in T(M)$ be distinct; we have $ax = 0, a'y = 0$ for some non-zero $a,a' \in \Ann(x)$. Then, $aa'(x-y) = aa'x - aa'y = 0$ where $aa' \ne 0$ since $A$ is an integral domain. Thus, $T(M)$ is an abelian group.
+  \par $x \in T(M) \implies ax = 0$ for some non-zero $a \in \Ann(x)$. Then, $\Ann(\alpha x) \ni a$ for all $\alpha \in A$ since $\alpha xy = 0$. Thus, $T(M)$ is closed under external multiplication, and $T(M) \subseteq M$ is a submodule.
+\end{proof}
+\begin{proof}[Proof of $i)$]
+  Suppose $\overline{x} \in T(M/T(M))$. Then, there is non-zero $a \in A$ such that $0 = a\overline{x} = \overline{ax}$, and so $ax \in T(M)$. There exists non-zero $a' \in A$ such that $a'ax = 0$, but $a'a \ne 0$ since $A$ is an integral domain, and so $x \in T(M)$, i.e., $\overline{x} = 0$.
+\end{proof}
+\begin{proof}[Proof of $ii)$]
+  Suppose $x \in T(M)$, then there exists non-zero $a \in A$ such that $ax = 0$. We then see $0 = f(ax) = af(x)$, and so $a \in \Ann(f(x)) \implies f(x) \in T(N)$.
+\end{proof}
+\begin{proof}[Proof of $iii)$]
+  We have the exact sequence
+  \begin{equation*}
+    0 \to M' \xrightarrow{f} M \xrightarrow{g} M''.
+  \end{equation*}
+  We claim that
+  \begin{equation*}
+    0 \to T(M') \xrightarrow{\overline{f}} T(M) \xrightarrow{\overline{g}} T(M'')
+  \end{equation*}
+  is exact, where $\overline{f}$ is the restriction of $f$ on $T(M')$, and likewise for $\overline{g}$. Note that the image of each map is contained in the next module of the sequence by $ii)$. At $T(M')$, we see that $f$ is injective and so $\overline{f}$ is injective since it is simply a restriction, and so the sequence is exact at $T(M')$. At $T(M)$, we claim $\Im(\overline{f}) = \ker(\overline{g})$. Suppose $m \in \ker(\overline{g}) \subseteq \ker(g) = \Im(f)$. Then, choose $m' \in M'$ such that $f(m') = m$; since $m \in T(M)$ there exists non-zero $a \in A$ such that $am = 0$. Then, $0 = am = af(m') = f(am')$. By the injectivity of $f$, we see $am' = 0$, and so $m' \in T(M')$, i.e., $\ker({g}) \subseteq \Im(\overline{f})$. Next we see $m \in \Im(\overline{f}) \subseteq \Im(f) = \ker(g)$, and so $\overline{g}(m) = 0$. Thus, $\Im(\overline{f}) \subseteq \ker(\overline{g})$, and our sequence is exact at $T(M)$.
+\end{proof}
+\begin{proof}[Proof of $iv)$]
+  Let $\varphi: x \mapsto 1 \otimes x$. We see that $T(M) \subseteq \ker(\varphi)$ since $x \in T(M) \implies \exists a \ne 0 \in A$ such that $ax = 0 \implies x \mapsto 1 \otimes x = a/a \otimes x = 1/a \otimes ax = 1/a \otimes 0 = 0$.
+  \par To show $\ker(\varphi) \subseteq T(M)$, we first show that
+  \begin{equation*}
+    K = \varinjlim_{\mathclap{a \in A \setminus \{0\}}} A[1/a].
+  \end{equation*}
+  We see that for $A[1/a], A[1/a']$, $A[1/a] + A[1/a'] \subseteq A[1/(aa')]$, and so by AM Exercise $2.17$, we have that $K$ is the direct limit we claimed. Tensoring with $M$ gives
+  \begin{equation*}
+    K \otimes_A M = \varinjlim_{\mathclap{a \in A \setminus \{0\}}} (A[1/a] \otimes_A M),
+  \end{equation*}
+  by AM Exercise $2.20$. 
+  \par Now if $1 \otimes x = 0$ in $K \otimes_A M$, we see that $1 \otimes x = 0$ in some $A[1/a] \otimes_A M$ for some $a \in A$ by AM Exercise $2.15$. Since $1 = a/a$, we have $1 \otimes x = (a/a) \otimes x = (1/a) \otimes ax = 0$. Moreover, $A[1/a] \otimes_A M \hookrightarrow M$ is injective by having $b/a \otimes x \mapsto bx$, which only maps to zero if $b = 0$ by the fact that $A$ is an integral domain. Thus, $ax = 0$, and so $x \in T(M)$.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.13]
+  Let $S$ be a multiplicatively closed subset of an integral domain $A$. In the notation of Exercise $12$, show that $T(S^{-1}M) = S^{-1}(TM)$. Deduce that the following are equivalent:
+  \begin{enumi}
+    \item $M$ is torsion-free.
+    \item $M_\mathfrak{p}$ is torsion-free for all prime ideals $\mathfrak{p}$.
+    \item $M_\mathfrak{m}$ is torsion-free for all maximal ideals $\mathfrak{m}$.
+  \end{enumi}
+\end{problem}
+\begin{proof}[Proof that $T(S^{-1}M) = S^{-1}(TM)$]
+  Suppose $0 \notin S$, for this would make everything equal $0$, making the claim trivial. Let $m/s \in T(S^{-1}M)$; then, there exists non-zero $a/s' \in S^{-1}A$ such that $(m/s)(a/s') = am/(ss') = 0$, i.e., there exists $s''' \in S$ such that $s'''am = 0$. But since $A$ is an integral domain, we have $s''a \ne 0$ since $s'',a \ne 0$. Thus, $m \in T(M)$, and so $m/s \in S^{-1}(TM)$.
+  \par Now let $m \in T(M)$, i.e., there exists non-zero $a \in A$ such that $am = 0$. Then, $a/1 \ne 0/1$ since $0 \notin S$, and therefore, $(m/s)(a/1) = 0$ for arbitrary $s$, i.e., $S^{-1}(TM) \subseteq T(S^{-1}M)$.
+\end{proof}
+\begin{proof}[Proof of equivalence]
+  $i) \Rightarrow ii)$. By the previous proof, $T(M_\mathfrak{p}) = (TM)_\mathfrak{p} = 0_\mathfrak{p} = 0$.
+  \par $ii) \Rightarrow iii)$. True since maximal $\implies$ prime.
+  \par $iii) \Rightarrow i)$. Suppose $T(M) \ne \emptyset$. Then, there is some $x \in T(M)$ and so $ax = 0$ for some non-zero $a \in A$. Let $\mathfrak{m}$ be the maximal ideal that contains $\Ann(x)$, which exists via AM Corollary $1.4$. Since $A$ is an integral domain, $a/1 \ne 0$ in $M_\mathfrak{m}$. Then, $a(x/1) = 0$ in $M_\mathfrak{m}$ which is torsion-free, and so $x/1 = 0$ in $M_\mathfrak{m}$. This implies $a'x = 0$ for some $a' \in A \setminus \mathfrak{m}$, which contradicts our choice of $\mathfrak{m} \supseteq \Ann(x)$.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.21]\mbox{}
+  \begin{enumi}
+  \item Let $A$ be a ring, $S$ a multiplicatively closed subset of $A$, and $\phi : A \to S^{-1}A$ the canonical homomorphism. Show that $\phi^* : \Spec(S^{-1}A) \to \Spec(A)$ is a homeomorphism of $\Spec(S^{-1}A)$ onto its image in $X = \Spec(A)$. Let this image be denoted by $S^{-1}X$.
+    \par In particular, if $f \in A$, the image of $\Spec(A_f)$ in $X$ is the basic open set $X_f$ (Chapter $1$, Exercise $17$).
+  \item Let $f : A \to B$ be a ring homomorphism. Let $X = \Spec(A)$ and $Y = \Spec(B)$, and let $f^* : Y \to X$ be the mapping associated with $f$. Identifying $\Spec(S^{-1}A)$ with its canonical image $S^{-1}X$ in $X$, and $\Spec(S^{-1}B) (=\Spec(f(S)^{-1}B))$ with its canonical image $S^{-1}Y$ in $Y$, show that $S^{-1}f^* : \Spec(S^{-1}B) \to \Spec(S^{-1}A)$ is the restriction of $f^*$ to $S^{-1}Y$, and that $S^{-1}Y = f^{*-1}(S^{-1}X)$.
+  \item Let $\mathfrak{a}$ be an ideal of $A$ and let $\mathfrak{b} = \mathfrak{a}^e$ be its extension in $B$. Let $\overline{f} : A/\mathfrak{a} \to B/\mathfrak{b}$ be the homomorphism induced by $f$. If $\Spec(A/\mathfrak{a})$ is identified with its canonical image $V(\mathfrak{a})$ in $X$, and $\Spec(B/\mathfrak{b})$ with its image $V(\mathfrak{b})$ in $Y$, show that $\overline{f}^*$ is the restriction of $f^*$ to $V(\mathfrak{b})$.
+  \item Let $\mathfrak{p}$ be a prime ideal of $A$. Take $S = A - \mathfrak{p}$ in $ii)$ and then reduce mod $S^{-1}\mathfrak{p}$ as in $iii)$. Deduce that the subspace $f^{*-1}(\mathfrak{p})$ of $Y$ is naturally homeomorphic to $\Spec(B_\mathfrak{p}/\mathfrak{p}B_\mathfrak{p}) = \Spec(k(\mathfrak{p})\otimes_A B)$, where $k(\mathfrak{p})$ is the residue field of the local ring $A_\mathfrak{p}$.
+    \par $\Spec(k(\mathfrak{p}) \otimes_A B)$ is called the \emph{fiber} of $f^*$ over $\mathfrak{p}$.
+  \end{enumi}
+\end{problem}
+\begin{proof}[Proof of $i)$]
+  $\phi^*$ is continuous by AM Exercise $1.21i)$. Since every prime ideal of $S^{-1}A$ is an extended ideal by AM Proposition $3.11i)$, we see that $\phi^*$ is injective by AM Exercise $3.20ii)$, and therefore bijective onto its image. We consider $S^{-1}X = \Im(\phi^*)$; this is the set of prime ideals that do not meet $S$ by Proposition $3.11iv)$. It therefore remains to show that $\phi^*$ is closed. Since any arbitrary ideal of $S^{-1}A$ is an extended ideal by AM Proposition $3.11i)$, we only have to consider basis elements of the form $\mathbb{V}(\mathfrak{a}^e) \subseteq \Spec(S^{-1}A)$ for $\mathfrak{a} \in A$. We claim $\phi^*(\mathbb{V}(\mathfrak{a}^e)) = S^{-1}X \cap \mathbb{V}(\mathfrak{a}^{ec})$ (note the latter is closed in $S^{-1}X$ since $\mathbb{V}(\mathfrak{a}^{ec})$ is closed in $X$). If $\mathfrak{p} \in \phi^*(\mathbb{V}(\mathfrak{a}^e))$, then $\mathfrak{p} \cap S = \emptyset$ and $\mathfrak{a}^e \subseteq \mathfrak{p}^e \implies \mathfrak{a}^{ec} \subseteq \mathfrak{p}^{ec} = \mathfrak{p} \implies \mathfrak{p} \in S^{-1}X \cap \mathbb{V}(\mathfrak{a}^{ec})$. On the other hand if $\mathfrak{p} \in S^{-1}X \cap \mathbb{V}(\mathfrak{a}^{ec})$, then $\mathfrak{p} \cap S = \emptyset$ and $\mathfrak{a}^{ec} \subseteq \mathfrak{p} \implies \mathfrak{a}^e \subseteq \mathfrak{p}^e$. Thus $\phi$ is a homeomorphism onto its image.
+  \par In particular, if $f \in A$, $\phi^*(\Spec(A_f)) = X_f$ by having $S = \braket{f}$.
+\end{proof}
+\begin{proof}[Proof of $ii)$]
+  We first claim the diagram, with $\varphi_A : A \hookrightarrow S^{-1}A, \varphi_B : B \hookrightarrow S^{-1}B$ the natural embedding maps,
+  \begin{center}
+    \begin{tikzcd}
+      A \arrow{r}{f}\arrow{d}[swap]{\varphi_A} & B \arrow{d}{\varphi_B}\\
+      S^{-1}A \arrow{r}{S^{-1}f} & S^{-1}B
+    \end{tikzcd}
+  \end{center}
+  commutes. But this is clear since $S^{-1}B \simeq f(S)^{-1}B$ by AM Exercise $3.4$, and since $S^{-1}f(a/s) = f(a)/f(s)$. Moreover, calculating explicitly, if $a \in A$, $(\varphi_B \circ f) (a) = \varphi_B (f(a)) = f(a)/1$, while $(S^{-1}f \circ \varphi_A)(a) = S^{-1}f (a/1) = f(a)/1$. Since AM Exercise $1.21$ implies $f^* \circ \varphi_B^* = (\varphi_B \circ f)^* = (S^{-1}f \circ \varphi_A)^* = \varphi_A^* \circ (S^{-1}f)^*$, we have the commutative diagram
+  \begin{center}
+    \begin{tikzcd}
+      \Spec(S^{-1}B) = S^{-1}Y \arrow{r}{(S^{-1}f)^*}\arrow{d}[swap]{\varphi_B^*} & \Spec(S^{-1}A) = S^{-1}X \arrow{d}{\varphi_A^*}\\
+      \Spec(B) = Y \arrow{r}{f^*} & \Spec(A) = X
+    \end{tikzcd}
+  \end{center}
+  where the identification is by $i)$, which shows the compatibility of $(S^{-1}f)^*$ and $f^*$.
+  \par We now show $S^{-1}Y = f^{*-1}(S^{-1}X)$. The diagram above shows that $f^*(S^{-1}Y) \subseteq S^{-1}X$, and so $S^{-1}Y \subseteq f^{*-1}(S^{-1}X)$. On the other hand, suppose $\mathfrak{p} \in f^{*-1}(S^{-1}X)$. Then, $\mathfrak{p}^c = f^*(\mathfrak{p}) \in S^{-1}X$, so $\mathfrak{p}^c \cap S = \emptyset$ by AM Proposition $3.11iv)$. To show $\mathfrak{p} \in S^{-1}Y$, it suffices to show $\mathfrak{p} \cap f(S) = \emptyset$. So, suppose $x \in \mathfrak{p} \cap f(S)$; then, $x = f(s)$ for some $s \in S \cap \mathfrak{p}^c = \emptyset$, which is a contradiction. Thus, $S^{-1}Y \supseteq f^{*-1}(S^{-1}X)$, and $S^{-1}Y = f^{*-1}(S^{-1}X)$.
+\end{proof}
+\begin{proof}[Proof of $iii)$]
+  Letting $\pi_A : A \twoheadrightarrow A/\mathfrak{a},\pi_B : B \twoheadrightarrow B/\mathfrak{b}$ be the natural quotient maps, we have the commutative diagram
+  \begin{center}
+    \begin{tikzcd}
+      A \arrow{r}{f}\arrow{d}[swap]{\pi_A} & B \arrow{d}{\pi_B}\\
+      A/\mathfrak{a} \arrow{r}{\overline{f}} & B/\mathfrak{b}
+    \end{tikzcd}
+  \end{center}
+  and by the same argument as in $iv)$, we get
+  \begin{center}
+    \begin{tikzcd}
+      \Spec(B/\mathfrak{b}) = \mathbb{V}(\mathfrak{b}) \arrow{r}{\overline{f}^*}\arrow{d}[swap]{\pi_B^*} & \Spec(A/\mathfrak{a}) = \mathbb{V}(\mathfrak{a}) \arrow{d}{\pi_A^*}\\
+      \Spec(B) = Y \arrow{r}{f^*} & \Spec(A) = X
+    \end{tikzcd}
+  \end{center}
+  The identification comes from AM Exercise $1.21iv)$, which says $\pi_B^*$ is a homeomorphism $\Spec(B/\mathfrak{b}) \to \mathbb{V}(\ker(\pi_B)) = \mathbb{V}(\mathfrak{b})$ and $\pi_A^*$ is a homeomorphism $\Spec(A/\mathfrak{a}) \to \mathbb{V}(\ker(\pi_A)) = \mathbb{V}(\mathfrak{a})$. Thus, $\overline{f}^*$ and $f^*$ are compatible.
+  %\par Much like in $ii)$, we also show $\mathbb{V}(\mathfrak{b}) = f^{*-1}(\mathbb{V}(\mathfrak{a}))$. The diagram above shows that $f^*(\mathbb{V}(\mathfrak{b})) \subseteq \mathbb{V}(\mathfrak{a})$, and so $\mathbb{V}(\mathfrak{b}) \subseteq f^{*-1}(\mathbb{V}(\mathfrak{a}))$. On the other hand, suppose $\mathfrak{p} \in f^{*-1}(\mathbb{V}(\mathfrak{a}))$. Then, $\mathfrak{p}^c = f^{*-1}(\mathfrak{p}) \in \mathbb{V}(\mathfrak{a})$, and so $\mathfrak{p}^c \supseteq \mathfrak{a}$. Taking the extension of both, we get $\mathfrak{p} = \mathfrak{p}^{ce} \supseteq \mathfrak{a}^e = \mathfrak{b}$, and so $\mathfrak{p}^c \in \mathbb{V}(\mathfrak{b})$. Thus, $f^{*-1}(\mathbb{V}(\mathfrak{a})) \subseteq \mathbb{V}(\mathfrak{b})$, and $\mathbb{V}(\mathfrak{b}) = f^{*-1}(\mathbb{V}(\mathfrak{a}))$.
+\end{proof}
+\begin{proof}[Proof of $iv)$]
+  Following the steps given, we get the commutative diagram
+  \begin{center}
+    \begin{tikzcd}
+      \Spec(B_\mathfrak{p}/\mathfrak{p}B_\mathfrak{p}) \arrow{r}{\overline{f_\mathfrak{p}}^*}\arrow{d}[swap]{\pi_B^*} & \Spec(A_\mathfrak{p}/\mathfrak{p}_\mathfrak{p})\arrow{d}{\pi_A^*}\\
+      \Spec(B_\mathfrak{p}) \arrow{r}{f_\mathfrak{p}^*}\arrow{d}[swap]{\varphi_B^*} & \Spec(A_\mathfrak{p}) \arrow{d}{\varphi_A^*}\\
+      \Spec(B) \arrow{r}{f^*} & \Spec(A)
+    \end{tikzcd}
+  \end{center}
+  By $iii)$, $\Spec(B_\mathfrak{p}/\mathfrak{p}B_\mathfrak{p})$ is homeomorphic to $\mathbb{V}(\mathfrak{p}B_\mathfrak{p})$. By $ii)$, $\mathbb{V}(\mathfrak{p}B_\mathfrak{p})$ is homeomorphic to $\varphi_B^*(\mathbb{V}(\mathfrak{p}B_\mathfrak{p}))$. We now claim that $\varphi_B^*(\mathbb{V}(\mathfrak{p}B_\mathfrak{p})) = f^{*-1}(\mathfrak{p})$. Suppose $\mathfrak{q} \in f^{*-1}(\mathfrak{p})$, which gives $\mathfrak{p} \in \Im(\varphi_A^*) \implies \mathfrak{q} \in \Im(\varphi_B^*)$. Then, since $\mathfrak{p} = f^{-1}(\mathfrak{q})$, i.e., $f(\mathfrak{p}) \subseteq \mathfrak{q}$, i.e., $\mathfrak{p}B \subseteq \mathfrak{q}$. Thus, $\mathfrak{q}_\mathfrak{p}$ is prime in $B_\mathfrak{p}$ and contains $\mathfrak{p}B_\mathfrak{p}$, i.e., $f^{*-1}(\mathfrak{p}) \subseteq \varphi_B^*(\mathbb{V}(\mathfrak{p}B_\mathfrak{p}))$. In the other direction, suppose $\mathfrak{q} \in \varphi_B^*(\mathbb{V}(\mathfrak{p}B_\mathfrak{p}))$. Then, $\mathfrak{p}B_\mathfrak{p} \subseteq \mathfrak{q}_\mathfrak{p}$ so $\mathfrak{p}B \subseteq \mathfrak{q}_\mathfrak{p}^c = \mathfrak{q}$, i.e., $f(\mathfrak{p}) \subseteq \mathfrak{q}$. So, $\mathfrak{p} \subseteq f^{-1}(\mathfrak{q})$. On the other hand, $f^{-1}(\mathfrak{q}) \subseteq \mathfrak{p}$ since $\mathfrak{q} \cap f(A \setminus \mathfrak{p}) = \emptyset$ by choice of $\mathfrak{q}$. Thus, $\mathfrak{p} = f^{-1}(\mathfrak{q})$, and so $\mathfrak{q} \in f^{*-1}(\mathfrak{p})$, i.e., $\varphi_B^*(\mathbb{V}(\mathfrak{p}B_\mathfrak{p})) = f^{*-1}(\mathfrak{p})$.
+  \par We now want to show the isomorphism given. We have $B_\mathfrak{p}/\mathfrak{p}B_\mathfrak{p} \simeq B_\mathfrak{p}/(\mathfrak{p}B)_\mathfrak{p} \simeq (B/\mathfrak{p}B)_\mathfrak{p}$ by AM Proposition $3.11v)$. Then, $(B/\mathfrak{p}B)_\mathfrak{p} \simeq A_\mathfrak{p} \otimes_A B/\mathfrak{p}B$ by Proposition $3.5$. AM Exercise $1.2$ gives $A_\mathfrak{p} \otimes_A B/\mathfrak{p}B \simeq A_\mathfrak{p} \otimes_A (A/\mathfrak{p} \otimes_A B)$. The associativity of the tensor product from AM Proposition $2.14ii)$ then gives $A_\mathfrak{p} \otimes_A (A/\mathfrak{p} \otimes_A B) \simeq (A/\mathfrak{p} \otimes_A A_\mathfrak{p}) \otimes_A B$. Applying AM Exercise $1.2$ again yields $(A/\mathfrak{p} \otimes_A A_\mathfrak{p}) \otimes_A B \simeq A_\mathfrak{p}/\mathfrak{p}A_\mathfrak{p} \otimes_A B$. But then $A_\mathfrak{p}/\mathfrak{p}A_\mathfrak{p} = A_\mathfrak{p}/\mathfrak{p}_\mathfrak{p} = k(\mathfrak{p})$, since $A_\mathfrak{p}$ is local and therefore $\mathfrak{p}_\mathfrak{p}$ can only be the maximal ideal, and so we get the isomorphism $B_\mathfrak{p}/\mathfrak{p}B_\mathfrak{p} \simeq k(\mathfrak{p}) \otimes_A B$. We note that this also preserves ring structure since this is just the map $b/f(x) + \mathfrak{p}B_\mathfrak{p} \leftrightarrow (1/x + \mathfrak{p}_\mathfrak{p}) \otimes b$.
+\end{proof}
+
+\printbibliography
+\end{document}

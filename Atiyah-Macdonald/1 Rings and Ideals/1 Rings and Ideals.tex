@@ -151,26 +151,42 @@
 
 \begin{document}
 \maketitle
-%These solutions are the result of taking MAT447 Commutative Algebra in the Fall of 2013 at Princeton University, and self-study during the Fall of 2014. Please e-mail \href{mailto:takumim@umich.edu}{\nolinkurl{takumim@umich.edu}} with any corrections.
 \setcounter{section}{1}
 \begin{problem}\label{exc:1.1}
-  Let $x$ be a nilpotent element of a ring $A$. Show that $1 + x$ is a unit of $A$. Deduce that the sum of a nilpotent element and a unit is a unit.
+  Let $x$ be a nilpotent element of a ring $A$.
+  Show that $1 + x$ is a unit of $A$.
+  Deduce that the sum of a nilpotent element and a unit is a unit.
 \end{problem}
 \begin{proof}
-  Suppose $x^n = 0$, and let $y = \sum_{i=0}^{n-1} (-x)^i$. Then, $(1+x)y = 1$. Now if $u \in A^\times$, we see $(u^{-1}x)^n = 0$. Thus, $u+x = u(1+u^{-1}x)$ is a unit since each factor is.
+  Suppose $x^n = 0$, and let $y = \sum_{i=0}^{n-1} (-x)^i$.
+  Then, $(1+x)y = 1$.
+  Now if $u \in A^\times$, we see $(u^{-1}x)^n = 0$.
+  Thus, $u+x = u(1+u^{-1}x)$ is a unit since each factor is.
 \end{proof}
 
 \begin{problem}\label{exc:1.2}
-  Let $A$ be a ring and let $A[x]$ be the ring of polynomials in an indeterminate $x$, with coefficients in $A$. Let $f = a_0 + a_1x + \cdots + a_nx^n \in A[x]$. Prove that
+  Let $A$ be a ring and let $A[x]$ be the ring of polynomials in an
+  indeterminate $x$, with coefficients in $A$.
+  Let $f = a_0 + a_1x + \cdots + a_nx^n \in A[x]$.
+  Prove that
   \begin{enumi}
-    \item $f$ is a unit in $A[x] \Leftrightarrow a_0$ is a unit in $A$ and $a_1,\ldots,a_n$ are nilpotent.
+    \item $f$ is a unit in $A[x] \Leftrightarrow a_0$ is a unit in $A$
+      and $a_1,\ldots,a_n$ are nilpotent.
     \item $f$ is nilpotent $\Leftrightarrow a_0,a_1,\ldots,a_n$ are nilpotent.
-    \item $f$ is a zero-divisor $\Leftrightarrow$ there exists $a \ne 0$ in $A$ such that $af = 0$.
-    \item $f$ is said to be \emph{primitive} if $(a_0,a_1,\ldots,a_n) = (1)$. Prove that if $f,g \in A[x]$, then $fg$ is primitive $\Leftrightarrow f$ and $g$ are primitive.
+    \item $f$ is a zero-divisor $\Leftrightarrow$ there exists $a \ne 0$
+      in $A$ such that $af = 0$.
+    \item $f$ is said to be \emph{primitive} if $(a_0,a_1,\ldots,a_n) = (1)$.
+      Prove that if $f,g \in A[x]$, then $fg$ is primitive
+      $\Leftrightarrow f$ and $g$ are primitive.
   \end{enumi}
 \end{problem}
 \begin{proof}[Proof of $i)$]
-  $\Rightarrow$. We induce on the degree $n$ of $f$. If $n=0$, then $f = a_0 \in A^\times$. So suppose $n > 0$. Let $b_0 + b_1x + \cdots + b_mx^m$ be the inverse of $f$. By matching degrees in $x$ in the equation $fg = 1$, we have the system of equations
+  $\Rightarrow$. We induce on the degree $n$ of $f$.
+  If $n=0$, then $f = a_0 \in A^\times$.
+  So suppose $n > 0$.
+  Let $b_0 + b_1x + \cdots + b_mx^m$ be the inverse of $f$.
+  By matching degrees in $x$ in the equation $fg = 1$, we have the system of
+  equations
   \begin{equation}\label{eq:1.2}
     \begin{aligned}
       a_nb_m &= 0\\
@@ -180,57 +196,148 @@
       a_0b_0 &= 1.
     \end{aligned}
   \end{equation}
-  The last row gives that $a_0,b_0$ are units. We now claim that $a_n^{r+1}b_{m-r} = 0$ for $0 \le r \le m$. The case when $r=0$ is the first row in \eqref{eq:1.2}. Suppose the claim holds for all $0 \le r < k$. We then have
+  The last row gives that $a_0,b_0$ are units.
+  We now claim that $a_n^{r+1}b_{m-r} = 0$ for $0 \le r \le m$.
+  The case when $r=0$ is the first row in \eqref{eq:1.2}.
+  Suppose the claim holds for all $0 \le r < k$.
+  We then have
   \begin{multline*}
     a_n^k(a_{n-k}b_m + a_{n-k+1}b_{m-1} + \cdots + a_{n-1}b_{m-k+1} + a_nb_{m-k})\\
     = a_n^ka_{n-k}b_m + a_n^ka_{n-k+1}b_{m-1} + \cdots + a_n^ka_{n-1}b_{m-k+1} + a_n^{k+1}b_{m-k} = 0
   \end{multline*}
-  by multiplying the $(k+1)$th line from \eqref{eq:1.2} by $a_n^k$. All but the last term vanish by inductive hypothesis, and so $a_n^{k+1}b_{m-k} = 0$. In particular, for $r=m$ we have $a_n^{m+1}b_0 = 0$, which implies $a_n^{m+1} = 0$ since $b_0$ is a unit, i.e., $a_n$ is nilpotent. Now $f - a_nx^n$ is a unit by Exercise \ref{exc:1.1}, hence by inductive hypothesis $a_1,\ldots,a_{n-1}$ are units as well.
-  \par $\Leftarrow$. $g = \sum_{i=1}^n a_ix^i$ is nilpotent since $\mathfrak{N}$ is an ideal by Prop.~1.7, so $f = a_0 + g$ is a unit by Exercise \ref{exc:1.1}.
+  by multiplying the $(k+1)$th line from \eqref{eq:1.2} by $a_n^k$.
+  All but the last term vanish by inductive hypothesis, and so
+  $a_n^{k+1}b_{m-k} = 0$.
+  In particular, for $r=m$ we have $a_n^{m+1}b_0 = 0$, which implies
+  $a_n^{m+1} = 0$ since $b_0$ is a unit, i.e., $a_n$ is nilpotent. 
+  Now $f - a_nx^n$ is a unit by Exercise \ref{exc:1.1}, hence by inductive
+  hypothesis $a_1,\ldots,a_{n-1}$ are units as well.
+  \par $\Leftarrow$. $g = \sum_{i=1}^n a_ix^i$ is nilpotent since $\mathfrak{N}$
+  is an ideal by Prop.~1.7, so $f = a_0 + g$ is a unit by Exercise \ref{exc:1.1}.
 \end{proof}
 \begin{proof}[Proof of $ii)$]
-  $\Rightarrow$. $1 + f$ is a unit by Exercise \ref{exc:1.1}, and so $a_1,\ldots,a_n$ are nilpotent by $i)$. $a_0$ is nilpotent as well for otherwise $f^m$ has constant term $a_0^m \ne 0$ for any $m$.
-  \par $\Leftarrow$. If $a_0,a_1,\ldots,a_n \in \mathfrak{N}$, $f \in \mathfrak{N}$ since $\mathfrak{N}$ is an ideal by Prop.~1.7.
+  $\Rightarrow$. $1 + f$ is a unit by Exercise \ref{exc:1.1}, and so
+  $a_1,\ldots,a_n$ are nilpotent by $i)$.
+  $a_0$ is nilpotent as well for otherwise $f^m$ has constant term $a_0^m \ne 0$
+  for any $m$.
+  \par $\Leftarrow$. If $a_0,a_1,\ldots,a_n \in \mathfrak{N}$, $f \in \mathfrak{N}$
+  since $\mathfrak{N}$ is an ideal by Prop.~1.7.
 \end{proof}
 \begin{proof}[Proof of $iii)$]
   $\Leftarrow$. Trivial since $a \in A \subset A[x]$.
-  \par $\Rightarrow$. Suppose not, and let $g = b_0 + b_1x + \cdots + b_mx^m$ be a polynomial of least degree $m > 0$ such that $fg = 0$. We claim $a_{n-r}g = 0$ for all $0 \le r \le n$. First, $a_nb_m=0$, hence $a_ng = 0$ since it has degree less than $m$ but annihilates $f$. Now suppose that $a_{n-r}g = 0$ for all $0 \le r < r_0$. Then, we have that
+  \par $\Rightarrow$. Suppose not, and let $g = b_0 + b_1x + \cdots + b_mx^m$
+  be a polynomial of least degree $m > 0$ such that $fg = 0$.
+  We claim $a_{n-r}g = 0$ for all $0 \le r \le n$.
+  First, $a_nb_m=0$, hence $a_ng = 0$ since it has degree less than $m$ but
+  annihilates $f$. Now suppose that $a_{n-r}g = 0$ for all $0 \le r < r_0$.
+  Then, we have that
   \begin{equation*}
     fg = \left(a_0 + a_1x + \cdots + a_{n-r_0}x^{n-r_0}\right)g = 0
   \end{equation*}
-  by inductive hypothesis. Then, $a_{n-r_0}b_m = 0$, hence $a_{n-r_0}g = 0$ since it has degree less than $m$ but annihilates $f$. By induction, $a_{n-r}g = 0$ for all $0 \le r \le n$, hence letting $a = b_m$ gives $af = 0$, a contradiction.
+  by inductive hypothesis.
+  Then, $a_{n-r_0}b_m = 0$, hence $a_{n-r_0}g = 0$ since it has degree less than $m$ 
+  but annihilates $f$.
+  By induction, $a_{n-r}g = 0$ for all $0 \le r \le n$, hence letting $a = b_m$
+  gives $af = 0$, a contradiction.
 \end{proof}
 \begin{proof}[Proof of $iv)$]
-  $\Rightarrow$. Suppose $fg$ is primitive but $f$ is not. Then, $\mathfrak{a} = (a_0,a_1,\ldots,a_n) \subset \mathfrak{m} \subsetneq A$ by Cor.~$1.4$, where $\mathfrak{m}$ is a maximal ideal. Now consider the natural homomorphism $\varphi\colon A[x] \to A/\mathfrak{m}[x]$ induced by the map $A \to A/\mathfrak{m}$ on coefficients. $\varphi(f) = 0$ implies that $\varphi(fg) = 0$, and so the coefficients of $fg$ are in $\mathfrak{m}$, a contradiction.
-  \par $\Leftarrow$. Suppose $f,g$ are primitive but $fg$ is not. Then, the coefficients of $fg$ generate an ideal $\mathfrak{a}$, and $\mathfrak{a} \subset \mathfrak{m} \subsetneq A$ by Cor.~$1.4$, where $\mathfrak{m}$ is again a maximal ideal. The same map $\varphi$ defined above has $\varphi(fg) = 0$, and so $\varphi(f)\varphi(g) = 0$, i.e., either $\varphi(f) = 0$ or $\varphi(g) = 0$, for if either were a zero divisor, then there exists $a \in A/\mathfrak{m}$ such that $a\varphi(f) = 0$ by $iii)$, contradicting that $A/\mathfrak{m}$ is a field. Thus, the coefficients of either $f$ or $g$ are contained in $\mathfrak{m}$, a contradiction. 
+  $\Rightarrow$. Suppose $fg$ is primitive but $f$ is not.
+  Then, $\mathfrak{a} = (a_0,a_1,\ldots,a_n) \subset \mathfrak{m} \subsetneq A$
+  by Cor.~$1.4$, where $\mathfrak{m}$ is a maximal ideal.
+  Now consider the natural homomorphism $\varphi\colon A[x] \to A/\mathfrak{m}[x]$
+  induced by the map $A \to A/\mathfrak{m}$ on coefficients.
+  $\varphi(f) = 0$ implies that $\varphi(fg) = 0$, and so the coefficients of $fg$
+  are in $\mathfrak{m}$, a contradiction.
+  \par $\Leftarrow$. Suppose $f,g$ are primitive but $fg$ is not.
+  Then, the coefficients of $fg$ generate an ideal $\mathfrak{a}$, and
+  $\mathfrak{a} \subset \mathfrak{m} \subsetneq A$ by Cor.~$1.4$, where
+  $\mathfrak{m}$ is again a maximal ideal.
+  The same map $\varphi$ defined above has $\varphi(fg) = 0$, and so
+  $\varphi(f)\varphi(g) = 0$, i.e., either $\varphi(f) = 0$ or $\varphi(g) = 0$,
+  for if either were a zero divisor, then there exists $a \in A/\mathfrak{m}$ such
+  that $a\varphi(f) = 0$ by $iii)$, contradicting that $A/\mathfrak{m}$ is a field.
+  Thus, the coefficients of either $f$ or $g$ are contained in $\mathfrak{m}$,
+  a contradiction. 
 \end{proof}
 
 \begin{problem}
-  Generalize the results of Exercise $\hyperref[exc:1.2]{2}$ to a polynomial ring $A[x_1,\ldots,x_r]$ in several indeterminates.
+  Generalize the results of Exercise $\hyperref[exc:1.2]{2}$ to a polynomial ring
+  $A[x_1,\ldots,x_r]$ in several indeterminates.
 \end{problem}
 \begin{claim}
-  Let $A$ be a ring and let $A[x_1,\ldots,x_r]$ be the ring of polynomials in several indeterminates $x_1,\ldots,x_r$, with coefficients in $A$. Let $f \in A[x_1,\ldots,x_r]$. Then,
+  Let $A$ be a ring and let $A[x_1,\ldots,x_r]$ be the ring of polynomials in
+  several indeterminates $x_1,\ldots,x_r$, with coefficients in $A$.
+  Let $f \in A[x_1,\ldots,x_r]$. Then,
   \begin{enumi}
-    \item $f$ is a unit in $A[x_1,\ldots,x_r] \Leftrightarrow$ its constant term $a_0$ is a unit in $A$ and all other coefficients are nilpotent.
+    \item $f$ is a unit in $A[x_1,\ldots,x_r] \Leftrightarrow$ its constant term
+      $a_0$ is a unit in $A$ and all other coefficients are nilpotent.
     \item $f$ is nilpotent $\Leftrightarrow$ all its coefficients are nilpotent.
-    \item $f$ is a zero-divisor $\Leftrightarrow$ there exists $a \ne 0$ in $A$ such that $af = 0$.
-    \item If $f,g \in A[x_1,\ldots,x_r]$, then $fg$ is primitive $\Leftrightarrow f$ and $g$ are primitive.
+    \item $f$ is a zero-divisor $\Leftrightarrow$ there exists $a \ne 0$ in $A$
+      such that $af = 0$.
+    \item If $f,g \in A[x_1,\ldots,x_r]$, then $fg$ is primitive
+      $\Leftrightarrow f$ and $g$ are primitive.
   \end{enumi}
 \end{claim}
 \begin{proof}[Proof of $i),ii)$]
-  We induce on $r$. $r=1$ is Exercise \ref{exc:1.2}. Now consider $A[x_1,\ldots,x_r]$ as a polynomial ring in an indeterminate $x_r$ over the ring $A[x_1,\ldots,x_{r-1}]$, and write $f = \sum f_ix_r^i$, where $f_i \in A[x_1,\ldots,x_{r-1}]$. By Exercise \ref{exc:1.2}, $f$ is a unit (resp.~nilpotent) if and only if $f_0$ is a unit and $f_1,\ldots,f_n$ are nilpotent (resp.~each coefficient $f_i$ is nilpotent). By inductive hypothesis, this is equivalent to the constant term $a_0$ of $f_0$ being a unit and each other coefficient of $f_i$ in $A$ being nilpotent (resp.~every coefficient of the $f_i$ in $A$ being nilpotent).
+  We induce on $r$. $r=1$ is Exercise \ref{exc:1.2}.
+  Now consider$A[x_1,\ldots,x_r]$ as a polynomial ring in an indeterminate $x_r$
+  over the ring $A[x_1,\ldots,x_{r-1}]$, and write $f = \sum f_ix_r^i$, where
+  $f_i \in A[x_1,\ldots,x_{r-1}]$.
+  By Exercise \ref{exc:1.2}, $f$ is a unit (resp.~nilpotent) if and only if $f_0$
+  is a unit and $f_1,\ldots,f_n$ are nilpotent (resp.~each coefficient $f_i$ is
+  nilpotent).
+  By inductive hypothesis, this is equivalent to the constant term $a_0$ of $f_0$
+  being a unit and each other coefficient of $f_i$ in $A$ being nilpotent
+  (resp.~every coefficient of the $f_i$ in $A$ being nilpotent).
 \end{proof}
 \begin{proof}[Proof of $iii)$]
   $\Rightarrow$. Trivial since $a \in A \subset A[x_1,\ldots,x_r]$.
-  \par $\Leftarrow$. Suppose not. Using multi-index notation $x^\alpha = x_1^{\alpha^1}\cdots x_r^{\alpha^r}$ where $\alpha = (\alpha^1,\ldots,\alpha^r) \in \mathbb{N}^r$, consider the well-ordering $\succ$ on monomials in $A[x_1,\ldots,x_r]$ defined by $\alpha \succ \beta$ if the left-most nonzero entry in $\alpha - \beta$ is positive (the \emph{lexicographic} order). Define $\lt(f)$ to be the leading term of $f$ with respect to $\succ$, and $\lc(f)$ to be the coefficient of $\lt(f)$. Now write $f = a_{n}x^{\alpha_n} + a_{n-1}x^{\alpha_{n-1}} + \cdots + a_{0}x^{\alpha_0}$ where $\alpha_n \succ \alpha_{n-1} \succ \cdots \succ \alpha_0$. Let $g$ be a polynomial $fg = 0$ such that $\lt(g)$ is minimal with respect to $\succ$. We claim $a_{n-s}g = 0$ for all $0 \le s \le n$. First, $\lc(fg) = \lc(f)\lc(g) = 0$, hence $a_ng = 0$ since $g \succ a_ng$ but $f \cdot a_{n-s_0}g = 0$. Now suppose that $a_{n-s}g = 0$ for all $0 \le s < s_0$. Then, we have that
+  \par $\Leftarrow$. Suppose not.
+  Using multi-index notation $x^\alpha = x_1^{\alpha^1}\cdots x_r^{\alpha^r}$
+  where $\alpha = (\alpha^1,\ldots,\alpha^r) \in \mathbb{N}^r$, consider the
+  well-ordering $\succ$ on monomials in $A[x_1,\ldots,x_r]$ defined by
+  $\alpha \succ \beta$ if the left-most nonzero entry in $\alpha - \beta$ is
+  positive (the \emph{lexicographic} order).
+  Define $\lt(f)$ to be the leading term of $f$ with respect to $\succ$, and
+  $\lc(f)$ to be the coefficient of $\lt(f)$.
+  Now write $f = a_{n}x^{\alpha_n} + a_{n-1}x^{\alpha_{n-1}} +
+  \cdots + a_{0}x^{\alpha_0}$ where $\alpha_n \succ \alpha_{n-1} \succ
+  \cdots \succ \alpha_0$.
+  Let $g$ be a polynomial $fg = 0$ such that $\lt(g)$ is minimal with respect to
+  $\succ$.
+  We claim $a_{n-s}g = 0$ for all $0 \le s \le n$.
+  First, $\lc(fg) = \lc(f)\lc(g) = 0$, hence $a_ng = 0$ since $g \succ a_ng$
+  but $f \cdot a_{n-s_0}g = 0$.
+  Now suppose that $a_{n-s}g = 0$ for all $0 \le s < s_0$. Then, we have that
   \begin{equation*}
     fg = \left( a_{n-s_0}x^{\alpha_{n-s_0}} + \cdots + a_0x^{\alpha_{0}} \right)g = 0
   \end{equation*}
-  by inductive hypothesis. Then, $a_{n-s_0}\lc(g) = 0$, hence $a_{n-s_0}g = 0$ since $g \succ a_{n-s_0}g$ but $f \cdot a_{n-s_0}g = 0$. By induction, $a_{n-s}g = 0$ for all $0 \le s \le n$, hence letting $a = \lc(g)$ gives $af = 0$, a contradiction.
+  by inductive hypothesis.
+  Then, $a_{n-s_0}\lc(g) = 0$, hence $a_{n-s_0}g = 0$ since $g \succ a_{n-s_0}g$
+  but $f \cdot a_{n-s_0}g = 0$.
+  By induction, $a_{n-s}g = 0$ for all $0 \le s \le n$, hence letting
+  $a = \lc(g)$ gives $af = 0$, a contradiction.
 \end{proof}
 \begin{proof}[Proof of $iv)$]
-  $\Rightarrow$. Suppose $fg$ is primitive but $f$ is not. Then, the coefficients of $f$ generate an ideal $\mathfrak{a} \subset \mathfrak{m} \subsetneq A$ by Cor.~$1.4$, where $\mathfrak{m}$ is a maximal ideal. Now consider the natural homomorphism $\varphi\colon A[x_1,\ldots,x_r] \to A/\mathfrak{m}[x_1,\ldots,x_r]$ induced by the map $A \to A/\mathfrak{m}$ on coefficients. $\varphi(f) = 0$ implies that $\varphi(fg) = 0$, and so the coefficients of $fg$ are in $\mathfrak{m}$, a contradiction.
-  \par $\Leftarrow$. Suppose $f,g$ are primitive but $fg$ is not. Then, the coefficients of $fg$ generate an ideal $\mathfrak{a}$, and $\mathfrak{a} \subset \mathfrak{m} \subsetneq A$ by Cor.~$1.4$, where $\mathfrak{m}$ is again a maximal ideal. The same map $\varphi$ defined above has $\varphi(fg) = 0$, and so $\varphi(f)\varphi(g) = 0$, i.e., either $\varphi(f) = 0$ or $\varphi(g) = 0$, for if either were a zero divisor, then there exists $a \in A/\mathfrak{m}$ such that $a\varphi(f) = 0$ by $iii)$, contradicting that $A/\mathfrak{m}$ is a field. Thus, the coefficients of either $f$ or $g$ are contained in $\mathfrak{m}$, a contradiction. 
+  $\Rightarrow$. Suppose $fg$ is primitive but $f$ is not.
+  Then, the coefficients of $f$ generate an ideal
+  $\mathfrak{a} \subset \mathfrak{m} \subsetneq A$ by Cor.~$1.4$, where
+  $\mathfrak{m}$ is a maximal ideal.
+  Now consider the natural homomorphism
+  $\varphi\colon A[x_1,\ldots,x_r] \to A/\mathfrak{m}[x_1,\ldots,x_r]$
+  induced by the map $A \to A/\mathfrak{m}$ on coefficients.
+  $\varphi(f) = 0$ implies that $\varphi(fg) = 0$, and so the coefficients of
+  $fg$ are in $\mathfrak{m}$, a contradiction.
+  \par $\Leftarrow$. Suppose $f,g$ are primitive but $fg$ is not.
+  Then, the coefficients of $fg$ generate an ideal $\mathfrak{a}$, and
+  $\mathfrak{a} \subset \mathfrak{m} \subsetneq A$ by Cor.~$1.4$, where
+  $\mathfrak{m}$ is again a maximal ideal.
+  The same map $\varphi$ defined above has $\varphi(fg) = 0$, and so
+  $\varphi(f)\varphi(g) = 0$, i.e., either $\varphi(f) = 0$ or $\varphi(g) = 0$,
+  for if either were a zero divisor, then there exists $a \in A/\mathfrak{m}$
+  such that $a\varphi(f) = 0$ by $iii)$, contradicting that $A/\mathfrak{m}$ is
+  a field.
+  Thus, the coefficients of either $f$ or $g$ are contained in $\mathfrak{m}$, a contradiction. 
 \end{proof}
 
 \begin{problem}\label{exc:1.4}

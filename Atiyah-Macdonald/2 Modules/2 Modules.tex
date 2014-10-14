@@ -604,15 +604,45 @@
   and the bottom sequence $M \to N \to P$ is exact.
 \end{proof}
 
-\begin{problem}[AM Exercise 2.20]\label{exc:2.20}
-  Keeping the same notation as in Exercise $14$, let $N$ be any $N$-module. Then $(M_i \otimes N, \mu_{ij} \otimes 1)$ is a direct system; let $P = \displaystyle\lim_{\longrightarrow}(M_i \otimes N)$ be its direct limit. For each $i \in I$ we have a homomorphism $\mu_i \otimes 1 : M_i \otimes N \to M \otimes N$, hence by Exercise $16$ a homomorphism $\psi : P \to M \otimes N$. Show that $\psi$ is an isomorphism, so that
+\begin{problem}\label{exc:2.20}
+  Keeping the same notation as in Exercise \href{exc:2.14}{$14$}, let $N$ be
+  any $N$-module.
+  Then $(M_i \otimes N, \mu_{ij} \otimes 1)$ is a direct system; let
+  $P = \displaystyle\lim_{\longrightarrow}(M_i \otimes N)$ be its direct limit.
+  For each $i \in I$ we have a homomorphism
+  $\mu_i \otimes 1\colon M_i \otimes N \to M \otimes N$, hence by Exercise
+  \href{exc:2.16}{$16$} a homomorphism $\psi\colon P \to M \otimes N$.
+  Show that $\psi$ is an isomorphism, so that
   \begin{equation*}
-    \lim_{\longrightarrow} (M_i \otimes N) \simeq \left( \lim_{\longrightarrow} M_i \right) \otimes N.
+    \lim_{\longrightarrow} (M_i \otimes N) \cong \left( \lim_{\longrightarrow} M_i \right) \otimes N.
   \end{equation*}
 \end{problem}
 \begin{proof}
-  For each $i \in I$, let $g_i : M_i \times N \to M_i \otimes N$ be the canonical bilinear mapping. Since $g_i = g_j \circ \mu_{ij}$ for $i \le j$, by the universal property of direct limits in AM Exercise $2.16$ we then have the unique homomorphism $g : M \times N \to P$. This is bilinear, since for $am+b \in M$, it is contained in some $M_i$, and so $g(am+b,n) = g_i(am+b,n) = ag_i(m,n) + g_i(b,n)$ by the bilinearity of $g_i$; the $N$ case follows similarly. Thus, by the universal property of tensor products we have the unique homomorphism $\varphi : M \otimes N \to P$.
-  \par We claim $\varphi \circ \psi = \psi \circ \varphi = 1$. Let $x \in P$; then, by AM Exercise $2.17$ it is contained in some $M_i \otimes N$, and is of the form $(m_i \otimes n)$. Thus, $(\varphi \circ \psi)(x) = (\varphi \circ \psi)(m_i \otimes n) = \varphi(m_i \otimes n) = m_i \otimes n \in P$. Likewise, $x \in M \otimes N \implies x \in \bigcup M_i \otimes N \implies x = m_i \otimes n = x$ for some $m_i \in M_i$ for some $i$, and so $(\psi \circ \varphi)(x) = (\psi \circ \varphi)(m_i \otimes n) = m_i \otimes n = x$.
+  For each $i \in I$, let $g_i\colon M_i \times N \to M_i \otimes N$ be the
+  canonical bilinear mapping.
+  Since $g_i = g_j \circ \mu_{ij}$ for $i \le j$, by the universal property of
+  direct limits (Exercise \ref{exc:2.16}) we then have the unique homomorphism
+  $g\colon M \times N \to P$.
+  This is bilinear, since any $am+b \in M$ is contained in some $M_i$ by
+  Exercise \ref{exc:2.15}, and so
+  $g(am+b,n) = g_i(am+b,n) = ag_i(m,n) + g_i(b,n)$ by the bilinearity of $g_i$;
+  the $N$ case follows similarly.
+  Thus, by the universal property of tensor products we have the unique
+  homomorphism $\varphi\colon M \otimes N \to P$.
+  \par We claim $\varphi \circ \psi = \psi \circ \varphi = 1$.
+  Let $x \in P$; then, by Exercise \ref{exc:2.15} it is contained in some
+  $M_i \otimes N$, and is of the form $(m_i \otimes n)$.
+  Thus,
+  \begin{equation*}
+    (\varphi \circ \psi)(x) = (\varphi \circ \psi)(m_i \otimes n)
+    = \varphi(m_i \otimes n) = m_i \otimes n \in P.
+  \end{equation*}
+  Likewise, $x \in M \otimes N$ implies $x = m_i \otimes n$ for some $m_i \in M_i$
+  for some $i$ by Exercise \ref{exc:2.15}, and so
+  \begin{equation*}
+    (\psi \circ \varphi)(x) = (\psi \circ \varphi)(m_i \otimes n) = m_i \otimes
+    n = x.\qedhere
+  \end{equation*}
 \end{proof}
 
 \begin{problem}[AM Exercise 2.21]

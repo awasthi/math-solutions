@@ -541,18 +541,40 @@
   which is a contradiction).
   Hence $\dim X \ge n = \dim Y$. 
 \end{proof}
-
 \begin{proof}[Proof of $(b)$]
-  Let $\dim X = n$. 
-  From (a), $\dim U_i \le \dim X$. Hence, $\sup \dim U_i \le \dim X$.
-  Now, consider an ascending chain $X_0 \subsetneq X_1 \subsetneq \cdots
-  \subsetneq X_n$ of distinct irreducible closed subsets of $X$.
-  Choose an open set $U_i$ such that $X_0 \cap U_i \neq \emptyset$.
-  We can choose such $U_i$ because $\{U_i\}$ covers $X$. 
-	Then, $U_i \cap X_j \neq \emptyset$ because $X_j \supset X_0$.
-  Hence, $X_0 \cap U_i \subsetneq \cdots \subsetneq X_n \cap U_i$ is an
-  ascending chain of irreducible closed subsets (with respect to the subspace
-  topology) of $U_i$. Hence, $\sup \dim U_i \geq \dim X$.
+  $\dim X \ge \sup \dim U_i$ by $(a)$.
+  For the opposite inequality, we induce on dimension $n = \dim X$.
+  If $n = 0$, the claim is trivial.
+  Suppose $0 < n < \infty$. Then, there exists an ascending chain
+  \begin{equation*}
+    X_0 \subsetneq X_1 \subsetneq\cdots \subsetneq X_{n-1} \subsetneq X_n
+    \subset X.
+  \end{equation*}
+  By inductive hypothesis, since $U_i \cap X_{n-1}$ cover $X_{n-1}$, there
+  exists an ascending chain
+  \begin{equation*}
+    W_0 \subsetneq W_1 \subsetneq \cdots \subsetneq W_{n-2} \subsetneq W_{n-1}
+    = U_i \cap X_{n-1}
+  \end{equation*}
+  for some $i$. Now $X_n \setminus X_{n-1}$ and $U_i \cap X_n$ are both open and
+  dnece in $X_n$ by Exercise \ref{exc:1.6}, hence they have nonempty
+  intersection.
+  This implies $U_i \cap X_{n-1} \subsetneq U_i \cap X_n$, hence $U_i \cap X_n$
+  has dimension $\ge \dim X_{n-1} + 1 = \dim X_n = \dim X$, and we are done.
+  \par Now if $\dim X = \infty$, then for every $m$ there exists a closed
+  irreducible subset $X_m$ of dimension $\ge m$. By the above, the open covers $U_i
+  \cap X_m$ of $X_m$ satisfy $\dim X_m = \sup_i\dim (X_m \cap U_i)$, and so
+  $\sup_m \dim X_m = \sup_{m,i}(U_i \cap X_m) = \infty$.
+  %Let $\dim X = n$. 
+  %From (a), $\dim U_i \le \dim X$. Hence, $\sup \dim U_i \le \dim X$.
+  %Now, consider an ascending chain $X_0 \subsetneq X_1 \subsetneq \cdots
+  %\subsetneq X_n$ of distinct irreducible closed subsets of $X$.
+  %Choose an open set $U_i$ such that $X_0 \cap U_i \neq \emptyset$.
+  %We can choose such $U_i$ because $\{U_i\}$ covers $X$. 
+	%Then, $U_i \cap X_j \neq \emptyset$ because $X_j \supset X_0$.
+  %Hence, $X_0 \cap U_i \subsetneq \cdots \subsetneq X_n \cap U_i$ is an
+  %ascending chain of irreducible closed subsets (with respect to the subspace
+  %topology) of $U_i$. Hence, $\sup \dim U_i \geq \dim X$.
 \end{proof}
 \begin{proof}[Proof of $(c)$]
 	Let $X = {0,1}$, and $\tau = \{ \emptyset, X, \{0\}\}$ be the set of open sets of $X$. This is a topology. 

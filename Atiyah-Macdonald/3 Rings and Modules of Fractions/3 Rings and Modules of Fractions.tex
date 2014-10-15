@@ -159,16 +159,22 @@
 \begin{document}
 \maketitle
 \setcounter{section}{3}
-\begin{problem}(AM Exercise 3.1). Let $S$ be a multiplicatively closed subset of a ring $A$, and let $M$ be a finitely generated $A$-module. Prove that $S^{-1}M = 0$ if and only if there exists $S \in S$ such that $sM = 0$. 
+\begin{problem}
+  Let $S$ be a multiplicatively closed subset of a ring $A$, and let $M$ be a finitely generated $A$-module. Prove that $S^{-1}M = 0$ if and only if there exists $s \in S$ such that $sM = 0$. 
 \end{problem}
 \begin{proof}
-Assume that $S^{-1}M = 0$, and let $\{x_1, \cdots, x_n\}$ be the set of generators of $M$, as an A-Module. Then as $S^{-1}M = 0$, for each $i \in \{1, \cdots n\}$, there exists $s_i \in S$ such that $s_i \cdot x_i=0$. Let $s= \prod_{i} s_i$. Then, for any $\sum_{i}a_ix_i \in M$, $$s \cdot \sum_{i}a_ix_i = \sum_{i}a_isx_i = 0$$
-
-The other direction is trivial. 
-
+  Assume that $S^{-1}M = 0$, and let $\{x_1, \ldots, x_n\}$ be a set of
+  generators of $M$, as an $A$-module. Then as $S^{-1}M = 0$, for each $i \in
+  \{1, \ldots, n\}$, there exists $s_i \in S$ such that $s_i \cdot x_i=0$. Let $s= \prod_{i} s_i$. Then, for any $\sum_{i}a_ix_i \in M$,
+  \begin{equation*}
+    s \cdot \sum_{i}a_ix_i = \sum_{i}a_isx_i = 0,
+  \end{equation*}
+  hence $sM = 0$.
+  \par Conversely, if there exists $s \in S$ such that $sM = 0$, then
+  $S^{-1}M = 0$ since for each generator $x_i$, $sx_i = 0$.
 \end{proof}
 
-\begin{problem}[AM Exercise 3.2]
+\begin{problem}
   Let $\mathfrak{a}$ be an ideal of a ring $A$, and let $S = 1 + \mathfrak{a}$. Show that $S^{-1}\mathfrak{a}$ is contained in the Jacobson radical of $S^{-1}A$.
   \par Use this result and Nakayama's lemma to give a proof of $(2.5)$ which does not depend on determinants.
 \end{problem}

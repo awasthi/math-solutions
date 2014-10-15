@@ -154,11 +154,20 @@
 %\usepackage[notref,notcite]{showkeys}
 
 \title{Atiyah-Macdonald Ch.~2 Modules}
-\author{Takumi Murayama}
+\author{Takumi Murayama and Kyu Jun}
 
 \begin{document}
 \maketitle
 \setcounter{section}{3}
+\begin{problem}(AM Exercise 3.1). Let $S$ be a multiplicatively closed subset of a ring $A$, and let $M$ be a finitely generated $A$-module. Prove that $S^{-1}M = 0$ if and only if there exists $S \in S$ such that $sM = 0$. 
+\end{problem}
+\begin{proof}
+Assume that $S^{-1}M = 0$, and let $\{x_1, \cdots, x_n\}$ be the set of generators of $M$, as an A-Module. Then as $S^{-1}M = 0$, for each $i \in \{1, \cdots n\}$, there exists $s_i \in S$ such that $s_i \cdot x_i=0$. Let $s= \prod_{i} s_i$. Then, for any $\sum_{i}a_ix_i \in M$, $$s \cdot \sum_{i}a_ix_i = \sum_{i}a_isx_i = 0$$
+
+The other direction is trivial. 
+
+\end{proof}
+
 \begin{problem}[AM Exercise 3.2]
   Let $\mathfrak{a}$ be an ideal of a ring $A$, and let $S = 1 + \mathfrak{a}$. Show that $S^{-1}\mathfrak{a}$ is contained in the Jacobson radical of $S^{-1}A$.
   \par Use this result and Nakayama's lemma to give a proof of $(2.5)$ which does not depend on determinants.
@@ -177,12 +186,22 @@
   Since $M = \mathfrak{a}M$, we first have that $M \ni m = am' \in \mathfrak{a}M$ for some $m' \in M$. Then, we have $S^{-1}M = (S^{-1}\mathfrak{a})(S^{-1}M)$, by having $m/s = (a/1)(m'/s)$ as above. Since $S^{-1}\mathfrak{a} \in \mathfrak{R}_{S^{-1}A}$ by the first part of the problem, we apply Nakayama to get that $S^{-1}M = 0$. By AM Exercise $3.1$, we see that there is then $x \in S^{-1}$ such that $xM = 0$, and $x \equiv 1 \pmod{\mathfrak{a}}$ by definition of $S$.
 \end{proof}
 
+\begin{problem}[AM Exercise 3.4] 
+Let $f: A \to B$ be a homomorphism of rings and let $S$ be a multiplicatively closed subset of $A$. Let $T= f(S)$. Show that $S^{-1}B$ and $T^{-1}B$ are isomorphic as $S^{-1}A$ modules. 
+\end{problem}
+
+\begin{proof}
+Let $\phi$ be a natural $S^{-1}A$-module homomorphism from $S^{-1}B$ to $T^{-1}B$ given by $b/s \mapsto b/f(s)$. As $f$ is a homomorphism of rings, $\phi$ is a homomorphism. Let $\psi: T^{-1}B\to S^{-1}B$ such that $\psi(b/f(s)) = b/s$ for each $b \in B, f(s) = T = f(s)$. It is immediate that $\phi$ and $\psi$ are inverses of each other. Hence, $S^{-1}B$ and $T^{-1}B$ are isomorphic as $S^{-1}A$ modules. 
+\end{proof}
+
 \begin{problem}[AM Exercise 3.5]
   Let $A$ be a ring. Suppose that, for each prime ideal $\mathfrak{p}$, the local ring $A_\mathfrak{p}$ has no nilpotent element $\ne 0$. Show that $A$ has no nilpotent element $\ne 0$. If each $A_\mathfrak{p}$ is an integral domain, is $A$ necessarily an integral domain?
 \end{problem}
 \begin{proof}
   Suppose $A$ has a nilpotent element, i.e., $\mathfrak{N} \ne 0$. Then, by AM Corollary $3.12$, the nilradical of $A_\mathfrak{p}$ is $\mathfrak{N}_\mathfrak{p}$. But $\mathfrak{N} \ni x \ne 0 \implies x/1 \in \mathfrak{N}_\mathfrak{p}$, which is a contradiction.
   \par Now consider $A = k \times k$; clearly this is not an integral domain, for $(a,0)\cdot(0,b) = 0$. Note $\mathfrak{p} = k \times 0$ and $\mathfrak{q} = 0 \times k$ are the only non-trivial prime ideals of $A$. Now consider $\mathfrak{p}_\mathfrak{p}$; for any $a/b \in \mathfrak{p}_\mathfrak{p}$, we claim $a/b \equiv 0/1 = 0$. For, $a(0,1) = 0$ and $(0,1) \in A \setminus \mathfrak{p}$ and by definition of the equivalence relation. But recall from AM Example $1$ from p.~$38$ that this ideal $0$ is maximal in $A_\mathfrak{p}$, and so $A_\mathfrak{p}$ is a field. Since the same argument applies for $A_\mathfrak{q}$, we see that each $A_\mathfrak{p}$ being an integral domain does not imply $A$ is an integral domain.
+  \par One another simple example would be $A = \mathbb{Z}/6\mathbb{Z} = \mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/3\mathbb{Z}$. Prime ideals of $A$ are copies of $\mathbb{Z}/(2)$ and $ \mathbb{Z}/(3)$ (i.e. $\mathfrak{p}_1 = \{0,3\}$ and $ \mathfrak{p}_2 = \{0,2,4\}$) ,and $A_{\mathfrak{p}} = \mathbb{Z}/(3)$ or $\mathbb{Z}/(2)$. Hence, $A_\mathfrak{p}$ is a domain for all of its prime ideals $\mathfrak{p}$, but $A$ itself is obviously not a domain as $2 \cdot 3 = 0$. 
+  \par In general Let $R$ be a ring with two nonzero prime ideals $\mathfrak{p}$ and $\mathfrak{q}$ such that each is not included in the other, and that $\Spec R = \{\mathfrak{p}, \mathfrak{q}\}.$ Now let $A = R/\mathfrak{p}\mathfrak{q}$. Then $A$ is not a domain because the image of any two element $p \in \mathfrak{p}/\mathfrak{q}$ and $q \in \mathfrak{q}/\mathfrak{p}$ are zero divisors of $A$. However, $A_{\mathfrak{p}}$ and  $A_{\mathfrak{q}}$ are domains. 
 \end{proof}
 
 \begin{problem}[AM Exercise 3.7]

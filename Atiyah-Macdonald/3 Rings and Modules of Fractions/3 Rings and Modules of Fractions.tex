@@ -55,7 +55,7 @@
 \newtheorem{problem}{Exercise}[section]
 \newtheorem{subproblem}{Problem}[problem]
 \newtheorem{lemma}{Lemma}%[section]
-\newtheorem{corollary}{Corollary}
+\newtheorem*{corollary}{Corollary}
 \newtheorem{proposition}{Proposition}
 \newtheorem{property}{Property}[problem]
 \newtheorem*{lemma*}{Lemma}
@@ -159,7 +159,7 @@
 \begin{document}
 \maketitle
 \setcounter{section}{3}
-\begin{problem}
+\begin{problem}\label{exc:3.1}
   Let $S$ be a multiplicatively closed subset of a ring $A$, and let $M$ be a finitely generated $A$-module. Prove that $S^{-1}M = 0$ if and only if there exists $s \in S$ such that $sM = 0$. 
 \end{problem}
 \begin{proof}
@@ -179,17 +179,24 @@
   \par Use this result and Nakayama's lemma to give a proof of $(2.5)$ which does not depend on determinants.
 \end{problem}
 \begin{proof}[Proof of first claim]
-  Suppose $x \in S^{-1}\mathfrak{a}$; recall that for $x \in \mathfrak{R}_{S^{-1}A}$ it suffices to show $1-xy$ is a unit in $S^{-1}A$ for all $y \in S^{-1}A$ by AM Proposition $1.9$. Then, $x = m/(1+a)$ for $m,a \in \mathfrak{a}$. Let $y = n/(1+a')$ for $a' \in \mathfrak{a},n \in A$, then
+  Suppose $x \in S^{-1}\mathfrak{a}$; recall that for $x \in
+  \mathfrak{R}_{S^{-1}A}$ it suffices to show $1-xy$ is a unit in $S^{-1}A$ for
+  all $y \in S^{-1}A$ by Prop.~$1.9$. Then, $x = m/(1+a)$ for $m,a \in \mathfrak{a}$. Let $y = n/(1+a')$ for $a' \in \mathfrak{a},n \in A$, then
   \begin{equation*}
     1 - xy = 1 - \frac{m}{1+a} \cdot \frac{n}{1+a'} = 1 - \frac{mn}{1+a''} = \frac{1 + a''-mn}{1+a''} = \frac{1 + a'''}{1+a''},
   \end{equation*}
   for some $a'',a''' \in \mathfrak{a}$, since $S$ is multiplicative and $a''-mn \in \mathfrak{a}$. Thus, we see that $(1+a'')/(1+a''') \in S^{-1}A$ is the inverse of $1-xy$, and so $x \in \mathfrak{R}_{S^{-1}A}$.
 \end{proof}
-\begin{corollary}[AM Corollary $2.5$]
+\begin{corollary}[Cor.~$2.5$]
   Let $M$ be a finitely generated $A$-module and let $\mathfrak{a}$ be an ideal of $A$ such that $\mathfrak{a}M = M$. Then there exists $x \equiv 1\pmod{\mathfrak{a}}$ such that $xM = 0$.
 \end{corollary}
 \begin{proof}[Proof of Corollary]
-  Since $M = \mathfrak{a}M$, we first have that $M \ni m = am' \in \mathfrak{a}M$ for some $m' \in M$. Then, we have $S^{-1}M = (S^{-1}\mathfrak{a})(S^{-1}M)$, by having $m/s = (a/1)(m'/s)$ as above. Since $S^{-1}\mathfrak{a} \in \mathfrak{R}_{S^{-1}A}$ by the first part of the problem, we apply Nakayama to get that $S^{-1}M = 0$. By AM Exercise $3.1$, we see that there is then $x \in S^{-1}$ such that $xM = 0$, and $x \equiv 1 \pmod{\mathfrak{a}}$ by definition of $S$.
+  Since $M = \mathfrak{a}M$, we first have that, for any $m \in M$, $m = am' \in
+  \mathfrak{a}M$ for some $m' \in M$. Then, we have $S^{-1}M =
+  (S^{-1}\mathfrak{a})(S^{-1}M)$, by having $m/s = (a/1)(m'/s)$ as above. Since
+  $S^{-1}\mathfrak{a} \subset \mathfrak{R}_{S^{-1}A}$ by the first part of the
+  problem, we apply Nakayama to get that $S^{-1}M = 0$. By Exercise
+  \ref{exc:3.1}, we see that there is then $x \in S^{-1}$ such that $xM = 0$, and $x \equiv 1 \pmod{\mathfrak{a}}$ by definition of $S$.
 \end{proof}
 
 \begin{problem}[AM Exercise 3.4] 

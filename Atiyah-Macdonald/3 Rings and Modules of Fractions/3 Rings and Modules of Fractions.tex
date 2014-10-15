@@ -202,7 +202,7 @@
   \par Now suppose $S$ is saturated; we want to show that all $x \notin S$ are in some prime ideal disjoint from $S$. We see that $(x) \cap S = \emptyset$, for $S$ is saturated, and so is a proper ideal. Moreover, $(x)^e \subseteq S^{-1}A$ is not $(1)$, for $x/1$ is not a unit in $S^{-1}A$. Then, there exists a maximal ideal $\mathfrak{m} \supseteq (x)^e$ by AM Corollary $1.4$. We see by AM Proposition $3.11iv)$ implies $\mathfrak{m}^c \subseteq A$ is a prime ideal that does not intersect $S$, and $x \in \mathfrak{m}^c$.
 \end{proof}
 \begin{proof}[Proof of $ii)$]
-  Let $\mathcal{S}$ be the set of saturated multiplicatively closed subsets of $A$ containing $S$, which is non-empty since it contains $A$. We claim $\overline{S} = \bigcap_{S \in \mathcal{S}} S$ works. Clearly it is unique. Since $A \setminus \overline{S} = A \setminus \bigcap_{S \in \mathcal{S}} S = \bigcup_{S \in \mathcal{S}} A \setminus S = \bigcup_{S \in \mathcal{S}} \bigcup \mathfrak{p}_i$, where the last union is over the prime ideals in the complement of each $S$ shown to exist in part $i)$, and each $\mathfrak{p}_i$ does not intersect $\overline{S}$. Moreover, if there is any $\mathfrak{p}$ that does not intersect $\overline{S}$, $A \setminus \mathfrak{p} \in \mathcal{S}$, and so $\mathfrak{p} \subseteq A \setminus \overline{S}$.
+  Let $\mathcal{S}$ be the set of saturated multiplicatively closed subsets of $A$ containing $S$, which is non-empty since it contains $A$. We claim $\overline{S} = \bigcap_{S \in \mathcal{S}} S$ works. Clearly it is unique. Since $A \setminus \overline{S} = A \setminus \bigcap_{T \in \mathcal{S}} S = \bigcup_{T \in \mathcal{S}} A \setminus T = \bigcup_{T \in \mathcal{S}} \bigcup \mathfrak{p}_i$, where the last union is over the prime ideals in the complement of each $S$ shown to exist in part $i)$, and each $\mathfrak{p}_i$ does not intersect $\overline{S}$. Moreover, if there is any $\mathfrak{p}$ that does not intersect $\overline{S}$, $A \setminus \mathfrak{p} \in \mathcal{S}$, and so $\mathfrak{p} \subseteq A \setminus \overline{S}$.
 \end{proof}
 \begin{proof}[Solution for last statement]
   First note $\mathfrak{p} \cap S \ne \emptyset \iff \exists a \in \mathfrak{a}$ such that $1 + a \in \mathfrak{p} \iff 1 \in \mathfrak{p} + \mathfrak{a}$. By part $ii)$, then, $A \setminus \overline{S} = \bigcup \mathfrak{p}$, where the union is taken over $\mathfrak{p}$ such that $1 \notin \mathfrak{p} + \mathfrak{a}$.
@@ -252,6 +252,59 @@
 \end{proof}
 \begin{proof}[Proof of $iii)$]
   $\varphi : A \hookrightarrow S_0^{-1}A$, and so it suffices to show $\varphi$ is surjective. $S_0^{-1}A \ni a/x = ax^{-1}/xx^{-1} = ax^{-1}/1 = \varphi(ax^{-1})$, where $x^{-1}$ exists since $S_0$ consists of units.
+\end{proof}
+
+\begin{problem}[AM Exercise 3.10]
+  Let $A$ be a ring. 
+  \begin{enumi}
+    \item If $A$ is absolutely flat (i.e. every A-module is flat) and $S$ is any multiplicatively closed subset of $A$, then $S^{-1}A$ is absolutely flat.
+    \item $A$ is absolutely flat $\iff$ $A_\mathfrak{m}$ is a field for each maximal ideal $\mathfrak{m}$.
+  \end{enumi}
+\end{problem}
+\begin{proof}[Proof of $i$] We begin by citing a previous result: 
+\begin{proposition} (AM Exercise 2.27) $A$ is absolutely flat $\iff$ Every principal ideal of $A$ is idempotent.
+\end{proposition}
+
+  Assume $A$ is absolutely flat. Then from the proposition above, for every element $a \in A$ $(a)^2 = (a^2) = (a)$. That is, there exists an element $u \in A^{\times}$ such that $a^2 = ua$. 
+  
+  Now let $\frac{a}{s} \in S^{-1}A$. Then there exists $\alpha, \beta \in A^{\times}$ such that $a^2 = \alpha a$, $s^2 = \beta s$. Then,
+  $$\Big{(}\frac{a}{s}\Big{)}^2 = \Big{(}\frac{a^2}{s^2}\Big{)} = \Big{(}\frac{\alpha \beta^{-1} a}{s}\Big{)} \subseteq \Big{(}\frac{a}{s}\Big{)}$$
+  
+  We note that $$\frac{\alpha^{-1}s^2}{s} \cdot \frac{\alpha \beta^{-1} a}{s} = \frac{a}{s}$$ Hence,$\Big{(}\frac{a}{s}\Big{)}^2 \supseteq \Big{(}\frac{a}{s}\Big{)}$. Thus, Every principal ideal in $S^{-1}A$ is an idempotent, and again from the proposition, $S^{-1}A$ is absolutely flat. 
+
+\end{proof}
+
+\begin{proof}[Proof of $ii$]
+\end{proof}
+
+\begin{problem}[AM Exercise 3.11]
+  Let $A$ be a ring. Prove that TFAE:
+   \begin{enumi}
+     \item $A/\mathfrak{N}$ is absolutely flat ($\mathfrak{N}$ being the nilradical of $A$)
+     \item Every prime ideal of $A$ is maximal. 
+     \item $\Spec (A)$ is a $T_1$-space (i.e. every subset consisting of a single point is closed).
+     \item $\Spec(A)$ is Hausdorff
+   \end{enumi}
+
+\par   If these conditions are satisfied, show that $\Spec (A)$ is compact and totally disconnected (i.e. the only connected subsets of $\Spec(A)$ are those consisting of a single point).
+\end{problem}
+
+\begin{proof}[Proof of equivalence]
+ We will show $iv) \Rightarrow  iii) \Rightarrow ii) \Rightarrow i) \Rightarrow iv)$
+ 
+ \par $iv) \Rightarrow iii)$: Trivial
+ \par $iii) \Rightarrow ii)$: Assume that $\Spec(A)$ is a $T_1$-space. Let $\mathfrak{p} \in \Spec(A)$. Then, $V(\mathfrak{p}) = \overline{\{\mathfrak{p}\}} = \{\mathfrak{p}\}$ because $\Spec(A)$ is $T_1$. By definition of $V(\mathfrak{p})$, this means that $\mathfrak{p}$ is maximal. (AM Exercise 1.18). Hence, $iii)$ implies $ii)$. 
+ \par $ii) \Rightarrow i)$: Assume that every prime ideal of $A$ is maximal. Choose an element $x \in A$ and any $\mathfrak{p} \in \Spec(A)$. Then, either $x \in \mathfrak{p}$ or $x \notin \mathfrak{p} \Rightarrow x+ \mathfrak{p} = (1)$ because $\mathfrak{p}$ is maximal. Then, $x -1 \in \mathfrak{p}$. So for all $x \in A$ and $\mathfrak{p} \in \Spec(A)$, $x(x-1) \in \mathfrak{p}$. Therefore, any $\overline{x} \in A/\mathfrak{N}$ is idempotent. Using the proposition from the previous problem, we conclude that $A/\mathfrak{N}$ is absolutely flat. 
+
+ \par $i) \Rightarrow iv)$. From AM Exercise 1.21 $iv)$, $\Spec(A)$ and $\Spec(A/\mathfrak{N})$ are naturally homeomorphic. Hence, we are done if we show that if a ring $A$ is absolutely flat, $\Spec(A)$ is Hausdorff. 
+ 
+ If $A$ is absolutely flat, then for any $x \in A$, there exists $u \in A^{\times}$ such that $x^2 = ux$ (again, from the proposition). Then $x(x-u) = 0 \in \mathfrak{p}$ for any prime ideal $\mathfrak{p}$. Thus either $x \in \mathfrak{p}$ or $x-u \in \mathfrak{p}$. If both $x$ and $x-u$ is in $\mathfrak{p}$, then $x-(x-u) = u \in \mathfrak{p}$ so $\mathfrak{p} = (1)$, as $u$ is a unit. Hence, $x$ and $x-u$ cannot be in a same prime ideal, so $\Spec(A) = V(x) \sqcup V(x-u) = (V(x-u))^c \sqcup (V(x))^c = X_{x-u} \sqcup X_x$. Hence, $\Spec(A)$ is Hausdorff.   
+ 
+\end{proof}
+\begin{proof}[Proof of the last claim]
+  $\Spec A$ is always quasi-compact from AM Exercise 17 $v)$. As $\Spec A$ is Hausdorff by the assumption, it is compact. 
+  \par Assume that $C \subset \Spec(A)$ is a subset of $\Spec(A)$ with more than one element. Let $\mathfrak{p} \neq \mathfrak{q} \in C$. Without loss of generality assume $\mathfrak{p} \neq \emptyset$. Choose $x \in \mathfrak{p}/\mathfrak{q}$. Then we see from the last proof that $\mathfrak{p} \in V(x) = X_{x-u}$, and $\mathfrak{q} \in X_{x}$ where $X_{x-u} \sqcup X_x = \Spec(A)$. Then $C = (C \cap X_x) \sqcup (C \cap X_{x-u})$, so $C$ is disconnected. Hence, the only subsets of $\Spec(A)$ are those consisting of a single point.  
+
 \end{proof}
 
 \begin{problem}[AM Exercise 3.12]

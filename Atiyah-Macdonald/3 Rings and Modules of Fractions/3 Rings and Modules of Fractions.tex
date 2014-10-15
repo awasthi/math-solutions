@@ -199,10 +199,32 @@
   \ref{exc:3.1}, we see that there is then $x \in S^{-1}$ such that $xM = 0$, and $x \equiv 1 \pmod{\mathfrak{a}}$ by definition of $S$.
 \end{proof}
 
-\begin{problem}[AM Exercise 3.4] 
-Let $f: A \to B$ be a homomorphism of rings and let $S$ be a multiplicatively closed subset of $A$. Let $T= f(S)$. Show that $S^{-1}B$ and $T^{-1}B$ are isomorphic as $S^{-1}A$ modules. 
+\begin{problem}
+  Let $A$ be a ring, let $S$ and $T$ be two multiplicatively closed subsets of
+  $A$, and let $U$ be the image of $T$ in $S^{-1}A$.
+  Show that the rings $(ST)^{-1}A$ and $U^{-1}(S^{-1}A)$ are isomorphic.
 \end{problem}
+\begin{proof}
+  Let $g\colon A \to U^{-1}(S^{-1}A) \eqqcolon B$ be the canonical ring
+  homomorphism $a \mapsto a/1$.
+  To show $(ST)^{-1}A \cong U^{-1}(S^{-1}A)$, it suffices to show the
+  properties in Cor.~3.2 hold.
+  \par Suppose $st \in ST$ where $s\in S,t\in T$.
+  Then, $g(st) = st/1 = (s/1)(t/1)$ is a unit in $B$ since
+  $t/1 \in U$ and $s/1$ is a unit in $S^{-1}A$, hence $3.2i)$ holds.
+  \par Suppose $g(a) = 0$. Then, $a/1 \equiv 0$ and so $(t/1)(a/1) = at/1 = 0$ in
+  $S^{-1}A$ for some $t/1 \in U$, hence $ast = 0$ for some $st \in ST$,
+  hence $3.2ii)$ holds.
+  \par Now suppose we have a unit $(a/s)/(t/1)$ in $B$. We claim $(a/s)/(t/1) =
+  g(a)g(st)^{-1}$. For, $g(a)g(st)^{-1} = (a/1)(st/1)^{-1} = (a/1)(1/st) =
+  (a/1)/(st/1)$, which is equivalent to $(a/s)/(t/1)$ since $(a/1)(t/1) =
+  (a/s)(st/1)$ in $S^{-1}A$.
+  Thus, $3.2iii)$ holds, and so $(ST)^{-1}A \cong U^{-1}(S^{-1}A)$ by Cor.~3.2.
+\end{proof}
 
+\begin{problem}
+  Let $f\colon A \to B$ be a homomorphism of rings and let $S$ be a multiplicatively closed subset of $A$. Let $T= f(S)$. Show that $S^{-1}B$ and $T^{-1}B$ are isomorphic as $S^{-1}A$ modules. 
+\end{problem}
 \begin{proof}
 Let $\phi$ be a natural $S^{-1}A$-module homomorphism from $S^{-1}B$ to $T^{-1}B$ given by $b/s \mapsto b/f(s)$. As $f$ is a homomorphism of rings, $\phi$ is a homomorphism. Let $\psi: T^{-1}B\to S^{-1}B$ such that $\psi(b/f(s)) = b/s$ for each $b \in B, f(s) = T = f(s)$. It is immediate that $\phi$ and $\psi$ are inverses of each other. Hence, $S^{-1}B$ and $T^{-1}B$ are isomorphic as $S^{-1}A$ modules. 
 \end{proof}

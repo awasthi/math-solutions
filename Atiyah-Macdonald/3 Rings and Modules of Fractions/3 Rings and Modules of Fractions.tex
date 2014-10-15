@@ -423,6 +423,29 @@ Let $\phi$ be a natural $S^{-1}A$-module homomorphism from $S^{-1}B$ to $T^{-1}B
   \par $iii) \Rightarrow i)$. Suppose $T(M) \ne \emptyset$. Then, there is some $x \in T(M)$ and so $ax = 0$ for some non-zero $a \in A$. Let $\mathfrak{m}$ be the maximal ideal that contains $\Ann(x)$, which exists via AM Corollary $1.4$. Since $A$ is an integral domain, $a/1 \ne 0$ in $M_\mathfrak{m}$. Then, $a(x/1) = 0$ in $M_\mathfrak{m}$ which is torsion-free, and so $x/1 = 0$ in $M_\mathfrak{m}$. This implies $a'x = 0$ for some $a' \in A \setminus \mathfrak{m}$, which contradicts our choice of $\mathfrak{m} \supseteq \Ann(x)$.
 \end{proof}
 
+\begin{problem} [AM Exercise 3.16] Let B be a flat $A$-algebra. Then TFAE:
+  \begin{enumi}
+    \item $\mathfrak{a}^{ec} = \mathfrak{a}$ for all ideals $\mathfrak{a}$ of $A$. 
+    \item $\Spec (B) \to \Spec(A)$ is surjective
+    \item For every maximal ideal $\mathfrak{m}$ of A we have $\mathfrak{m}^e \neq (1)$. 
+    \item If $M$ is any non-zero $A$-module, them $M_B \neq 0$. 
+    \item For every A-module $M$, the mapping $x \mapsto 1 \otimes x$ of M into $M_B$ is injective. 
+  \end{enumi}
+  \par $B$ is said to be faithfully flat over A
+\end{problem}1
+\begin{proof}
+  \par $i) \Rightarrow ii)$: From AM prop 3.16, $\mathfrak{p} \in \Spec(A)$ is the contraction of a prime ideal of $B$ iff $\mathfrak{p}^{ec} = \mathfrak{p}$. From the assumption, $\mathfrak{a}^{ec} = \mathfrak{a}$ for all ideals $\mathfrak{a}$, so $\mathfrak{p} \in \Spec(A)$ is the contraction of a prime ideal of $B$. Hence, $\Spec (B) \to \Spec(A)$ is surjective. 
+  \par $ii) \Rightarrow iii)$: assume $\mathfrak{m}^e = (1)$. There exists a prime ideal $\mathfrak{q}$ of $B$ such that $\mathfrak{q}^c = \mathfrak{m}$. Then we see that $(1) = \mathfrak{m}^e = \mathfrak{q}^{ce} \supseteq \mathfrak{q}$, which contradicts to the assumption that $ \mathfrak{q}$ is a prime ideal. 
+  \par $iii) \Rightarrow iv)$: Let $0 \neq x \in M$, and let $M' = Ax$. We see that $0 \to M \to M'$ is exact. Since $B$ is flat over $A$, $0 \to M \otimes B \to M' \otimes B$ is exact. Hence, if $M'_B = M' \otimes B$ is nonzero, $M_B$ is also nonzero. 
+  $M' \simeq A/\mathfrak{a}$ for some ideal $\mathfrak{a} \neq (1)$ of A, so $M'_B \simeq B \otimes A/\mathfrak{a} = B/\mathfrak{a}^e \otimes A \simeq B/\mathfrak{a}^e$.
+   Then, There is a maximal ideal $\mathfrak{m}$ that contains $\mathfrak{a}$ (Corollary 1.4), and $\mathfrak{a}^e \subseteq \mathfrak{m}^e \subsetneq (1)$ from the assumption. Hence, $M'_B \neq 0$. 
+   \par $iv) \Rightarrow v)$: Let $M'$ be the kernel of $M \to M_B$. Then $0 \to M' \to M \to M_B $ is exact. Because $B$ if flat, $0 \to M'_B \to M_B \to (M_B)_B$ is exact. Using AM Exercise 2.13, $M_B \to (M_B)_B$ is injective, so $M'_B =0 \Rightarrow M' = 0$. Hence, the mapping $x \mapsto 1 \otimes x$ of $M$ into $M_B$ is injective. 
+   \par $v) \Rightarrow i)$ Choose an ideal $\mathfrak{a}$ of $A$. Let $M = A/\mathfrak{a}$. Then we see that the mapping $x \mapsto 1 \otimes x$ of $M = A/\mathfrak{a}$ into $M_B = A/\mathfrak{a} \otimes B = A \otimes B/\mathfrak{a}^e \simeq B/\mathfrak{a}^e$ is injective. Hence, $\mathfrak{a}^{ec} \subseteq \mathfrak{a}$. $\mathfrak{a}^{ec} \supseteq \mathfrak{a}$ from AM proposition 1.17, so $\mathfrak{a}^{ec} = \mathfrak{a}$. 
+
+\end{proof}
+
+\begin{problem} [AM Exercise 3.17] LET $A$
+
 \begin{problem}[AM Exercise 3.21]\mbox{}
   \begin{enumi}
   \item Let $A$ be a ring, $S$ a multiplicatively closed subset of $A$, and $\phi : A \to S^{-1}A$ the canonical homomorphism. Show that $\phi^* : \Spec(S^{-1}A) \to \Spec(A)$ is a homeomorphism of $\Spec(S^{-1}A)$ onto its image in $X = \Spec(A)$. Let this image be denoted by $S^{-1}X$.

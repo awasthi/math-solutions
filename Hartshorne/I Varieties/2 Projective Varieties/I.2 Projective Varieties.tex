@@ -41,6 +41,11 @@
 \newenvironment{enuma}
 {\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
 {\end{list}}
+\newcounter{enumicounter}
+\newenvironment{enumi}
+{\begin{list}{$(\roman{enumicounter})$}{\usecounter{enumicounter} \parsep=0em
+\itemsep=0em \leftmargin=2.5em \labelwidth=1.75em \topsep=0em}}
+{\end{list}}
 \newcounter{enumdcounter}
 \newenvironment{enumd}
 {\begin{list}{$(\arabic{enumdcounter})$}{\usecounter{enumdcounter} \parsep=0em \itemsep=0em \leftmargin=1.75em \labelwidth=1.5em \topsep=0em}}
@@ -112,7 +117,7 @@
 \newcommand{\Ss}{\mathscr{S}}
 \newcommand{\Af}{\mathfrak{A}}
 \newcommand{\Aa}{\mathscr{A}}
-\newcommand{\PP}{\mathcal{P}}
+\newcommand{\PP}{\mathbb{P}}
 \newcommand{\red}{\mathrm{red}}
 \newcommand{\Sh}{\mathfrak{Sh}}
 \newcommand{\Psh}{\mathfrak{Psh}}
@@ -149,22 +154,73 @@
 \begin{document}
 \maketitle
 \setcounter{section}{2}
-\begin{problem}
+\begin{problem}\label{exc:2.1}
   Prove the ``homogeneous Nullstellensatz,'' which says if $\mathfrak{a}
   \subseteq S$ is a homogeneous ideal, and if $f \in S$ is a homogeneous
   polynomial with $\deg f > 0$, such that $f(P) = 0$ for all $P \in
-  Z(\mathfrak{a})$ in $\mathbb{P}^n$, then $f^q \in \mathfrak{a}$ for some $q >
+  Z(\mathfrak{a})$ in $\PP^n$, then $f^q \in \mathfrak{a}$ for some $q >
   0$.
 \end{problem}
 \begin{proof}
   Consider $S = k[x_0,\ldots,x_n]$ as an affine polynomial ring, and let
-  $CZ(\mathfrak{a})$ be the affine variety defined by $\mathfrak{a}$.
+  $CZ(\mathfrak{a})$ be the affine variety defined by $\mathfrak{a}$ in
+  $\AA^{n+1}$.
   Then, $f(P) = 0$ for any $P \in CZ(\mathfrak{a})$, since any nonzero $P$ is a
   representative of some point in $Z(\mathfrak{a})$, and if $P=0$ then $f(P) =
   0$ by the fact that $f$ is homogeneous with $\deg f > 0$.
-  By the ``affine'' Nullstellensatz (Thm.~1.3A), we have $f^q \in \mathfrak{a}$ for
+  By the affine Nullstellensatz (Thm.~1.3A), we have $f^q \in \mathfrak{a}$ for
   some $q > 0$.
 \end{proof}
+
+\begin{problem}
+  For a homogeneous ideal $\mathfrak{a} \subseteq S$, show that the following
+  conditions are equivalent:
+  \begin{enumi}
+    \item $Z(\mathfrak{a}) = \emptyset$ (the empty set);
+    \item $\sqrt{\mathfrak{a}} =$ either $S$ or the ideal $S_+ =
+      \bigoplus_{d > 0}S_d$;
+    \item $\mathfrak{a} \supseteq S_d$ for some $d > 0$. 
+  \end{enumi}
+\end{problem}
+\begin{proof}
+  $(i) \Rightarrow (ii)$. If $Z(\mathfrak{a}) = \emptyset$, then
+  $CZ(\mathfrak{a}) = \{0\}$ or $\emptyset$, where as in Exercise \ref{exc:2.1}
+  $CZ(\mathfrak{a})$ is the affine variety in $\AA^{n+1}$ defined by
+  $\mathfrak{a}$.
+  If $CZ(\mathfrak{a}) = \{0\}$, then $x_i^r \in \mathfrak{a}$ by the affine
+  Nullstellensatz (Thm.~1.3A) for each $0 \le i \le n$, hence $x_i \in
+  \sqrt{\mathfrak{a}}$ for each $0 \le i \le n$, and so $\sqrt{\mathfrak{a}}
+  \supset S_+$; this is moreover an equality since $S_0 = k$, and $\mathfrak{a}
+  \cap k = \emptyset$ for otherwise $CZ(\mathfrak{a}) = \emptyset$.
+  On the other hand, if $CZ(\mathfrak{a}) = \emptyset$, then since $\emptyset =
+  Z(S)$ by the proof of Prop.~1.1, then $I(\emptyset) = I(CZ(\mathfrak{a})) =
+  \sqrt{\mathfrak{a}} = S$ by Prop.~$1.2(d)$.
+  \par $(ii) \Rightarrow (iii)$. If $\sqrt{\mathfrak{a}} = S$, then $1 \in
+  \sqrt{\mathfrak{a}}$, so $1 \in \mathfrak{a}$ by \cite[p.~9,
+  Exc.~$1.13iv$]{AM69}, and so $\mathfrak{a} \supset S_d$ for any $d$.
+  On the other hand, if $\sqrt{\mathfrak{a}} = S_+$, then $x_i^r \in
+  \mathfrak{a}$ for some $r$ for all $0 \le i \le n$. But every element in
+  $S_{r(n+1)}$ ha some $x_i^r$ appearing in each term by the pigeon-hole
+  principle, and so $\mathfrak{a} \supset S_{r(n+1)}$.
+  \par $(iii) \Rightarrow (i)$. $\mathfrak{a} \supset S_d$ implies all $x_i^d$
+  must vanish on $Z(\mathfrak{a})$, which is impossible in $\PP^n$, hence
+  $Z(\mathfrak{a}) = \emptyset$.
+\end{proof}
+
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item If $T_1 \subseteq T_2$ are subsets of $S^h$, then $Z(T_1) \supseteq
+      Z(T_2)$.
+    \item If $Y_1 \subseteq Y_2$ are subsets of $\PP^n$, then $I(Y_1) \supseteq
+      I(Y_2)$.
+    \item For any two subsets $Y_1,Y_2$ of $\PP^n$, $I(Y_1 \cup Y_2) = I(Y_1)
+      \cap I(Y_2)$.
+    \item If $\mathfrak{a} \subseteq S$ is a homogeneous ideal with
+      $Z(\mathfrak{a}) \ne \emptyset$, then $I(Z(\mathfrak{a})) =
+      \sqrt{\mathfrak{a}}$.
+    \item For any subset $Y \subseteq \PP^n$, $Z(I(Y)) = \overline{Y}$.
+  \end{enuma}
+\end{problem}
 
 \printbibliography
 \end{document}

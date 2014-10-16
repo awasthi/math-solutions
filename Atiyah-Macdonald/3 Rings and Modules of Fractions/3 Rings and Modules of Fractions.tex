@@ -444,7 +444,14 @@ Let $\phi$ be a natural $S^{-1}A$-module homomorphism from $S^{-1}B$ to $T^{-1}B
 
 \end{proof}
 
-\begin{problem} [AM Exercise 3.17] LET $A$
+\begin{problem} [AM Exercise 3.17] Let $A \xrightarrow{f} B \xrightarrow{g} C$ be ring homomorphisms. If $g \circ f$ is flat and $g$ is faithfully flat, then $f$ is flat. 
+\end{problem}
+
+\begin{proof}
+  $C$ is a flat $A$-module, and a faithfully flat $B$-module.   
+  \par Let M, N be $A$-modules, $\phi: M \to N$ be an injective map. Then, as $C$ is flat $A$-module, $\phi \otimes_A 1: M \otimes_A C \to N \otimes_A C$ is injective (AM proposition 2.19). As $C \simeq C \otimes_B B$, this means that $\phi \otimes_A (1 \otimes_B 1): M \otimes_A (B \otimes_B C) \to N \otimes_A( B \otimes_B C)$ is injective. As tensor product commutes, $(\phi \otimes_A 1) \otimes_B 1: (M \otimes_A B) \otimes_B  \to (N \otimes_A B) \otimes_B C$ is injective. As $C$ is faithfully flat $B$-module, $x \mapsto 1 \otimes_B x$ is injective, so $\phi \otimes_A 1: M \otimes_A B \to N \otimes_A B$ is injective. Thus, B is a flat $A$-module, again by the proposition 2.19
+   
+\end{proof}
 
 \begin{problem}[AM Exercise 3.21]\mbox{}
   \begin{enumi}

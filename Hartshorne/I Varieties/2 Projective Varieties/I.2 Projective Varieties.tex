@@ -149,7 +149,7 @@
 \usepackage{todonotes}
 
 \title{Hartshorne Ch.~I, \S2 Projective Varieties}
-\author{Takumi Murayama}
+\author{Takumi Murayama, Kyu Jun}
 
 \begin{document}
 \maketitle
@@ -251,6 +251,34 @@
   \par (b) From (a), $\PP^n$ is noetherian, so by prop 1.5, every algebraic set in $\PP^n$ can be written uniquely as a finite union of irreducible algebraic sets, no one containing another. 
 \end{proof}
 
+\begin{problem} If $Y$ is a projective variety with homogeneous coordinate ring $S(Y)$, show that $\dim S(Y) = \dim Y +1$. 
+\end{problem}
+\begin{proof}
+  Let $\phi_i: U_i \to \AA^n$ be the homeomorphism of prop 2.2, and $Y_i = \phi(Y \cap U_i)$. Then $A(Y_i)$ is its affine coordinate ring. Choose $i$ such that $\dim Y_i = \sup_{j} \dim Y_j = \dim Y$ (problem 1.10 (b)). 
+  \par Then, any element $\frac{f}{x_i^n} \in S(Y)_{x_i}$ of degree $0$ can be expressed as $$f(\frac{x_0}{x_i}, \cdots, \frac{x_{i-1}}{x_i}, 1, \frac{x_{i+1}}{x_i}, \cdots, \frac{x_n}{x_i})$$, which is $\alpha(f) \in A(Y_i)$ where $\alpha$ is a function defined in prop 2.2. 
+  Conversely, for $f \in A(Y_i)$ of degree $e$, consider a function $\beta: A(Y_i) \to (S(Y)_{x_i})_0$ such that $f \to {x_i}^{-e}f$, where $(S(Y)_{x_i})_0$, is the subring of elements of degree $0$ of the localized ring $S(Y)_{x_i}$. Then $\alpha \beta$, $\beta \alpha$ are identity maps. Thus, $A(Y_i)$ can be identified with $(S(Y)_{x_i})_0$. Then, $S(Y)_{x_i} = ((S(Y)_{x_i})_0)[x_i, x_i^{-1}] \simeq A(Y_i)[x_i, x_i^{-1}]$
+  \par From thm 1.8A, the transcendence degree of $K(A(Y_i)[x_i, x_i^{-1}]$ is one plus the transcendence degree of $K(A(Y_i))$. From prop 1.7, the transcendence degree of $K(A(Y_i)) = \dim(Y_i)$. Hence,  
+  $$\dim S(Y) = \dim S(Y)_{x_i} = \dim Y_i +1 = \dim Y+1$$
+  $\dim Y_i = \dim Y$ whenever $Y_i \neq \emptyset$ because if $Y_i$ is dense in $Y$ if $Y_i \neq \emptyset$ (from problem 2.7(b) which we will soon show)
+\end{proof}
+
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item $\dim \PP^n = n$
+    \item If $Y \subseteq \PP^n$ is a quasi-projective variety, then $\dim Y = \dim \overline{Y}$
+  \end{enuma}
+\end{problem}
+
+\begin{proof}
+  \par (a) from exercise 2.6, $\dim S(\PP^n) = n + 1 = \dim(\PP^n) +1$. Hence, $\dim \PP^n = n$
+  \par (b) From exercise 2.6, $\dim S(Y) = \dim Y +1 \iff \dim Y = \dim S(Y) -1 $. We note that $\dim S(Y) = \dim (CY)$, where $CY = \pi^{-1} (Y)$. $\pi : \AA^{n+1} \setminus \{0\} \to \PP^n$. This is true because $S(Y) = k[x_0, \cdots, x_n]/I(Y)$, and realizing this in an affine space $\AA^{n+1}$, we get $\dim S(Y) = \dim CY$(from prop 1.7). Then, from prop 1.10, $\dim S(Y) = \dim CY = \dim \overline{CY} = \dim C \overline{Y} = \dim S(\overline{Y})$. Hence, $\dim Y = \dim S(Y) -1 = \dim S(\overline{Y}) -1 = \dim \overline{Y}$.
+\end{proof}
+
+\begin{problem} A projective variety $Y \subseteq \PP^n$ has dimension $n-1$ if and only if it is the zero set of a single irreducible homogeneous polynomial $f$ of positive degree. $Y$ is called a hypersurface in $\PP^n$. 
+\end{problem}
+\begin{proof}
+  Let $Y$ be a projective variety of dimension $n-1$. 
+\end{proof}
 
 \printbibliography
 \end{document}

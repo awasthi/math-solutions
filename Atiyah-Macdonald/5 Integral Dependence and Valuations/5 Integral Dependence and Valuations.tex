@@ -1,0 +1,304 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{decorations.markings}
+\tikzset{
+  open/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} },
+  closed/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; } }, postaction = {decorate} },
+  imm/.style = {decoration = {markings, mark = at position 0.3 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; }, mark = at position 0.6 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} }
+}
+
+\usepackage{braket}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../../References}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumacounter}
+\newenvironment{enuma}
+{\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumicounter}
+\newenvironment{enumi}
+{\begin{list}{$\roman{enumicounter})$}{\usecounter{enumicounter} \parsep=0em \itemsep=0em \leftmargin=2.25em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumnumcounter}
+\newenvironment{enumnum}
+{\begin{list}{$(\arabic{enumnumcounter})$}{\usecounter{enumnumcounter} \parsep=0em \itemsep=0em \leftmargin=2.25em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{universalproperty}{Universal Property}
+\newtheorem{problem}{Exercise}[section]
+\newtheorem{subproblem}{Problem}[problem]
+\newtheorem{lemma}{Lemma}%[section]
+\newtheorem*{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{property}{Property}[problem]
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{figure}{problem}
+\numberwithin{equation}{section}
+
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Ass}{Ass}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\WeakAss}{\widetilde{Ass}}
+\let\Im\relax
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\SPEC}{\mathbf{Spec}}
+\DeclareMathOperator{\Sp}{sp}
+\DeclareMathOperator{\Max}{Max}
+\DeclareMathOperator{\maxSpec}{maxSpec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Soc}{Soc}
+\DeclareMathOperator{\Ht}{ht}
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\V}{\mathbf{V}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\stimes}{\text{\footnotesize\textcircled{s}}}
+\DeclareMathOperator{\End}{End}
+\let\ker\relax
+\DeclareMathOperator{\ker}{Ker}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{Coker}
+\DeclareMathOperator{\LCM}{LCM}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\dv}{div}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\trd}{tr.d.}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\lt}{lt}
+\DeclareMathOperator{\lc}{lc}
+\newcommand{\GR}{\mathbb{G}\mathrm{r}}
+\newcommand{\gR}{\mathrm{Gr}}
+\newcommand{\EE}{\mathscr{E}}
+\newcommand{\FF}{\mathscr{F}}
+\newcommand{\GG}{\mathscr{G}}
+\newcommand{\HH}{\mathscr{H}}
+\newcommand{\II}{\mathscr{I}}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\MM}{\mathscr{M}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\Ss}{\mathscr{S}}
+\newcommand{\Af}{\mathfrak{A}}
+\newcommand{\Aa}{\mathscr{A}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\Sh}{\mathfrak{Sh}}
+\newcommand{\Psh}{\mathfrak{Psh}}
+\newcommand{\LRS}{\mathsf{LRS}}
+\newcommand{\Sch}{\mathfrak{Sch}}
+\newcommand{\Var}{\mathfrak{Var}}
+\newcommand{\Rings}{\mathfrak{Rings}}
+\DeclareMathOperator{\In}{in}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Spe}{Sp\acute{e}}
+\DeclareMathOperator{\HHom}{\mathscr{H}\!\mathit{om}}
+\newcommand{\isoto}{\overset{\sim}{\to}}
+\newcommand{\isolongto}{\overset{\sim}{\longrightarrow}}
+\newcommand{\Mod}{\mathsf{mod}\mathchar`-}
+\newcommand{\MOD}{\mathsf{Mod}\mathchar`-}
+\newcommand{\gr}{\mathsf{gr}\mathchar`-}
+\newcommand{\qgr}{\mathsf{qgr}\mathchar`-}
+\newcommand{\uqgr}{\underline{\mathsf{qgr}}\mathchar`-}
+\newcommand{\qcoh}{\mathsf{qcoh}\mathchar`-}
+\newcommand{\Alg}{\mathsf{Alg}\mathchar`-}
+\newcommand{\coh}{\mathsf{coh}\mathchar`-}
+\newcommand{\vect}{\mathsf{vect}\mathchar`-}
+\newcommand{\imm}[1][imm]{\hspace{0.75ex}\raisebox{0.58ex}{%
+\begin{tikzpicture}[commutative diagrams/every diagram]
+\draw[commutative diagrams/.cd, every arrow, every label,hook,{#1}] (0,0ex) -- (2.25ex,0ex);
+\end{tikzpicture}}\hspace{0.75ex}}
+\newcommand{\dashto}[2]{\smash{\hspace{-0.7em}\begin{tikzcd}[column sep=small,ampersand replacement=\&] {#1} \rar[dashed] \& {#2} \end{tikzcd}\hspace{-0.7em}}}
+
+%\usepackage{todonotes}
+%\usepackage[notref,notcite]{showkeys}
+
+\title{Atiyah-Macdonald Ch.~5 Integral Dependence and Valuations}
+\author{Takumi Murayama and Kyu Jun}
+
+\begin{document}
+\maketitle
+\setcounter{section}{5}
+\begin{problem}[AM Ch 5 \# 16]
+  Let $k$ be a field and let $A \ne 0$ be a finitely generated $k$-algebra. Then there exist elements $y_1,\ldots,y_r \in A$ which are algebraically independent over $k$ and such that $A$ is integral over $k[y_1,\ldots,y_r]$.
+\end{problem}
+\begin{proof}
+  We assume $k$ is infinite. Let $x_1,\ldots,x_n$ generate $A$ as a $k$-algebra. We can rearrange the $x_i$ such that $x_1,\ldots,x_r$ are algebraically independent over $k$ and each of $x_{r+1},\ldots,x_n$ is algebraic over $k[x_1,\ldots,x_r]$. Proceed by induction on $n$. If $n = r$ there is nothing to do, and so suppose $n > r$ and that the result is true for $n-1$ generators. In this case, the generator $x_n$ is algebraic over $k[x_1,\ldots,x_{n-1}]$, i.e., there is a polynomial $f \ne 0$ in $n$ variables such that $f(x_1,\ldots,x_{n-1},x_n) = 0$. Let $F$ be the homogeneous part of highest degree in $f$. Since $k$ is infinite, there exist $\lambda_1,\ldots,\lambda_{n-1} \in k$ such that $F(\lambda_1,\ldots,\lambda_{n-1},1) \ne 0$, since $F$ is a non-zero polynomial in $n-1$ variables, and so cannot induce the zero function on $k^{n-1}$ when $k$ is infinite. Now let $x_i' = x_i - \lambda_ix_n$ for $1 \le i \le n-1$, and let $A' = k[x_1',\ldots,x'_{n-1}]$. We claim that $x_n$ is integral over $A'$.
+  \par We let $d = \deg(F)$ and choose $G_j$ in $n-1$ variables such that
+  \begin{equation*}
+    F(z_1,\ldots,z_n) = \sum_{j=0}^d z_n^jG_j(z_1,\ldots,z_{n-1}).
+  \end{equation*}
+  Each $G_j$ is a homogeneous polynomial of degree $d-j$. Letting $z_i' = z_i - \lambda_iz_n$, we compute
+  \begin{align*}
+    F(z_1,\ldots,z_n) &= \sum_{j=0}^d z_n^j G_j(z_1' + \lambda_1z_n,\ldots,z_{n-1}' + \lambda_{n-1}z_n)\\
+    &= \sum_{j=0}^d z_n^j [z_n^{d-j}G_J(\lambda_1,\ldots,\lambda_{n-1},1)+H_j(z'_1,\ldots,z'_{n-1},z_n)]\\
+    &= z_n^dF(\lambda_1,\ldots,\lambda_{n-1},1)+\sum_{j=0}^dz_n^jH_j(z'_1,\ldots,z'_{n-1},z_n),
+  \end{align*}
+  where each $H_j$ is a polynomial in $z'_1,\ldots,z'_{n-1},z_n$ with degree $< d-j$ in $z_n$, with coefficients in $k$. Defining a new polynomial
+  \begin{equation*}
+    \hat{F}(z) = z^d + \frac{1}{F(\lambda_1,\ldots,\lambda_{n-1},1)} \sum_{j=0}^d z^jH_j(x'_1,\ldots,x'_{n-1},z),
+  \end{equation*}
+  we see $\hat{F}$ is monic in $z$ with coefficients in $A'$ such that $\hat{F}(x_n) = F(x_1,\ldots,x_{n-1},x_n) = 0$. Thus, $x_n$ is integral over $A'$, i.e., $A = k[x_1,\ldots,x_n] = k[x_1',\ldots,x_{n-1}',x_n]$ is integral over $A'$. By the induction hypothesis, there are $y_1,\ldots,y_{n-1} \in A'$ algebraically independent over $k$ such that $A'$ is integral over $A'[y_1,\ldots,y_{n-1}]$. Now $y_1,\ldots,y_n \in A$ are algebraically independent over $k$ and $A$ is integral over $A[y_1,\ldots,y_n]$, and we are done.
+\end{proof}
+
+\begin{problem}[AM Exercise $5.10i$]
+  A ring homomorphism $f : A \to B$ is said to have the \emph{going-up property} \emph{(}resp.~the \emph{going-down property)} if the conclusion of the going-up theorem $(5.11)$ \emph{(}resp.~the \emph{going-down theorem (5.16))} holds for $B$ and its subring $f(A)$.
+  \par Let $f^* : \Spec(B) \to \Spec(A)$ be the mapping associated with $f$.
+  \par Consider the following three statements:
+  \begin{enum}
+    \item $f^*$ is a closed mapping.
+    \item $f$ has the going-up property.
+    \item Let $\mathfrak{q}$ be any prime ideal of $B$ and let $\mathfrak{p} = \mathfrak{q}^c$. Then $f^* : \Spec(B/\mathfrak{q}) \to \Spec(A/\mathfrak{p})$ is surjective.
+  \end{enum}
+  Prove that $(a) \Rightarrow (b) \Leftrightarrow (c)$.
+\end{problem}
+\begin{proof}
+  $(a) \Rightarrow (b)$. Suppose $\mathfrak{p}_1 \subseteq \mathfrak{p}_2$ a chain of prime ideals in $f(A)$ and $\mathfrak{q}_1 \subseteq B$ lies over $\mathfrak{p}_1$. Since $f^*(\mathfrak{q}_1) = f^{-1}(\mathfrak{p}_1) \subseteq f^{-1}(\mathfrak{p}_2)$, we have $f^{-1}(\mathfrak{p}_2) \in \V(f^*(\mathfrak{q}_1))$. Note $\V(f^*(\mathfrak{q}_1)) = \V(f^{-1}(\mathfrak{q}_1)) = \overline{f^*(\V(\mathfrak{q}_1))} = f^*(\V(\mathfrak{q}_1))$ by the AM Exercise $1.21iii)$ and the fact that $f^*$ is closed. Thus, $f^{-1}(\mathfrak{p}_2) \in f^*(\V(\mathfrak{q}_1))$, and so there exists $\mathfrak{q}_2 \in \V(\mathfrak{q}_1)$ such that $f^*(\mathfrak{q}_2) = f^{-1}(\mathfrak{p}_2)$. Since $f^*(\mathfrak{q}_2) = f^{-1}(\mathfrak{q}_2 \cap f(A))$, we then see that $\mathfrak{p}_2 = \mathfrak{q}_2 \cap f(A)$, and so $\mathfrak{q}_2$ lies over $\mathfrak{p}_2$. By induction as in the original proof of Going Up, we are done.
+  \par $(b) \Rightarrow (c)$. Suppose $\mathfrak{q} \in \Spec(B)$ and let $\mathfrak{p} = f^{-1}(\mathfrak{q}) = f^{-1}(\mathfrak{q} \cap f(A))$. Consider $\mathfrak{p}' \in \V(\mathfrak{p})$; note that $\V(\mathfrak{p}) \xleftrightarrow{1-1\:} \Spec(A/\mathfrak{p})$, and so showing that $\mathfrak{p}' \in \Im f^*$ suffices. Then, $\mathfrak{p} \subseteq \mathfrak{p}'$, and so $f(\mathfrak{p}) \subseteq f(\mathfrak{p}')$ is a chain of prime ideals in $f(A)$ and $\mathfrak{q} \cap f(A) = f(\mathfrak{p})$. By $(b)$, the Going Up property, there exists $\mathfrak{q}' \subseteq B$ such that $\mathfrak{q}' \cap f(A) = f(\mathfrak{p}')$. Finally, $f^{-1}(\mathfrak{q}' \cap f(A)) = f^*(\mathfrak{q}') = f^{-1}(f(\mathfrak{p}')) = \mathfrak{p}'$, and so $f^*$ is surjective.
+  \par $(c) \Rightarrow (b)$. Suppose $\mathfrak{p}_1 \subseteq \mathfrak{p}_2$ is a chain of prime ideals in $f(A)$ and $\mathfrak{q}_1 \subseteq B$ lies over $\mathfrak{p}_1$. Note that $f^{-1}(\mathfrak{p}_1)$ is prime since it is a contraction of a prime ideal, and also $f^{-1}(\mathfrak{p}_1) = f^{-1}(\mathfrak{q}_1 \cap f(A)) = (\mathfrak{q}_1)^c$. By $(c)$, $f^* : \V(\mathfrak{q}_1) \to \V(f^{-1}(\mathfrak{p}_1))$ is surjective, and so $f^{-1}(\mathfrak{p}_2) \in \V(f^{-1}(\mathfrak{p}_1))$ has preimage $\mathfrak{q}_2 = (f^*)^{-1}(f^{-1}(\mathfrak{p}_2)) \in \V(\mathfrak{q}_1)$. $\mathfrak{q}_2 \in \V(\mathfrak{q}_1) \implies \mathfrak{q}_1 \subseteq \mathfrak{q}_2$, and $f^{-1}(\mathfrak{p}_2) = f^*(\mathfrak{q}_2) = f^{-1}(\mathfrak{q}_2 \cap f(A)) \implies \mathfrak{p}_2 = \mathfrak{q}_2 \cap f(A)$, i.e., $\mathfrak{q}_2$ lies over $\mathfrak{p}_2$. By induction as in the original proof of Going Up, we are done.
+\end{proof}
+
+\begin{problem}[AM Exercise 5.1]
+  Let $f: A \to B$ be an integral homomorphism of rings. Show that $f^* : \Spec(B) \to \Spec(A)$ is a \emph{closed} mapping, i.e., that it maps closed sets to closed sets.
+\end{problem}
+\begin{proof}
+  Let $\mathfrak{q} \in \Spec(B)$; we claim $f^*(\V(\mathfrak{q})) = \V(f^*(\mathfrak{q}))$. By AM Exercise $1.21iii)$, we see $f^*(\V(\mathfrak{q})) \subseteq \overline{f^*(\V(\mathfrak{q}))} = \V(f^{-1}(\mathfrak{q})) = \V(f^*(\mathfrak{q}))$. Conversely, if $\mathfrak{p} \in \V(f^*(\mathfrak{q}))$, then $f^*(\mathfrak{q}) \subseteq \mathfrak{p}$, and so $f(f^*(\mathfrak{q})) \subseteq f(\mathfrak{p})$ is a chain of prime ideals in $f(A)$. Since $f(f^*(\mathfrak{q})) = f(f^{-1}(\mathfrak{q})) = \mathfrak{q} \cap f(A)$, we have that $\mathfrak{q}$ lies over $f(f^*(\mathfrak{q}))$, and so since $B$ is integral over $f(A)$, by Going Up there exists $\mathfrak{r} \in \Spec(B)$ such that $\mathfrak{r} \supseteq \mathfrak{q}$ and $\mathfrak{r} \cap f(A) = f(\mathfrak{p})$. Thus, $\mathfrak{p} = f^{-1}(f(\mathfrak{p})) = f^{-1}(\mathfrak{r} \cap f(A)) = f^{-1}(\mathfrak{r}) = f^*(\mathfrak{r})$, where $\mathfrak{r} \in \V(\mathfrak{q})$. This implies $\mathfrak{p} \in f^*(\V(\mathfrak{q}))$; thus, $f^*(\V(\mathfrak{q})) = \V(f^*(\mathfrak{q}))$, i.e., $f^*$ is closed.
+\end{proof}
+
+\begin{problem}[AM Exercise $5.10ii$]
+  In the same situation as in Problem $3.1$, show that $f$ has the going-down property $\iff$ for any prime ideal $\mathfrak{q}$ of $B$, if $\mathfrak{p} = \mathfrak{q}^c$, then $f^*:\Spec(B_\mathfrak{q}) \to \Spec(A_\mathfrak{p})$ is surjective.
+\end{problem}
+\begin{proof}
+  $(b) \Rightarrow (c)$. Suppose $\mathfrak{q} \in \Spec(B)$ and let $\mathfrak{p} = f^{-1}(\mathfrak{q}) = f^{-1}(\mathfrak{q} \cap f(A))$. Consider $\mathfrak{p}' \in \Spec(A) \setminus \V(\mathfrak{p})$; note that $\Spec(A) \setminus \V(\mathfrak{p}) \xleftrightarrow{1-1\:} \Spec(A_\mathfrak{p})$, and so showing that $\mathfrak{p}' \in \Im f^*$ suffices. Then, $\mathfrak{p}' \subseteq \mathfrak{p}$, and so we have $f(\mathfrak{p}') \subseteq f(\mathfrak{p})$ a chain of prime ideals in $f(A)$ and $\mathfrak{q} \cap f(A) = f(\mathfrak{p})$. By $(b)$, the Going Down property, there exists $\mathfrak{q}' \subseteq B$ such that $\mathfrak{q}' \cap f(A) = f(\mathfrak{p}')$. Finally, $f^{-1}(\mathfrak{q}' \cap f(A)) = f^*(\mathfrak{q}') = f^{-1}(f(\mathfrak{p}')) = \mathfrak{p}'$, and so $f^*$ is surjective.
+  \par $(c) \Rightarrow (b)$. Suppose $\mathfrak{p}_1 \subseteq \mathfrak{p}_2$ is a chain of prime ideals in $f(A)$ and $\mathfrak{q}_2 \subseteq B$ lies over $\mathfrak{p}_2$. Note that $f^{-1}(\mathfrak{p}_2)$ is prime since it is a contraction of a prime ideal, and also $f^{-1}(\mathfrak{p}_2) = f^{-1}(\mathfrak{q}_2 \cap f(A)) = (\mathfrak{q}_2)^c$. By $(c)$, $f^* : \Spec(B_{\mathfrak{q}_2}) \to \Spec(A_{f^{-1}(\mathfrak{p}_2)})$ is surjective, and so $f^{-1}(\mathfrak{p}_1) \in \Spec(A_{f^{-1}(\mathfrak{p}_2)})$ has preimage $\mathfrak{q}_1 = (f^*)^{-1}(f^{-1}(\mathfrak{p}_1)) \in \Spec(B_{\mathfrak{q}_2})$. $\mathfrak{q}_1 \in \Spec(B_{\mathfrak{q}_2}) \implies \mathfrak{q}_1 \subseteq \mathfrak{q}_2$, and $f^{-1}(\mathfrak{p}_1) = f^*(\mathfrak{q}_1) = f^{-1}(\mathfrak{q}_1 \cap f(A)) \implies \mathfrak{p}_1 = \mathfrak{q}_1 \cap f(A)$, i.e., $\mathfrak{q}_1$ lies over $\mathfrak{p}_1$. By induction as in the original proof of Going Down, we are done.
+\end{proof}
+
+\begin{problem}[AM Exercise 5.11]
+  Let $f: A \to B$ be a flat homomorphism of rings. Then $f$ has the going-down property.
+\end{problem}
+\begin{proof}
+  By AM Exercise $3.18$, we know that if $\mathfrak{q} \in \Spec(B)$ and $\mathfrak{p} = \mathfrak{q}^c$, then $f^* : \Spec(B_\mathfrak{q} \to \Spec(A_\mathfrak{p}))$ is surjective. By AM Exercise $5.10ii)$ above, this implies $f$ has the going-down property.
+\end{proof}
+
+\begin{problem}[cf.~AM Ch 5 \# 12,13]
+  Let $G$ be a finite group of automorphisms of a ring $A$, and let $A^G$ denote the subring of $G$-invariants, that is of all $x \in A$ such that $\sigma(x) = x$ for all $\sigma \in G$.
+  \begin{enum}
+    \item Prove that $A$ is integral over $A^G$.
+    \item Fixing a prime ideal $P \subseteq A^G$, let $\mathcal{Q}$ be the set of primes in $A$ whose contraction is $P$. Show that $G$ acts transitively on $\mathcal{Q}$ (i.e., ``$G$ acts transitively on the fibers of the quotient $X = \Spec(A) \to \Spec(A^G) = X/G$'').
+  \end{enum}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  %^$A^G$ is a subring since if $x,y \in A^G$, $xy = \sigma(x)\sigma(y) = \sigma(xy)$, $x\pm y = \sigma(x)\pm\sigma(y) = \sigma(x\pm y)$, and $1 \in A^G$ by the fact that $0 \ne x = \sigma(x) = \sigma(1x) = \sigma(1)x \implies \sigma(1) = 1$.
+  Let $x \in A$ and consider
+  \begin{equation*}
+    f(t) = \prod_{\sigma \in G} (t - \sigma(x)) = (t-x)\prod_{\sigma \ne e}(t-\sigma(x)),
+  \end{equation*}
+  since $e \in G$. Thus, $f(x) = 0$, and since the highest order term of $f(t)$ is $t^{|G|}$, we see that $f$ is monic. We then show $f(t)$ has coefficients in $A^G$. We see that the coefficients of $f$ are elementary symmetric polynomials, i.e., of the form
+  \begin{equation*}
+    a_k = \sum_{i_1 < \cdots < i_k} \sigma_{i_1}(x)\cdots\sigma_{i_k}(x),
+  \end{equation*}
+  where we enumerate $G=\{\sigma_i\}$. $\tau(a_k) = a_k$ for any $\tau\in G$, for $\sigma$ just permutes terms in the summation; thus, $a_k \in A^G$ for all $k$, and $A$ is integral over $A^G$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Consider $Q_1,Q_2 \in \mathcal{Q}$. If $x \in Q_1$, then $\prod_{\sigma \in G}\sigma(x) \in Q_1 \cap A^G = P \subseteq Q_2$, for $e \in G \implies x \mid \prod\sigma(x)$ and $\tau(\prod\sigma(x)) = \prod(\sigma(x))$ for any $\tau \in G$ since $G$ is a group. It follows $\sigma(x) \in Q_2$ for some $\sigma$ since $Q_2$ is prime, i.e., $x \in \sigma^{-1}(Q_2)$. Thus $Q_1 \subseteq \bigcup_{\sigma \in G}\sigma^{-1}(Q_2)$. $\sigma^{-1}(Q_2) = Q_2^c$ and so they are prime; by prime avoidance $Q_1 \subseteq \sigma^{-1}(Q_2)$ for some $\sigma \in G$. But since $Q_1 \cap A^G = \sigma^{-1}(Q_2) \cap A^G = P$, by Incomparability we have $Q_1 = \sigma^{-1}(Q_2)$, i.e., $G$ acts transitively on $\mathcal{Q}$.
+\end{proof}
+
+\begin{problem}[cf.~AM Ch 5 \# 14,15]
+  Suppose that $A$ is a normal domain with field of fractions $K$. Let $L$ be any extension field of $K$, and $B$ the integral closure of $A$ inside of $L$.
+  \begin{enum}
+    \item Recall that an automorphism of $L$ over $K$ is a ring isomorphism $\phi : L \to L$ such that $\phi(x) = x$ for all $x \in K$, and that the set of all such automorphisms $\Aut(L/K)$ form a group. Show that $\Aut(L/K)$ acts on $B$, i.e.~$\phi(B) = B$ for all $\phi \in \Aut(L/K)$.
+    \item If $L$ is a finite Galois extension of $K$ with $G = \Aut(L/K)$, then show $A = B^G$ and the previous problem applies. What happens if instead the extension if purely inseparable?
+  \end{enum}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Suppose $b \in B$, and $f(x) = x^n + a_1x^{n-1} + \cdots + a_n$ with $a_i \in A$ is such that $f(b) = 0$. Since $\phi(f(x)) = \phi(x)^n + a_1\phi(x)^{n-1} + \cdots + a_n = f(\phi(x))$ by the fact that $\phi \in \Aut(L/K)$ holds $K \supseteq A$ fixed, we have $0 = f(b) = \phi(f(b)) = f(\phi(b))$, i.e., $\phi(B)$ is integral over $A$ and so $\phi(B) \subseteq B$ for all $\phi \in \Aut(L/K)$. In particular, we also have $\phi^{-1}(B) \subseteq B$ and so $B \subseteq \phi(B)$, which implies $\phi(B) = B$ for all $\phi \in \Aut(L/K)$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We have that $A \subseteq B \implies A = A^G \subseteq B^G$ by the fact that $A \subseteq K$, and so it suffices to show $B^G \subseteq A$. We have that $A \subseteq B^G \subseteq L^G = K$ by definition of $\Aut(L/K)$. But then, $B^G$ is integral over $A$, and $A$ normal implies it is integrally closed in $K$, which implies $B^G = A$. Thus, letting $G = \Aut(L/K)$ (finite since $[L:K] < \infty$) act on the ring $B$, we see that fixing a prime ideal $P \subseteq A = B^G$, $G$ acts transitively on the set of primes in $B$ whose contraction is $P$ by Problem $5(b)$.
+  \par Now consider the case when the extension $L \supseteq K$ is purely inseparable; we want to show an analogue of Problem $5(b)$. So, suppose $P \subseteq A$ is prime, and $\mathcal{Q}$ is the set of primes in $B$ whose contraction is $P$. We claim that $Q = \{x \in B \mid x^{p^m} \in P~\text{for some}~m \ge 0\}$ for any $Q \in \mathcal{Q}$, where $p = \Char(K)$ prime since we have a purely inseparable extension. Now if $x^{p^m} \in P$ for some $m \ge 0$, then $x^{p^m} \in Q$ and so $x \in Q$. Conversely, if $x \in Q$ then $x^{p^m} \in K$ for some $m \ge 0$ since $L/K$ is purely inseparable. Then, $x^{p^m} \in Q \cap K = P$, and so $Q = \{x \in B \mid x^{p^m} \in P~\text{for some}~m \ge 0\}$. This implies that there is only one unique $Q \in \mathcal{Q}$, and so $G = \Aut(L/K)$ trivially acts transitively on $\mathcal{Q}$. Moreover, $\Spec(B) \leftrightarrow \Spec(A)$ is a bijection since $Q$ is uniquely defined by $P$, and vice versa.
+\end{proof}
+
+\begin{problem}[AM Exercise 5.28]
+  Let $A$ be an integral domain, $K$ its field of fractions. Show that the following are equivalent:
+  \begin{enum}
+    \item $A$ is a valuation ring of $K$;
+    \item If $\mathfrak{a},\mathfrak{b}$ are any two ideals of $A$, then either $\mathfrak{a} \subseteq \mathfrak{b}$ or $\mathfrak{b} \subseteq \mathfrak{a}$.
+  \end{enum}
+  Deduce that if $A$ is a valuation ring and $\mathfrak{p}$ is a prime ideal of $A$, then $A_{\mathfrak{p}}$ and $A/\mathfrak{p}$ are valuation rings of their fields of fractions.
+\end{problem}
+\begin{proof}
+  $(1) \Rightarrow (2)$. Consider two ideals $\mathfrak{a},\mathfrak{b} \subseteq A$. Suppose, without loss of generality, that there exists $x \in \mathfrak{a} \setminus \mathfrak{b}$, and let $0 \ne y \in \mathfrak{b}$. Then, $x/y \notin A$, for otherwise $x \in \mathfrak{b}$ since $\mathfrak{b}$ is an ideal, and so $y/x \in A$, and so $y \in \mathfrak{a}$. Thus, $\mathfrak{b} \subseteq \mathfrak{a}$.
+  \par $(2) \Rightarrow (1)$. Suppose there exist $a,b \in A$ such that $b \ne 0$ and $a/b \notin K$; in particular, this implies $a \ne 0$. Let $\mathfrak{a} = (a),\mathfrak{b} = (b)$. If $\mathfrak{a} \subseteq \mathfrak{b}$, then there exists $c \in A$ such that $a = bc$, i.e., $a/b = c \in A$, a contradiction. Thus, $\mathfrak{b} \subseteq \mathfrak{a}$, and so there exists $c \in A$ such that $b = ac$, i.e., $b/a = c \in A$, and so $A$ is a valuation ring of $K$.
+  \par Now suppose $\mathfrak{p} \in \Spec(A)$. Any two ideals in $A_{\mathfrak{p}}$ (resp.~$A/\mathfrak{p}$) are of the form $\mathfrak{a}_{\mathfrak{p}},\mathfrak{b}_{\mathfrak{p}}$ (resp.~$\mathfrak{a}/\mathfrak{p},\mathfrak{b}/\mathfrak{p}$), where $\mathfrak{a},\mathfrak{b}$ are ideals of $A$. Since $A$ is a valuation ring, without loss of generality $\mathfrak{b} \subseteq \mathfrak{a}$, and so $\mathfrak{b}_{\mathfrak{p}} \subseteq \mathfrak{a}_{\mathfrak{p}}$ (resp.~$\mathfrak{b}/\mathfrak{p} \subseteq \mathfrak{a}/\mathfrak{p}$). Thus, $A_{\mathfrak{p}}$ (resp.~$A/\mathfrak{p}$) is a valuation ring of its field of fractions.
+\end{proof}
+
+\begin{problem}[AM Exercise 5.29]
+  Let $A$ be a valuation ring of a field $K$. Show that every subring of $K$ which contains $A$ is a local ring of $A$.
+\end{problem}
+\begin{lemma*}[AM Exercise 5.27]
+  Let $A,B$ be two local rings. $B$ is said to \emph{dominate} $A$ if $A$ is a subring of $B$ and the maximal ideal $\mathfrak{m}$ of $A$ is contained in the maximal ideal $\mathfrak{n}$ of $B$ (or, equivalently, $\mathfrak{m} = \mathfrak{n} \cap A$). Let $K$ be a field and let $\Sigma$ be the set of all local subrings of $K$. If $\Sigma$ is ordered by the relation of domination, show that $\Sigma$ has maximal elements and that $A \in \Sigma$ is maximal if and only if $A$ is a valuation ring of $K$.
+\end{lemma*}
+\begin{proof}[Proof of Lemma]
+  Let $\{A_\alpha\}$ be a chain in $\Sigma$; let $A = \bigcup A_\alpha, \mathfrak{m} = \bigcup \mathfrak{m}_\alpha$. We claim $A$ is a local ring with maximal ideal $\mathfrak{m}$. $x \in A \setminus \mathfrak{m}$ implies $x \in A_\alpha \setminus \mathfrak{m}_\alpha$ for some $\alpha$. By MR Corollary $1.9$, we then see $x \in A_\alpha^\times$, and so $x \in A^\times$. By AM Proposition $1.6i$, then, $(A,\mathfrak{m})$ is local. By Zorn's lemma, $\Sigma$ therefore has a maximal element.
+  \par $\Rightarrow$. Letting $f_\alpha : A_\alpha \hookrightarrow \overline{K}$ be the canonical inclusions, $\Sigma' = \{(A_\alpha,f_\alpha)\}$ has the same maximal elements as $\Sigma$, and moreover satisfies the construction on p.~$65$ in AM. Thus, by AM Theorem $5.21$, if $A \in \Sigma$ is maximal, it is a valuation ring of $K$.
+  \par $\Leftarrow$. Suppose $(A,\mathfrak{m})$ is a valuation ring properly dominated by $(B,\mathfrak{n})$. Choose $x \in B \setminus A$ such that $x^{-1} \in A$, which exists since $A$ is a valuation ring. Then, $x^{-1} \in \mathfrak{m}$ since $x \notin A \implies x^{-1} \notin A^\times$, and then by MR Corollary $1.9$. But $x \in B$ implies $x^{-1} \notin \mathfrak{n}$ by MR Corollary $1.9$, and so $\mathfrak{m} \not\subseteq \mathfrak{n}$, a contradiction.
+\end{proof}
+\begin{proof}
+  Let $A \subseteq B \subseteq K$; we want to show $B = A_{\mathfrak{p}}$ for some $\mathfrak{p} \subseteq A$. By AM Proposition $5.18i,ii$, we see $B$ is a valuation ring of $K$, and is moreover local. Let $\mathfrak{M}$ be the maximal ideal of $B$. Let $\mathfrak{p} = A \cap \mathfrak{M}$, which is prime since contractions of prime ideals of prime.
+  \par We claim $B = A_{\mathfrak{p}}$. First, consider $x \in A \setminus \mathfrak{p}$. Then, $x \notin \mathfrak{M}$ by definition of $\mathfrak{p}$, and so $x \in B^\times$ by MR Corollary $1.9$. Thus, $a \in A \implies a/x \in B$, and so $A_{\mathfrak{p}} \subseteq B$. Now since $A_{\mathfrak{p}} \subseteq B$, we also have $\mathfrak{p}A_{\mathfrak{p}} \subseteq \mathfrak{M}$, where both ideals are maximal, i.e., $B$ dominates $A_{\mathfrak{p}}$. Since $A_{\mathfrak{p}}$ is a valuation ring by AM Exercise 5.28, we see that $A_{\mathfrak{p}}$ is maximal with respect to domination by AM Exercise $5.27$, i.e., $B = A_{\mathfrak{p}}$.
+\end{proof}
+
+\begin{problem}[AM Exercise 5.33]
+  Let $\Gamma$ be a totally ordered abelian group. We shall show how to construct a field $K$ and a valuation $v$ of $K$ with $\Gamma$ as value group. Let $k$ be any field and let $A = k[\Gamma]$ be the group algebra of $\Gamma$ over $k$. By definition, $A$ is freely generated as a $k$-vector space by elements $x_\alpha~(\alpha \in \Gamma)$ such that $x_\alpha x_\beta = x_{\alpha+\beta}$. Show that $A$ is an integral domain.
+  \par If $u = \lambda_1x_{\alpha_1} + \cdots + \lambda_nx_{\alpha_n}$ is any non-zero element of $A$, where the $\lambda_i$ are all $\ne 0$ and $\alpha_1 < \cdots < \alpha_n$, define $v_0(u)$ to be $\alpha_1$. Show that the mapping $v_0 : A - \{0\} \to \Gamma$ satisfies the conditions $(1)$ and $(2)$ of Exercise $31$.
+  \par Let $K$ be the field of fractions of $A$. Show that $v_0$ can be uniquely extended to a valuation $v$ of $K$, and that the value group of $v$ is precisely $\Gamma$.
+\end{problem}
+\begin{proof}
+  Suppose $uv = 0$ for nonzero $u,v \in A$. Then, $u = \lambda_1x_{\alpha_1} + \cdots + \lambda_mx_{\alpha_m}, v = \eta_1x_{\beta_1} + \cdots + \eta_nx_{\beta_n}$, where we assume without loss of generality that $\alpha_i,\beta_j$ are totally ordered by the order on $\Gamma$. Then, the least term in $uv$ with respect to this order is $\lambda_1\eta_1x_{\alpha_1+\beta_1}$, which is nonzero since $\lambda_1\eta_1 \ne 0$, a contradiction. Thus, $A$ is a domain.
+  \par Consider $u,v$ as above. Then, $v_0(uv) = \alpha_1+\beta_1 = v_0(u)+v_0(v)$, and $v_0(u+v) \ge \min\{\alpha_1,\beta_1\} = \min\{v_0(u),v_0(v)\}$, and so $v_0$ satisfies $(1),(2)$ in AM Exercise 5.31.
+  \par We want to extend $v_0$ to a valuation $v : K \setminus \{0\} \to \Gamma$. Such an extension must satisfy $(1)$ in AM Exercise $5.31$, i.e., $v(a/s) + v(s) = v(a)$. Thus, $v(a/s) = v(a) - v(s)$ uniquely determines $v$, and since $v_0$ maps onto $\Gamma$ and every element $-v(s) \in \Gamma$ by $\Gamma$'s additive group structure, we see the value group of $v$ is precisely $\Gamma$.
+\end{proof}
+
+
+\printbibliography
+\end{document}

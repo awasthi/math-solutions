@@ -163,22 +163,7 @@
   Let $k$ be a field and let $A \ne 0$ be a finitely generated $k$-algebra. Then there exist elements $y_1,\ldots,y_r \in A$ which are algebraically independent over $k$ and such that $A$ is integral over $k[y_1,\ldots,y_r]$.
 \end{problem}
 \begin{proof}
-  We assume $k$ is infinite. Let $x_1,\ldots,x_n$ generate $A$ as a $k$-algebra. We can rearrange the $x_i$ such that $x_1,\ldots,x_r$ are algebraically independent over $k$ and each of $x_{r+1},\ldots,x_n$ is algebraic over $k[x_1,\ldots,x_r]$. Proceed by induction on $n$. If $n = r$ there is nothing to do, and so suppose $n > r$ and that the result is true for $n-1$ generators. In this case, the generator $x_n$ is algebraic over $k[x_1,\ldots,x_{n-1}]$, i.e., there is a polynomial $f \ne 0$ in $n$ variables such that $f(x_1,\ldots,x_{n-1},x_n) = 0$. Let $F$ be the homogeneous part of highest degree in $f$. Since $k$ is infinite, there exist $\lambda_1,\ldots,\lambda_{n-1} \in k$ such that $F(\lambda_1,\ldots,\lambda_{n-1},1) \ne 0$, since $F$ is a non-zero polynomial in $n-1$ variables, and so cannot induce the zero function on $k^{n-1}$ when $k$ is infinite. Now let $x_i' = x_i - \lambda_ix_n$ for $1 \le i \le n-1$, and let $A' = k[x_1',\ldots,x'_{n-1}]$. We claim that $x_n$ is integral over $A'$.
-  \par We let $d = \deg(F)$ and choose $G_j$ in $n-1$ variables such that
-  \begin{equation*}
-    F(z_1,\ldots,z_n) = \sum_{j=0}^d z_n^jG_j(z_1,\ldots,z_{n-1}).
-  \end{equation*}
-  Each $G_j$ is a homogeneous polynomial of degree $d-j$. Letting $z_i' = z_i - \lambda_iz_n$, we compute
-  \begin{align*}
-    F(z_1,\ldots,z_n) &= \sum_{j=0}^d z_n^j G_j(z_1' + \lambda_1z_n,\ldots,z_{n-1}' + \lambda_{n-1}z_n)\\
-    &= \sum_{j=0}^d z_n^j [z_n^{d-j}G_J(\lambda_1,\ldots,\lambda_{n-1},1)+H_j(z'_1,\ldots,z'_{n-1},z_n)]\\
-    &= z_n^dF(\lambda_1,\ldots,\lambda_{n-1},1)+\sum_{j=0}^dz_n^jH_j(z'_1,\ldots,z'_{n-1},z_n),
-  \end{align*}
-  where each $H_j$ is a polynomial in $z'_1,\ldots,z'_{n-1},z_n$ with degree $< d-j$ in $z_n$, with coefficients in $k$. Defining a new polynomial
-  \begin{equation*}
-    \hat{F}(z) = z^d + \frac{1}{F(\lambda_1,\ldots,\lambda_{n-1},1)} \sum_{j=0}^d z^jH_j(x'_1,\ldots,x'_{n-1},z),
-  \end{equation*}
-  we see $\hat{F}$ is monic in $z$ with coefficients in $A'$ such that $\hat{F}(x_n) = F(x_1,\ldots,x_{n-1},x_n) = 0$. Thus, $x_n$ is integral over $A'$, i.e., $A = k[x_1,\ldots,x_n] = k[x_1',\ldots,x_{n-1}',x_n]$ is integral over $A'$. By the induction hypothesis, there are $y_1,\ldots,y_{n-1} \in A'$ algebraically independent over $k$ such that $A'$ is integral over $A'[y_1,\ldots,y_{n-1}]$. Now $y_1,\ldots,y_n \in A$ are algebraically independent over $k$ and $A$ is integral over $A[y_1,\ldots,y_n]$, and we are done.
+  We assume $k$ is infinite. Let $x_1,\ldots,x_n$ generate $A$ as a $k$-algebra. We can rearrange the $x_i$ such that $x_1,\ldots,x_r$ are algebraically independent over $k$ and each of $x_{r+1},\ldots,x_n$ is algebraic over $k[x_1,\ldots,x_r]$. Proceed by induction on $n$. If $n = r$ there is nothing to do, and so suppose $n > r$ and that the result is true for $n-1$ generators. In this case, the generator $x_n$ is algebraic over $k[x_1,\ldots,x_{n-1}]$, i.e., there is a polynomial $f \ne 0$ in $n$ variables such that $f(x_1,\ldots,x_{n-1},x_n) = 0$. Let $F$ be the homogeneous part of highest degree in $f$. 
 \end{proof}
 
 \begin{problem}[AM Exercise $5.10i$]

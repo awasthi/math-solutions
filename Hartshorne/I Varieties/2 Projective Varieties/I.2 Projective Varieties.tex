@@ -221,21 +221,48 @@
   \end{enuma}
 \end{problem}
 \begin{proof}[Proof of $(a)$]
-  For $i = 1,2$, let $CZ(T_i)$ be the affine variety defined by $T_i$ in
-  $\AA^{n+1}$. Then, from Prop.~1.2, $CZ(T_1)\supset CZ(T_2)$. $Z(T_i)$ is the projection of $CZ(T_i)$ to $\PP^n$, so it follows that $Z(T_1) \supset Z(T_2)$.  
+  $P \in Z(T_2)$ implies $f(P) = 0$ for all $f \in T_2$, and so in particular
+  $f(P)= 0$ for all $f \in T_1$, hence $P \in Z(T_1)$.
 \end{proof}
-\begin{proof}[Proof of $(b)$--$(d)$]
-  Obvious. Do pretty much the same thing as in prop 1.2 (or use affine cones or
-  homogeneous ideals in $k[x_0,\cdots,x_n]$ if applicable).
+\begin{proof}[Proof of $(b)$]
+  It suffices to show the homogeneous elements of $I(Y_2)$ are in $I(Y_1)$,
+  since both ideals are assumed to be homogeneous. If
+  $f$ is a generator of $I(Y_2)$, then $f(P) = 0$ for all $P \in Y_2$, and in
+  particular $f(P) = 0$ for all $P \in Y_1$, hence $f \in I(Y_1)$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  As in $(b)$, it suffices to show the homogeneous elements of $I(Y_1 \cup
+  Y_2)$ are in $I(Y_1) \cap I(Y_2)$, and vice versa. But $f \in I(Y_1 \cup Y_2)$
+  if and only if $f(P) = 0$ for all $P \in Y_1 \cup Y_2$, which holds if and
+  only if $f(P) = 0$ for all $P \in Y_1$ and $P \in Y_2$. But this is equivalent
+  to $f \in I(Y_1) \cap I(Y_2)$ by definition.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  $\sqrt{\mathfrak{a}} \subset I(Z(\mathfrak{a}))$, since any power of a
+  homogeneous element $f \in \mathfrak{a}$
+  vanishes at all points of $Z(\mathfrak{a})$ by definition.
+  \par Conversely, suppose $f \in I(Z(\mathfrak{a}))$. Then, $f(P) = 0$ for all
+  $P\in Z(\mathfrak{a})$, hence by the homogeneous Nullstellensatz (Exercise
+  \ref{exc:2.1}), $f^q \in \mathfrak{a}$ for some $q>0$, i.e., $f \in
+  \sqrt{\mathfrak{a}}$.
 \end{proof}
 \begin{proof}[Proof of $(e)$]
   Because $Z(I(Y))$ is closed, by the definition of the closure, $Z(I(Y))
-  \supset Y$ implies $Z(I(Y)) \supset \overline{Y}$. Now let $W$ be any closed set containing $Y$. Then $W = Z(\mathfrak{a})$ for some homogeneous ideal $\mathfrak{a}$. Then from (b), (d) and the fact that an ideal is contained in its radical ideal, $\mathfrak{a} \subseteq \sqrt{\mathfrak{a}}= IZ(\mathfrak{a}) \subseteq I(Y)$. Hence, $\mathfrak{a} \subseteq I(Y)$ So from (a), we have $W = Z(\mathfrak{a}) \supset ZI(Y)$. Hence, $ZI(Y) = \overline{Y}$
+  \supset Y$ implies $Z(I(Y)) \supset \overline{Y}$. Now let $W$ be any closed
+  set containing $Y$. Then $W = Z(\mathfrak{a})$ for some homogeneous ideal
+  $\mathfrak{a}$. Then from (b), (d) and the fact that an ideal is contained in
+  its radical ideal, $\mathfrak{a} \subset \sqrt{\mathfrak{a}}=
+  I(Z(\mathfrak{a})) \subset I(Y)$. Hence, $\mathfrak{a} \subset I(Y)$. So from
+  $(a)$, we have $W = Z(\mathfrak{a}) \supset Z(I(Y))$. Hence, $Z(I(Y)) =
+  \overline{Y}$.
 \end{proof}
 
 \begin{problem}\mbox{}
   \begin{enuma}
-    \item There is a one-to-one inclusion-reversing correspondence between algebraic sets in $\PP^n$ and homogeneous radical ideals of $S$ not equal to $S_+$ given by $Y \mapsto I(Y)$ and $\mathfrak{a} \mapsto Z(\mathfrak{a})$
+    \item There is a one-to-one inclusion-reversing correspondence between
+      algebraic sets in $\PP^n$ and homogeneous radical ideals of $S$ not equal
+      to $S_+$ given by $Y \mapsto I(Y)$ and $\mathfrak{a} \mapsto
+      Z(\mathfrak{a})$.
     \item An algebraic set $Y \subseteq \PP^n$ is irreducible if and only if $I(Y)$ is a prime ideal. 
     \item Show that $\PP^n$ itself is irreducible. 
    \end{enuma}

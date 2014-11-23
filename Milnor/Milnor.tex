@@ -1,0 +1,53 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[american]{babel}
+%\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+%\bibliography{../../References}
+%\AtEveryBibitem{\clearfield{url}}
+%\AtEveryBibitem{\clearfield{doi}}
+%\AtEveryBibitem{\clearfield{issn}}
+%\AtEveryBibitem{\clearfield{isbn}}
+%\renewbibmacro{in:}{}
+%\DeclareFieldFormat{postnote}{#1}
+%\DeclareFieldFormat{multipostnote}{#1}
+
+\newtheorem{problem}{Problem}[section]
+\renewcommand{\theproblem}{\thesection-\Alph{problem}}
+\newtheorem{lemma}{Lemma}%[section]
+
+\numberwithin{equation}{section}
+
+%Put Macros here
+\newcommand{\RR}{\ensuremath \mathbf{R}}
+
+\title{Solutions to Milnor's \emph{Characteristic Classes}}
+\author{Takumi Murayama, Matt Stevenson, Feng Zhu}
+
+\begin{document}
+\maketitle
+\section{Smooth Manifolds}
+\begin{problem}
+  Let $M_1 \subset \RR^A$ and $M_2 \subset \RR^B$ be smooth manifolds. Show that
+  $M_1 \times M_2 \subset \RR^A \times \RR^B$ is a smooth manifold, and that the
+  tangent manifold $D(M_1 \times M_2)$ is canonically diffeomorphic to the
+  product $DM_1 \times DM_2$. Note that a function $x \mapsto (f_1(x),f_2(x))$
+  from $M$ to $M_1 \times M_2$ is smooth if and only if both $f_1 \colon M \to
+  M_1$ and $f_2 \colon M \to M_2$ are smooth.
+\end{problem}
+\begin{proof}
+  \textbf{Proof would go here}.
+\end{proof}
+\end{document}

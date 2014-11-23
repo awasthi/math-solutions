@@ -328,8 +328,8 @@
   \par Conversely, let $F \in (\beta(I(Y))$. Then, $F = \sum_i a_i \beta(f_i)$, where each $f_i \in I(Y)$. Then, $\beta(f_i) \in I(\overline{Y})$, as $\beta(f_i)[1:y] = 0$ for all $y \in Y$. Hence, $F \in I(\overline{Y})$. 
 \end{proof}
 
-\begin{proof} [proof of (a)]
-  From exercise 1.2, $I(Y) = (y-x^2, z-x^3)$. Now, Using $\phi_0$, $Y$ can be realized as a subset of $\PP^3= \{[w:x:y:z]\}$ such that $Y = \{[1:t:t^2:t^3]: t \in k \} \subset \PP^3$. Homogenizing the coordinates, we get $\overline{Y} = \{[s^3:s^2t:st^2:t^3]| s,t \in \AA, \mbox{ either } s \mbox{ or } t \mbox{ is nonzero}\} \subset \PP^3$
+\begin{proof} [proof of (b)]
+  From exercise 1.2, $I(Y) = (y-x^2, z-x^3)$. Now, Using $\phi_0$, $Y$ can be realized as a subset of $\PP^3= \{[w:x:y:z]\}$ such that $Y = \{[1:t:t^2:t^3]: t \in k \} \subset \PP^3$. Homogenizing the coordinates, we get $\overline{Y} = \{[s^3:s^2t:st^2:t^3]: s,t \in \AA, \mbox{ either } s \mbox{ or } t \mbox{ is nonzero}\} \subset \PP^3$
   \par Thus, $I(\overline{Y}) = (wz - xy, wy -x^2, w^2z-x^4) \neq (\beta(z-x^3), \beta(y-x^2)$. Thus, $\beta(f_1), \cdots, \beta(f_r)$ do not necessarily generate $I(\overline{Y})$ even if $f_1, \cdots, f_r$ generate $I(Y)$.
 \end{proof}
 
@@ -382,10 +382,85 @@ Note) This is a special case of the projective dimension ( page 48 theorem 1.7.2
 
 \end{proof}
 
-\begin{problem} \textbf{The d-Uple Embedding} For given $n, d>0$, let $M_0,\cdots, M_N$ be all the monomials of degree $d$ in the $n+1$ variables $x_0, \cdots x_n$, where $N = {{n+d} \choose n} -1.$ We define a mapping $\rho_d: \PP^n \to \PP^N$ by sending the point $P = (a_0, \cdots, a_n)$ to the point $\rho_d(P) = (M_0(a), \cdots, M_N(a))$ obtained by substituting the $a_i$ in the monomials $M_j$. This is called the $d-$uple \textit{embedding} of $\PP^n$ in $\PP^N$. For example, if $n=1, d=2$, then $N= 2$, and the image $Y$ of the 2-uple embedding of $\PP^1$ in $\PP^2$ is a conic. 
+\begin{problem} \textbf{The d-Uple Embedding} For given $n, d>0$, let $M_0,\cdots, M_N$ be all the monomials of degree $d$ in the $n+1$ variables $x_0, \cdots x_n$, where $N = {{n+d} \choose n} -1.$ We define a mapping $\rho_d: \PP^n \to \PP^N$ by sending the point $P = (a_0, \cdots, a_n)$ to the point $\rho_d(P) = (M_0(a), \cdots, M_N(a))$ obtained by substituting the $a_i$ in the monomials $M_j$. This is called the $d$-uple \textit{embedding} of $\PP^n$ in $\PP^N$. For example, if $n=1, d=2$, then $N= 2$, and the image $Y$ of the 2-uple embedding of $\PP^1$ in $\PP^2$ is a conic. 
 \begin{enuma}
 
+\item Let $\theta: k[y_0, \cdots, y_N] \to k[x_0, \cdots, x_n]$ be the homorphism defined by sending $y_i$ to $M_i$, and let $\mathfrak{a} = \Ker \theta$. Then $\mathfrak{a}$ is homogeneous prime ideal, and so $Z(\mathfrak{a})$ is a projective variety in $\PP^N$. 
+\item Show that the image of $\rho_d$ is exactly $Z(\mathfrak{a})$.
+\item Now show that $\rho_d$ is a homeomorphism of $\PP^n$ onto the projective variety $Z(\mathfrak{a})$. 
+\item Show that the twisted cubic curve in $\PP^3$ is equal to the 3-uple embedding of $\PP^1$ in $\PP^3$, for suitable choice of coordinates. 
 \end{enuma}
+\end{problem}
+
+\begin{proof}[proof of (a)]
+Note that $\theta: y_i \mapsto M_i$, and the degrees of $M_i$'s are all $d$. As all $y_i$'s are mapped to polynomials of the same degree, $\mathfrak{a}= \Ker \theta$ is a homogeneous ideal. To show that $\mathfrak{a}$ is prime, consider $\k[y_0, \cdots, y_N]/\mathfrak{a}$. This is isomorphic to a subring of $k[x_0, \cdots, x_n]$. Thus, $\k[y_0, \cdots, y_N]/\mathfrak{a}$ is a domain $\iff \mathfrak{a}$ is prime. 
+\end{proof}
+
+\begin{proof}[proof of (b)]
+Pick $\rho_d(P) \in \Im \rho_d$. Choose any $f \in Z(\mathfrak{a})$. Because $\f \in Z(\mathfrak{a}) = \Ker(\theta)$, $f(\rho_d(P)) = f(M_0(a), \cdots, M_N(a)) = 0$. Thus, $\rho_d(P) \in Z(\mathfrak{a})$. Hence, $\Im \rho_d \subseteq  Z(\mathfrak{a})$. 
+
+Conversely, let's show $Z(\mathfrak{a}) \subseteq \Im \rho_d \iff \mathfrak{a} \supseteq I(\Im \rho_d)$. Pick $f \in I(\Im \rho_d)$. Then, $f(Q) = 0$ for all $Q \in \Im \rho_d$. Then, $f(M_0, \cdots, M_N)= 0 \Rightarrow f \in \Ker \theta$. 
+\end{proof}
+
+\begin{proof}[proof of (c)]
+From $(b)$ we know that $Z(\mathfrak{a}) = \Im \rho_d$. $\rho$ is injective, and the inverse is also continuous.  
+\end{proof}
+
+\begin{proof}[proof of (d)] From ex 2.9, we know that the map $\pi: \PP^1 \to \PP^3$ such that $[s:t] \mapsto [s^3: s^2t: st^2: t^3]$ sends $\PP^1$ to the twisted cubic. Choose $M_0(s,t) = s^3, \cdots, M_3 = t^3$. Thus, the twisted cubic curve in $\PP^3$ is equal to the $3$-uple embedding of $\PP^1$ in $\PP^3$. 
+
+\end{proof}
+
+
+\begin{problem} Let $Y$ be the image of the $2$-uple embedding of $\PP^2$ in $\PP^5$. This is the \textbf{Veronese surface}. If $Z \subseteq Y$ is a closed curve(a curve is a variety of dimension 1), show that there exists a hypersurface $V \subseteq \PP^5$ such that $V \cap Y = Z$. 
+\end{problem}
+
+\begin{proof}
+The veronese mapping $\nu: \PP^2 \to \PP^5$ is defined to be $\nu: (x:y:z) \mapsto (x^2: y^2:z^2:xy:yz:zx)$. From exercise 2.8, a projective variety $Z$ is a curve (i.e. of dimension 1) if and only if it is the zero set of a single irreducible homogeneous polynomial $f$ of positive degree. Let $Z = Z(f)$ where $f \in k[x,y,z]$ is a homogeneous polynomial of positive degree. Then, $f^2 \in k[x^2:y^2:z^2:xy:yz:zx]$. Thus, there exists a homogeneous polynomial $g \in k[x_0, x_1, \cdots, x_5]$ such that $g|_Y = f$. $V = Z(g)$ is a hypersurface of $\PP^5$, and $V \cap Y = Z$. 
+\end{proof}
+
+\begin{problem} \textbf{The Segre Embedding} Let $\psi : \PP^r \times \PP^s \to \PP^N$ be the map defined by sending the ordered pair $(a_0, \cdots, a_r) \times (b_0, \cdots, b_s)$ to $(\cdots, a_ib_j, \cdots)$ in lexicographic order, where $N = rs + r +s$. Note that $\psi$ is well-defined and injective. It is called the \textbf{Segre Embedding}. Show that the image of $\psi$ is a subvariety of $\PP^N$. [Hint: Let the homogeneous coordinates of $\PP^N$ be $\{z_{ij}:i=0, \cdots, r, j = 0,\cdots, s\}$, and let $\mathfrak{a}$ be the kernel of the homomorphism $k[{z_{ij}}] \to k [x_1, \cdots, x_r, y_0, \cdots, y_s]$ which sends $z_{ij}$ to $x_iy_j$. Then show that $\Im \psi = Z(\mathfrak{a})$.]
+
+\begin{proof}
+Let's follow the hint. Let $\theta$ be the homomorphism $\theta: k[{z_{ij}}] \to k [x_1, \cdots, x_r, y_0, \cdots, y_s]$ which sends $z_{ij}$ to $x_iy_j$. If $\mathfrak{a} = \Ker \theta$, Then $z_{ij} z_{kl} \mapsto x_iy_jx_ky_l$, and $z_{kj}z_{il} \mapsto x_ky_jx_iy_l$. Thus, $\mathfrak{a} = (z_{ij}z_{kl} -z_{kj}z_{il}:0\leq i,j \leq r, 0 \leq k,l \leq s)$. We claim that $\Im \psi = Z(\mathfrak{a})$. If $P \in \Im \psi$, $P = (\cdots, a_ib_j,\cdots)$ This for any generator $f = z_{ij}z_{kl}-z_{kj}z_{il}$ of $\mathfrak{a}$, $f(P) = 0 \Rightarrow \Im \psi \subseteq Z(\mathfrak{a})$. Conversely, let's show $Z(\mathfrak{a}) \subseteq \Im\psi \iff \mathfrak{a} \supset I(\Im\psi)$. If $g \in I(\Im \psi)$, then, for every $Q = (\cdots,a_ib_j, \cdots) \in \Im\psi$, $g(Q) = 0$. Then, $g \in \Ker \theta = \mathfrak{a}$. Thus, $\Im \psi = Z(\mathfrak{a})$ is a subvariety of $\PP^N$. 
+\end{proof}
+
+\begin{problem} \textbf{The Quadric Surface in $\PP^3$}. Consider the surface $Q$ (a surface is variety of dimension 2) in $\PP^3$ defined by the equation $xy-zw = 0$
+
+\begin{enuma} 
+\item Show that $Q$ is equal to the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3$, for suitable choice of coordinates.
+\item Show that $Q$ contains two families of lines (a line is a linear variety of dimension 1) $\{L_t\}, \{M_t\}$, each parametrized by $t \in \PP^1$, with the properties that if $L_t \neq L_u$, then $L_t \cap L_u = \emptyset $; if $\M_t \neq M_u$, $\M_t \cap M_u = \emptyset$, and for all $t,u, L_t \cap M_u = \mbox{one point}$. 
+\item Show that $Q$ contains other curves besides these lines, and deduce that the Zariski topology on $Q$ is not homeomorphic via $\psi$ to the product topology on $\PP^1 \times \PP^1$ (where each $\PP^1$ has its Zariski topology). 
+\end{enuma}
+
+\end{problem}
+
+\begin{proof}
+
+\end{proof}
+
+\begin{problem} \mbox{}
+\begin{enuma}
+\item The intersection of two varieties need not be a variety. For example, let $Q_1$ and $Q_2$ be the quadric surfaces in $\PP^3$ given by the equation $x^2-yw = 0$ and $xy -zw =0$, respectively. Show that $Q_1 \cap Q_2$ is the union of a twisted cubic curve and a line 
+\item Even if the intersection of two varieties is a variety, the ideal of the intersection may not be the sum of the ideals. For example, let $C$ be the conic in $\PP^2$ given by the equation $x^2-yz = 0$. Let $L$ be the line given by $y = 0$. Show that $C \cap L$ consists of one point $P$, but that $I(C) + I(L) \neq I(P)$. 
+\end{enuma}
+\end{problem}
+\begin{proof}
+
+\end{proof}
+
+
+
+\begin{problem} \textbf{Complete intersections.} A variety $Y$ of dimension $r$ in $\PP^n$ is a (strict) complete intersection if $I(Y)$ can be generated by $n-r$ elements. $Y$ is a \textbf{set-theoretic complete intersection} if $Y$ can be written as the intersection of $n-r$ hypersurfaces.
+\begin{enuma}
+\item let $Y$ be a variety in $\PP^n$, let $Y = Z(\mathfrak{a})$; and suppose that $\mathfrak{a}$ can be generated by $q$ elements. Then show that $\dim Y \geq n-q$. 
+\item Show that a strict complete intersection is a set-theoretic complete intersection.
+\item The converse of $(b)$ is false. For example, let $Y$ be the twisted cubic curve in $\PP^3$ (Ex. 2.9). Show that $I(Y)$ cannot be generated by two elements. On the other hand, find hypersurfaces $H_1, H_2$ of degrees 2, 3 respectively, such that $Y = H_1 \cap H_2$. 
+\item It is an unsolved problem whether every closed irreducible curve in $\PP^3$ a set=theoretic intersection of two surfaces.
+\end{enuma}
+\begin{proof}
+
+\end{proof}
+
 \end{problem}
 
 

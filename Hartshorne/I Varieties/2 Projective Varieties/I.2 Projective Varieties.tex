@@ -350,7 +350,6 @@ From corollary 1.4, an algebraic set is irreducible iff its ideal is a prime ide
 $\dim C(Y) = \dim S(y) = \dim Y +1$ by problem 2.6. We can also show that $\dim C(Y) = \dim Y +1$ by directly using the definition of the dimension (pg 5). If $\dim Y = n$, there is a chain $Z_0 \subsetneq Z_1 \subsetneq \cdots\subsetneq \Z_n \subseteq Y$ of irreducible variates. An origin is added in $C(Y)$, and we can add the point (which is irreducible) to the beginning of the given chain. Hence, $\dim C(Y) = n+1$. 
 \end{proof}
 
-\pagebreak
 
 \begin{problem} \textbf{Linear Varieties in $\PP^N$} A hypersurface defined by a linear polynomial is called a hyperplane. 
 \begin{enuma}
@@ -428,15 +427,25 @@ Let's follow the hint. Let $\theta$ be the homomorphism $\theta: k[{z_{ij}}] \to
 
 \begin{enuma} 
 \item Show that $Q$ is equal to the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3$, for suitable choice of coordinates.
-\item Show that $Q$ contains two families of lines (a line is a linear variety of dimension 1) $\{L_t\}, \{M_t\}$, each parametrized by $t \in \PP^1$, with the properties that if $L_t \neq L_u$, then $L_t \cap L_u = \emptyset $; if $\M_t \neq M_u$, $\M_t \cap M_u = \emptyset$, and for all $t,u, L_t \cap M_u = \mbox{one point}$. 
+\item Show that $Q$ contains two families of lines (a line is a linear variety of dimension 1) $\{L_t\}, \{M_t\}$, each parametrized by $t \in \PP^1$, with the properties that if $L_t \neq L_u$, then $L_t \cap L_u = \emptyset $; if $M_t \neq M_u$, $M_t \cap M_u = \emptyset$, and for all $t,u, L_t \cap M_u = \mbox{one point}$. 
 \item Show that $Q$ contains other curves besides these lines, and deduce that the Zariski topology on $Q$ is not homeomorphic via $\psi$ to the product topology on $\PP^1 \times \PP^1$ (where each $\PP^1$ has its Zariski topology). 
 \end{enuma}
 
 \end{problem}
 
-\begin{proof}
+\begin{proof}[proof of (a)] Let $Q = Z(xy -zw) \in \PP^3$. From exercise 2.14, the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3= \{[z_{00}:z_{01}:z_{10}:z_{11}]\}$ is defined by $Z(z_{00}z_{11}-z_{10}z_{01})$. Thus, after change of coordinates (i.e. $z_{00} \mapsto x, z_{11} \mapsto y, z_{10} \mapsto z, z_{01} \mapsto w$) $Q$  equals to the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3$. 
+\end{proof}
+
+\begin{proof}[proof of (b)] For $t = [u,v] \in \PP^1$, define $L_t$ to be $L_t = \nu (t \times \PP^1)$ where $\nu$ is the Segre embedding $\PP^1 \times \PP^1 \to \PP^3$. Then, $L_t$ is a line(i.e. a linear variety of dimension 1): for $\PP^3 = \{[z_{00}, z_{01}, z_{10}, z_{11}]\}$, $L_t = \{[ux, vy, vx, vy]: [x,y] \in \PP^1 \}= \{[z_{00}, z_{01}, z_{10}, z_{11}]: uz_{00} - vz_{10} = 0\}$. Define $M_u$ similarly, now fixing a point in the latter $\PP^1$. Then, it is immediate that if $L_t \neq L_u$, then $L_t \cap L_u = \emptyset $; if $M_t \neq M_u$, $M_t \cap M_u = \emptyset$, and for all $t,u, L_t \cap M_u = \mbox{one point}$.
 
 \end{proof}
+
+
+
+\begin{proof}[proof of (c)] Clearly, $Q$ contains other curves besides these lines: one example would be the curve contained in $Q$ defined by the equation $x = y$. This is closed in $Q$ but not in $\PP^1 \times \PP^1$. Thus, the Zariski topology on $Q$ is not homeomorphic via $\psi$ to the product topology on $\PP^1 \times \PP^1$.
+
+\end{proof}
+
 
 \begin{problem} \mbox{}
 \begin{enuma}
@@ -444,22 +453,45 @@ Let's follow the hint. Let $\theta$ be the homomorphism $\theta: k[{z_{ij}}] \to
 \item Even if the intersection of two varieties is a variety, the ideal of the intersection may not be the sum of the ideals. For example, let $C$ be the conic in $\PP^2$ given by the equation $x^2-yz = 0$. Let $L$ be the line given by $y = 0$. Show that $C \cap L$ consists of one point $P$, but that $I(C) + I(L) \neq I(P)$. 
 \end{enuma}
 \end{problem}
-\begin{proof}
+\begin{proof} [proof of (a)] Let $C =\{st^2:s^2t:s^3:t^3]$ be a twisted cubic (we changed the coordinate), and $L = \{[x,y,z,w]: x = w = 0\}$ be a line in $\PP^3$. We will show that $Q_1 \cap Q_2 = C \cup L$.
 
+First consider when $w = 0$ Then, $x^2 -yw = 0 \iff x^2 = 0$ and $xy - zw =0 \iff xy =0$. Hence, $w = 0 \Rightarrow x = 0$. When, $w \neq 0$, we are in an affine patch $U = U_{w = 1}$, and in $U$, $x^2 -yw = 0$ and $xy -zw = 0$ becomes $x^2 = y, xy = z$. Thus, $U \cap (Q_1 \cap Q_2) = \{[x:x^2: x^3: 1]\}$, which is $C \cap U$. Thus, $C \cup L = (U \cap (Q_1 \cap Q_2)) \cup (U^c \cap (Q_1 \cap Q_2)) = Q_1 \cap Q_2$. Thus, $Q_1 \cap Q_2$ is the union of a twisted cubic curve and a line.
+
+\end{proof}
+
+\begin{proof} [proof of (b)]
+If $x^2 -yz = 0, y =0$, then $x^2 =0 \iff x = 0$. Thus, $z = 1$ as $x,y,z$ cannot be all zero. Thus, $C \cap L$ consists of one point $P = [0:0:1]$ Thus, $I(P) = (x,y)$. $I(C) = x^2-yz$ (because $x^2-yz$ is irreducible), $I(L) = y$. Thus, $I(C) + I(L) = (x^2, y)$. Obviously, $(x^2,y) \neq (x,y)$ because $x \in (x,y)$ but $x \not\in (x^2,y)$. 
 \end{proof}
 
 
 
 \begin{problem} \textbf{Complete intersections.} A variety $Y$ of dimension $r$ in $\PP^n$ is a (strict) complete intersection if $I(Y)$ can be generated by $n-r$ elements. $Y$ is a \textbf{set-theoretic complete intersection} if $Y$ can be written as the intersection of $n-r$ hypersurfaces.
 \begin{enuma}
-\item let $Y$ be a variety in $\PP^n$, let $Y = Z(\mathfrak{a})$; and suppose that $\mathfrak{a}$ can be generated by $q$ elements. Then show that $\dim Y \geq n-q$. 
+\item Let $Y$ be a variety in $\PP^n$, let $Y = Z(\mathfrak{a})$; and suppose that $\mathfrak{a}$ can be generated by $q$ elements. Then show that $\dim Y \geq n-q$. 
 \item Show that a strict complete intersection is a set-theoretic complete intersection.
 \item The converse of $(b)$ is false. For example, let $Y$ be the twisted cubic curve in $\PP^3$ (Ex. 2.9). Show that $I(Y)$ cannot be generated by two elements. On the other hand, find hypersurfaces $H_1, H_2$ of degrees 2, 3 respectively, such that $Y = H_1 \cap H_2$. 
-\item It is an unsolved problem whether every closed irreducible curve in $\PP^3$ a set=theoretic intersection of two surfaces.
+\item It is an unsolved problem whether every closed irreducible curve in $\PP^3$ a set-theoretic intersection of two surfaces.
 \end{enuma}
-\begin{proof}
+
+\begin{proof} [proof of (a)] Let $Y = Z(\mathfrak{a})$ be a variety in $\PP^n$ where $\mathfrak{a}$ can be generated by $q$ elements. Use induction on $q$ to show that $\dim Y \geq n-q$. If $q = 1$, the result follows from Exercise 2.8. 
+
+Assume that the result is true for $q = r$. Now, $\mathfrak{a} = (e_1, \cdots, e_r, e_{r+1})$ where $e_{r+1} \not\in (e_1, \cdots, e_r)$. Let $Y' = Z(e_1, \cdots, e_r)$ and by induction hypothesis, $\dim Y' \geq n-r$. From Exercise 1.8, $\dim Y = \dim (Y' \cap Z(e_{r+1})) \geq n-r-1 = n-(r+1)$. 
+\end{proof}
+
+\begin{proof} [proof of (b)] Assume that a $r$-dimensional variety $Y \subset \PP^n$ is a strict complete intersection i.e. $I(Y)$ can be generated by $n-r$ elements. Let $I(Y) = (f_1, \cdots, f_{n-r})$.  Then, $Y = \cap_i Z(f_i)$: $x \in Y \iff f_i(x) = 0 $ for all $i = 1, \cdots, n-r \iff$ $x \in \cap Z(f_i)$. Hence, $Y$ is a set-theoretic complete intersection. 
 
 \end{proof}
+
+\begin{proof} [proof of (c)] Now, let $Y = \{[s^3:s^2t:st^2:t^3]\}$ be the twisted cubic curve in $\PP^3$. Then, $Y = Z(xz-y^2, yw-z^2, xw-yz)$, and $(xz-y^2, yw-z^2, xw-yz)$ is a radical ideal. $I(Y)=(xz-y^2, yw-z^2, xw-yz)$ cannot be generated by any of the two polynomials $f,g \in k[x,y,z,w]$: if so, $xw-yz \in (xz-y^2, yw-z^2)$ but it is easy to check that this is not true (exercise 1.11).
+
+However, we can find hypersurfaces $H_1, H_2$ of degrees 2, 3 respectively, such that $Y = H_1 \cap H_2$...
+
+\end{proof}
+
+\begin{proof} [proof of (d)] I wish I can come up with a proof lol 
+\end{proof}
+
+
 
 \end{problem}
 

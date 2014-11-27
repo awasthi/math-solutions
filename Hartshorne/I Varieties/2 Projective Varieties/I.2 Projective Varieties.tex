@@ -316,7 +316,7 @@
   closed subsets of $\PP^n$; then, $I(Y_1) \subset I(Y_2) \subset \cdots$ is an
   ascending chain of homogeneous radical ideals in $S = k[x_0, \cdots, x_n]$
   (from Exercise $\ref{exc:2.4}(a)$). Then, this chain of ideals eventually
-  stabilizes since $S$ is a noetherian ring. For each $i$, $Y_i = ZI(Y_i)$, and
+  stabilizes since $S$ is a noetherian ring. For each $i$, $Y_i = Z(I(Y_i))$, and
   so the descending chain of $Y_i$ also eventually stabilizes.
 \end{proof}
 \begin{proof}[Proof of $(b)$]
@@ -326,7 +326,7 @@
   contains another.
 \end{proof}
 
-\begin{problem}
+\begin{problem}\label{exc:2.6}
   If $Y$ is a projective variety with homogeneous coordinate ring $S(Y)$, show that $\dim S(Y) = \dim Y + 1$. 
 \end{problem}
 %\begin{lemma}\label{lem:2.6}
@@ -386,15 +386,28 @@
       \dim \overline{Y}$.
   \end{enuma}
 \end{problem}
-\begin{proof}
-  \par (a) from exercise 2.6, $\dim S(\PP^n) = n + 1 = \dim(\PP^n) +1$. Hence, $\dim \PP^n = n$
-  \par (b) From exercise 2.6, $\dim S(Y) = \dim Y +1 \iff \dim Y = \dim S(Y) -1 $. We note that $\dim S(Y) = \dim (CY)$, where $CY = \pi^{-1} (Y)$. $\pi : \AA^{n+1} \setminus \{0\} \to \PP^n$. This is true because $S(Y) = k[x_0, \cdots, x_n]/I(Y)$, and realizing this in an affine space $\AA^{n+1}$, we get $\dim S(Y) = \dim CY$(from prop 1.7). Then, from prop 1.10, $\dim S(Y) = \dim CY = \dim \overline{CY} = \dim C \overline{Y} = \dim S(\overline{Y})$. Hence, $\dim Y = \dim S(Y) -1 = \dim S(\overline{Y}) -1 = \dim \overline{Y}$.
+\begin{proof}[Proof of $(a)$]
+  From Exercise $\ref{exc:2.6}$,
+  \begin{equation*}
+    n + 1 = \dim k[x_0,\ldots,x_n] = \dim S(\PP^n) = \dim(\PP^n) +1,
+  \end{equation*}
+  hence $\dim \PP^n = n$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $Y_i \coloneqq Y \cap U_i$ be nonempty. Then, by our remark at the end of
+  the proof of Exercise $\ref{exc:2.6}$, $\dim Y_i = \dim Y$. Similarly, $\dim
+  \overline{Y} = \dim Z_i$, where $Z_i$ is the closure of $Y_i$ in $U_i$. Thus,
+  it suffices to show $\dim Z_i = \dim Y_i$, but this is exactly Prop.~$1.10$.
+  %From Exercise $\ref{exc:2.6}$, $\dim S(Y) = \dim Y +1$. We note that $\dim S(Y) = \dim (CY)$, where $CY = \pi^{-1} (Y)$. $\pi : \AA^{n+1} \setminus \{0\} \to \PP^n$. This is true because $S(Y) = k[x_0, \cdots, x_n]/I(Y)$, and realizing this in an affine space $\AA^{n+1}$, we get $\dim S(Y) = \dim CY$(from prop 1.7). Then, from prop 1.10, $\dim S(Y) = \dim CY = \dim \overline{CY} = \dim C \overline{Y} = \dim S(\overline{Y})$. Hence, $\dim Y = \dim S(Y) -1 = \dim S(\overline{Y}) -1 = \dim \overline{Y}$.
 \end{proof}
 
-\begin{problem} A projective variety $Y \subseteq \PP^n$ has dimension $n-1$ if and only if it is the zero set of a single irreducible homogeneous polynomial $f$ of positive degree. $Y$ is called a hypersurface in $\PP^n$. 
+\begin{problem} A projective variety $Y \subseteq \PP^n$ has dimension $n-1$ if
+  and only if it is the zero set of a single irreducible homogeneous polynomial
+  $f$ of positive degree. $Y$ is called a \emph{hypersurface} in $\PP^n$. 
 \end{problem}
 \begin{proof}
-  Let $Y$ be a projective variety of dimension $n-1$. Then $\dim S(Y) = n$ from exercise 2.6. Regarded as a polynomial in $k[x_0,\cdots,x_n]$ (i.e. considering $Z( S(Y))$ an affine space $\AA^{n+1}$), $CY = Z(S(Y))$ is a $n$-dimensional variety. Using prop 1.13, an affine cone $CY$ of $Y$ is the zero set $Z(f)$ of a single nonconstant irreducible polynomial. Thus, $Y = Z(f')$ where $f'$ the homogenization of $f$. 
+  Let $Y$ be a projective variety of dimension $n-1$. Then, $\dim S(Y) = n$ from
+  Exercise $\ref{exc:2.6}$. Regarded as a polynomial in $k[x_0,\cdots,x_n]$ (i.e. considering $Z( S(Y))$ an affine space $\AA^{n+1}$), $CY = Z(S(Y))$ is a $n$-dimensional variety. Using prop 1.13, an affine cone $CY$ of $Y$ is the zero set $Z(f)$ of a single nonconstant irreducible polynomial. Thus, $Y = Z(f')$ where $f'$ the homogenization of $f$. 
   \par Conversely, let $Y= Z(F)$ where $f \in  S = k[x_0, \cdots, x_n]$ be an irreducible homogeneous polynomial of positive degree (thus $f \neq 0$). By Hauptidealsatz (theorem 1.11A), $(f)$ has height 1, as $(f)$ is a minimal prime ideal containing $f$. Hence, in an affine cone, $CY = Z(f)$ has dimension $n+1-1 =n$ (by theorem 1.8A). Hence, $\dim Y = \dim CY-1 = n-1$. 
   \par cf. It is quite obvious (to Takumi who is quite unhappy to see the phrase "quite obvious": I know you are unhappy, but I-perhaps you- will show this soon! :p) that $\dim Y = \dim CY -1$, and we will show that in exercise 2.10 (c). 
 \end{proof}

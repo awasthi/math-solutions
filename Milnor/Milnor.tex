@@ -50,4 +50,57 @@
 \begin{proof}
   \textbf{Proof would go here}.
 \end{proof}
+
+\section{Vector Bundles}
+
+\begin{problem}
+Show that the unit sphere $S^n$ admits a vector field which is nowhere zero, providing that $n$ is odd. Show that the normal bundle of $S^n \subset \RR^{n+1}$ is trivial for all $n$.
+\end{problem}
+
+\begin{proof}
+Let $S^n \subset \RR^{n+1}$ be the standard embedding and let $(x^1,\ldots,x^{n+1})$ be the standard coordinates on $\RR^{n+1}$. For each $\vec{x} = (x^1,\ldots,x^{n+1}) \in S^n$, define $v(\vec{x}) := (x^2, -x^1, \ldots, x^{n+1}, -x^n) \in \RR^{n+1}$. This function $v \colon S^n \to TS^n$ is a vector field, since 
+\[
+v(\vec{x}) \cdot \vec{x}  = (x^1 x^2 - x^2 x^1 ) + \ldots + (x^{n} x^{n+1} - x^{n+1} x^n) = 0 \textrm{ for all $\vec{x} \in S^n$.}
+\]
+It is clear that $v$ does not vanish.
+
+To each $\vec{x} \in S^n$, let $s(\vec{x}) = (\vec{x},\vec{x})$, where the first coordinate denotes the basepoint and the second coordinate denotes the point on the line through the origin and $\vec{x}$. As the normal bundle of $S^n \subset \RR^{n+1}$ has rank 1, the existence of the nowhere vanishing section $s$ implies that the bundle is trivial, by Theorem 2.2.
+
+\end{proof}
+
+\begin{problem}
+If $S^n$ admits a vector field which is nowhere zero, show that the identity map of $S^n$ is homotopic to the antipodal map. For $n$ even, show that the antipodal map of $S^n$ is homotopic to the reflection 
+\[
+r(x^1,\ldots,x^{n+1}) = (-x^1,x^2,\ldots,x^{n+1}),
+\]
+and therefore has degree $-1$. Combining these facts, show that $S^n$ is not parallelizable for $n$ even, $n \geq 2$.
+\end{problem}
+
+\begin{proof}
+Let $v \colon S^n \to \RR^{n+1}$ be a nonwhere zero vector field, then for $t \in [0,\pi]$,
+\[
+(\vec{x},t) \mapsto H(\vec{x},t) := \cos(t) \vec{x} + \sin(t) \frac{v(\vec{x})}{\| v(\vec{x}) \|^2 }
+\]
+defines a homotopy from the identity map to the antipodal map (remark that $v$ is needed so that the homotopy stays on $S^n$: indeed, for any fixed $t$, $H(\vec{x},t) \cdot H(\vec{x},t) = 1$ since $\vec{x} \cdot v(\vec{x}) = 0$.)
+
+Middle proof still to be added.
+
+Let $n \geq 2$ be even and assume that $S^n$ is parallelizable, then there exist $n$ nowhere dependent (hence, nowhere zero) sections of $S^n$. Thus, the identity map is homotopic to the antipodal map, which is in turn homotopic to the above reflection; taking degrees, we find that $1= \deg(id) = \deg(-id) = \deg(r) = -1$, a contradiction.
+\end{proof}
+
+\begin{problem}
+(Existence theorem for Euclidean metrics) Using a partition of unity, show that any vector bundle over a paracompact base can be given a Euclidean metric. 
+\end{problem}
+
+\begin{proof}
+Let $\{ U_{\alpha} \}$ be an open cover of the base space $M$ such that the vector bundle $(E,M,\pi)$ is trivial over each $U_{\alpha}$. Over each $U_{\alpha}$, we can equip $\pi^{-1}(U_{\alpha}) \simeq U_{\alpha} \times \RR^{\textrm{rank}(E)}$ with a Euclidean metric $\langle \cdot, \cdot \rangle_{\alpha}$. By paracompactness, there is a partition of unity $\{ \psi_{\alpha} \}$ subordinate to $\{ U_{\alpha} \}$, so $\langle \cdot , \cdot \rangle := \sum \psi_{\alpha} \langle \cdot , \cdot \rangle_{\alpha}$ is a Euclidean metric on $E$.
+\end{proof}
+
+\begin{problem}
+The Alexandroff line $L$ (also called the ``long line'') is a smooth, connected, 1-dimensional manifold which is not paracompact. Show that $L$ cannot be given a Riemannian metric.
+\end{problem}
+
+\begin{proof}
+A Riemannian metric induces a metric by taking the infimum of the lengths of paths connecting 2 points, but $L$ is not metrizable (proof needed).
+\end{proof}
 \end{document}

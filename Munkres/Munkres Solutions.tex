@@ -13,7 +13,20 @@
 \fi
 
 \usepackage{tikz}
+\usetikzlibrary{decorations.markings,calc,shapes,snakes}
+\usepackage{pgflibraryarrows}
 \usepackage{tikz-cd}
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position #1 with {\arrow[scale=2]{>}}},postaction={decorate}}}
+\tikzset{->--/.style={decoration={
+  markings,
+  mark=at position #1 with {\arrow[scale=1.2]{>}}},postaction={decorate}}}
+\tikzset{label/.style={%
+  postaction={ decorate,transform shape,
+  decoration={ markings, mark=at position .55 with \node #1;}}}}
+\tikzset{decorate sep/.style 2 args=
+  {decorate,decoration={shape backgrounds,shape=circle,shape size=#1,shape sep=#2}}}
 
 \usepackage{bm}
 
@@ -59,6 +72,9 @@
 \newcommand{\bracket}[1]{[#1]}
 \let\amsamp=&
 
+\usepackage{braket}
+\DeclareMathOperator*{\bigast}{\raisebox{-0.6ex}{\scalebox{2.5}{$\ast$}}}
+
 \title{Selected Solutions to Munkres's Topology, 2nd Ed.}
 \author{Takumi Murayama}
 
@@ -72,7 +88,23 @@ These solutions are the result of taking MAT365 Topology in the Fall of 2012 at 
 \endgroup
 \newpage
 \part{General Topology}
-\setcounter{section}{1}
+\section{Set Theory and Logic}
+\setcounter{subsection}{6}
+\subsection{Countable and Uncountable Sets}
+\setcounter{subsubsection}{4}
+\begin{problem}\label{exc:7.5}
+  Determine, for each of the following sets, whether or not it is countable.
+  Justify your answers.
+  \begin{enuma}
+    \setcounter{enumacounter}{9}
+    \item The set $J$ of all finite subsets of $\mathbb{Z}_+$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Solution for $(j)$]
+  We claim $J$ is countable.
+  Consider $I = \bigcup_{n=0}^\infty I_n$ where $I_n$ is the set of sequences with $n$ elements. Each $I_n$ is countable by Theorem $7.6$ so $I$ is countable by Theorem $7.5$. Identifying each finite subset in $J$ with the finite sequence with the same elements in increasing order, we see that $J \subseteq I$, and so $J$ is countable by Corollary $7.3$.
+\end{proof}
+
 \section{Topological Spaces and Continuous Functions}
 \setcounter{subsection}{12}
 \subsection{Basis for a Topology}
@@ -257,7 +289,7 @@ These solutions are the result of taking MAT365 Topology in the Fall of 2012 at 
 
 \setcounter{subsubsection}{15}
 \begin{problem}
-  Consider the five topologies on $\mathbb{R}$ given in \href{exc:13.7}{Exercise
+  Consider the five topologies on $\mathbb{R}$ given in \hyperref[exc:13.7]{Exercise
   $7$ of $\S13$}.
   \begin{enuma}
     \item Determine the closure of the set $K = \{1/n \mid n \in \mathbb{Z}_+\}$ under each of these topologies.
@@ -531,8 +563,8 @@ These solutions are the result of taking MAT365 Topology in the Fall of 2012 at 
 \end{problem}
 \begin{proof}
   Clearly $d|_{A \times A}$ is a metric since it inherits all the properties for a metric from the metric $d$ for $X$; it therefore suffices to show that every basis element for the subspace topology on $A$ contains some open ball defined by $d|_{A \times A}$, and vice versa, by Lemma $13.3$.
-  \par So, suppose $B$ is a basis element for the metric topology on $A$; it
-  equals $B_{d|_{A \times A}}(x,r)$ for some $x \in A$ and $r \in \mathbb{R}$.
+  \par So, suppose $B$ is a basis element for the metric topology on $A$;
+  $B = B_{d|_{A \times A}}(x,r)$ for some $x \in A$ and $r \in \mathbb{R}$.
   But then, $B = B_d(x,r) \cap A$ by definition, and so the subspace topology is
   finer than the metric topology.
   \par Conversely, suppose $B$ is a basis element for the subspace topology on
@@ -785,7 +817,106 @@ These solutions are the result of taking MAT365 Topology in the Fall of 2012 at 
 \begin{proof}[Solution for $(d)$]
   Yes. Let $x,y \in \bigcup A_\alpha$ and $p \in \bigcap A_\alpha$. Then, there
   exists a continuous map $f\colon [a,b] \to \bigcup A_\alpha$ with $f(a) = x,
-  f(b) = p$, and similarly $g\colon [b,c] \to \bigcup A_\alpha$ with $f(b) = p, f(c) = y$, since $a,p \in A_\alpha$ for some $\alpha$ and similarly for $y$ (we are free to have $\Dom g = [b,c]$ by composition with multiplication and addition, which are continuous). Then, by the pasting lemma (Theorem 18.3) since $f,g$ are continuous and $f(b) = g(b)$, we see that $h=f$ on $[a,b]$ and $h=g$ on $[b,c]$ is a continuous map such that $h(a) = x, h(c) = y$.
+  f(b) = p$, and similarly $g\colon [b,c] \to \bigcup A_\alpha$ with $f(b) = p,
+  f(c) = y$, since $a,p \in A_\alpha$ for some $\alpha$ and similarly for $y$
+  (we are free to have $\operatorname{Dom} g = [b,c]$ by composition with multiplication and addition, which are continuous). Then, by the pasting lemma (Theorem 18.3) since $f,g$ are continuous and $f(b) = g(b)$, we see that $h=f$ on $[a,b]$ and $h=g$ on $[b,c]$ is a continuous map such that $h(a) = x, h(c) = y$.
+\end{proof}
+
+\setcounter{subsubsection}{11}
+\begin{problem}
+  Recall that $S_\Omega$ denotes the minimal uncountable well-ordered set. Let
+  $L$ denote the ordered set $S_\Omega \times [0,1)$ in the dictionary order,
+  with its smallest element deleted. The set $L$ is a classical example in
+  topology called the \emph{\textbf{long line}}.
+  \par \noindent \emph{Theorem. The long line is path connected and locally homeomorphic to $\mathbb{R}$, but it cannot be imbedded in $\mathbb{R}$.} 
+  \begin{enuma}
+    \item Let $X$ be an ordered set; let $a < b < c$ be points of $X$. Show that $[a,c)$ has the order type of $[0,1)$ if and only if both $[a,b)$ and $[b,c)$ have the order type of $[0,1)$.
+    \item Let $X$ be an ordered set. Let $x_0 < x_1 < \cdots$ be an increasing sequence of points of $X$; suppose $b = \sup\{x_i\}$. Show that $[x_0,b)$ has the order type of $[0,1)$ if and only if each interval $[x_i,x_{i+1})$ has the order type of $[0,1)$.
+    \item Let $a_0$ denote the smallest element of $S_\Omega$. For each element $a$ of $S_\Omega$ different from $a_0$, show that the interval $[a_0 \times 0, a \times 1)$ of $S_\Omega \times [0,1)$ has the order type of $[0,1)$.
+    \item Show that $L$ is path connected.
+    \item Show that every point of $L$ has a neighborhood homeomorphic with an open interval in $\mathbb{R}$.
+    \item Show that $L$ cannot be imbedded in $\mathbb{R}$, or indeed in $\mathbb{R}^n$ for any $n$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  We first note order-preserving maps are injective. Letting $f\colon A \to B$ be such a map, if $a_1,a_2 \in A$, then one is larger than the other by the comparability property of order relations, so one of $f(a_1),f(a_2)$ is larger than the other, hence unequal.
+  \par Now suppose $[a,c)$ has order type $[0,1)$, and let $f\colon [0,1) \to [a,c)$ be the order isomorphism. We claim
+  \begin{equation*}
+    g(x) = f\{[f^{-1}(b)] x\}, \quad h(x) = f\{f^{-1}(b) + [1-f^{-1}(b)]  x\}
+  \end{equation*}
+  define order isomorphisms $g\colon [0,1) \to [a,b)$ and $h\colon [0,1) \to [b,c)$. They are order-preserving since if $x,y \in [0,1)$,
+  \begin{align*}
+    x < y &\implies [f^{-1}(b)]x < [f^{-1}(b)]y \implies g(x) = f\{[f^{-1}(b)]x\} < f\{[f^{-1}(b)]y\} = g(y)\\
+    x < y &\implies f^{-1}(b) + [1-f^{-1}(b)]  x < f^{-1}(b) + [1-f^{-1}(b)]  y\\
+    &\implies h(x) = f\{f^{-1}(b) + [1-f^{-1}(b)]x\} < f\{f^{-1}(b) + [1-f^{-1}(b)]y\} = h(y)
+  \end{align*}
+  where the first implications are due to our linear transformations being strictly monotonic increasing, and the second since $f$ is order-preserving. This also implies injectivity by the above. It remains to show surjectivity. Let $z \in [a,b), z' \in [b,c)$. Then, $0 \le f^{-1}(z) < f^{-1}(b)$ and $f^{-1}(b) \le f^{-1}(z') < 1$, and so
+  \begin{equation*}
+    g\left[\frac{f^{-1}(z)}{f^{-1}(b)}\right] = z, \quad h\left[\frac{f^{-1}(z') - f^{-1}(b)}{1-f^{-1}(b)}\right] = z'.
+  \end{equation*}
+  \par Conversely, suppose $[a,b)$ and $[b,c)$ have order type $[0,1)$, and let
+    $g\colon [0,1) \to [a,b)$, $h\colon [0,1) \to [b,c)$ be the order isomorphisms. We claim
+  \begin{equation*}
+    f(x) = \begin{cases}
+      g(2x) & \text{if}~0 \le x < 1/2\\
+      h(2x-1) & \text{if}~1/2 \le x < 1
+    \end{cases}
+  \end{equation*}
+  is an order isomorphism. It preserves orders since $g,h$ preserve orders on their respective domains, and since if $x < 1/2 \le y$, applying $f$ gives
+  \begin{equation*}
+    f(x) = g(2x) < b \le h(2y-1) = f(y).
+  \end{equation*}
+  This also shows injectivity by the above. $f$ is surjective since if $z \in [a,c)$,
+  \begin{equation*}
+    z < b \implies f[g^{-1}(z)/2] = z, \quad z \ge b \implies f\{[h^{-1}(z)+1]/2\} = z.\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Suppose $[x_0,b)$ has order type $[0,1)$. For any $i \in \mathbb{Z}_+$, by $(a)$, $[x_i,b)$ has order type $[0,1)$; applying $(a)$ again gives that $[x_i,x_{i+1})$ has order type $[0,1)$.
+  \par Now suppose every $[x_i,x_{i+1})$ has order type $[0,1)$. If $f_i\colon [0,1) \to [x_i,x_{i+1})$ are order isomorphisms, first define
+  \begin{equation*}
+    f\colon [0,\infty) \to [x_0,b), \quad x \mapsto f_i(x-i)~\text{if}~x \in [i,i+1),
+  \end{equation*}
+  which is well-defined since any $x \in [0,\infty)$ is in some set of the form $[i,i+1)$. We claim $f$ is an order isomorphism. If $x,y \in [0,\infty)$, then $x \in [i,i+1), y \in [j,j+1)$ for some $i,j$. Suppose $x<y$. Then,
+  \begin{align*}
+    i \ne j &\implies f(x) = f_i(x-i) < x_{i+1} \le x_j \le f_j(y-j) = f(y),\\
+    i = j &\implies f(x) = f_i(x-i) < f_i(y-i) = f(y),
+  \end{align*}
+  since the $f_i$ are order-preserving; this also implies injectivity by the above. To show surjectivity, we first know $f$ maps onto $\bigcup_i [x_i,x_{i+1})$ by definition. So let $z \in [x_0,b)$. Since $b$ is the least upper bound of the $\{x_i\}$, $z$ is not an upper bound, so there exists $i$ such that $z \in [x_i,x_{i+1})$. But then, since the $f_i$ are bijective as well, $f(f_i^{-1}(z)+i) = z$.
+  \par Now let $g\colon [0,1) \to [0,\infty)$ be defined as $x \mapsto x/(1-x)$;
+    this is an order isomorphism since it has inverse $x/(1+x)$, and since it is
+    strictly monotonic increasing. Thus, $f \circ g\colon [0,1) \to [x_0,b)$ is a bijection, and preserves orientation since $f,g$ do.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $a > a_0$. We proceed by transfinite induction. $S_\Omega$ is a well-ordered set, and so if we let $J$ be the set of $a \in S_\Omega$ such that the claim holds, it suffices to show that for every $a \in J$, $S_a \subseteq J \implies a \in J$.
+  \par We first show that either $a$ has an immediate predecessor or there exists a sequence $\{a_i\} \subseteq S_a$ such that $a = \sup \{a_i\}$. Suppose $a$ does not have an immediate predecessor. Then, we have the section $S_a = \{b_i\}$, which is countable by definition of $S_\Omega$. $(b_1,a] \ne \emptyset$ since $a$ has no immediate predecessor, and so let $a_1 \in (b_1,a]$. We construct the $a_i$ inductively as follows: if we have $a_n$, let $a_{n+1} \in (\sup\{a_n,b_{n+1}\},a]$, which is nonempty as above. We then get a sequence of elements $a_1 < a_2 < \cdots < a$. But since $a_n > b_n$ for all $n$ by construction, we see that $a \ge \sup \{a_i\}$. Moreover, if $a > \sup \{a_i\}$, then $\sup \{a_i\} = b_k$ for some $k$, for $S_a$ contains all elements less than $a$, and hence $\sup \{a_i\} < a_k$, contradicting that $\sup\{a_i\}$ is an upper bound.
+  \par Now suppose $S_a \subseteq J$. If $a$ has an immediate predecessor $a-1$, then $[a_0 \times 0,a \times 1) = [a_0 \times 0,(a-1) \times 1) \cup [a \times 0,a \times 1)$ has order type $[0,1)$ by $(a)$, for we have the order isomorphism $[a \times 0,a \times 1) \to [0,1)$ defined by $a \times x \mapsto x$, which is trivially bijective and order-preserving since $S_\Omega \times [0,1)$ was constructed with the dictionary order. On the other hand, if $a$ does not have an immediate predecessor, then there exists a sequence $\{a_i\} \subseteq S_a$ such that $a = \sup \{a_i\}$, and so the claim follows by $(b)$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  Let $a \times b, a' \times b'$ be two points in $L$; suppose without loss of
+  generality that $a \times b < a' \times b'$. By $(c)$, $[a_0 \times 0,a \times
+  1)$ and $[a_0 \times 0,a' \times 1)$ have order type $[0,1)$; by $9a)$, this
+  implies $[a_0 \times 0,a \times b)$ and $[a_0 \times 0,a' \times b')$ have
+  order type $[0,1)$. Hence, by $(a)$, $Y = [a \times b,a' \times b')$ has
+  order type $[0,1)$. Let $f\colon [0,1) \to Y$ be the order isomorphism. We claim $f$ is continuous. First, since $Y$ is an interval, it is convex, and so by Theorem $16.4$ the order topology on $Y$ is the same as the subspace topology on $Y$ inherited from $L$. Then, for any basis set $A = (c \times d,c' \times d') \subseteq Y$, $f^{-1}(A) = (f^{-1}(c \times d),f^{-1}(c' \times d'))$ since $f$ is an order isomorphism, and moreover this preimage is open. Also, for any basis set $B = [a \times b,c'\times d') \subseteq Y$, $f^{-1}(B) = [f^{-1}(a \times b),f^{-1}(c' \times d'))$, which is again open. Thus, $f$ is continuous. Finally, if we define
+  \begin{equation*}
+    F(x) = \begin{cases}
+      f(x) & \text{if}~x \in [0,1)\\
+      a' \times b' & \text{if}~x=1
+    \end{cases}
+  \end{equation*}
+  we have a continuous path $F\colon [0,1] \to [a \times b,a' \times b']$ by the pasting lemma (Theorem $18.3$), and so $L$ is path connected.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  Let $a \times b$ be a point in $L$. Since $S_\Omega \times [0,1)$ does not
+  have a maximal element, there is some $a' \times b' > a \times b$. Now by
+  $(c)$, there exists an order isomorphism $f\colon [0,1) \to [a_0 \times 0,a'
+  \times b')$. Restricting $f$ to $(0,1)$, we get another order isomorphism
+  $f\colon (0,1) \to (a_0 \times 0,a'\times b')$. The set $[a_0 \times 0,a' \times b')$ is open in $S_\Omega \times [0,1)$, and so $(a_0 \times 0,a' \times b')$ is open in $L$, and is a neighborhood of $a \times b$.
+  \par We claim $(a_0 \times 0,a' \times b')$ is homeomorphic to $(0,1)$. We already have a bijection that is continuous by the same argument as in $(d)$, and so it suffices to show $f$ is open as well. But if $(x,y) \subseteq (0,1)$ is a basis set, then $f(x,y) = (f(x),f(y))$ since $f$ is an order isomorphism, and moreover open since the topology on $(a_0 \times 0,a' \times b')$ is the order topology.
+\end{proof}
+\begin{proof}[Proof of $(f)$]
+  Suppose $L$ could be imbedded in $\mathbb{R}^n$; then, every subspace of $\mathbb{R}^n$ has a countable basis by Example $30.1$, and since $L$ is homeomorphic with such a subspace, it also has a countable basis. Now, since $X = (S_\Omega \times \{0\}) \setminus \{a_0 \times 0\}$ is a convex subset of $L$, the subspace topology on $X$ is the same as the order topology by Theorem $16.4$. Thus, the intersection of the countable basis for $L$ with $X$ forms a countable basis by Theorem 30.2. This implies that there is a countable subset $Y$ of $X$ that is dense in $X$ by Theorem $30.3$. By Theorem $10.3$, though, this subset $Y$ has an upper bound $x$ in $X$. Thus, $\emptyset \ne (x,\Omega) \subseteq X \setminus Y$, and so the closure of $Y$ is not all of $X$, a contradiction.
 \end{proof}
 
 \subsection{Components and Local Connectedness}
@@ -879,7 +1010,14 @@ These solutions are the result of taking MAT365 Topology in the Fall of 2012 at 
 \section{Countability and Separation Axioms}
 \setcounter{subsection}{29}
 \subsection{The Countability Axioms}
-\setcounter{subsubsection}{4}
+\setcounter{subsubsection}{3}
+\begin{problem}\label{exc:30.4}
+  Every compact metrizable space $X$ has a countable basis.
+\end{problem}
+\begin{proof}
+  For given $n \in \mathbb{Z}_+$, we have an open cover of $X$ by $B(x,1/n)$ for each $x \in X$; since $X$ is compact, let $\mathcal{A}_n$ be the finite subcover. $\bigcup_n \mathcal{A}_n$ is countable since it is the countable union of finite sets; we claim it is a basis for $X$. Let $U \subseteq X$ open and $x \in U$. Since $X$ is metrizable, there exists $B(x,\delta) \subseteq U$ for some $\delta > 0$. Let $N$ such that $2/N < \delta$. Since $\mathcal{A}_N$ covers $X$, there exists $B(y,1/N) \ni x$. $B(y,1/N) \subseteq B(x,\delta)$, for if we choose $z \in B(y,1/N)$, $d(x,z) \le d(x,y)+d(y,z) \le 1/N+1/N < \delta$. Thus, $x \in B(y,1/N) \subseteq U$, and so $\bigcup_n \mathcal{A}_n$ is a countable basis by Lemma $13.2$.
+\end{proof}
+
 \begin{problem}\label{exc:30.5}\mbox{}
   \begin{enuma}
     \item Show that every metrizable space with a countable dense subset has a
@@ -980,6 +1118,932 @@ These solutions are the result of taking MAT365 Topology in the Fall of 2012 at 
 \end{proof}
 
 \subsection{Normal Spaces}
+\begin{problem}
+  Show that a closed subspace of a normal space is normal.
+\end{problem}
+\begin{proof}
+  Suppose $Y$ is our closed subspace of our normal space $X$, and $A,B \subseteq Y$ disjoint and closed. By Theorem 17.3, $A,B$ are closed in $X$. Let $U,V$ be a separation of $A,B$ in $X$. Then, $Y \cap U, Y \cap V$ separate $A,B$ in $Y$, and so $Y$ is normal.
+\end{proof}
+
+\setcounter{subsubsection}{2}
+\begin{problem}\label{exc:32.3}
+  Show that every locally compact Hausdorff space is regular.
+\end{problem}
+\begin{proof}
+  Let $X$ be a locally compact Hausdorff space; in particular it is $T_1$.
+  Let $x \in X$ with neighborhood $U \ni x$. By Theorem $29.2$, there exists a neighborhood $V \ni x$ such that $\overline{V} \subseteq U$. By Lemma $31.1(a)$, $X$ is then regular.
+\end{proof}
+
+\begin{problem}
+  Show that every regular Lindel\"of space is normal.
+\end{problem}
+\begin{proof}
+  Let $A,B$ be disjoint closed subsets of $X$ regular and Lindel\"of. For all $x \in A$, there exists a neighborhood $\mathcal{U} \ni x$ disjoint from $B$. By regularity, there exists a neighborhood $U \subseteq \overline{U} \subseteq \mathcal{U}$ containing $x$; since these $U$ cover $A$, and $A$ is Lindel\"of by Exercise \S30.9, there exists a countable subcover $\{U_i\}$ such that $\overline{U_i} \cap B = \emptyset$ for all $i$. Similarly, we can construct a countable subcover $\{V_i\}$ of $B$ such that $\overline{V_i} \cap A = \emptyset$ for all $i$. By the exact same argument as in the proof of Theorem $32.1$, then, the sets
+  \begin{equation*}
+    U' = \bigcup_{n \in \mathbb{Z}_+} \bigg( U_n \setminus \bigcup_{i=1}^n \overline{V_i} \bigg), ~ V' = \bigcup_{n \in \mathbb{Z}_+} \bigg( V_n \setminus \bigcup_{i=1}^n \overline{U_i} \bigg)
+  \end{equation*}
+  are open and $U' \supseteq A, V' \supseteq B, U' \cap V' = \emptyset$, and so $X$ is normal.
+\end{proof}
+
+\begin{problem}
+  Is $\mathbb{R}^\omega$ normal in the product topology? In the uniform topology?
+\end{problem}
+\begin{proof}
+  Since $\mathbb{R}^\omega$ is metrizable in the product topology by Theorem $20.5$ and in the uniform topology by definition on p.~124, both are normal by Theorem $32.2$.
+\end{proof}
+
+\subsection{The Urysohn Lemma}
+\begin{problem}
+  Examine the proof of the Urysohn lemma, and show that for given $r$,
+  \begin{equation*}
+    f^{-1}(r) = \bigcap_{p > r} U_p - \bigcup_{q < r} U_q,
+  \end{equation*}
+  $p,q$ rational.
+\end{problem}
+\begin{proof}
+  $\subseteq$. Suppose $x \in f^{-1}(r)$, i.e., $x \in U_r$ by definition, and $x \notin U_q$ for all $q < r$ by definition in Step 3. Then, $x \in \overline{U_r} \subseteq U_p$ for all $p > r$ by construction in Steps 1, 2.
+  \par $\supseteq$. Suppose $x \in \bigcap_{p > r} U_p - \bigcup_{q < r} U_q$. This implies $x \in U_p \subseteq \overline{U_p}$ for all $p > r$, and so $f(x) \le r$ by Step $4(1)$, and also $x \notin U_q$ for all $q < r$, and so $f(x) \ge r$ by Step $4(2)$. Thus, $f(x) = r$.
+\end{proof}
+
+\subsection{The Urysohn Metrization Theorem}
+\setcounter{subsubsection}{2}
+\begin{problem}
+  Let $X$ be a compact Hausdorff space. Show that $X$ is metrizable if and only if $X$ has a countable basis.
+\end{problem}
+\begin{proof}
+  $\Rightarrow$. $X$ is compact and metrizable, hence second countable
+  by Exercise \ref{exc:30.4}.
+  \par $\Leftarrow$. $X$ is compact and Hausdorff, and so $X$ is regular by Theorem $32.3$. $X$ is second countable as well, and so by the Urysohn metrization theorem (Theorem 34.1), $X$ is metrizable.
+\end{proof}
+
+\setcounter{subsubsection}{4}
+\begin{problem}
+  Let $X$ be a locally compact Hausdorff space. Let $Y$ be the one-point compactification of $X$. Is it true that if $X$ has a countable basis, then $Y$ is metrizable? Is it true that if $Y$ is metrizable, then $X$ has a countable basis?
+\end{problem}
+\begin{proof}[Solution]
+  If $Y$ is metrizable, then it is second countable by Exercise \ref{exc:30.4}. $X$ is then second countable by Theorem $30.2$.
+  \par Now suppose $X$ has a countable basis $\mathcal{B} = \{B_i\}$. We claim
+  that $\mathcal{B}$ with sets of the form $Y \setminus \bigcup \overline{B_i}$,
+  where the union is finite and the closure is taken in $Y$, form a basis of
+  $Y$; call this larger basis $\mathcal{B}^+$. The $B_i \in \mathcal{B}$ are
+  open by Lemma $16.2$, and the $Y \setminus \bigcup \overline{B_i}$ by Theorem
+  $26.3$. $\mathcal{B}^+$ is countable since $\mathcal{B}$ is countable and
+  there are countably many $Y \setminus \bigcup \overline{B_i}$ by Exercise
+  $\ref{exc:7.5}(j)$.
+  \par Now recall that we have two types of open sets of $Y$, sets $U$ open in
+  $X$, and sets $Y \setminus C$ for $C$ compact in $X$, by construction in
+  Theorem $29.1$. By Lemma $13.2$, it suffices to show that for each $x$ in an
+  open set, we can find an element of $\mathcal{B}^+$ containing $x$ properly contained in the open set. So first consider the $U$. For every $x \in U$, there exists $B_i \in \mathcal{B}$ such that $x \in B_i \subseteq U$ since $\mathcal{B}$ is a basis of $X$. Now consider the $Y \setminus C$ and $x \in Y \setminus C$. If $x \in X$, then $Y \setminus C \cap X \ni x$ is open in $X$ by Theorem $29.1$ (which says $X$ is a subspace), and so the previous argument for $U \subseteq X$ applies. It remains to show the case $x = \infty$, where $\{\infty\} = Y \setminus X$. For each $y \in C$, we can find a neighborhood $V \ni y$ in $X$ such that $\overline{V} \subseteq X = Y \setminus \{x\}$ by local compactness. Since $V$ is open in $X$, there exists some $B_i \subseteq V$ containing $y$. These $B_i$ cover $C$ and so there is a finite subcover by compactness $C \subseteq \bigcup B_i$; also, $x \notin \bigcup \overline{B_i} \supseteq C$. Thus, we have $x \in Y \setminus \bigcup \overline{B_i} \subseteq Y \setminus C$. $\mathcal{B}^+$ is therefore a basis for $Y$ by Lemma $13.2$.
+  \par Since $Y$ is compact and Hausdorff, it is normal by Theorem 32.3, and
+  in particular, $Y$ is regular. Finally, since $Y$ also has a countable basis, it is metrizable by the Urysohn metrization theorem (Theorem $34.1$).
+\end{proof}
+
+\setcounter{subsection}{35}
+\subsection{Imbeddings of Manifolds}
+\begin{problem}
+  Prove that every manifold is regular and hence metrizable. Where do you use the Hausdorff condition?
+\end{problem}
+\begin{proof}
+  Let $X$ be our $m$-manifold. We first show $X$ is locally compact. Let $x \in
+  X$ and a neighborhood $U \ni x$ be given. Since $X$ is a manifold, there
+  exists a homeomorphism $f\colon U \to f(U) \subseteq \mathbb{R}^m$. Since $\mathbb{R}^m$ is locally compact by Example 29.2, there exists a neighborhood $V \subseteq f(U)$ of $f(x)$ such that $\overline{V}$ is compact and $\overline{V} \subseteq f(U)$ by Theorem $29.2$. Then, $x \in f^{-1}(V) \subseteq f^{-1}(\overline{V}) \subseteq U$. But then, $f^{-1}(\overline{V})$ is compact and therefore closed by Theorems $26.3$ and $26.5$, and so $\overline{f^{-1}(V)} \subseteq f^{-1}(\overline{V})$ since the closure of a set is the intersection of all closed sets containing it, and moreover $\overline{f^{-1}(V)} = f^{-1}(\overline{V})$ by Theorem $18.1$. Finally, we have $x \in f^{-1}(V) \subseteq \overline{f^{-1}(V)} \subseteq U$, with $\overline{f^{-1}(V)}$ compact, and so $X$ is locally compact by Theorem $29.2$.
+  \par Now since $X$ is locally compact and Hausdorff, $X$ is regular by
+  Exercise \ref{exc:32.3}. Since $X$ is regular and has a countable basis, it is
+  metrizable by the Urysohn metrization theorem (Theorem $34.1$). Note we used
+  that $X$ is Hausdorff in showing $X$ is regular, for the characterization of
+  local compactness, and the assertion that compact implies closed.
+\end{proof}
+
+\setcounter{subsubsection}{4}
+\begin{problem}
+  The Hausdorff condition is an essential part of the definition of a manifold;
+  it is not implied by the other parts of the definition. Consider the following
+  space: Let $X$ be the union of the set $\mathbb{R}-\{0\}$ and the two-point
+  set $\{p,q\}$. Topologize $X$ by taking as basis the collection of all open
+  intervals in $\mathbb{R}$ that do not contain $0$, along with all sets of the
+  form $(-a,0) \cup \{p\} \cup (0,a)$ and all sets of the form $(-a,0) \cup
+  \{q\} \cup (0,a)$, for $a > 0$. The space $X$ is called the \emph{\textbf{line
+  with two origins}}.
+  \begin{enuma}
+    \item Check that this is a basis for a topology.
+    \item Show that each of the spaces $X - \{p\}$ and $X - \{q\}$ is homeomorphic to $\mathbb{R}$.
+    \item Show that $X$ satisfies the $T_1$ axiom, but is not Hausdorff.
+    \item Show that $X$ satisfies all the conditions for a $1$-manifold except for the Hausdorff condition.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  For any $x \in X$, for $a$ large enough either $(-a,0) \cup \{p\} \cup (0,a)$ or $(-a,0) \cup \{q\} \cup (0,a)$ contains $x$. Moreover, if we have two basis elements $B_1,B_2$, their intersection is either empty, already another basis element, or a set of the form $(-a,0) \cup (0,a)$, we have a basis for $X$, for if $x \in B_1 \cap B_2$, $B_1 \cap B_2$, or in the last case choosing $(-a,0)$ or $(0,a)$, would be a basis element containing $x$ that is contained in the intersection.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $f\colon X \setminus \{q\} \to \mathbb{R}$ be defined such that $x \mapsto 0$
+  if $x = p$, and $x \mapsto x$ otherwise. Clearly $f$ is a bijection; it
+  suffices to show it is continuous and open. A basis element not containing
+  $p,q$ maps to a basis element not containing $0$ by definition and vice versa.
+  A basis element of the form $(-a,0) \cup \{p\} \cup (0,a)$ maps to $(-a,a)$,
+  and in the other direction, an open interval $(-a,b)$ for $a,b > 0$ maps to
+  $(-a,0) \cup \{p\} \cup (0,a) \cup (0,b)$ if $a < b$, and similarly if $a >
+  b$. Thus, $f$ is a homeomorphism. Note $g\colon X \setminus \{p\} \to \mathbb{R}$ is also a homemorphism by the same argument.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  To show $X$ is $T_1$, it suffices to show $\{x\}$ is closed for all $x \in X$. $\{p\},\{q\}$ are closed since $X \setminus \{p\} = (-\infty,0) \cup \{q\} \cup (0,\infty)$, $X \setminus \{q\} = (-\infty,0) \cup \{p\} \cup (0,\infty)$ are open. $\{x\}$ is closed for $x \ne p,q$ since if $x < 0$, $X \setminus \{x\} = (-\infty,x) \cup (x,0) \cup \{p,q\} \cup (0,\infty)$ is open, and likewise for if $x > 0$. Note $X$ is not Hausdorff since any neighborhood $U$ of $\{p\}$ intersects any neighborhood $V$ of $\{q\}$, since $U,V$ must contain basis elements $B_p,B_q$ that contain $p,q$ respectively; however, $B_p \cap B_q = ((-a,0) \cup \{p\} \cup (0,a)) \cap ((-b,0) \cup \{p\} \cup (0,b)) = (-c,0) \cup (0,c) \ne \emptyset$ for $c = \min\{a,b\}$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  We claim the basis elements with rational end points form a countable basis. For any $(a,b)$ basis element containing $x$, we can find $a < r < s < b$ such that $x \in (r,s) \subseteq (a,b)$; for any $(-a,0) \cup \{p\} \cup (0,a)$ basis element containing $x$, we can find $0 < r < a$ such that $x \in (-r,0) \cup \{p\} \cup (0,r) \subseteq (-a,0) \cup \{p\} \cup (0,a)$. Thus they form a basis by Lemma $13.2$.
+  \par Now for any $x \ne p,q$, we see that there is a neighborhood $U$ of $x$ not containing $p,q$, and $U$ is homeomorphic to a neighborhood in $\mathbb{R}$ by $(b)$. For $x = p,q$, any neighborhood of $x$ will contain a basis element $(-a,0) \cup \{x\} \cup(0,a)$, which is homeomorphic to $(-a,a)$ by $(b)$.
+\end{proof}
+
+\part{Algebraic Topology}
+\setcounter{section}{8}
+\section{The Fundamental Group}
+\setcounter{subsection}{50}
+\subsection{Homotopy of Paths}
+\begin{problem}\label{exc:51.1}
+  Show that if $h,h'\colon X \to Y$ are homotopic and $k,k'\colon Y \to Z$ are homotopic, then $k \circ h$ and $k' \circ h'$ are homotopic.
+\end{problem}
+\begin{proof}
+  Let $F$ be the homotopy between $h,h'$, and $G$ the homotopy between $k,k'$.
+  Let $H\colon X \times 1 \to Z$ where $H(x,t) = G(F(x,t),t)$. Then  $H(x,0) = G(F(x,0),0) = G(f(x),0) = (k \circ h)(x)$, $H(x,1) = G(F(x,1),1) = G(f(x),1) = (k' \circ h')(x)$.
+  \par It remains to show $H$ is continuous. $H$ is the map $(x,t) \mapsto
+  (F(x,t),t) \mapsto G(F(x,t),t)$; since $G$ is already continuous and the
+  composition of continuous functions is continuous, it suffices to show $(x,t)
+  \mapsto (F(x,t),t)$ is continuous. But this is clear since this map is
+  continuous in each coordinate in the codomain.
+\end{proof}
+
+\begin{problem}
+  Given spaces $X$ and $Y$, let $[X,Y]$ denote the set of homotopy classes of maps of $X$ into $Y$.
+  \begin{enuma}
+    \item Let $I = [0,1]$. Show that for any $X$, the set $[X,I]$ has a single element.
+    \item Show that if $Y$ is path connected, the set $[I,Y]$ has a single element.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Fix $f_0\colon X \to I$. For arbitrary $f\colon X \to I$, $f \simeq f_0$ by straight-line homotopy since any straight line in $I$ is contained in $I$. Thus, since $f$ was arbitrary, $[X,I] = \{[f_0]\}$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $f\colon I \to Y$ and $y = f(0)$. Let $g\colon I \to Y$ be the constant
+  map with value $y \in Y$. Define $F\colon I \times I \to Y$ by $F(s,t) =
+  f(s(1-t))$. Since $F(s,0) = f(s)$ and $F(s,1) = g(s)$, we see $F$ is a
+  homotopy $f \simeq g$. Now fix $y_0 \in Y$, and let $\rho$ be a path
+  connecting $y,y_0$. Define $H\colon X \times I \to Y$ such that $H(s,t) = \rho(t)$. Then, if $f_0$ is the constant map with value $y_0 \in Y$, $H$ is a homotopy $g \simeq f_0$. By transitivity of homotopy, we see $f \simeq f_0$, and so since $f$ was arbitrary, $[X,Y] = \{[f_0]\}$.
+\end{proof}
+
+\begin{problem}
+  A space $X$ is said to be \emph{\textbf{contractible}} if the identity map
+  $i_X\colon X \to X$ is nulhomotopic.
+  \begin{enuma}
+  \item Show that $I$ and $\mathbb{R}$ are contractible.
+  \item Show that a contractible space is path connected.
+  \item Show that if $Y$ is contractible, then for any $X$, the set $[X,Y]$ has a single element.
+  \item Show that if $X$ is contractible and $Y$ is path connected, then $[X,Y]$ has a single element.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Since both $I$ and $\mathbb{R}$ are convex, we see that any two maps are homotopic by straight-line homotopy as on pp.~324--325 since then the straight lines are fully contained in convex set. In particular, $i_X \simeq f$ for any constant map $f$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  If $X$ is our contractible space, and $F$ is our homotopy between $i_X$ and
+  $f_0$ for $f_0$ a constant map with value $x_0 \in X$, the map $\rho\colon I \to X$ where $\rho(t) = F(x,t)$ is a path connecting $x,x_0$ for any $x \in X$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $g_0\colon Y \to Y$ be the constant map with value $y_0 \in Y$; we have
+  $i_Y \simeq g_0$. Now define $f_0\colon X \to Y$ such that $f_0(x) = y_0$.
+  Then, for any $f\colon X \to Y$, we have $f = i_Y \circ f \simeq g_0 \circ f =
+  f_0$ by Exercise \ref{exc:51.1}, and so since $f$ was arbitrary, $[X,Y] = \{[f_0]\}$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  Let $g_0\colon X \to X$ be the constant map with value $x_0 \in X$; we have
+  $i_X \simeq g_0$. Now define $y = f(x_0)$. Then, for any $f\colon X \to Y$, we
+  have $f = f \circ i_X \simeq f \circ g_0$, which is the constant map at $y$.
+  Fix $y_0 \in Y$ with $f_0\colon X \to Y$ the constant map with value $y_0 \in
+  Y$, and let $\rho$ be a path connecting $y,y_0$. Define $H\colon X \times I \to Y$ such that $H(x,t) = \rho(t)$. Then, $H$ is a homotopy between $f \circ g_0$ and $f_0$. By transitivity of homotopy, we see $f \simeq f_0$, and so since $f$ was arbitrary, $[X,Y] = \{[f_0]\}$.
+\end{proof}
+
+\subsection{The Fundamental Group}
+\setcounter{subsubsection}{3}
+\begin{problem}
+  Let $A \subset X$; suppose $r\colon X \to A$ is a continuous map such that
+  $r(a) = a$ for each $a \in A$. (The map $r$ is called a
+  \emph{\textbf{retraction}} of $X$ onto $A$.) If $a_0 \in A$, show that
+  \begin{equation*}
+    r_*\colon \pi_1(X,a_0) \longrightarrow \pi_1(A,a_0)
+  \end{equation*}
+  is surjective.
+\end{problem}
+\begin{proof}
+  Letting $\iota\colon A \hookrightarrow X$ be the inclusion map, we see $r \circ \iota = \mathrm{id}_A$, and so by Theorem 52.4, $r_* \circ \iota_* = (r \circ \iota)_* = (\mathrm{id}_A)_* = \mathrm{id}_{\pi_1(A,a_0)}$. This implies $r_*$ is surjective.
+\end{proof}
+
+\subsection{Covering Spaces}
+\setcounter{subsubsection}{2}
+\begin{problem}
+  Let $p\colon E \to B$ be a covering map; let $B$ be connected. Show that if
+  $p^{-1}(b_0)$ has $k$ elements for some $b_0 \in B$, then $p^{-1}(b)$ has $k$
+  elements for every $b \in B$. In such a case, $E$ is called a
+  \emph{\textbf{$\bm{k}$-fold covering}} of $B$.
+\end{problem}
+\begin{proof}
+  Since $p$ is a covering map, for any $b$ with $|p^{-1}(b)| = j$ there exists a
+  neighborhood $U \ni b$ such that $p^{-1}(U)$ is the disjoint union of $j$ open
+  neighborhoods $V_\alpha$ homeomorphic to $U$, for each $V_\alpha$ contains a
+  unique preimage of $b$, which must be one point since $U,V_\alpha$ are
+  homeomorphic. By the same argument, all $x \in U$ are such that $|p^{-1}(x)| =
+  j$. Thus, we can partition $B$ into disjoint open sets $A_j$ where each $x \in
+  A_j$ are such that $p^{-1}(x) = j$ (note that $j$ can be any cardinal since
+  the argument above does not depend on $j$ being finite), and $A_k \ni b_0$ is
+  one of the $A_j$; however, since $B$ is connected, $B = A_k$, for otherwise
+  the $A_j$ will be a separation of $B$.
+\end{proof}
+
+\setcounter{subsubsection}{4}
+\begin{problem}
+  Show that the map of Example $3$ is a covering map. Generalize to the map $p(z) = z^n$.
+\end{problem}
+\begin{proof}
+  Note that $p(z)$ when considered as a map on $S^1$ as a subset of
+  $\mathbb{R}^2$ is given by $p(\cos 2\pi x,\sin 2\pi x) = (\cos 2\pi nx,\sin
+  2\pi nx)$. Letting $q(x) = (2\cos\pi x,\sin 2\pi x)$ be the covering
+  $\mathbb{R} \to S^1$ in Theorem $53.1$, and $r\colon \mathbb{R} \to \mathbb{R}$ be the multiplication by $n$, we then have the commutative diagram
+  \begin{center}
+    \begin{tikzcd}
+      \mathbb{R}^2 \arrow{r}{r} & \mathbb{R}^2\arrow{d}{q}\\
+      S^1\arrow{r}{p}\arrow{u}{q^{-1}} & S^1
+    \end{tikzcd}
+  \end{center}
+  Now let $x \in S^1$, and consider $U = S^1 \setminus \{x\}$. Taking $s \in
+  q^{-1}(x)$, we see that we have a partition $q^{-1}(U) = \bigsqcup_{i \in
+    \mathbb{Z}} W_i$ where $W_i = (s+i,s+i+1)$, and we also have $r^{-1}(W_i) =
+    ((s+i)/n,(s+i+1)/n) \eqqcolon Z_i$. Letting $V_i = q(Z_i)$, we see that $p^{-1}(U) = \bigsqcup_{0\le i<n} V_i$. Thus, for all $i$,
+  \begin{center}
+    \begin{tikzcd}
+      W_i \arrow{r}{r|W_i} & Z_i\arrow{d}{q|Z_i}\\
+      V_i \arrow{r}{p|V_i}\arrow{u}{(q|W_i)^{-1}} & U
+    \end{tikzcd}
+  \end{center}
+  commutes, where the top and vertical arrows are homeomorphisms, and so we have a homeomorphism between $V_i$ and $U$ for all $i$.
+\end{proof}
+
+\subsection{The Fundamental Group of the Circle}
+\begin{problem}
+  What goes wrong with the ``path-lifting lemma'' (Lemma $54.1$) for the local homeomorphism of Example $2$ of $\S53$?
+\end{problem}
+\begin{proof}[Solution]
+  Since $b_0=(1,0)$ cannot be covered by an open set that is evenly covered by $p$ by Example 53.2, we see that the first step in the proof of Lemma 54.1 fails.
+\end{proof}
+
+\setcounter{subsubsection}{3}
+\begin{problem}
+  Consider the covering map $p\colon \mathbb{R} \times \mathbb{R}_+ \to \mathbb{R}^2 - 0$ of Example $6$ of $\S53$. Find liftings of the paths
+  \begin{align*}
+    f(t) &= (2-t,0),\\
+    g(t) &= ((1+t)\cos 2\pi t,(1+t)\sin 2\pi t),\\
+    h(t) &= f * g.
+  \end{align*}
+  Sketch these paths and their liftings.
+\end{problem}
+\begin{proof}[Solution]
+  We see first that the covering map $p$ is the mapping
+  \begin{equation*}
+    (x,s) \mapsto ((\cos 2\pi x,\sin 2\pi x),s) \mapsto s(\cos 2\pi x,\sin 2\pi x).
+  \end{equation*}
+  Thus, we have the family of liftings
+  \begin{align*}
+    \tilde{f}_n(t) &= (n,2-t)\\
+    \tilde{g}_n(t) &= (t+n,1+t)\\
+    \tilde{h}_n(t) &= \begin{cases}
+      (n,2-2t) & \text{if}~t \in [0,1/2]\\
+      (2t+n-1,2t) & \text{if}~t \in [1/2,1]
+    \end{cases}
+  \end{align*}
+  where $n \in \mathbb{Z}$. We omit the sketches.
+\end{proof}
+
+\begin{problem}
+  Consider the covering map $p \times p\colon \mathbb{R} \times \mathbb{R} \to S^1 \times S^1$ of Example $4$ of $\S53$. Consider the path
+  \begin{equation*}
+    f(t) = (\cos 2\pi t,\sin 2\pi t) \times (\cos 4\pi t,\sin 4\pi t)
+  \end{equation*}
+  in $S^1 \times S^1$. Sketch what $f$ looks like when $S^1 \times S^1$ is identified with the doughnut surface $D$. Find a lifting $\tilde{f}$ of $f$ to $\mathbb{R} \times \mathbb{R}$, and sketch it.
+\end{problem}
+\begin{proof}[Solution]
+  We have the family of liftings $\tilde{f}_n(t) = (n+t/2,n+t)$, where $n \in
+  \mathbb{Z}$. We omit the sketches.
+\end{proof}
+
+\setcounter{subsection}{57}
+\subsection{Deformation Retracts and Homotopy Type}
+\begin{problem}
+  Show that if $A$ is a deformation retract of $X$, and $B$ is a deformation retract of $A$, then $B$ is a deformation retract of $X$.
+\end{problem}
+\begin{proof}
+  Let $F\colon X \times I \to X$, $G\colon A \times I \to A$ be the deformation retractions of $X$ onto $A$ and $A$ onto $B$ respectively. We claim that
+  \begin{equation*}
+    H(x,t) = \begin{cases}
+      F(x,2t) & \text{if}~0 \le t \le 1/2\\
+      \iota \circ G(F(x,1),2t-1) & \text{if}~1/2 \le t \le 1
+    \end{cases}
+  \end{equation*}
+  is a deformation retraction of $X$ onto $B$, where $\iota\colon A \hookrightarrow X$ is the inclusion map. We see $H(x,0) = F(x,0) = x$, and that if $x \in B$, $H(x,1) = \iota \circ G(F(x,1),1) = \iota \circ F(x,1) = \iota \circ x = x$; moreover, $H$ is continuous by the pasting lemma, since $H(x,1/2) = F(x,1) = \iota \circ G(F(x,1),0) = \iota \circ F(x,1) = F(x,1)$, and since $\iota \circ G(F(x,1),2t-1)$ is a composition of continuous functions.
+\end{proof}
+
+\begin{problem}
+  For each of the following spaces, the fundamental group is either trivial, infinite cyclic, or isomorphic to the fundamental group of the figure-eight. Determine for each space which of the three alternatives holds.
+  \begin{enuma}
+    \item The ``solid torus,'' $B^2 \times S^1$.
+    \item The torus $T$ with a point removed.
+    \item The cylinder $S^1 \times \mathbb{R}$.
+    \item The infinite cylinder $S^1 \times \mathbb{R}$.
+    \item $\mathbb{R}^3$ with the nonnegative $x$, $y$, and $z$ axes deleted.
+  \end{enuma}
+  The following subsets of $\mathbb{R}^2$:
+  \begin{enuma}
+    \setcounter{enumacounter}{5}
+    \item $\{x \mid \Vert x \Vert > 1\}$
+    \item $\{x \mid \Vert x \Vert \ge 1\}$
+    \item $\{x \mid \Vert x \Vert < 1\}$
+    \item $S^1 \cup (\mathbb{R}_+ \times 0)$
+    \item $S^1 \cup (\mathbb{R}_+ \times \mathbb{R})$
+    \item $S^1 \cup (\mathbb{R} \times 0)$
+    \item $\mathbb{R}^2 - (\mathbb{R}_+ \times 0)$
+  \end{enuma}
+\end{problem}
+\begin{remark}
+  We use Theorem $60.1$ to say that $\pi_1(-)$ and $\times$ commute.
+\end{remark}
+\begin{proof}[Solution]
+  $(a)$. $\pi_1(B^2 \times S^1) = \pi_1(B^2) \times \pi_1(S^1) = \pi_1(S^1)$, for we have a deformation retraction from $B^2$ onto $\{0\}$.
+  \par $(b)$. $\pi_1(T \setminus \{p\})$ is isomorphic to the fundamental group
+  of the figure-eight, for we have a deformation retraction onto the
+  figure-eight by deforming $T \setminus \{p\}$ in the following manner:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=stealth,x=1.0cm,y=1.0cm]
+      \node (a) at (0,0) {
+        \begin{tikzpicture}[>=stealth]
+          \fill [gray] (0,0) rectangle (2,2);
+          \draw (0,1) node[anchor=east] {$a$};
+          \draw (2,1) node[anchor=west] {$a$};
+          \draw (1,0) node[anchor=north] {$b$};
+          \draw (1,2) node[anchor=south] {$b$};
+          \draw [->-=0.55] (0,0) -- (0,2);
+          \draw [->-=0.55] (0,2) -- (2,2);
+          \draw [->-=0.55] (2,0) -- (2,2);
+          \draw [->-=0.55] (0,0) -- (2,0);
+          \fill [white] (1,1) circle (0.1); 
+          \draw (1,1) circle(0.1);
+        \end{tikzpicture}
+      };
+      \node (b) at (a.east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \fill [gray] (0,0) rectangle (2,2);
+          \draw (0,1) node[anchor=east] {$a$};
+          \draw (2,1) node[anchor=west] {$a$};
+          \draw (1,0) node[anchor=north] {$b$};
+          \draw (1,2) node[anchor=south] {$b$};
+          \draw [->-=0.55] (0,0) -- (0,2);
+          \draw [->-=0.55] (0,2) -- (2,2);
+          \draw [->-=0.55] (2,0) -- (2,2);
+          \draw [->-=0.55] (0,0) -- (2,0);
+
+          \draw [->--=0.55] (1,1) -- (2,0);
+          \draw [->--=0.55] (1,1) -- (2,2);
+          \draw [->--=0.55] (1,1) -- (0,0);
+          \draw [->--=0.55] (1,1) -- (0,2);
+          \draw [->--=0.56] (1,1) -- (1,0);
+          \draw [->--=0.56] (1,1) -- (1,2);
+          \draw [->--=0.56] (1,1) -- (0,1);
+          \draw [->--=0.56] (1,1) -- (2,1);
+
+          \fill [white] (1,1) circle (0.1); 
+          \draw (1,1) circle(0.1);
+        \end{tikzpicture}
+
+      };
+      \node (c) at (b.east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \draw (0,1) node[anchor=east] {$a$};
+          \draw (2,1) node[anchor=west] {$a$};
+          \draw (1,0) node[anchor=north] {$b$};
+          \draw (1,2) node[anchor=south] {$b$};
+          
+          \draw [->-=0.55] (0,0) -- (0,2);
+          \draw [->-=0.55] (0,2) -- (2,2);
+          \draw [->-=0.55] (2,0) -- (2,2);
+          \draw [->-=0.55] (0,0) -- (2,0);
+        \end{tikzpicture}
+      };
+
+      \node (d) at (c.east) [anchor=west,xshift=0.5cm]{
+        \begin{tikzpicture}[>=stealth]
+          \draw (-1,0) node[anchor=east] {$a$};
+          \draw (1,0) node[anchor=west] {$b$};
+          \fill (0,0) circle (0.066);
+          \draw[postaction={decoration={markings,mark=at position 0.75 with {\arrow[scale=2]{>}}},decorate}] (-0.5,0) circle (0.5);
+          \draw[postaction={decoration={markings,mark=at position 0.25 with {\arrow[scale=2]{>}}},decorate}] (0.5,0) circle (0.5);
+        \end{tikzpicture}
+      };
+      \path[-to,line width=0.5pt] (a) edge (b);
+      \path[-to,line width=0.5pt] (b) edge (c);
+      \path[-to,line width=0.5pt] (c) edge (d);
+    \end{tikzpicture}
+  \end{center}
+  where the last arrow comes from the construction of the torus as the quotient
+  $\mathbb{R}^2/\mathbb{Z}^2$.
+  \par $(c)$. $\pi_1(S^1 \times I) = \pi_1(S^1) \times \pi_1(I) = \pi_1(S^1)$, for we have the deformation retraction from $I$ onto $\{0\}$.
+  \par $(d)$. $\pi_1(S^1 \times \mathbb{R}) = \pi_1(S^1) \times \pi_1(\mathbb{R})$, for we have the deformation retraction from $\mathbb{R}$ onto $\{0\}$.
+  \par $(e)$. This space retracts onto $S^2 \setminus \{p,q,r\} \simeq \mathbb{R}^2 \setminus \{s,t\}$ (where the isomorphism is from Theorem $59.3$), which retracts onto the figure-eight, and so the fundamental group is isomorphic to the fundamental group of the figure-eight.
+  \par $(f)$. $\pi_1(\{x \mid \Vert x \Vert > 1\}) = \pi_1(S^1)$, by a deformation retraction onto a circle of radius $>1$, whose fundamental group is $\pi_1(S^1)$ since it is homeomorphic to $S^1$.
+  \par $(g)$. $\pi_1(\{x \mid \Vert x \Vert \ge 1\}) = \pi_s(S^1)$, for we have the deformation retraction onto $S^1$.
+  \par $(h)$. $\pi_1(\{x \mid \Vert x \Vert < 1\}) = \pi_1(\{0\}) = 1$, by a deformation retraction onto $\{0\}$.
+  \par $(i)$. $\pi_1(S^1 \cup (\mathbb{R}_+ \times 0)) = \pi_1(S^1)$, since we can retract $\mathbb{R}_+$ to one point $(1,0) \in S^1$.
+  \par $(j)$. $\pi_1(S^1 \cup (\mathbb{R}_+ \times \mathbb{R})) = \pi_1(S^1)$, since we can retract $\mathbb{R}_+ \times \mathbb{R}$ to the half-circle $S^1 \cap \mathbb{R}_+ \times \mathbb{R}$.
+  \par $(k)$. $\pi_1(S^1 \cup (\mathbb{R} \times 0))$ is isomorphic to the
+  fundamental group of the figure-eight, for we can retract $(\mathbb{R} \times
+  0)$ onto the line segment from $(-1,0)$ to $(1,0)$, which gives a topological
+  space homotopy equivalent to the figure-eight.
+  \par $(l)$. $\pi_1(\mathbb{R}^2 \setminus (\mathbb{R}_+ \times 0)) = 1$, since we can retract onto any arbitrary point $p \in \mathbb{R}^2 \setminus (\mathbb{R}_+ \times 0)$.
+\end{proof}
+
+\setcounter{subsubsection}{8}
+\begin{problem}
+  We define the \emph{\textbf{degree}} of a continuous map $h\colon S^1 \to S^1$ as follows:
+  \par Let $b_0$ be the point $(1,0)$ of $S^1$; choose a generator $\gamma$ for the infinite cyclic group $\pi_1(S^1,b_0)$. If $x_0$ is any point of $S^1$, choose a path $\alpha$ in $S^1$ from $b_0$ to $x_0$, and define $\gamma(x_0) = \hat{\alpha}(\gamma)$. Then $\gamma(x_0)$ generates $\pi(S^1,x_0)$. The element $\gamma(x_0)$ is independent of the choice of the path $\alpha$, since the fundamental group of $S^1$ is abelian.
+  \par Now given $h\colon S^1 \to S^1$, choose $x_0 \in S^1$ and let $h(x_0) = x_1$. Consider the homomorphism
+  \begin{equation*}
+    h_*\colon \pi(S^1,x_0) \longrightarrow \pi_1(S^1,x_1).
+  \end{equation*}
+  Since both groups are infinite cyclic, we have
+  \begin{equation}\label{3a}\tag{$\ast$}
+    h_*(\gamma(x_0)) = d \cdot \gamma(x_1)
+  \end{equation}
+  for some integer $d$, if the group is written additively. The integer $d$ is called the \emph{degree} of $h$ and is denoted by $\deg h$.
+  \par The degree of $h$ is independent of the choice of the generator $\gamma$; choosing the other generator would merely change the sign of both sides of \eqref{3a}.
+  \begin{enuma}
+    \item Show that $d$ is independent of the choice of $x_0$.
+    \item Show that if $h,k\colon S^1 \to S^1$ are homotopic, they have the same degree.
+    \item Show that $\deg(h \circ k) = (\deg h) \cdot (\deg k)$.
+    \item Compute the degrees of the constant map, the identity map, the reflection map $\rho(x_1,x_2) = (x_1,-x_2)$, and the map $h(z) = z^n$, where $z$ is a complex number.
+    \item Show that if $h,k\colon S^1 \to S^1$ have the same degree, they are homotopic.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Let $x_0 \ne y_0 \in S^1$, and let $h(y_0) = y_1$. Let $\alpha$ be a path from $x_0$ to $y_0$; then, $\beta' = h \circ \beta$ is a path from $x_1$ to $y_1$. Then, $\gamma(y_1) = [\overline{\beta}'] * \gamma(x_1) * [\beta']$, and so
+  \begin{align*}
+    h_*(\gamma(y_0)) &= h_*([\overline{\beta}] * \gamma(x_0) * [\beta]) = [\overline{\beta}'] * h_*(\gamma(x_0)) * [\beta']\\
+    &= [\overline{\beta}'] *d \cdot \gamma(x_1) * [\beta'] = d \cdot ([\overline{\beta}'] * \gamma(x_1) * [\beta']) = d \cdot \gamma(y_1).\qedhere
+  \end{align*}
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Choose $x_0 \in S^1$ and let $h(x_0) = y_0, k(x_0) = y_1$. By Lemma $58.4$, there exists a path $\alpha$ from $y_0$ to $y_1$ such that $k_* = \hat{\alpha} \circ h_*$. Then, we have
+  \begin{align*}
+    \deg k \cdot \gamma(y_0) = k_*(\gamma(x_0)) &= \hat{\alpha}(h^*(\gamma(x_0)))\\
+    &= \hat{\alpha}(\deg h\cdot\gamma(y_1)) = \deg h\cdot\hat{\alpha}(\gamma(y_1)) = \deg h\cdot\gamma(y_0),
+  \end{align*}
+  and so $\deg k = \deg h$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Choose $x_0 \in S^1$ and let $k(x_0) = y_0, h(y_0) = y_1$. Then,
+  \begin{align*}
+    \deg (h \circ k) \cdot \gamma(y_1) &= (h \circ k)_*(\gamma(x_0)) = (h_* \circ k_*)(\gamma(x_0))\\
+    &= h_*(\deg k\cdot\gamma(y_0)) = \deg k\cdot h_*(\gamma(y_0)) = (\deg h)\cdot(\deg k)\gamma(y_1),
+  \end{align*}
+  and so $\deg(h \circ k) = (\deg h)\cdot(\deg k)$.
+\end{proof}
+\begin{proof}[Solution for $(d)$]
+  Let $k\colon S^1 \to S^1$ be the constant map. Then, we have $k_*(\gamma(x_0)) = 0$, and so $\deg k = 0$.
+  \par Let $\id\colon S^1 \to S^1$ be the constant map. Then, we have $\id_*(\gamma(x_0)) = \gamma(x_0)$, and so $\deg \id = 1$.
+  \par Let $h\colon S^1 \to S^1$ such that $z \mapsto z^n$. Let $p\colon \mathbb{R} \to S^1$ be the standard covering. $p^{-1}(b_0) = 0$, which is fixed by $h$. Let $\gamma$ be the loop $\gamma(s) = e^{2\pi is}$, which generates $\pi_1(S_1,b_0)$; note we can choose $\gamma,b_0$ in this way by the fact that degree is independent of choice of generator and $x_0$. Then, $(h \circ \gamma)(s) = e^{2\pi ins} = p(ns)$, and so the lift of $h \circ \gamma$ is $s \mapsto ns$, i.e., $h_*(\gamma(b_0)) = n\gamma(b_0)$. Thus, $\deg h = n$.
+  \par The case for $\rho$ follows from that of $h$, where $n = -1$.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  By $(a)$, we use $b_0$ as our base point, and let $h(b_0) = x_0, k(b_0) =
+  y_0$. Consider $h_*\colon \pi_1(S^1,b_0) \to \pi_1(S^1,x_0)$, $k_*\colon \pi_1(S^1,b_0) \to \pi_1(S^1,y_0)$; by assumption, there exists $n$, such that $h_*(\gamma(b_0)) = n \cdot \gamma(x_0), k_*(\gamma(b_0)) = n \cdot \gamma(y_0)$.
+  \par Now let $\gamma(s) = e^{2\pi is}$, which generates $\pi_1(S_1,b_0)$ as
+  above. Then, let $\widetilde{h \circ \gamma},\widetilde{k \circ \gamma}$ be
+  the lifts of $h \circ \gamma, k \circ \gamma$ through the standard covering
+  $p\colon \mathbb{R} \to S^1$, at $h_0 \in p^{-1}(x_0),k_0 \in p^{-1}(y_0)$ respectively. Let $h_1 = \widetilde{h \circ \gamma}(1), k_1 = \widetilde{k \circ \gamma}(1)$.
+  \par Now we have $h_*(\gamma(b_0)) = (h_1-h_0) \gamma(x_0), k_*(\gamma(b_0)) = (k_1-k_0) \gamma(y_0)$, and so $h_1-h_0 = k_1-k_0 = n$. We want to find a path homotopy from $\widetilde{h \circ \gamma}$ to $\widetilde{k \circ \gamma}$. We first define $\widetilde{\widetilde{h \circ \gamma}} = \widetilde{h \circ \gamma} - h_0 + k_0$ so that both $\widetilde{\widetilde{h \circ \gamma}}, \widetilde{h \circ \gamma}$ have the same end points; we then see there exists a path homotopy $\tilde{F}$ between them since $\mathbb{R}$ is contractible.
+  \par Now consider $\tilde{h}(x) = e^{2\pi i(k_0-h_0)}h(x)$. Then, $\widetilde{\widetilde{h \circ \gamma}}$ is the lift of $\tilde{h} \circ \gamma$ at $k_0$. Then, $p \circ \tilde{F}$ is a path homotopy from $\widetilde{\widetilde{h \circ \gamma}}$ to $\widetilde{k \circ \gamma}$. Since this is a path homotopy, it factors through $(p,\id)$ to get a homotopy $F$ from $\tilde{h}$ to $k$.
+  \par We now see that there exists a path homotopy $G$ between $\tilde{h}$ and $h$ given by $G(x,t) = h(x)e^{2\pi is(k_0-h_0)}$, and so there exists a path homotopy combining $F,G$ between $h$ and $k$.
+\end{proof}
+
+\begin{problem}
+  Suppose that to every map $h\colon S^n \to S^n$ we have assigned an integer,
+  denoted by $\deg h$ and called the \emph{\textbf{degree}} of $h$, such that
+  \begin{enumi}
+    \item Homotopic maps have the same degree.
+    \item $\deg(h \circ k) = (\deg h) \cdot (\deg k)$.
+    \item The identity has degree $1$, any constant map has degree $0$, and the reflection map $\rho(x_1,\ldots,x_{n+1}) = (x_1,\ldots,x_n,-x_{n+1})$ has degree $-1$.
+  \end{enumi}
+  Prove the following:
+  \begin{enuma}
+    \item There is no retraction $r\colon B^{n+1} \to S^n$.
+    \item If $h\colon S^n \to S^n$ has degree different from $(-1)^{n+1}$, then $h$ has a fixed point.
+    \item If $h\colon S^n \to S^n$ has degree different from $1$, then $h$ maps some point $x$ to is antipode $-x$.
+    \item If $S^n$ has a nonvanishing tangent vector field $v$, then $n$ is odd.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  We use polar coordinates to denote $B^{n+1}$ and $S^n$, i.e., the points in $B^{n+1}$ are given by $(\theta,\phi_2,\ldots,\phi_n,\rho)$ and the points in $S^n$ by $(\theta,\phi_2,\ldots,\phi_n)$, where $0 \le \theta < 2\pi$, $0 \le \phi_i < \pi$, and $0 \le \rho \le 1$. Thus, the inclusion $S^n \hookrightarrow B^{n+1}$ is given by $(\theta,\phi_2,\ldots,\phi_n) \mapsto (\theta,\phi_2,\ldots,\phi_n,1)$.
+  \par Now, suppose a retraction $r\colon B^{n+1} \to S^n$ exists. Then, define the
+  homotopy $H\colon S^n \times [0,1] \to S^n$ by $H(x_1,\ldots,x_n,t) = r(x_1,\ldots,x_n,t)$, which is continuous since $r$ is. Then, $H(x_1,\ldots,x_n,0)$ is constant, hence has degree $0$, whereas $H(x_1,\ldots,x_n,1)$ is the identity, hence has degree $1$, which contradicts $(i)$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We return to Cartesian coordinates. Suppose $h$ has no fixed points. We first construct a homotopy:
+  \begin{equation*}
+    H(x,t) = \frac{(1-t)h(x)+ta(x)}{\lVert(1-t)h(x)+ta(x)\rVert}.
+  \end{equation*}
+  Since $H$ is continuous since it is a composition of continuous functions in both variables, it suffices to show $\lVert(1-t)h(x)+ta(x)\rVert \ne 0$ for all $x,t$. So, suppose $(1-t)h(x)+ta(x) = 0$. Then, $(1-t)h(x) = tx$. Comparing norms, this is only possible when $t=1/2$, and so $h(x) = x$, which contradicts that $h$ has no fixed points.
+  \par Thus, we see that $h$ is homotopic to the antipodal map. Now, since the antipodal map is the composition of $n+1$ reflections, each one reflecting each coordinate of $S^n$, we have that $\deg(h) = \deg(a) = (-1)^{n+1}$ by $(i)$, $(ii)$, and $(iii)$, a contradiction.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Suppose $h$ maps no point $x$ to its antipode $-x$. We first construct a homotopy:
+  \begin{equation*}
+    G(x,t) = \frac{(1-t)h(x)+tx}{\lVert(1-t)h(x)+tx\rVert}.
+  \end{equation*}
+  Since $G$ is continuous since it is a composition of continuous functions in both variables, it suffices to show $\lVert(1-t)h(x)+tx\rVert \ne 0$ for all $x,t$. So, suppose $(1-t)h(x)+tx = 0$. Then, $(1-t)h(x) = -tx$. Comparing norms, this is only possible when $t=1/2$, and so $h(x) = -x$, which contradicts that $h$ maps no point $x$ to its antipode $-x$.
+  \par Thus, we see that $h$ is homotopic to the identity. Since the identity has degree $1$, we have $\deg(h) = 1$ by $(i)$, a contradiction.
+  %Suppose $h$ does not map any point $x$ to its antipode $-x$. Then, $g = -h$ is a map with no fixed points, and so $g \simeq a$ by the proof of $(b)$. But then, $\deg(h) = \deg(-g) = \deg(-a) = \deg(i) = 1$ by $(i)$ and $(iii)$, a contradiction.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  Suppose such a $v(x)$ exists. Then, let $h(x) = v(x)/\lVert v(x) \rVert$; $h(x)$ then is a map $S^n \to S^n$. Since $v(x)$ is a tangent vector field, $\braket{h(x),x} = \braket{v(x),x}/\lVert v(x) \rVert = 0$, where $\braket{\cdot,\cdot}$ is the standard inner product in $\mathbb{R}^{n+1}$. Then, there are no points $h(x) = \pm x$ since $\braket{h(x),x} = 0 \ne \pm1$. By the proofs of $(b)$ and $(c)$, $h(x)$ is then homotopic to the identity and the antipodal map; hence, the identity is homotopic to the antipodal map. By $(i)$, $(iii)$, and the proofs of $(b)$ and $(c)$, this then implies that $\deg 1 = \deg (-1)^{n+1}$, and so $n$ is odd.
+\end{proof}
+
+\subsection{The Fundamental Group of \texorpdfstring{$\bm{S^n}$}{S\textasciicircum n}}
+\begin{problem}
+  Let $X$ be the union of two copies of $S^2$ having a single point in common. What is the fundamental group of $X$? Prove that your answer is correct.
+\end{problem}
+\begin{proof}[Solution]
+  Let $U = X \setminus \{a\}, V = X \setminus \{b\}$ such that $a,b$ are in different copies of $S^2$; $U,V$ are open since $X$ is Hausdorff. Then, since $S^2 \setminus \{a\}, S^2 \setminus \{b\}$ are homeomorphic to $\mathbb{R}^2$ by the proof in Theorem $59.3$, we see that there exists a deformation retraction from $X \setminus \{a\}$ onto $S^2$ by taking the copy of $S^2$ containing $a$ and retracting it into $\{x_0\}$ the intersection of the two copies of $S^2$; likewise, there exists a deformation retraction from $X \setminus \{b\}$ onto $S^2$. Thus, both $U,V$ are simply connected by Theorem $59.3$. $U \cap V$ is path connected since it is homeomorphic to two copies of $\mathbb{R}^2$ adjoined at $x_0$, and so $X$ is simply connected by Corollary $59.2$.
+\end{proof}
+
+\subsection{Fundamental Groups of Some Surfaces}
+\setcounter{subsubsection}{1}
+\begin{problem}
+  Let $X$ be the quotient space obtained from $B^2$ by identifying each point $x$ of $S^1$ with its antipode $-x$. Show that $X$ is homeomorphic to the projective plane $P^2$.
+\end{problem}
+\begin{proof}
+  Consider $X$ as constructed from $B^2$ identified with the closed upper
+  hemisphere of $S^2$. Let $p\colon S^2 \to P^2, q\colon B^2 \to X$ be the
+  quotient maps, and $\pi\colon S^2 \to B^2$ the map sending $x$ to either itself or $-x$ if $x \notin B^2$; note this is a quotient map since $U \subseteq S^2$ open implies $\pi(U)$ open, and $V \subseteq B^2$ open implies $\pi^{-1}(V) = V \cup -V$ open. We then have the commutative diagram
+  \begin{center}
+    \begin{tikzcd}
+      S^2 \arrow[swap]{d}{p}\arrow{r}{\pi} & B^2 \arrow{d}{q}\\
+      P^2 \arrow[dashed]{r}{f} & X
+    \end{tikzcd}
+  \end{center}
+  and since $q \circ \pi$ is a quotient map by p.~141, we see $f$ is a quotient map by Theorem $22.2$. But since for $x \in X$, $(q \circ \pi)^{-1}(x) = \{x,-x\} \in P^2$, and moreover any equivalence class $\{x,-x\}$ can be realized as the inverse image of this type, $f$ is a bijection and $P^2 = \{(q \circ \pi)^{-1}(x) \mid x \in X\}$, and so $f$ is a homeomorphism by Corollary $22.3(a)$.
+\end{proof}
+
+\setcounter{subsubsection}{2}
+\begin{problem}
+  Let $p\colon E \to X$ be the map constructed in the proof of Lemma $60.5$. Let $E'$ be the subspace of $E$ that is the union of the $x$-axis and the $y$-axis. Show that $p |_{E'}$ is not a covering map.
+\end{problem}
+\begin{proof}
+  Consider the base point $x_0$, the center of the figure-eight $X$. A
+  neighborhood $U \ni x_0$ contains the union $V$ of open intervals in $A$ and
+  $B$ which intersect in exactly $\{x_0\}$. $(p |_{E'})^{-1}(V)$ is then equal
+  to the union of open intervals around integers on the $x$-axis and open
+  intervals around integers on the $y$-axis. But none of these intervals are
+  homeomorphic to $V$, since removing an integer in an interval gives two
+  connected components, while removing its image $x_0$ in $V$ gives four connected components.
+\end{proof}
+
+\setcounter{section}{10}
+\section{The Seifert-van Kampen Theorem}
+\setcounter{subsection}{66}
+\subsection{Direct Sums of Abelian Groups}
+\setcounter{subsubsection}{1}
+\begin{problem}
+  Show that if $G_1$ is a subgroup of $G$, there may be no subgroup $G_2$ of $G$ such that $G = G_1 \oplus G_2$.
+\end{problem}
+\begin{proof}
+  Let $G = \mathbb{Z}$ and $G_1 = 2\mathbb{Z}$, and suppose that such a $G_2$ exists. Then, we have $G = 2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z}$ by Corollary $67.3$, and so $(0,1) \in G_1 \oplus G_2$. But since $2(0,1) = (0,0)$, $G_1 \oplus G_2$ contains an element of order $2$ while $G$ does not, a contradiction.
+\end{proof}
+
+\setcounter{subsubsection}{3}
+\begin{problem}
+  The \emph{\textbf{order}} of an element $a$ of an abelian group $G$ is the smallest positive integer $m$ such that $ma = 0$, if such exists; otherwise, the order of $a$ is said to be infinite. The order of $a$ thus equals the order of the subgroup generated by $a$.
+  \begin{enuma}
+    \item Show the elements of finite order in $G$ form a subgroup of $G$,
+      called its \emph{\textbf{torsion subgroup}}.
+    \item Show that if $G$ is free abelian, it has no elements of finite order.
+    \item Show the additive group of rationals has no elements of finite order, but is not free abelian.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  It suffices to show the torsion elements $T(G)$ of $G$ is closed under sums and inverses. If $a,b \in T(G)$ with orders $m,n$ respectively, then $mn(a+b) = n(ma) + m(nb) = 0 \implies a+b \in T(G)$; likewise, $m(-a) = -(ma) = 0 \implies -a \in T(G)$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Any $0 \ne a \in G$ is of the form $a = \sum k_\alpha a_\alpha$ where $\{a_\alpha\}$ is our basis of $G$ and $k_\alpha \in \mathbb{Z}$. If $ma = 0$, then $mk_\alpha a_\alpha = 0$ for all $\alpha$, which is a contradiction since each $a_\alpha$ also has infinite order.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Suppose $\mathbb{Q} = \braket{a_\alpha}$, $\{a_\alpha\}$ a basis. Then for any $a_\alpha$, $a_\alpha/2$ must be of the form $a_\alpha/2 = \sum k_\alpha a_\alpha$ for $k_\alpha \in \mathbb{Z}$. But then, $a_\alpha = 2\sum k_\alpha a_\alpha$, and since $a_\alpha$ is a basis element, we have $a_\alpha = 2k_\alpha a_\alpha$. This implies $k_\alpha = 1/2$, which is a contradiction.
+\end{proof}
+
+\subsection{Free Products of Groups}
+\setcounter{subsubsection}{1}
+\begin{problem}
+  Let $G = G_1 * G_2$, where $G_1$ and $G_2$ are nontrivial groups.
+  \begin{enuma}
+    \item Show $G$ is not abelian.
+    \item If $x \in G$, define the \emph{\textbf{length}} of $x$ to be the length of the unique reduced word in the elements of $G_1$ and $G_2$ that represents $x$. Show that if $x$ has even length (at least $2$), then $x$ does not have finite order. Show that if $x$ has odd length (at least $3$), then $x$ is conjugate to an element of shorter length.
+    \item Show that the only elements of $G$ that have finite order are the elements of $G_1$ and $G_2$ that have finite order, and their conjugates.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  For $1 \ne g \in G_1, 1 \ne h \in G_2$, $gh \ne hg$ since otherwise we would have distinct reduced word representations of the same element of $G$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  If $x \in G$ has even length, then without loss of generality, $x$ starts with an element in $G_1$ and ends with one in $G_2$, and so we cannot reduce $x^n$ to the identity, and $x$ has infinite order. If $x \in G$ has odd length, then without loss of generality, $x = ghg'$ for $g,g' \in G_1$, $h \in G$. Then, $g^{-1}xg = hg'g$ has shorter length, for $g'g$ reduces to one element in $G_1$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Suppose $x \in G$ has finite order. Then, by $(b)$ it must have odd length $2k+1$. We proceed by induction on $k$. For $k=0$, we see the length is $1$, and so $x \in G_i$ for some $i$, and has finite order in $G_i$. Now suppose $k > 0$. Since $x$ has odd length, $x = g^{-1}yg$ for $g,y \in G$, $y$ of shorter length. $y$ has odd length for if not, $y$ has infinite order by $(b)$, and so $x$ also has infinite order since $x^n = g^{-1}y^ng$, which is a contradiction. Since $y$ is of finite order by the fact $gx^ng^{-1} = y^n$, $y$ is either equal to an element of $G_i$ with finite order or conjugate to one by inductive hypothesis. If the latter is true, $x = g^{-1}yg = g^{-1}h^{-1}zhg = (hg)^{-1}zhg$ for $h \in G$, and $z \in G_i$ having finite order for some $i$. $x$ is therefore conjugate to a finite order element of $G_i$.
+\end{proof}
+
+\setcounter{subsection}{70}
+\subsection{The Fundamental Group of a Wedge of Circles}
+\setcounter{subsubsection}{1}
+\begin{problem}\label{exc:71.2}
+  Suppose $X$ is a space that is the union of the closed subspaces $X_1$,
+  \ldots, $X_n$; assume there is a point $p$ of $X$ such that $X_i \cap X_j =
+  \{p\}$ for $i \ne j$. Then we call $X$ the \emph{\textbf{wedge}} of the spaces
+  $X_1$, \ldots, $X_n$, and write $X = X_1 \vee \cdots \vee X_n$. Show that if
+  for each $i$, the point $p$ is a deformation retract of an open set $W_i$ of
+  $X_i$, then $\pi_1(X,p)$ is the external free product of the groups
+  $\pi_1(X_i,p)$ relative to the monomorphisms induced by inclusion.
+\end{problem}
+\begin{proof}
+  By induction, it suffices to show when $X = X_1 \vee X_2$; moreover, it
+  suffices to consider when the $X_i$ are both path-connected since if $C_i$
+  are the path components containing $p$ in $X_i$, then
+  $\pi_1(C_i,p) = \pi_1(X_i,p)$ as on p.~332. So, let $U = X_1 \cup
+  W_2$ and $V = X_2 \cup W_1$. Then, both $U$ and $V$ are path connected since
+  they deformation retract to $X_1,X_2$, respectively, and $U \cap V = W_1 \cup
+  W_2$ is moreover simply connected since it deformation retracts to $\{p\}$.
+  Thus, by Corollary $70.3$, there is an isomorphism
+  $\pi_1(X_1,p) * \pi_1(X_2,p) \simeq \pi_1(X,p)$.
+\end{proof}
+
+\setcounter{subsubsection}{3}
+\begin{problem}\label{exc:71.4}
+  Show that if $X$ is an infinite wedge of circles, then $X$ does not satisfy the first countability axiom.
+\end{problem}
+\begin{proof}
+  Let $p \in X$ be the common point of the circles. Suppose $X$ has a countable basis $\{U_i\}$ at $p$; we can assume without loss of generality that $U_i \supsetneq U_j$ if $i < j$. For each $U_i$, we know that $V_{ij} = U_i \cap S_j$ is open for any $i,j$ by the coherence condition, and is nonempty since $p \in V_{ij}$.
+  \par Now take $V = \bigcup V_{ii}$; we claim it is a neighborhood of $p$ that does not contain any $U_i$. It is open by coherence since $V \cap S_i = U_i$ is open for all $i$, and contains $p$ by construction above. Now suppose $U_i \subseteq V$. Then, this implies $U_i \cap S_j \subseteq V \cap S_j = U_j$ for all $j$, and in particular when $i < j$, which contradicts that $U_i \supsetneq U_j$ if $i < j$.
+\end{proof}
+
+\begin{problem}
+  Let $S_n$ be the circle of radius $n$ in $\mathbb{R}^2$ whose center is at the point $(n,0)$. Let $Y$ be the subspace of $\mathbb{R}^2$ that is the union of these circles; let $p$ be their common point.
+  \begin{enuma}
+    \item Show that $Y$ is not homeomorphic to a countably infinite wedge $X$ of circles, nor to the space of Example $1$.
+    \item Show, however, that $\pi_1(Y,p)$ is a free group with $\{[f_n]\}$ as a system of free generators, where $f_n$ is a loop representing a generator of $\pi_1(S_n,p)$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  $Y$ is a subspace of $\mathbb{R}^2$ and so it is first countable by Theorem
+  $30.2$, and so $Y$ is not homeomorphic to $X$ by Exercise \ref{exc:71.4}, which says $X$ is not first countable.
+  \par Denote $Z$ as the space of Example $71.1$; we claim $Z$ is compact while $Y$ is not. First, denoting $D_m$ as the closed disc of radius $1/m$ with center at the point $(1/m,0)$, we see that $Z \cup D_m$ is closed since it is a finite union of closed sets $Z \cup D_m = D_m \cup \bigcup_{n < m} C_n$. Then, $Z \subseteq \bigcap_m (Z \cup D_m)$ trivially; moreover, since if $x \notin Z$, then $x \notin D_m$ for all $m$ large enough, we have that $Z = \bigcap_m (Z \cup D_m)$. Thus, $Z$ is closed. Since $Z$ is bounded, it is then compact by Theorem $27.3$. On the other hand, $Y$ is unbounded hence not compact by Theorem $27.3$, and so $Y,Z$ are not homeomorphic.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $i_n\colon \pi_1(S_n,p) \to \pi_1(Y,p)$ be the homomorphism induced by inclusion, and let their respective images be $G_n$; we want to show that the homomorphism
+  \begin{equation}\label{eq5}
+    \bigast_{n=1}^\infty \pi_1(S_n,p) \to \pi_1(Y,p), \quad \prod_{j=1}^J [f_{m_j}]^{\ell_j} \mapsto \prod_{j=1}^J i_n([f_{m_j}])^{\ell_j}
+  \end{equation}
+  is an isomorphism.
+  \par We first show that the homomorphism \eqref{eq5} is surjective. So,
+  suppose $f\colon I \to Y$ is a loop in $Y$. Letting $Y_N = Y \setminus
+  \bigcup_{n=N+1}^\infty \{(2n,0)\}$, since $I$ is compact, the image $f(I)$ is
+  also compact, thus bounded by Theorem $27.3$, and so $f(I) \subseteq Y_N$ for
+  some $N$. Letting $r_N\colon Y \to \bigcup_{n=1}^N S_n$, we form the
+  deformation retraction $H\colon Y_N \times I \to Y_N$, where $H(x,0) =
+  \id_{Y_N}$ and $H(x,1) = r_N|_{Y_N}$, by retracting the upper and lower
+  semicircles of $S_n$ to $p$ for all $n > N$. Then, $H \circ (f \times
+  \id_I)\colon I \times I \to Y_N$ is a path homotopy from $f$ to $r_N \circ f$. Thus, $[f] = [r_N \circ f]$, and Theorem $71.1$ implies that $[r_N \circ f]$ is a product of elements of the groups $G_n$ for $n \le N$. Therefore, $[f]$ is in the image of the homomorphism \eqref{eq5}.
+  \par We now show that the homomorphism \eqref{eq5} is injective. Now suppose there is some non-identity element
+  \begin{equation*}
+    w \in \bigast_{n=1}^\infty \pi_1(S_n,p),
+  \end{equation*}
+  whose image through the homomorphism \eqref{eq5} is the identity in $\pi_1(Y,p)$. Let $f$ be a loop in $X$ whose path-homotopy class is the image of $w$. Then, $f$ is path homotopic to a constant in $X$, so by the argument above, it is path homotopic to a constant in some $Y_N$, and therefore path homotopic to a constant in $\bigcup_{n=1}^N S_n$. But this contradicts Theorem $71.1$, which says that the map
+  \begin{equation*}
+    \bigast_{n=1}^N \pi_1(S_n,p) \to \pi_1\left( \bigvee_{n=1}^N S_n,p \right)
+  \end{equation*}
+  is injective.
+\end{proof}
+
+\setcounter{subsection}{72}
+\subsection{The Fundamental Groups of the Torus and the Dunce Cap}
+\begin{problem}
+  Find spaces whose fundamental groups are isomorphic to the following groups. (Here $\mathbb{Z}/n$ denotes the additive group of integers modulo $n$.)
+  \begin{enuma}
+    \item $\mathbb{Z}/n \times \mathbb{Z}/m$.
+    \item $\mathbb{Z}/n_1 \times \mathbb{Z}/n_2 \times \cdots \times \mathbb{Z}/n_k$.
+    \item $\mathbb{Z}/n * \mathbb{Z}/m$. (See \hyperref[exc:71.2]{Exercise $2$ of
+      $\S71$}).
+    \item $\mathbb{Z}/n_1 * \mathbb{Z}/n_2 * \cdots * \mathbb{Z}/n_k$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Solution]
+  We use Theorem $60.1$ to say $\pi_1(X \times Y,x_0 \times y_0) = \pi_1(X,x_0)
+  \times \pi_1(Y,y_0)$, and use Exercise \ref{exc:71.2} to say $\pi_1(X \vee Y,x_0) = \pi_1(X,x_0) * \pi_1(Y,x_0)$ for $\{x_0\} = X \cap Y$.
+  \par We denote the $n$-fold dunce cap by $D_n$. Note since the $D_n$ are path connected, we do not need to specify base points.
+  \par Through repeated applications of the above, and by using induction to get $(a) \Rightarrow (b), (c) \Rightarrow (d)$, we get
+  \begin{alignat*}{4}
+    \pi_1(D_n \times D_m) &= \mathbb{Z}/n \times \mathbb{Z}/m &\implies{}& \pi_1\left(\prod_{i=1}^k D_{n_i}\right) &={}& \prod_{i=1}^k \mathbb{Z}/n_i,\\
+    \pi_1(D_n \vee D_m) &= \mathbb{Z}/n * \mathbb{Z}/m &\implies{}& \pi_1\left( \bigvee_{i=1}^k D_{n_i} \right) &={}& \bigast_{i=1}^k \mathbb{Z}/n_i.\tag*{\qedsymbol}
+  \end{alignat*}
+  \renewcommand{\qedsymbol}{}\vspace{-2em}
+\end{proof}
+
+\section{Classification of Surfaces}
+\setcounter{subsection}{73}
+\subsection{Fundamental Groups of Surfaces}
+\setcounter{subsubsection}{2}
+\begin{problem}
+  The \emph{\textbf{Klein bottle}} $K$ is the space obtained form a square by means of the labeling scheme $aba^{-1}b$. Figure $74.11$ indicates how $K$ can be pictured as an immersed surface in $\mathbb{R}^3$.
+  \begin{enuma}
+    \item Find a presentation for the fundamental group of $K$.
+    \item Find a double covering map $p : T \to K$, where $T$ is the torus. Describe the induced homomorphism of fundamental groups.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  $\pi_1(K) = \braket{a,b \mid aba^{-1}b = 1}$ by Theorem $74.2$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We consider $T$ as $[0,1] \times [0,1]$ with the relations $(0,y)\sim(1,y)$,
+  $(x,0) \sim (x,1)$, and $K$ as $[0,1] \times [0,1]$ with the relations $(0,y)
+  \sim (1,1-y)$, $(x,0) \sim (x,1)$. Then, define $p\colon T \to K$ by
+  \begin{equation*}
+    p(x,y) = \begin{cases}
+      (2x,y) & \text{if}~x \in [0,1/2],\\
+      (2x-1,1-y) & \text{if}~x \in [1/2,1].
+    \end{cases}
+  \end{equation*}
+  This is continuous in each region, and agrees on the boundary since $p(1/2,y) = (2 \cdot 1/2,y) = (1,y) = (0,1-y) = (2 \cdot 1/2 - 1,1-y)$ and $p(1,1-y) = (1,1-y) = (0,y) = p(0,y)$.
+  \par Now recall that $\pi_1(T) = \braket{\alpha,\beta \mid \alpha\beta\alpha^{-1}\beta^{-1} = 1}$. Looking at Figures $74.4$ and $74.11$, we see $p_*(\alpha) = a^2,p_*(\beta) = b$. Since $aba^{-1}b = 1 \iff bab = a$, we see that $p_*(\alpha)p_*(\beta) = a^2b = babab = ba^2 = p_*(\beta)p_*(\alpha)$.
+\end{proof}
+
+\subsection{Homology of Surfaces}
+\setcounter{subsubsection}{2}
+\begin{problem}\label{exc:75.3}
+  Let $X$ be the quotient space obtained from an $8$-sided polygonal region $P$ by pasting its edges together according to the labelling scheme $acadbcb^{-1}d$.
+  \begin{enuma}
+    \item Check that all vertices of $P$ are mapped to the same point of the quotient space $X$ by the pasting map.
+    \item Calculate $H_1(X)$.
+    \item Assuming $X$ is homeomorphic to one of the surfaces given in Theorem $75.5$ (which it is), which surface is it?
+  \end{enuma}
+\end{problem}
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+    \draw [->,dotted] (0,0) -- (0,1);
+    \draw [->,dotted] (0,1) -- (0.71,1.71);
+    \draw [->,dotted] (0.71,1.71) -- (1.71,1.71);
+    \draw [->,dotted] (1.71,1.71) -- (2.41,1);
+    \draw [->,dotted] (2.41,1) -- (2.41,0);
+    \draw [->,dotted] (2.41,0) -- (1.71,-0.71);
+    \draw [->,dotted] (0.71,-0.71) -- (1.71,-0.71);
+    \draw [->,dotted] (0.71,-0.71) -- (0,0);
+    \draw [-] (0,1) -- (1.71,1.71);
+    \draw [-] (1.71,1.71) -- (0.71,-0.71);
+    \draw [-] (0.71,-0.71) -- (2.41,1);
+    \draw [-] (2.41,1) -- (0,0);
+    \draw [-] (0,0) -- (0.71,1.71);
+    \draw [-] (0.71,1.71) -- (1.71,-0.71);
+    \draw [-] (0,1) -- (2.41,0);
+    \draw [-] (2.41,0) -- (1.71,-0.71);
+    \draw (-0.46,0.7) node[anchor=north west] {$a$};
+    \draw (0.89,2.15) node[anchor=north west] {$a$};
+    \draw (-0.04,1.7) node[anchor=north west] {$c$};
+    \draw (1.94,1.92) node[anchor=north west] {$d$};
+    \draw (-0.05,-0.27) node[anchor=north west] {$d$};
+    \draw (2.35,0.96) node[anchor=north west] {$b$};
+    \draw (0.82,-0.68) node[anchor=north west] {$b^{-1}$};
+    \draw (2.05,-0.15) node[anchor=north west] {$c$};
+  \end{tikzpicture}
+  \caption{Labeling of edges and identification of vertices in $P$.}
+  \label{fig5}
+\end{figure}
+\begin{proof}[Proof of $(a)$]
+  We have the identification of vertices in $P$ as shown with solid lines in Figure \ref{fig5}, found by identifying heads/tails of arrows with the same label. Thus, all the vertices of $P$ are mapped to the same point of the quotient space $X$ by the pasting map.
+\end{proof}
+\begin{proof}[Solution for $(b)$]
+  We apply Lemma $77.1$ to the labeling scheme $acadbcb^{-1}d$ repeatedly to find an equivalent labeling scheme, where the brackets show our decomposition $[y_0]a[y_1]a[y_2]$:
+  \begin{align*}
+    [~]a[c]a[dbcb^{-1}d] &\sim aac^{-1}dbcb^{-1}d\\
+    [aac^{-1}]d[bcb^{-1}]d[~] &\sim ddaac^{-1}bc^{-1}b^{-1}\\
+    [ddaa]c^{-1}[b]c^{-1}[b^{-1}] &\sim c^{-1}c^{-1}ddaab^{-1}b^{-1}.
+  \end{align*}
+  Relabeling the edges, which is allowed by p.~460, we have the labeling scheme $aabbccdd$. Thus, by Theorem $74.2$, the fundamental group is
+  \begin{equation*}
+    \pi_1(X,x_0) = \braket{a,b,c,d \mid a^2b^2c^2d^2 = 1}.
+  \end{equation*}
+  Finally, the first homology group is
+  \begin{equation*}
+    H_1(X) \simeq \braket{a,b,c,d \mid 2a + 2b + 2c + 2d = 0} \simeq
+    \mathbb{Z}^3 \times (\mathbb{Z}/2\mathbb{Z}).\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Solution for $(c)$]
+  Theorem $75.4$ says that $H_1(P_n) = \mathbb{Z}^{n-1} \times (\mathbb{Z}/2\mathbb{Z})$. Thus, assuming that $X$ is homeomorphic to one of the surfaces in Theorem $75.5$, we see that $X$ is homeomorphic to $P_4 = P^2\#P^2\#P^2\#P^2$ by $(b)$.
+\end{proof}
+
+\begin{problem}
+  Let $X$ be the quotient space obtained from an $8$-sided polygonal region $P$
+  by means of the labelling scheme $abcdad^{-1}cb^{-1}$. Let $\pi\colon P \to X$ be the quotient map.
+  \begin{enuma}
+    \item Show that $\pi$ does not map all the vertices of $P$ to the same point of $X$.
+    \item Determine the space $A = \pi(\Bd P)$ and calculate its fundamental group.
+    \item Calculate $\pi_1(X,x_0)$ and $H_1(X)$.
+    \item Assuming $X$ is homeomorphic to one of the surfaces given in Theorem $75.5$, which surface is it?
+  \end{enuma}
+\end{problem}
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+    \draw [->,dotted] (0,0) -- (0,1);
+    \draw [->,dotted] (0,1) -- (0.71,1.71);
+    \draw [->,dotted] (0.71,1.71) -- (1.71,1.71);
+    \draw [->,dotted] (1.71,1.71) -- (2.41,1);
+    \draw [->,dotted] (2.41,1) -- (2.41,0);
+    \draw [<-,dotted] (2.41,0) -- (1.71,-0.71);
+    \draw [<-,dotted] (0.71,-0.71) -- (1.71,-0.71);
+    \draw [<-,dotted] (0.71,-0.71) -- (0,0);
+    \draw [-] (0,1) -- (2.41,0);
+    \draw [-] (0,0) -- (2.41,1);
+    \draw [-] (2.41,0) -- (2.41,1);
+    \draw [-] (0,0) -- (0,1);
+    \draw [-,dashed] (0.71,1.71) -- (0.71,-0.71);
+    \draw [-,dashed] (1.71,1.71) -- (0.71,-0.71);
+    \draw [-,dashed] (1.71,1.71) -- (1.71,-0.71);
+    \draw [-,dashed] (0.71,1.71) -- (1.71,-0.71);
+    \draw (-0.46,0.71) node[anchor=north west] {$a$};
+    \draw (0.89,2.15) node[anchor=north west] {$c$};
+    \draw (-0.05,1.77) node[anchor=north west] {$b$};
+    \draw (1.94,1.92) node[anchor=north west] {$d$};
+    \draw (-0.35,-0.27) node[anchor=north west] {$b^{-1}$};
+    \draw (2.35,0.73) node[anchor=north west] {$a$};
+    \draw (1.10,-0.68) node[anchor=north west] {$c$};
+    \draw (1.95,-0.15) node[anchor=north west] {$d^{-1}$};
+  \end{tikzpicture}
+  \caption{Labeling of edges and identification of vertices in $P$.}
+  \label{fig6}
+\end{figure}
+\begin{proof}[Proof of $(a)$]
+  We have the identification of vertices in $P$ as shown in Figure \ref{fig6}, found by identifying heads/tails of arrows with the same label, where the solid lines are one identification and the dashed lines are another. Thus, $\pi$ does not map all the vertices of $P$ to the same point of $X$.
+\end{proof}
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+    % draw the two circles and decorate them with arrows
+    \draw[decoration={markings, mark=at position 0.625 with {\arrow{>}}}, postaction={decorate}] (0,0) circle (0.5);
+    \draw[decoration={markings, mark=at position 0.125 with {\arrow{>}}}, postaction={decorate}] (3,0) circle (0.5);
+
+    % draw the connecting line
+    \draw[postaction={decoration={markings,mark=at position 0.55 with {\arrow{>}}},decorate}] (0.5,0) to[bend left=40] (2.5,0);
+    \draw[postaction={decoration={markings,mark=at position 0.55 with {\arrow{>}}},decorate}] (2.5,0) to[bend left=40] (0.5,0);
+
+    % draw the two black dots
+    \fill (0.5,0) circle (0.08); 
+    \fill (2.5,0) circle (0.08); 
+
+    \draw (-0.75,0) node[anchor=center] {$a$};
+    \draw (3.75,0) node[anchor=center] {$c$};
+    \draw (1.5,0.75) node[anchor=center] {$b$};
+    \draw (1.5,-0.75) node[anchor=center] {$d$};
+
+    \draw (0.7,-0.4) node[anchor=center] {$x_0$};
+    \draw (2.4,-0.4) node[anchor=center] {$x_1$};
+  \end{tikzpicture}
+  \caption{Sketch of $A = \pi(\Bd P)$.}
+  \label{fig6a}
+\end{figure}
+\begin{proof}[Solution for $(b)$]
+  Let $x_0$ be the point identified by the solid lines in Figure \ref{fig6}, and $x_1$ the point identified by the dashed lines. Then, using Figure \ref{fig6}, we see that $a$ connects $x_0$ to itself, $c$ connects $x_1$ to itself, and $b$ goes from $x_0$ to $x_1$, while $d$ goes from $x_1$ to $x_0$. Thus, we have the sketch in Figure \ref{fig6a} for $A = \pi(\Bd P)$.
+  \par We now want to calculate its fundamental group. First, we see that we can homotopically retract the segment $d$ into the point $x_0$, thereby making $x_0$ coincide with $x_1$; the resulting deformation retract is then the wedge sum of three circles. Thus, $\pi_1(A,x_0) \simeq \pi_1(S^1 \vee S^1 \vee S^1,x_0) = \mathbb{Z} \ast \mathbb{Z} \ast \mathbb{Z}$ by Theorems $58.3$ and $71.1$.
+\end{proof}
+\begin{proof}[Solution for $(c)$]
+  We proceed as in Exercise $\ref{exc:75.3}(b)$:
+  \begin{align*}
+    [~]a[bcd]a[d^{-1}cb^{-1}] &\sim aad^{-1}c^{-1}b^{-1}d^{-1}cb^{-1}\\
+    [aad^{-1}c^{-1}]b^{-1}[d^{-1}c]b^{-1}[~] &\sim b^{-1}b^{-1}aad^{-1}c^{-1}c^{-1}d\\
+    [b^{-1}b^{-1}aad^{-1}]c^{-1}[~]c^{-1}[d] &\sim c^{-1}c^{-1}b^{-1}b^{-1}aad^{-1}d\\
+    c^{-1}c^{-1}b^{-1}b^{-1}aad^{-1}d &\sim c^{-1}c^{-1}b^{-1}b^{-1}aa\\
+    c^{-1}c^{-1}b^{-1}b^{-1}aa &\sim aabbcc
+  \end{align*}
+  where we cancel $d^{-1}d$ in the penultimate step and relabel in the last step as allowed on p.~460. Thus, our fundamental group is
+  \begin{equation*}
+    \pi_1(X,x_0) = \braket{a,b,c \mid a^2b^2c^2 = 1},
+  \end{equation*}
+  which has the first homology group
+  \begin{equation*}
+    H_1(X) = \braket{a,b,c,d \mid 2a + 2b + 2c = 0} \simeq \mathbb{Z}^2 \times
+    (\mathbb{Z}/2\mathbb{Z}).\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Solution for $(d)$]
+  Since $H_1(X) \simeq \mathbb{Z}^2 \times (\mathbb{Z}/2\mathbb{Z})$, by Theorem $75.4$, we have that $X$ is homeomorphic to $P_3 = P^2 \# P^2 \# P^2$, assuming that $X$ is homeomorphic to one of the surfaces in Theorem $75.5$.
+\end{proof}
 
 \cleardoublepage
 \pdfbookmark[1]{List of Solved Exercises}{det}

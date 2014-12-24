@@ -567,7 +567,7 @@
 \end{proof}
 
 
-\begin{problem}[Linear Varieties in $\PP^n$]
+\begin{problem}[Linear Varieties in $\PP^n$]\label{exc:2.11}
   A hypersurface defined by a linear polynomial is called a \emph{hyperplane}. 
   \begin{enuma}
     \item Show that the following two conditions are equivalent for a variety $Y \subset \PP^n$: 
@@ -833,7 +833,7 @@
   %The Veronese map $\nu\colon \PP^2 \to \PP^5$ is defined to be $\nu\colon [x:y:z] \mapsto [x^2: y^2:z^2:xy:yz:zx]$. From exercise 2.8, a projective variety $Z$ is a curve (i.e. of dimension 1) if and only if it is the zero set of a single irreducible homogeneous polynomial $f$ of positive degree. Let $Z = Z(f)$ where $f \in k[x,y,z]$ is a homogeneous polynomial of positive degree. Then, $f^2 \in k[x^2:y^2:z^2:xy:yz:zx]$. Thus, there exists a homogeneous polynomial $g \in k[x_0, x_1, \cdots, x_5]$ such that $g|_Y = f$. $V = Z(g)$ is a hypersurface of $\PP^5$, and $V \cap Y = Z$. 
 \end{proof}
 
-\begin{problem}[The Segre Embedding]
+\begin{problem}[The Segre Embedding]\label{exc:2.14}
   Let $\psi\colon \PP^r \times \PP^s \to \PP^N$ be the map defined by sending
   the ordered pair $(a_0, \ldots, a_r) \times (b_0, \ldots, b_s)$ to $(\ldots,
   a_ib_j, \ldots)$ in lexicographic order, where $N = rs + r +s$. Note that
@@ -867,98 +867,223 @@
   0$, and so $P \in Z(\mathfrak{a})$, i.e., $\Im \psi \subset Z(\mathfrak{a})$.
   \par Conversely, suppose $Q = [\cdots:c_{ij}:\cdots] \in Z(\mathfrak{a})$.
   Fix $i_i,j_0$ such that $c_{i_0j_0} \ne 0$. We claim letting
-  $a_i = c_{ij_0}/c_{i_0j_0}$ and $b_j = c_{i_0j}/c_{i_0j_0}$, we have
+  $a_i = c_{ij_0}$ and $b_j = c_{i_0j}$, we have
   $\psi(a,b) = Q$. First, note that
   \begin{equation*}
     \theta(z_{ij} z_{kl} - z_{kj}z_{il}) = x_iy_jx_ky_l - x_ky_jx_iy_l = 0,
   \end{equation*}
-  hence $z_{ij} z_{kl} - z_{kj}z_{il} \in \mathfrak{a}$. Thus, we see
-  \begin{equation*}
-    a_ib_j = c_{ij_0}c_{i_0j}/c_{i_0j_0}^2 = c_{ij}c_{i_0j_0}/c_{i_0j_0}^2 =
-    c_{ij}/c_{i_0j_0}
-  \end{equation*}
+  hence $z_{ij} z_{kl} - z_{kj}z_{il} \in \mathfrak{a}$. Thus, 
+  $a_ib_j = c_{ij_0}c_{i_0j} = c_{ij}c_{i_0j_0}$
   since $c_{ij_0}c_{i_0j} = c_{ij}c_{i_0j_0}$, and so $[\cdots:a_ib_j:\cdots] =
   [\cdots : c_{ij} : \cdots]$.
   %This for any generator $f = z_{ij}z_{kl}-z_{kj}z_{il}$ of $\mathfrak{a}$, $f(P) = 0 \Rightarrow \Im \psi \subseteq Z(\mathfrak{a})$. Conversely, let's show $Z(\mathfrak{a}) \subseteq \Im\psi \iff \mathfrak{a} \supset I(\Im\psi)$. If $g \in I(\Im \psi)$, then, for every $Q = (\cdots,a_ib_j, \cdots) \in \Im\psi$, $g(Q) = 0$. Then, $g \in \Ker \theta = \mathfrak{a}$.
-  Thus, $Z(\mathfrak{a}) \subset \Im\psi$, and so 
+  Finally, $Z(\mathfrak{a}) \subset \Im\psi$, and so 
   $\Im \psi = Z(\mathfrak{a})$. Moreover, this is a subvariety of $\PP^N$ since
   $\mathfrak{a}$ is prime, hence $Z(\mathfrak{a})$ is irreducible.
+  %\par We remark that the $z_{ij}z_{kl}-z_{kj}z_{il}$ indeed generate
+  %$\mathfrak{a}$. First, $\Im\psi = Z(z_{ij}z_{kl}-z_{kj}z_{il})$ by the above,
+  %since $\Im \psi = Z(\mathfrak{a}) \subset Z(z_{ij}z_{kl}-z_{kj}z_{il})$ by the
+  %fact that $z_{ij}z_{kl}-z_{kj}z_{il} \in \mathfrak{a}$, and since conversely,
+  %$\Im\psi \supset Z(z_{ij}z_{kl}-z_{kj}z_{il})$ by the previous paragraph.
+  %By Exercise $\ref{exc:2.3}(d)$, we therefore have $\mathfrak{a} =
+  %\sqrt{(z_{ij}z_{kl}-z_{kj}z_{il})}$. $(z_{ij}z_{kl}-z_{kj}z_{il})$ is a
+  %radical ideal since 
 \end{proof}
 
-\begin{problem} \textbf{The Quadric Surface in $\PP^3$}. Consider the surface $Q$ (a surface is variety of dimension 2) in $\PP^3$ defined by the equation $xy-zw = 0$
-
-\begin{enuma} 
-\item Show that $Q$ is equal to the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3$, for suitable choice of coordinates.
-\item Show that $Q$ contains two families of lines (a line is a linear variety of dimension 1) $\{L_t\}, \{M_t\}$, each parametrized by $t \in \PP^1$, with the properties that if $L_t \neq L_u$, then $L_t \cap L_u = \emptyset $; if $M_t \neq M_u$, $M_t \cap M_u = \emptyset$, and for all $t,u, L_t \cap M_u = \mbox{one point}$. 
-\item Show that $Q$ contains other curves besides these lines, and deduce that the Zariski topology on $Q$ is not homeomorphic via $\psi$ to the product topology on $\PP^1 \times \PP^1$ (where each $\PP^1$ has its Zariski topology). 
-\end{enuma}
-
+\begin{problem}[The Quadric Surface in $\PP^3$]
+  Consider the surface $Q$ (a \emph{surface} is variety of dimension $2$) in
+  $\PP^3$ defined by the equation $xy-zw = 0$.
+  \begin{enuma} 
+    \item Show that $Q$ is equal to the Segre embedding of $\PP^1 \times \PP^1$ in
+      $\PP^3$, for suitable choice of coordinates.
+    \item Show that $Q$ contains two families of lines (a \emph{line} is a
+      linear variety of dimension $1$) $\{L_t\}, \{M_t\}$, each parametrized by
+      $t \in \PP^1$, with the properties that if $L_t \ne L_u$, then
+      $L_t \cap L_u = \emptyset$; if $M_t \ne M_u$, $M_t \cap M_u = \emptyset$,
+      and for all $t,u, L_t \cap M_u =$ one point. 
+    \item Show that $Q$ contains other curves besides these lines, and deduce that
+      the Zariski topology on $Q$ is not homeomorphic via $\psi$ to the product
+      topology on $\PP^1 \times \PP^1$ (where each $\PP^1$ has its Zariski
+      topology). 
+  \end{enuma}
 \end{problem}
-
-\begin{proof}[proof of (a)] Let $Q = Z(xy -zw) \in \PP^3$. From exercise 2.14, the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3= \{[z_{00}:z_{01}:z_{10}:z_{11}]\}$ is defined by $Z(z_{00}z_{11}-z_{10}z_{01})$. Thus, after change of coordinates (i.e. $z_{00} \mapsto x, z_{11} \mapsto y, z_{10} \mapsto z, z_{01} \mapsto w$) $Q$  equals to the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3$. 
+\begin{proof}[Proof of $(a)$]
+  Let $Q = Z(xy - zw) \subset \PP^3$, where $\PP^3$ has coordinates $x,w,z,y$ in
+  that order. Let $\theta\colon k[x,w,z,y] \to
+  k[s,t,u,v]$ be the $k$-algebra homomorphism from Exercise \ref{exc:2.14},
+  mapping $x \mapsto su,w \mapsto sv,z \mapsto tu,y \mapsto tv$. Then, the Segre
+  embedding $\psi\colon\PP^1 \times \PP^1 \to \PP^3$ given by $[s : t] \times
+  [u : v] \mapsto [su : sv : tu : tv]$ is such that $\Im\psi = Z(\ker\theta)$,
+  and so we want to show $\ker\theta = (xy-zw)$. By definition
+  of $\theta$, we have $\ker\theta \supset (xy-zw)$, and so it suffices to show
+  the opposite inclusion. The proof of Exercise \ref{exc:2.14} shows that $Z(xy-zw)
+  \subset Z(\ker\theta) = \Im\psi$ since every point in $\PP^3$ satisfying
+  $xy-zw$ has preimage in $\PP^1 \times \PP^1$; by Exercise $\ref{exc:2.3}(d)$ we
+  then have $(xy-zw) \subset \ker\theta \subset \sqrt{(xy-zw)}$ and so it
+  suffices to show $(xy-zw)$ is radical. But this is clear since it is generated
+  by an irreducible quadratic polynomial, hence is prime, and in particular
+  radical.
+  %Let $Q = Z(xy -zw) \subset \PP^3$. From Exercise \ref{exc:2.14}, the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3= \{[z_{00}:z_{01}:z_{10}:z_{11}]\}$ is defined by $Z(z_{00}z_{11}-z_{10}z_{01})$. Thus, after change of coordinates (i.e. $z_{00} \mapsto x, z_{11} \mapsto y, z_{10} \mapsto z, z_{01} \mapsto w$) $Q$  equals to the Segre embedding of $\PP^1 \times \PP^1$ in $\PP^3$. 
 \end{proof}
-
-\begin{proof}[proof of (b)] For $t = [u,v] \in \PP^1$, define $L_t$ to be $L_t = \nu (t \times \PP^1)$ where $\nu$ is the Segre embedding $\PP^1 \times \PP^1 \to \PP^3$. Then, $L_t$ is a line(i.e. a linear variety of dimension 1): for $\PP^3 = \{[z_{00}, z_{01}, z_{10}, z_{11}]\}$, $L_t = \{[ux, vy, vx, vy]: [x,y] \in \PP^1 \}= \{[z_{00}, z_{01}, z_{10}, z_{11}]: uz_{00} - vz_{10} = 0\}$. Define $M_u$ similarly, now fixing a point in the latter $\PP^1$. Then, it is immediate that if $L_t \neq L_u$, then $L_t \cap L_u = \emptyset $; if $M_t \neq M_u$, $M_t \cap M_u = \emptyset$, and for all $t,u, L_t \cap M_u = \mbox{one point}$.
-
+\begin{proof}[Proof of $(b)$]
+  For $t = [a_0:a_1] \in \PP^1$, define $L_t,M_t$ to be
+  \begin{alignat*}{3}
+    L_t &={}& \psi(\{t\} \times \PP^1) &= \{[a_0u : a_0v : a_1u : a_1v] \mid [u:v]
+    \in \PP^1\}\\
+    M_t &={}& \psi(\PP^1 \times \{t\}) &= \{[a_0u : a_1u : a_0v : a_1v] \mid [u:v]
+    \in \PP^1\}
+  \end{alignat*}
+  Recall from $(a)$ that $\PP^3$ has coordinates $x,w,z,y$.
+  $L_t$ is a linear variety, since $L_t = Z(a_1x - a_0z,a_1w - a_0y)$ by the
+  proof of Exercise \ref{exc:2.14}. $L_t$ is one-dimensional since
+  $[u:v] \mapsto [a_0u : a_0v : a_1u : a_1v]$ and 
+  $[a_0u : a_0v : a_1u : a_1v] \mapsto [a_0u :a_0v] = [u:v]$ give a
+  bijection between $L_t$ and $\PP^1$, which is moreover a homeomorphism because
+  both maps are regular. Thus, $L_t$ is a line for each $t$.
+  Similarly, $M_t = Z(a_1x - a_0w,a_1z - a_0y)$ is a line for each $t$.
+  Since $\psi$ is a homeomorphism onto its image $Q$, if $L_t \ne L_u$, then
+  $L_t \cap L_u = \emptyset$ and similarly if $M_t \ne M_u$, then $M_t \cap M_u =
+  \emptyset$. Moreover, for all $t,u$, we see $L_t \cap M_u$ consists of one point.
 \end{proof}
-
-
-
-\begin{proof}[proof of (c)] Clearly, $Q$ contains other curves besides these lines: one example would be the curve contained in $Q$ defined by the equation $x = y$. This is closed in $Q$ but not in $\PP^1 \times \PP^1$. Thus, the Zariski topology on $Q$ is not homeomorphic via $\psi$ to the product topology on $\PP^1 \times \PP^1$.
-
+\begin{proof}[Proof of $(c)$]
+  By our proof of Exercise $\ref{exc:2.9}(b)$, $Q$ contains the twisted cubic,
+  since it is given by $Z(x^2-yw,xz-y^2,xy-zw)$; this is not a line by Exercise
+  $\ref{exc:2.11}(a)$. On the
+  other hand, the closed subsets of $\PP^1$ are the empty set, finite sets of
+  points, and all of $\PP^1$, and so the only closed subsets of $\PP^1 \times
+  \PP^1$ in the product topology are the empty set, finite sets of points,
+  finite sets of lines, and all of $\PP^1 \times \PP^1$. Thus, the Zariski
+  topology on $Q$ is not homeomorphic via $\psi$ to the product topology on
+  $\PP^1 \times \PP^1$.
+  %Clearly, $Q$ contains other curves besides these lines: one example would be the curve contained in $Q$ defined by the equation $x = y$. This is closed in $Q$ but not in $\PP^1 \times \PP^1$. Thus, the Zariski topology on $Q$ is not homeomorphic via $\psi$ to the product topology on $\PP^1 \times \PP^1$.
 \end{proof}
-
 
 \begin{problem} \mbox{}
-\begin{enuma}
-\item The intersection of two varieties need not be a variety. For example, let $Q_1$ and $Q_2$ be the quadric surfaces in $\PP^3$ given by the equation $x^2-yw = 0$ and $xy -zw =0$, respectively. Show that $Q_1 \cap Q_2$ is the union of a twisted cubic curve and a line 
-\item Even if the intersection of two varieties is a variety, the ideal of the intersection may not be the sum of the ideals. For example, let $C$ be the conic in $\PP^2$ given by the equation $x^2-yz = 0$. Let $L$ be the line given by $y = 0$. Show that $C \cap L$ consists of one point $P$, but that $I(C) + I(L) \neq I(P)$. 
-\end{enuma}
+  \begin{enuma}
+    \item The intersection of two varieties need not be a variety. For example,
+      let $Q_1$ and $Q_2$ be the quadric surfaces in $\PP^3$ given by the
+      equations $x^2-yw = 0$ and $xy - zw =0$, respectively. Show that $Q_1 \cap
+      Q_2$ is the union of a twisted cubic curve and a line.
+    \item Even if the intersection of two varieties is a variety, the ideal of the
+      intersection may not be the sum of the ideals. For example, let $C$ be the
+      conic in $\PP^2$ given by the equation $x^2-yz = 0$. Let $L$ be the line
+      given by $y = 0$. Show that $C \cap L$ consists of one point $P$, but that
+      $I(C) + I(L) \ne I(P)$. 
+  \end{enuma}
 \end{problem}
-\begin{proof} [proof of (a)] Let $C =\{st^2:s^2t:s^3:t^3]$ be a twisted cubic (we changed the coordinate), and $L = \{[x,y,z,w]: x = w = 0\}$ be a line in $\PP^3$. We will show that $Q_1 \cap Q_2 = C \cup L$.
-
-First consider when $w = 0$ Then, $x^2 -yw = 0 \iff x^2 = 0$ and $xy - zw =0 \iff xy =0$. Hence, $w = 0 \Rightarrow x = 0$. When, $w \neq 0$, we are in an affine patch $U = U_{w = 1}$, and in $U$, $x^2 -yw = 0$ and $xy -zw = 0$ becomes $x^2 = y, xy = z$. Thus, $U \cap (Q_1 \cap Q_2) = \{[x:x^2: x^3: 1]\}$, which is $C \cap U$. Thus, $C \cup L = (U \cap (Q_1 \cap Q_2)) \cup (U^c \cap (Q_1 \cap Q_2)) = Q_1 \cap Q_2$. Thus, $Q_1 \cap Q_2$ is the union of a twisted cubic curve and a line.
-
+\begin{proof}[Proof of $(a)$]
+  We claim $(x^2-yw,xy-zw) = (x,w) \cap (x^2-yw,xz-y^2,xy-zw)$. $\subset$ is
+  clear since every generator $x^2-yw,xy-zw$ is contained in $(x,w)$ and
+  $(x^2-yw,xz-y^2,xy-zw)$. Conversely, we know
+  \begin{align*}
+    &(x,w) \cap (x^2-yw,xz-y^2,xy-zw)\\
+    &\qquad= (x,w) \cap (x^2 - yw) + (x,w) \cap (xz - y^2) + (x,w) \cap (xy-zw)\\
+    &\qquad= (x^2-yw,xy-zw) + (x,w) \cap (xz - y^2)
+  \end{align*}
+  by the modular law \cite[p.~6]{AM69}, hence it suffices to show the last
+  summand is in $(x^2-yw,xy-zw)$. Note the elements of $(x,w) \cap (xz - y^2)$
+  are elements of the form $f(xz - y^2) \in (x,w)$ for $f \in
+  k[x,w,z,y]$; since $(x,w)$ is prime ($k[x,w,z,y]/(x,w) \cong k[z,y]$ is a
+  domain), this implies $f \in (x,w)$, and so $f
+  (xz - y^2) = gx(xz - y^2) + hw(xz - y^2)$ for some $g,h \in k[x,w,z,y]$. But,
+  \begin{equation*}
+    x(xz-y^2) = z(x^2 - yw) + y(xy - zw), \quad
+    w(xz - y^2) = w(x^2 - yw) - x(xy - zw)
+  \end{equation*}
+  are both in $(x^2-yw,xy-zw)$, so we are done. Finally, we have
+  \begin{align*}
+    Q_1 \cap Q_2 &= Z(x^2-yw,xy-zw)\\
+    &= Z((x,w) \cap (x^2-yw,xz-y^2,xy-zw))\\
+    &= Z(\sqrt{(x,w) \cap (x^2-yw,xz-y^2,xy-zw)})\\
+    &= Z(\sqrt{(x,w) \cdot (x^2-yw,xz-y^2,xy-zw)})\\
+    &= Z((x,w) \cdot (x^2-yw,xz-y^2,xy-zw))\\
+    &= Z(x,w) \cup Z(x^2-yw,xz-y^2,xy-zw)
+  \end{align*}
+  since taking radicals for an ideal does not change the variety defined by its
+  vanishing, $\sqrt{IJ} = \sqrt{I \cap J}$ by \cite[Exc.~1.13$iii$]{AM69}, and
+  since $Z(I \cdot J) = Z(I) \cup Z(J)$ as in the proof of Prop.~1.1. $Z(x,w)$
+  is a line and $Z(x^2-yw,xz-y^2,xy-zw)$ is the twisted cubic by 
+  Exercise $\ref{exc:2.11}(a)$.
+  %Let $C =\{st^2:s^2t:s^3:t^3]$ be a twisted cubic (we changed the coordinate), and $L = \{[x,y,z,w]: x = w = 0\}$ be a line in $\PP^3$. We will show that $Q_1 \cap Q_2 = C \cup L$.
+  %First consider when $w = 0$ Then, $x^2 -yw = 0 \iff x^2 = 0$ and $xy - zw =0 \iff xy =0$. Hence, $w = 0 \Rightarrow x = 0$. When, $w \neq 0$, we are in an affine patch $U = U_{w = 1}$, and in $U$, $x^2 -yw = 0$ and $xy -zw = 0$ becomes $x^2 = y, xy = z$. Thus, $U \cap (Q_1 \cap Q_2) = \{[x:x^2: x^3: 1]\}$, which is $C \cap U$. Thus, $C \cup L = (U \cap (Q_1 \cap Q_2)) \cup (U^c \cap (Q_1 \cap Q_2)) = Q_1 \cap Q_2$. Thus, $Q_1 \cap Q_2$ is the union of a twisted cubic curve and a line.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  $C \cap L = Z(x^2-yz,y) = Z(x^2,y) = Z(x,y) = \{P = [0:0:1]\}$ is one point,
+  and $I(P) = \sqrt{(x,y)} = (x,y)$ since $(x,y)$ is prime hence radical.
+  However, $I(C) = \sqrt{(x^2-yz)} = (x^2-yz)$ since $x^2-yz$ is irreducible
+  hence the ideal it generates is prime and in particular radical, and $I(L) =
+  y$, but $I(C) + I(L) = (x^2,y)$. 
+  %If $x^2 - yz = 0, y =0$, then $x^2 =0 \iff x = 0$. Thus, $z = 1$ as $x,y,z$
+  %cannot be all zero. Thus, $C \cap L$ consists of one point $P = [0:0:1]$
+  %Thus, $I(P) = (x,y)$. $I(C) = x^2-yz$ (because $x^2-yz$ is irreducible),
+  %$I(L) = y$. Thus, $I(C) + I(L) = (x^2, y)$. Obviously,
+  $(x^2,y) \ne (x,y)$ since $x \in (x,y)\setminus(x^2,y)$. 
 \end{proof}
 
-\begin{proof} [proof of (b)]
-If $x^2 -yz = 0, y =0$, then $x^2 =0 \iff x = 0$. Thus, $z = 1$ as $x,y,z$ cannot be all zero. Thus, $C \cap L$ consists of one point $P = [0:0:1]$ Thus, $I(P) = (x,y)$. $I(C) = x^2-yz$ (because $x^2-yz$ is irreducible), $I(L) = y$. Thus, $I(C) + I(L) = (x^2, y)$. Obviously, $(x^2,y) \neq (x,y)$ because $x \in (x,y)$ but $x \not\in (x^2,y)$. 
-\end{proof}
-
-
-
-\begin{problem} \textbf{Complete intersections.} A variety $Y$ of dimension $r$ in $\PP^n$ is a (strict) complete intersection if $I(Y)$ can be generated by $n-r$ elements. $Y$ is a \textbf{set-theoretic complete intersection} if $Y$ can be written as the intersection of $n-r$ hypersurfaces.
-\begin{enuma}
-\item Let $Y$ be a variety in $\PP^n$, let $Y = Z(\mathfrak{a})$; and suppose that $\mathfrak{a}$ can be generated by $q$ elements. Then show that $\dim Y \geq n-q$. 
-\item Show that a strict complete intersection is a set-theoretic complete intersection.
-\item The converse of $(b)$ is false. For example, let $Y$ be the twisted cubic curve in $\PP^3$ (Ex. 2.9). Show that $I(Y)$ cannot be generated by two elements. On the other hand, find hypersurfaces $H_1, H_2$ of degrees 2, 3 respectively, such that $Y = H_1 \cap H_2$. 
-\item It is an unsolved problem whether every closed irreducible curve in $\PP^3$ a set-theoretic intersection of two surfaces.
-\end{enuma}
-
-\begin{proof} [proof of (a)] Let $Y = Z(\mathfrak{a})$ be a variety in $\PP^n$ where $\mathfrak{a}$ can be generated by $q$ elements. Use induction on $q$ to show that $\dim Y \geq n-q$. If $q = 1$, the result follows from Exercise 2.8. 
-
-Assume that the result is true for $q = r$. Now, $\mathfrak{a} = (e_1, \cdots, e_r, e_{r+1})$ where $e_{r+1} \not\in (e_1, \cdots, e_r)$. Let $Y' = Z(e_1, \cdots, e_r)$ and by induction hypothesis, $\dim Y' \geq n-r$. From Exercise 1.8, $\dim Y = \dim (Y' \cap Z(e_{r+1})) \geq n-r-1 = n-(r+1)$. 
-\end{proof}
-
-\begin{proof} [proof of (b)] Assume that a $r$-dimensional variety $Y \subset \PP^n$ is a strict complete intersection i.e. $I(Y)$ can be generated by $n-r$ elements. Let $I(Y) = (f_1, \cdots, f_{n-r})$.  Then, $Y = \cap_i Z(f_i)$: $x \in Y \iff f_i(x) = 0 $ for all $i = 1, \cdots, n-r \iff$ $x \in \cap Z(f_i)$. Hence, $Y$ is a set-theoretic complete intersection. 
-
-\end{proof}
-
-\begin{proof} [proof of (c)] Now, let $Y = \{[s^3:s^2t:st^2:t^3]\}$ be the twisted cubic curve in $\PP^3$. Then, $Y = Z(xz-y^2, yw-z^2, xw-yz)$, and $(xz-y^2, yw-z^2, xw-yz)$ is a radical ideal. $I(Y)=(xz-y^2, yw-z^2, xw-yz)$ cannot be generated by any of the two polynomials $f,g \in k[x,y,z,w]$: if so, $xw-yz \in (xz-y^2, yw-z^2)$ but it is easy to check that this is not true (exercise 1.11).
-
-However, we can find hypersurfaces $H_1, H_2$ of degrees 2, 3 respectively, such that $Y = H_1 \cap H_2$. Let $H_1 = Z(z^2-yw)$ and $H_2 = Z(y^3-2xyz+x^2w)$. Then, $H_1 \cap H_2 = Z(\sqrt{(z^2-yw, y^3-2xyz+x^2w)})$. We can easily check (by Macaulay or easily by hand) that $\sqrt{(z^2-yw, y^3-2xyz+x^2w)} = (xz-y^2, yw-z^2, xw-yz)$. Hence, $H_1 \cap H_2 = Y$. Hence the converse of $(b)$ is false. 
-
-\end{proof}
-
-\begin{proof} [proof of (d)] 
-
-Wingardium Leviosa! Avada Kedavra! Algebraic Geometry! Grothendieck! Robin Hartshorne!
-\end{proof}
-
-
-
+\begin{problem}[Complete intersections]
+  A variety $Y$ of dimension $r$ in $\PP^n$ is a \emph{(strict) complete
+  intersection} if $I(Y)$ can be generated by $n-r$ elements. $Y$ is a
+  \emph{set-theoretic complete intersection} if $Y$ can be written as the
+  intersection of $n-r$ hypersurfaces.
+  \begin{enuma}
+    \item Let $Y$ be a variety in $\PP^n$, let $Y = Z(\mathfrak{a})$; and
+      suppose that $\mathfrak{a}$ can be generated by $q$ elements. Then show
+      that $\dim Y \ge n-q$. 
+    \item Show that a strict complete intersection is a set-theoretic complete
+      intersection.
+    \item The converse of $(b)$ is false. For example let $Y$ be the twisted
+      cubic curve in $\PP^3$ \hyperref[exc:2.9]{\emph{(Ex.\ 2.9)}}. Show that
+      $I(Y)$ cannot be generated by two elements. On the other hand, find
+      hypersurfaces $H_1,H_2$ of degrees $2,3$ respectively, such that
+      $Y = H_1 \cap H_2$. 
+    \item It is an unsolved problem whether every closed irreducible curve in
+      $\PP^3$ is a set-theoretic intersection of two surfaces.
+  \end{enuma}
 \end{problem}
-
+\begin{proof}[Proof of $(a)$]
+  Let $Y = Z(\mathfrak{a})$ be a variety in $\PP^n$ where $\mathfrak{a}$ can be
+  generated by $q$ elements. Then, its affine cone $CY$ has dimension $\ge n + 1 -
+  q$ by Exercise $1.9$. By Exercise $\ref{exc:2.10}(c)$, we then have 
+  $\dim Y \ge n - q$.
+  %We use induction on $q$ to show that $\dim Y \geq n-q$.
+  %If $q = 1$, this is Exercise \ref{exc:2.8}.
+  %\par So assume that the result is true for $q = r$. Now, $\mathfrak{a} = (e_1,
+  %\ldots, e_r, e_{r+1})$ where $e_{r+1} \notin (e_1, \ldots, e_r)$. Let $Y' =
+  %Z(e_1, \ldots, e_r)$; by induction hypothesis, $\dim Y' \ge n-r$. From
+  %Exercise 1.8, $\dim Y = \dim (Y' \cap Z(e_{r+1})) \geq n-r-1 = n-(r+1)$. 
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Assume that an $r$-dimensional variety $Y \subset \PP^n$ is a strict complete
+  intersection, so $I(Y) = (f_1, \ldots, f_{n-r})$.
+  Then, $Y = Z(f_1) \cap \cdots \cap Z(f_{n-r})$ as in the proof of
+  Prop.~1.1. Hence, $Y$ is a set-theoretic complete intersection. 
+  %$x \in Y \iff f_i(x) = 0 $ for all $i = 1, \cdots, n-r \iff$ $x \in \cap Z(f_i)$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $Y = Z(x^2-yw,xz-y^2,xy-zw)$ be the twisted cubic curve in $\PP^3$. Then,
+  $I(Y) = (xz-y^2, yw-z^2, xw-yz)$ since this ideal is radical by our proof of
+  Exercise $\ref{exc:2.9}(b)$, and is moreover prime. However, $I(Y)$ cannot be
+  generated by two elements, since considering $(I(Y))_2$ as a $k$-vector space,
+  $xz-y^2, yw-z^2, xw-yz$ are linearly independent.
+  %Then, $Y = Z(xz-y^2, yw-z^2, xw-yz)$, and $(xz-y^2, yw-z^2, xw-yz)$ is a radical ideal. $I(Y)=(xz-y^2, yw-z^2, xw-yz)$ cannot be generated by any of the two polynomials $f,g \in k[x,y,z,w]$: if so, $xw-yz \in (xz-y^2, yw-z^2)$ but it is easy to check that this is not true (exercise 1.11).
+  \par However, let $H_1 = Z(x^2-yw)$ and $H_2 = Z(z(xy-zw)+y(xz-y^2))$. We
+  claim that $H_1 \cap H_2 = Y$. It suffices to show
+  $\sqrt{(x^2-yw,z(xy-zw)+y(xz-y^2))} = I(Y)$ by Exercise $\ref{exc:2.4}(a)$.
+  Since $(x^2-yw,z(xy-zw)+y(xz-y^2)) \subset I(Y)$ trivially, it only remains to
+  show $I(Y) \subset \sqrt{(x^2-yw,z(xy-zw)+y(xz-y^2))}$. But
+  \begin{alignat*}{7}
+    (xz-y^2)^2 &={}& x^2z^2 &-{}& 2xy^2z &{}+ y^4 &{}={}& z^2(x^2-yw) &{}-{}&
+    y(z(xy-zw)&{}+{}&y(xz-y^2))\\
+    (xy-zw)^2 &={}& x^2y^2 &-{}& 2xyzw &{}+ z^2w^2 &{}={}& y^2(x^2-yw) &{}-{}&
+    w(z(xy-zw)&{}+{}&y(xz-y^2))
+  \end{alignat*}
+  and so $I(Y) \subset \sqrt{(x^2-yw,z(xy-zw)+y(xz-y^2))}$, so that
+  $H_1 \cap H_2 = Y$. Thus, the converse of $(b)$ is false.
+  %\par However, we can find hypersurfaces $H_1, H_2$ of degrees 2, 3 respectively, such that $Y = H_1 \cap H_2$. Let $H_1 = Z(z^2-yw)$ and $H_2 = Z(y^3-2xyz+x^2w)$. Then, $H_1 \cap H_2 = Z(\sqrt{(z^2-yw, y^3-2xyz+x^2w)})$. We can easily check (by Macaulay or easily by hand) that $\sqrt{(z^2-yw, y^3-2xyz+x^2w)} = (xz-y^2, yw-z^2, xw-yz)$. Hence, $H_1 \cap H_2 = Y$. Hence the converse of $(b)$ is false. 
+\end{proof}
+%\begin{proof}[Proof of $(d)$] 
+%  Wingardium Leviosa! Avada Kedavra! Algebraic Geometry! Grothendieck! Robin Hartshorne!
+%\end{proof}
 
 \printbibliography
 \end{document}

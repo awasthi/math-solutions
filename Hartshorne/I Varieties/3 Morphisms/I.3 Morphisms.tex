@@ -1,0 +1,181 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{decorations.markings}
+\tikzset{
+  open/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} },
+  closed/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; } }, postaction = {decorate} },
+  imm/.style = {decoration = {markings, mark = at position 0.3 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; }, mark = at position 0.6 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} }
+}
+
+\usepackage{braket}
+
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../../../References}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumacounter}
+\newenvironment{enuma}
+{\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumicounter}
+\newenvironment{enumi}
+{\begin{list}{$(\roman{enumicounter})$}{\usecounter{enumicounter} \parsep=0em
+\itemsep=0em \leftmargin=2.5em \labelwidth=1.75em \topsep=0em}}
+{\end{list}}
+\newcounter{enumdcounter}
+\newenvironment{enumd}
+{\begin{list}{$(\arabic{enumdcounter})$}{\usecounter{enumdcounter} \parsep=0em \itemsep=0em \leftmargin=1.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{universalproperty}{Universal Property}
+\newtheorem{problem}{Exercise}[section]
+\newtheorem{subproblem}{Problem}[problem]
+\newtheorem{lemma}{Lemma}%[section]
+\newtheorem{proposition}{Proposition}
+\newtheorem{property}{Property}[problem]
+\newtheorem*{lemma*}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{claim}{Claim}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{problem}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Ass}{Ass}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\WeakAss}{\widetilde{Ass}}
+\let\Im\relax
+\DeclareMathOperator{\Im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\SPEC}{\mathbf{Spec}}
+\DeclareMathOperator{\Sp}{sp}
+\DeclareMathOperator{\maxSpec}{maxSpec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Soc}{Soc}
+\DeclareMathOperator{\Ht}{ht}
+\let\AA\relax
+\DeclareMathOperator{\AA}{\mathbb{A}}
+\DeclareMathOperator{\V}{\mathbf{V}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\stimes}{\text{\footnotesize\textcircled{s}}}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{coker}
+\DeclareMathOperator{\LCM}{LCM}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\dv}{div}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\trdeg}{trdeg}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\GL}{GL}
+\newcommand{\GR}{\mathbb{G}\mathrm{r}}
+\newcommand{\gR}{\mathrm{Gr}}
+\newcommand{\EE}{\mathscr{E}}
+\newcommand{\FF}{\mathscr{F}}
+\newcommand{\GG}{\mathscr{G}}
+\newcommand{\HH}{\mathscr{H}}
+\newcommand{\II}{\mathscr{I}}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\MM}{\mathscr{M}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\Ss}{\mathscr{S}}
+\newcommand{\Af}{\mathfrak{A}}
+\newcommand{\Aa}{\mathscr{A}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\Sh}{\mathfrak{Sh}}
+\newcommand{\Psh}{\mathfrak{Psh}}
+\newcommand{\LRS}{\mathsf{LRS}}
+\newcommand{\Sch}{\mathfrak{Sch}}
+\newcommand{\Var}{\mathfrak{Var}}
+\newcommand{\Rings}{\mathfrak{Rings}}
+\DeclareMathOperator{\In}{in}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Spe}{Sp\acute{e}}
+\DeclareMathOperator{\HHom}{\mathscr{H}\!\mathit{om}}
+\newcommand{\isoto}{\overset{\sim}{\to}}
+\newcommand{\isolongto}{\overset{\sim}{\longrightarrow}}
+\newcommand{\Mod}{\mathsf{mod}\mathchar`-}
+\newcommand{\MOD}{\mathsf{Mod}\mathchar`-}
+\newcommand{\gr}{\mathsf{gr}\mathchar`-}
+\newcommand{\qgr}{\mathsf{qgr}\mathchar`-}
+\newcommand{\uqgr}{\underline{\mathsf{qgr}}\mathchar`-}
+\newcommand{\qcoh}{\mathsf{qcoh}\mathchar`-}
+\newcommand{\Alg}{\mathsf{Alg}\mathchar`-}
+\newcommand{\coh}{\mathsf{coh}\mathchar`-}
+\newcommand{\vect}{\mathsf{vect}\mathchar`-}
+\newcommand{\imm}[1][imm]{\hspace{0.75ex}\raisebox{0.58ex}{%
+\begin{tikzpicture}[commutative diagrams/every diagram]
+\draw[commutative diagrams/.cd, every arrow, every label,hook,{#1}] (0,0ex) -- (2.25ex,0ex);
+\end{tikzpicture}}\hspace{0.75ex}}
+\newcommand{\dashto}[2]{\smash{\hspace{-0.7em}\begin{tikzcd}[column sep=small,ampersand replacement=\&] {#1} \rar[dashed] \& {#2} \end{tikzcd}\hspace{-0.7em}}}
+
+\usepackage{todonotes}
+
+\title{Hartshorne Ch.~I, \S3 Morphisms}
+\author{Takumi Murayama}
+
+\begin{document}
+\maketitle
+\setcounter{section}{3}
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item Show that any conic in $\AA^2$ is isomorphic either to $\AA^1$ or
+      $\AA^1 - \{0\}$ \emph{(cf.\ Ex.~$1.1$)}.
+    \item Show that $\AA^1$ is \emph{not} isomorphic to any proper open subset
+      of itself. (This result is generalized by \emph{(Ex.~$6.7$)} below.)
+    \item Any conic in $\PP^2$ is isomorphic to $\PP^1$.
+    \item We will see later \emph{(Ex.\ $4.8$)} that any two curves are
+      homeomorphic. But show now that $\AA^2$ is not even homeomorphic to
+      $\PP^2$.
+    \item If an affine variety is isomorphic to a projective variety, then it
+      consists of only one point.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  By Exercise $1.1$, any conic $W$ has $A(W) \cong k[t]$ or $k[s,s^{-1}]$. But
+  $k[t] = A(\AA^1)$ and $k[s,s^{-1}] = A(\AA^1 - \{0\})$, so we are done by
+  Cor.~3.7.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  
+\end{proof}
+
+\printbibliography
+\end{document}

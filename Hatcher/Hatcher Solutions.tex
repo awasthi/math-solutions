@@ -1,0 +1,567 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage[utf8]{inputenc}
+\usepackage[unicode]{hyperref}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,calc,shapes,snakes}
+\usepackage{pgflibraryarrows}
+\usepackage{tikz-cd}
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position #1 with {\arrow[scale=2]{>}}},postaction={decorate}}}
+\tikzset{->--/.style={decoration={
+  markings,
+  mark=at position #1 with {\arrow[scale=1.2]{>}}},postaction={decorate}}}
+\tikzset{label/.style={%
+  postaction={ decorate,transform shape,
+  decoration={ markings, mark=at position .55 with \node #1;}}}}
+\tikzset{decorate sep/.style 2 args=
+  {decorate,decoration={shape backgrounds,shape=circle,shape size=#1,shape sep=#2}}}
+
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../References}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\usepackage{bm}
+
+\newtheorem{probaux}[subsubsection]{Exercise}
+\newtheorem*{claim}{Claim}
+\newtheorem*{lemma}{Lemma}%[subsubsection]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+%\renewcommand{\thesubsection}{\arabic{subsection}}
+%\renewcommand{\thelemma}{\thesubsubsection\alph{lemma}}
+
+\usepackage{xparse}
+\NewDocumentEnvironment{problem}{o}
+ {\IfNoValueTF{#1}
+   {\probaux\addcontentsline{toc}{subsubsection}{\protect Exercise \thesubsubsection}}
+   {\probaux[#1]\addcontentsline{toc}{subsubsection}{\protect Exercise \thesubsubsection}}%
+   \ignorespaces}
+ {\endprobaux}
+
+\usepackage{shorttoc}
+\usepackage[toc]{multitoc}
+\usepackage{tocloft}
+
+\newcounter{enumacounter}
+\newenvironment{enuma}
+{\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumicounter}
+\newenvironment{enumi}
+{\begin{list}{$(\roman{enumicounter})$}{\usecounter{enumicounter} \parsep=0em \itemsep=0em \leftmargin=2.25em \labelwidth=2em \topsep=0em}}
+{\end{list}}
+
+\DeclareMathOperator{\Aut}{Aut}
+\let\Im\relax
+\DeclareMathOperator{\Im}{im}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Hom}{Hom}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\GL}{\mathit{GL}}
+\newcommand{\PGL}{\mathit{PGL}}
+\newcommand{\SL}{\mathit{SL}}
+\newcommand{\bracket}[1]{[#1]}
+\let\amsamp=&
+
+\usepackage{braket}
+\DeclareMathOperator*{\bigast}{\raisebox{-0.6ex}{\scalebox{2.5}{$\ast$}}}
+
+\title{Selected Solutions to Hatcher's Algebraic Topology}
+\author{Takumi Murayama}
+
+\begin{document}
+\maketitle
+These solutions are the result of taking MAT560 Algebraic Topology in the Spring
+of 2013 at Princeton University. This is not a \emph{complete} set of solutions; see the \hyperlink{det.1}{List of Solved Exercises} at the end. Please e-mail \href{mailto:takumim@umich.edu}{\nolinkurl{takumim@umich.edu}} with any corrections.
+\pdfbookmark[1]{Contents}{toc}
+\begingroup
+\setlength{\cftsubsecnumwidth}{2.75em}
+\shorttoc{Contents}{1}
+\endgroup
+\newpage
+\setcounter{section}{-1}
+\section{Some Underlying Geometric Notions}
+\begingroup
+\renewcommand{\thesubsubsection}{\thesection.\arabic{subsubsection}}
+\setcounter{subsubsection}{0}
+\begin{problem}
+  Construct an explicit deformation retraction of the torus with one point deleted onto a graph consisting of two circles intersecting in a point, namely, longitude and meridian circles of the torus.
+\end{problem}
+\begin{proof}
+  Using the CW complex construction of the torus on p.~5, we have the map denoted by the small arrows:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,x=1.0cm,y=1.0cm]
+      \node (a) at (0,0) {
+        \begin{tikzpicture}[>=stealth]
+          \fill [gray] (0,0) rectangle (2,2);
+          \draw (0,1) node[anchor=east] {$a$};
+          \draw (2,1) node[anchor=west] {$a$};
+          \draw (1,0) node[anchor=north] {$b$};
+          \draw (1,2) node[anchor=south] {$b$};
+          \draw [->-=0.55] (0,0) -- (0,2);
+          \draw [->-=0.55] (0,2) -- (2,2);
+          \draw [->-=0.55] (2,0) -- (2,2);
+          \draw [->-=0.55] (0,0) -- (2,0);
+          \fill [white] (1,1) circle (0.1); 
+          \draw (1,1) circle(0.1);
+        \end{tikzpicture}
+      };
+      \node (b) at (a.east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \fill [gray] (0,0) rectangle (2,2);
+          \draw (0,1) node[anchor=east] {$a$};
+          \draw (2,1) node[anchor=west] {$a$};
+          \draw (1,0) node[anchor=north] {$b$};
+          \draw (1,2) node[anchor=south] {$b$};
+          \draw [->-=0.55] (0,0) -- (0,2);
+          \draw [->-=0.55] (0,2) -- (2,2);
+          \draw [->-=0.55] (2,0) -- (2,2);
+          \draw [->-=0.55] (0,0) -- (2,0);
+
+          \draw [->--=0.55] (1,1) -- (2,0);
+          \draw [->--=0.55] (1,1) -- (2,2);
+          \draw [->--=0.55] (1,1) -- (0,0);
+          \draw [->--=0.55] (1,1) -- (0,2);
+          \draw [->--=0.56] (1,1) -- (1,0);
+          \draw [->--=0.56] (1,1) -- (1,2);
+          \draw [->--=0.56] (1,1) -- (0,1);
+          \draw [->--=0.56] (1,1) -- (2,1);
+
+          \fill [white] (1,1) circle (0.1); 
+          \draw (1,1) circle(0.1);
+        \end{tikzpicture}
+
+      };
+      \node (c) at (b.east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \draw (0,1) node[anchor=east] {$a$};
+          \draw (2,1) node[anchor=west] {$a$};
+          \draw (1,0) node[anchor=north] {$b$};
+          \draw (1,2) node[anchor=south] {$b$};
+          
+          \draw [->-=0.55] (0,0) -- (0,2);
+          \draw [->-=0.55] (0,2) -- (2,2);
+          \draw [->-=0.55] (2,0) -- (2,2);
+          \draw [->-=0.55] (0,0) -- (2,0);
+        \end{tikzpicture}
+      };
+
+      \node (d) at (c.east) [anchor=west,xshift=0.5cm]{
+        \begin{tikzpicture}[>=stealth]
+          \draw (-1,0) node[anchor=east] {$a$};
+          \draw (1,0) node[anchor=west] {$b$};
+          \fill (0,0) circle (0.066);
+          \draw[postaction={decoration={markings,mark=at position 0.75 with {\arrow[scale=2]{>}}},decorate}] (-0.5,0) circle (0.5);
+          \draw[postaction={decoration={markings,mark=at position 0.25 with {\arrow[scale=2]{>}}},decorate}] (0.5,0) circle (0.5);
+        \end{tikzpicture}
+      };
+      \path[->,line width=0.5pt] (a) edge (b);
+      \path[->,line width=0.5pt] (b) edge (c);
+      \path[->,line width=0.5pt] (c) edge (d);
+    \end{tikzpicture}
+  \end{center}
+  To prove this map is indeed a deformation retraction, we use the
+  identification of the unit square with the unit disc (in this case the
+  boundary of the circle is divided into four arcs with the labeling scheme
+  $aba^{-1}b^{-1}$), and using polar coordinates we can let
+  $\tilde{F}((r,\theta),t) = (r+t(1-r),\theta)$. Then, let $F = q \circ
+  \tilde{F}$ where $q$ is the quotient map shown as the last arrow above.
+  $F$ is continuous as $\tilde{F}$ is continuous in each coordinate, and then
+  $q$ is continuous. $F$ is also such that $F((r,\theta),0) = (r,\theta)$,
+  $F((r,\theta),1) = (1,\theta)$, and $F((1,\theta),t) = (1,\theta)$. Thus, $F$
+  is a deformation retraction. The two circles in the last diagram are the
+  longitude and meridian circles of the torus by construction, namely since in the
+  penultimate diagram we identify the sides marked $a$ to get the meridian circle
+  and then the sides marked $b$ to get the longitude circle.
+\end{proof}
+
+\setcounter{subsubsection}{2}
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item Show that the composition of homotopy equivalences $X \to Y$ and $Y \to Z$ is a homotopy equivalence $X \to Z$. Deduce that homotopy equivalence is an equivalence relation.
+    \item Show that the relation of homotopy among maps $X \to Y$ is an equivalence relation.
+    \item Show that a map homotopic to a homotopy equivalence is homotopy equivalence.
+  \end{enuma}
+\end{problem}
+\begin{remark}
+  We remark that homotopy equivalences preserve compositions. For, if $f,g \in \Hom(X,Y)$ and $F(x,t)$ is a homotopy $f \simeq g$, and if $e \colon W \to X$, $h \colon Y \to Z$, then $h(F(e(x),t))$ is a homotopy $e \circ f \circ h \simeq e \circ g \circ h$ since the composition of continuous maps is continuous and since $h(F(e(x),0)) = e \circ f \circ h$ and $h(F(e(x),1)) = e \circ g \circ h$. This allows us to replace maps by homotopy equivalent ones in $(a)$ and $(c)$.
+\end{remark}
+\begin{proof}[Proof of $(a)$]
+  Let $e\colon X \to Y$, $f \colon Y \to X$ such that $e \circ f \simeq \id_X$, $f \circ e \simeq \id_Y$; likewise, let $g \colon Y \to Z$, $h \colon Z \to Y$ such that $g \circ h \simeq \id_Y$, $h \circ g \simeq \id_Z$. Then, since composition of maps is associative,
+  \begin{alignat*}{5}
+    (e \circ g) \circ (h \circ f) &={}& e \circ (g \circ h) \circ f &\simeq{}& e \circ \id_Y \circ\:f &={}& e \circ f &\simeq{}& \id_X\\
+    (h \circ f) \circ (e \circ g) &={}& h \circ (f \circ e) \circ g &\simeq{}& h \circ \id_Y \circ\:g &={}& h \circ g &\simeq{}& \id_Z
+  \end{alignat*}
+  and so we have a homotopy equivalence $X \simeq Z$ (note we have to use the fact that homotopy is transitive from $(b)$). Since homotopy equivalence is reflexive (take the identity map) and symmetric (change the roles of $X,Z$), homotopy equivalence is an equivalence relation since we have shown transitivity.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $f,g,h \in \Hom(X,Y)$. Homotopy is reflexive since we can take $F(x,t) = f(x)$ for all $t \in [0,1]$, and symmetric since if $F(x,t)$ is a homotopy between $f,g$, then $F(x,1-t)$ is a homotopy between $g,f$ by the fact that $1-t$ is continuous and so the composition $F(x,1-t)$ is continuous.
+  \par It remains to show homotopy is transitive. Let $F$ be a homotopy between $f,g$ and $G$ be a homotopy between $g,h$. Then, let
+  \begin{equation*}
+    H(x,t) = \begin{cases}
+      F(x,2t) & \text{if}~t \in [0,1/2],\\
+      G(x,2t-1) & \text{if}~t \in [1/2,1].\\
+    \end{cases}
+  \end{equation*}
+  This is continuous by the pasting lemma since $H(x,1/2) = F(x,1) = G(x,0) = g(x)$. $H$ is then a homotopy between $f,h$ since $H(x,0) = F(x,0) = f(x)$ while $H(x,1) = G(x,1) = h(x)$. Thus, homotopy is an equivalence relation.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $e\colon X \to Y$, $f\colon Y \to X$ such that $e \circ f \simeq \id_X$, $f \circ e \simeq \id_Y$, and let $g\colon X \to Y$ such that $e \simeq g$. Then, $g \circ f \simeq e \circ f \simeq \id_X$, $f \circ g \simeq f \circ e \simeq \id_Y$, and so $g$ is also a homotopy equivalence.
+\end{proof}
+
+\setcounter{subsubsection}{8}
+\begin{problem}
+  Show that a retract of a contractible space is contractible.
+\end{problem}
+\begin{proof}
+  Recall that $X$ is contractible if and only if $\id_X$ is homotopic to a
+  constant map mapping to some $x_0 \in X$. Let $F(x,t)$ be this homotopy, and let
+  $A$ be our retract, i.e., that there exists a map $r\colon X \to A$ such that
+  $r\rvert_A = \id_A$. Then, $(F \circ r)\rvert_A$ is a homotopy between $\id_A$
+  and the constant map mapping to $r(x_0)$, for it is a composition of continuous
+  maps hence itself continuous, and since $r(F(x,0))\rvert_A = (\id_X \circ
+  r)\rvert_A = r\rvert_A = \id_A$ and $r(F(x,1))\rvert_A = r(x_0)$. 
+\end{proof}
+
+\setcounter{subsubsection}{13}
+\begin{problem}
+  Given positive integers $v$, $e$, and $f$ satisfying $v - e + f = 2$, construct a cell structure on $S^2$ having $v$ $0$-cells, $e$ $1$-cells, and $f$ $2$-cells.
+\end{problem}
+\begin{proof}
+  For a given triple $(v,e,f)$, we can construct the following 1-skeleton $X^1$:
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[white] (-3.6,-1) rectangle (6.5,1);
+      \foreach \x in {0,...,4}
+      \fill (\x,0) circle (.066);
+      \path (0,0) edge (2,0);
+      \draw [decorate sep={0.25mm}{0.166cm},fill] (2,0) -- (3,0);
+      \path (3,0) edge (4,0);
+      \foreach \y in {2,3,5,6} {
+        \pgfplothandlerlineto
+          \pgfplotfunction{\x}{0,1,...,45}{
+              \pgfpointxy     
+              {cos(\x + 45 * \y - 22.5) * sin(4 * \x)}
+              {sin(\x + 45 * \y - 22.5) * sin(4 * \x)}
+          }
+        \pgfusepath{stroke}
+      }
+      \draw (-0.6,-0.3) node[anchor=south] {$\vdots$};
+      \draw [thick,decoration={brace,mirror,raise=0.3cm},decorate] (0.25,0) -- (3.75,0) node [pos=0.5,anchor=north,yshift=-0.4cm] {$v-1$ segments}; 
+      \draw [thick,decoration={brace,raise=1cm},decorate] (0,-1) -- (0,1) node [pos=0.5,anchor=east,xshift=-1.2cm] {$f-1$ petals}; 
+    \end{tikzpicture}
+  \end{center}
+  Each petal is homeomorphic to $S^1$ and each segment is homeomorphic to $I = [0,1]$. This construction works since for each $n$-cell in addition to the 1 0-cell and 1 2-cell that are minimally required to construct $S^2$, each 1-cell that contributes to $e$ must be offset by either a 0-cell that contributes to $v$ or a 2-cell that contributes to $f$.
+  \par It now suffices to attach 2-cells such that the resulting space is $S^2$. We see that our 1-skeleton divides the plane up into $f$ regions, one for each interior of a petal and one encompassing the rest of the plane. Attaching a 2-cell to each petal by identifying $\partial e_i^2 \simeq S^1_i$ where $S^1_i$ is one of the petals for $1 \le i \le f-1$, and then attaching a 2-cell such that $\partial e_f^2 \simeq X^1$, i.e., by having the boundary be identified with all of the edges in our 1-skeleton $X^1$, results in $S^2$ as desired.
+\end{proof}
+
+\begin{problem}
+  Enumerate all the subcomplexes of $S^\infty$, with the cell structure on $S^\infty$ that has $S^n$ as its $n$-skeleton.
+\end{problem}
+\begin{proof}[Solution]
+  Recall that any $S^n$ is constructed as a CW complex consisting of $S^{n-1}$, $e_1^n$, and $e_2^n$, where we identify $\partial e_i^n \simeq S^{n-1}$. Thus, $S^n = \bigcup_{k=0}^n (e_1^k \cup e_2^k)$.
+  \par Now suppose $\emptyset \ne A \subseteq S^\infty$ is a subcomplex. Then, $A$ contains some $k$-cell $e_i^k$ for $i=1$ or $2$. Then, since for $A$ to be closed we must have $S^{k-1} = \partial e_i^k \subseteq A$ as well, we see that $A$ must contain every $\ell$-cell for $\ell < k$. Thus, any subcomplex $A$ is in the collection:
+  \begin{equation*}
+    A \in \{\emptyset,~S^n,~S^\infty\} \cup \{ e_i^n \cup S^{n-1}\mid i=1~\text{or}~2 \},
+  \end{equation*}
+  for supposing $A \ne \emptyset$, if there is a maximal $n$ such that $e_i^n \subseteq A$ for $i=1$ or $2$, then $A = S^n$ or $e_i^n \cup S^{n-1}$, and if not, then for any $n$, $A$ must contain some $e_i^{n'}$ where $n' > n$, and so $A$ contains all $e_i^n$ by the argument above, i.e., $A = S^\infty$.
+\end{proof}
+
+\begin{problem}
+  Show that $S^\infty$ is contractible.
+\end{problem}
+\begin{proof}
+  Let $I = [0,1]$. Define
+  \begin{align*}
+    f \colon \RR^\infty \times I &\to \RR^\infty\\
+    (x_1,x_2,\ldots) \times t &\mapsto (1-t)(x_1,x_2,\ldots) + t(0,x_1,x_2,\ldots)
+  \end{align*}
+  Note $f$ is continuous by \cite[Thm.~19.6]{Mun00} since it is continuous in
+  each coordinate. $f_t$ takes nonzero vectors to nonzero vectors for all
+  $t \in I$, hence $f_t/\lvert f_t \rvert$ gives a homotopy from the identity map
+  of $S^\infty$ to the map $(x_1,x_2,\ldots) \mapsto (0,x_1,x_2,\ldots)$.
+  Next, define
+  \begin{align*}
+    g \colon \RR^\infty \times I &\to \RR^\infty\\
+    (x_1,x_2,\ldots) \times t &\mapsto (1-t)(0,x_1,x_2,\ldots) + t(1,0,0,\ldots)
+  \end{align*}
+  $g$ is continuous for the same reason as for $f$, and $g_t$ takes nonzero
+  vectors to nonzero vectors for all $t\in I$. Thus, $g_t/\lvert g_t \rvert$
+  gives a homotopy from the map $(x_1,x_2,\ldots) \mapsto (0,x_1,x_2,\ldots)$ to
+  a constant map. Composing these two homotopies together gives a homotopy
+  between the identity map and a constant map, so $S^\infty$ is contractible.
+\end{proof}
+
+\begin{problem}
+  Construct a $2$-dimensional CW complex that contains both an annulus $S^1 \times I$ and a M\"obius band as deformation retracts.
+\end{problem}
+\begin{proof}[Solution]
+  Consider the CW complex and the maps drawn with small arrows below:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,x=1.0cm,y=0.9cm]
+      \node (a) at (0,0) {
+        \begin{tikzpicture}[>=stealth]
+          \draw[white] (0,0) -- (2.5,0);
+          \fill [gray] (0,0) -- (0,2) -- (1.8,2.6) -- (1.8,0.6);
+          \fill [gray] (0.9,0.3) -- (0.9,2.3) -- (2.3,1.8) -- (2.3,-0.2);
+          \draw [->-=0.55] (0,2) -- (0.9,2.3);
+          \draw [->-=0.55] (0.9,2.3) -- (1.8,2.6);
+          \draw [->-=0.55] (0.9,0.3) -- (0,0);
+          \draw [->-=0.55,dashed] (1.8,0.6) -- (0.9,0.3);
+          \draw [dashed] (1.8,0.6) -- (1.8,2);
+          \draw (1.8,1.98) -- (1.8,2.6);
+          \draw (0,0) -- (0,2);
+          \draw [->-=0.55] (0.9,0.3) -- (2.3,-0.2);
+          \draw [->-=0.55] (0.9,2.3) -- (2.3,1.8);
+          \draw (0.9,0.3) -- (0.9,2.3);
+          \draw (2.3,1.8) -- (2.3,-0.2);
+
+          \draw (0.45,0.15) node[anchor=south] {$b$};
+          \draw (0.45,2.15) node[anchor=south] {$a$};
+          \draw (1.35,0.45) node[anchor=south] {$a$};
+          \draw (1.35,2.45) node[anchor=south] {$b$};
+
+          \draw (1.6,2.05) node[anchor=north] {$c$};
+          \draw (1.6,0.05) node[anchor=north] {$c$};
+        \end{tikzpicture}
+      };
+      \node (b) at (a.north east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \draw[white] (-0.2,0) -- (2.5,0);
+          \fill [gray] (0,0) -- (0,2) -- (1.8,2.6) -- (1.8,0.6);
+          \fill [gray] (0.9,0.3) -- (0.9,2.3) -- (2.3,1.8) -- (2.3,-0.2);
+          \draw [->-=0.55] (0,2) -- (0.9,2.3);
+          \draw [->-=0.55] (0.9,2.3) -- (1.8,2.6);
+          \draw [->-=0.55] (0.9,0.3) -- (0,0);
+          \draw [->-=0.55,dashed] (1.8,0.6) -- (0.9,0.3);
+          \draw [dashed] (1.8,0.6) -- (1.8,2);
+          \draw (1.8,1.98) -- (1.8,2.6);
+          \draw (0,0) -- (0,2);
+          \draw [->-=0.55] (0.9,0.3) -- (2.3,-0.2);
+          \draw [->-=0.55] (0.9,2.3) -- (2.3,1.8);
+          \draw [->--=0.55] (2.3,1.4) -- (0.9,1.9);
+          \draw [->--=0.55] (2.3,1.0) -- (0.9,1.5);
+          \draw [->--=0.55] (2.3,0.6) -- (0.9,1.1);
+          \draw [->--=0.55] (2.3,0.2) -- (0.9,0.7);
+          \draw (0.9,0.3) -- (0.9,2.3);
+          \draw (2.3,1.8) -- (2.3,-0.2);
+        \end{tikzpicture}
+      };
+      \node (c) at (b.east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \draw[white] (-0.2,0) -- (2.3,0);
+          \fill [gray] (0,0) -- (0,2) -- (1.8,2.6) -- (1.8,0.6);
+          \draw [->-=0.55] (0,2) -- (0.9,2.3);
+          \draw [->-=0.55] (0.9,2.3) -- (1.8,2.6);
+          \draw [->-=0.55] (0.9,0.3) -- (0,0);
+          \draw [->-=0.55] (1.8,0.6) -- (0.9,0.3);
+          \draw (1.8,0.6) -- (1.8,2.6);
+          \draw (0,0) -- (0,2);
+          \draw (0.9,0.3) -- (0.9,2.3);
+          
+          \draw (0.45,0.15) node[anchor=north] {$b$};
+          \draw (0.45,2.15) node[anchor=south] {$a$};
+          \draw (1.35,0.45) node[anchor=north] {$a$};
+          \draw (1.35,2.45) node[anchor=south] {$b$};
+        \end{tikzpicture}
+      };
+      \path[->,line width=0.5pt] (a) edge (b);
+      \path[->,line width=0.5pt] (b) edge (c);
+
+      \node (d) at (a.south east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \draw[white] (-0.2,0) -- (2.5,0);
+          \fill [gray] (0,0) -- (0,2) -- (1.8,2.6) -- (1.8,0.6);
+          \fill [gray] (0.9,0.3) -- (0.9,2.3) -- (2.3,1.8) -- (2.3,-0.2);
+          \draw [->-=0.55] (0,2) -- (0.9,2.3);
+          \draw [->-=0.55] (0.9,2.3) -- (1.8,2.6);
+          \draw [->-=0.55] (0.9,0.3) -- (0,0);
+          \draw [->-=0.55,dashed] (1.8,0.6) -- (0.9,0.3);
+
+          \draw (1.8,2.2) -- (1.5,2.1);
+          \draw [->--=0.55,dashed] (1.8,2.2) -- (0.9,1.9);
+          \draw [->--=0.55,dashed] (1.8,1.8) -- (0.9,1.5);
+          \draw [->--=0.55,dashed] (1.8,1.4) -- (0.9,1.1);
+          \draw [->--=0.55,dashed] (1.8,1.0) -- (0.9,0.7);
+
+          \draw [->--=0.55] (0,1.6) -- (0.9,1.9);
+          \draw [->--=0.55] (0,1.2) -- (0.9,1.5);
+          \draw [->--=0.55] (0,0.8) -- (0.9,1.1);
+          \draw [->--=0.55] (0,0.4) -- (0.9,0.7);
+
+          \draw [dashed] (1.8,0.6) -- (1.8,2);
+          \draw (1.8,1.98) -- (1.8,2.6);
+          \draw (0,0) -- (0,2);
+          \draw [->-=0.55] (0.9,0.3) -- (2.3,-0.2);
+          \draw [->-=0.55] (0.9,2.3) -- (2.3,1.8);
+          \draw (0.9,0.3) -- (0.9,2.3);
+          \draw (2.3,1.8) -- (2.3,-0.2);
+        \end{tikzpicture}
+
+      };
+      \node (e) at (d.east) [anchor=west,xshift=0.5cm] {
+        \begin{tikzpicture}[>=stealth]
+          \draw[white] (0.45,0) -- (2.3,0);
+          \fill [gray] (0.9,0.3) -- (0.9,2.3) -- (2.3,1.8) -- (2.3,-0.2);
+          \draw [->-=0.55] (0.9,0.3) -- (2.3,-0.2);
+          \draw [->-=0.55] (0.9,2.3) -- (2.3,1.8);
+          \draw (0.9,0.3) -- (0.9,2.3);
+          \draw (2.3,1.8) -- (2.3,-0.2);
+
+          \draw (1.6,2.05) node[anchor=south] {$c$};
+          \draw (1.6,0.05) node[anchor=north] {$c$};
+        \end{tikzpicture}
+      };
+      \path[->,line width=0.5pt] (a) edge (d);
+      \path[->,line width=0.5pt] (d) edge (e);
+    \end{tikzpicture}
+  \end{center}
+  \par In the top row, since the segment labeled $c$ is homeomorphic to $[0,1]$, we see that if the unit square containing $c$ has the coordinate along $c$ as the $x$ coordinate, and the other edge as the $y$ coordinate, our map is given by $F((x,y),t) = ((1-t)x,y)$ in this unit square, and the identity on the unit square containing $a,b$. $F$ is well-defined since it acts the same on the identified edges. $F$ is continuous in each coordinate hence continuous, and is such that $F((x,y),0) = (x,y)$, $F((x,y),1) = (0,y)$, and $F((0,y),t) = (0,y)$; thus, $F$ on the entire complex is continuous by the pasting lemma. $F$ is therefore a deformation retract to the M\"obius strip defined by the unit square containing $a,b$.
+  \par In the bottom row, let the horizontal edges be the $x$ coordinate axis with $x \in [0,1]$, and the vertical edges as the $y$ coordinate. Then, our map is given by $F((x,y),t) = (x + t(1/2-x),y)$ in this unit square, and the identity on the unit square containing $c$. $F$ is well-defined since it acts the same on the identified edges. $F$ is continuous in each coordinate hence continuous, and is such that $F((x,y),0) = (x,y)$, $F((x,y),1) = (0,y)$, and $F((1/2,y),t) = (1/2,y)$; thus, $F$ on the entire complex is continuous by the pasting lemma. $F$ is therefore a deformation retract to the annulus defined by the unit square containing $c$.
+\end{proof}
+
+\begin{problem}
+  Show that $S^1 \ast S^1 = S^3$, and more generally $S^m \ast S^n = S^{m+n+1}$.
+\end{problem}
+\begin{proof}
+  We first want to show $S^n = \bigast_{i=0}^n S^0$. This trivially holds for $n=0$, and so we consider the inductive case. Recall $S^{n+1} = S(S^n) = S\left( \bigast_{i=0}^n S^0 \right)$, and so $X \ast S^0 = S(X)$ implies $S^{n+1} = \bigast_{i=0}^{n+1} S^0$. Thus,
+  \begin{equation*}
+    S^m \ast S^n = \left( \bigast_{i=0}^{m} S^0 \right) \ast \left( \bigast_{k=0}^{n} S^0 \right) = \bigast_{i=0}^{m+n+1} S^0 = S^{m+n+1}
+  \end{equation*}
+  since $\ast$ is associative as remarked on p.~9. In particular, $S^1 \ast S^1 = S^3$.
+\end{proof}
+
+\setcounter{subsubsection}{19}
+\begin{problem}
+  Show that the subspace $X \subset \mathbb{R}^3$ formed by a Klein bottle intersecting itself in a circle, as shown in the figure, is homotopy equivalent to $S^1 \vee S^1 \vee S^2$.
+\end{problem}
+\begin{proof}
+  Using the characterization of the Klein bottle as a quotient of a square, we have that $X$ is the quotient of the following square:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=stealth,x=1.0cm,y=1.0cm]
+      \fill [gray] (0,0) rectangle (2,2);
+      \draw (0,1) node[anchor=east] {$a$};
+      \draw (2,1) node[anchor=west] {$a$};
+      \draw (1,0) node[anchor=north] {$b$};
+      \draw (1,2) node[anchor=south] {$b$};
+      \draw [->-=0.55] (0,0) -- (0,2);
+      \draw [->-=0.55] (2,2) -- (0,2);
+      \draw [->-=0.55] (2,0) -- (2,2);
+      \draw [->-=0.55] (0,0) -- (2,0);
+      \draw (1,1) node[anchor=north] {$b$};
+      \draw [decoration={markings, mark=at position 0.77 with {\arrow[scale=2]{>}}}, postaction={decorate}] (1,1) circle(0.5);
+    \end{tikzpicture}
+  \end{center}
+  We first deformation retract the disc in the center to a point:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=stealth,x=1.0cm,y=1.0cm]
+      \fill [gray] (0,0) rectangle (2,2);
+      \draw (0,1) node[anchor=east] {$a$};
+      \draw (2,1) node[anchor=west] {$a$};
+      \draw (1,0) node[anchor=north] {$b$};
+      \draw (1,2) node[anchor=south] {$b$};
+      \draw [->-=0.55] (0,0) -- (0,2);
+      \draw [->-=0.55] (2,2) -- (0,2);
+      \draw [->-=0.55] (2,0) -- (2,2);
+      \draw [->-=0.55] (0,0) -- (2,0);
+      \draw (1,1) node[anchor=north] {$b$};
+      \fill (1,1) circle (0.08);
+    \end{tikzpicture}
+  \end{center}
+  But then, since the two horizontal edges are identified with this center point, we can contract them to points in our diagram to get the space
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=stealth,x=1.0cm,y=1.0cm]
+      \fill [gray] (0,0) circle (1);
+      \draw[decoration={markings, mark=at position 0.52 with {\arrow[scale=2]{<}}}, postaction={decorate}] (0,0) circle (1);
+      \draw[decoration={markings, mark=at position 0.01 with {\arrow[scale=2]{>}}}, postaction={decorate}] (0,0) circle (1);
+      \draw (-1,0) node[anchor=east] {$a$};
+      \draw (1,0) node[anchor=west] {$a$};
+      \fill (0,1) circle (0.08);
+      \fill (0,0) circle (0.08);
+      \fill (0,-1) circle (0.08);
+      %\draw (0,1) node[anchor=east] {$a$};
+      %\draw (2,1) node[anchor=west] {$a$};
+      %\draw (1,0) node[anchor=north] {$b$};
+      %\draw (1,2) node[anchor=south] {$b$};
+      %\draw [->-=0.55] (0,0) -- (0,2);
+      %\draw [->-=0.55] (2,2) -- (0,2);
+      %\draw [->-=0.55] (2,0) -- (2,2);
+      %\draw [->-=0.55] (0,0) -- (2,0);
+      %\draw (1,1) node[anchor=north] {$b$};
+      %\draw [decoration={markings, mark=at position 0.77 with {\arrow[scale=2]{>}}}, postaction={decorate}] (1,1) circle(0.5);
+    \end{tikzpicture}
+  \end{center}
+  where the three labeled points are identified. This is the same as a sphere with three points identified, and so, attaching $1$-cells as in Example $0.8$, we see that $X$ is homotopy equivalent to $S^1 \vee S^1 \vee S^2$.
+\end{proof}
+
+%\begin{problem}
+%  If $X$ is a connected Hausdorff space that is a union of a finite number of $2$-spheres, any two of which intersect in at most one point, show that $X$ is homotopy equivalent to a wedge sum of $S^1$'s and $S^2$'s.
+%\end{problem}
+%\begin{proof}
+%  First, every sphere must intersect with at least one other sphere, for suppose not, and $S^1_i$ does not intersect with any other sphere. Then, $X$ would be disconnected, for $S^1_i$ is both open and closed in $S^1_i$ and hence open and closed in $X$; thus, $S^1_i \amalg X \setminus S^1_i$ is a separation of $X$.
+%  \par We proceed by strong induction on number of spheres. The claim is trivial for one sphere, and so we consider the case for $n+1$ spheres. Suppose $S^2_{n+1}$ has intersection points $\{p_j\}_{1 \le j \le J}$ with unions of spheres $X_j$. Then, identifying the $p_j$'s using $1$-cells as in Example 0.8, we see that $S^2_{n+1} \cup \bigcup_{j=1}^J X_j$ is homotopy equivalent to $S^2_{n+1} \wedge \bigcup_{j=1}^J X_j \wedge \bigwedge_{j=1}^J S_1$. By inductive hypothesis, each $X_j$ is a wedge of circles and spheres, and so we are done.
+%\end{proof}
+
+\setcounter{subsubsection}{23}
+\begin{problem}
+  Let $X$ and $Y$ be CW complexes with $0$-cells $x_0$ and $y_0$. Show that the quotient spaces $X \ast Y/(X \ast \{y_0\} \cup \{x_0\} \ast Y)$ and $S(X \vee Y)/S(\{x_0\} \wedge \{y_0\})$ are homeomorphic, and deduce that $X \ast Y \simeq S(X \wedge Y)$.
+\end{problem}
+\begin{proof}
+  Recall that
+  \begin{equation*}
+    X \ast Y = \frac{X \times Y \times I}{(x,y_1,0) \sim (x,y_2,0), (x_1,y,1)\sim(x_2,y,1)}.
+  \end{equation*}
+  Under this identification, $X \times \{y_0\} \times I \cup \{x_0\} \times Y \times I$ maps to $X \ast \{y_0\} \cup \{x_0\} \ast Y$, and so we have
+  \begin{equation*}
+    \frac{X \ast Y}{X \ast \{y_0\} \cup \{x_0\} \ast Y} \cong \frac{X \times Y \times I}{(X \times \{y_0\} \cup \{x_0\} \times Y) \times I}.
+  \end{equation*}
+  \par Note we also have
+  \begin{align*}
+    \frac{X \times Y \times I}{(X \times \{y_0\} \cup \{x_0\} \times Y) \times I} &\cong \frac{X \times Y \times I}{(X \vee Y) \times I}
+    \cong \frac{X \times Y}{X \vee Y} \times I \cong (X \wedge Y) \times I\\
+    &\cong \frac{X \wedge Y}{\{x_0\} \wedge \{y_0\}} \times I \cong \frac{(X \wedge Y) \times I}{(\{x_0\} \wedge \{y_0\}) \times I}.
+  \end{align*}
+  Recall that
+  \begin{equation*}
+    S(X) = \frac{X \times I}{(x,0) \sim (x',0), (x,1) \sim (x',1)}.
+  \end{equation*}
+  Under this identification for $X \wedge Y$, we see that $(X \wedge Y) \times \{0\}$ and $(X \wedge Y) \times \{1\}$ collapse to two points. Thus, $(\{x_0\} \wedge \{y_0\}) \times I$ maps to $S(\{x_0\} \wedge \{y_0\})$. By transitivity of homeomorphisms, we see
+  \begin{equation*}
+    \frac{X \ast Y}{X \ast \{y_0\} \cup \{x_0\} \ast Y} \cong \frac{S(X \wedge Y)}{S(\{x_0\} \wedge \{y_0\})}.
+  \end{equation*}
+  \par Finally, both $(X \ast Y,X \ast \{y_0\} \cup \{x_0\} \ast Y)$ and $(S(X \vee Y),S(\{x_0\} \wedge \{y_0\}))$ are CW pairs, and so they satisfy the homotopy extension property by Proposition 0.16, and therefore are homotopy equivalent to their quotient spaces by the subcomplex by Proposition 0.17. This gives that
+  \begin{equation*}
+    X \ast Y \simeq \frac{X \ast Y}{X \ast \{y_0\} \cup \{x_0\} \ast Y} \cong \frac{S(X \wedge Y)}{S(\{x_0\} \wedge \{y_0\})} \simeq S(X \wedge Y),
+  \end{equation*}
+  and so $X \ast Y \simeq S(X \wedge Y)$.
+\end{proof}
+
+\endgroup
+\printbibliography
+\cleardoublepage
+\pdfbookmark[1]{List of Solved Exercises}{det}
+\renewcommand*\contentsname{List of Solved Exercises}
+{\footnotesize\tableofcontents}
+\end{document}

@@ -401,7 +401,8 @@
   %From Exercise $\ref{exc:2.6}$, $\dim S(Y) = \dim Y +1$. We note that $\dim S(Y) = \dim (CY)$, where $CY = \pi^{-1} (Y)$. $\pi : \AA^{n+1} \setminus \{0\} \to \PP^n$. This is true because $S(Y) = k[x_0, \cdots, x_n]/I(Y)$, and realizing this in an affine space $\AA^{n+1}$, we get $\dim S(Y) = \dim CY$(from prop 1.7). Then, from prop 1.10, $\dim S(Y) = \dim CY = \dim \overline{CY} = \dim C \overline{Y} = \dim S(\overline{Y})$. Hence, $\dim Y = \dim S(Y) -1 = \dim S(\overline{Y}) -1 = \dim \overline{Y}$.
 \end{proof}
 
-\begin{problem} A projective variety $Y \subseteq \PP^n$ has dimension $n-1$ if
+\begin{problem}\label{exc:2.8}
+  A projective variety $Y \subseteq \PP^n$ has dimension $n-1$ if
   and only if it is the zero set of a single irreducible homogeneous polynomial
   $f$ of positive degree. $Y$ is called a \emph{hypersurface} in $\PP^n$. 
 \end{problem}
@@ -492,7 +493,7 @@
   decomposition of $f(X')$. So, we claim $Z(wy-x^2,xz-y^2,wz-xy)$ is the image
   of the regular map
   \begin{align*}
-    f\colon \mathbb{P}^1 &\to X_2\\
+    f\colon \mathbb{P}^1 &\to \PP^3\\
     [s:t] &\mapsto [s^3:s^2t:st^2:t^3]
   \end{align*}
   We note that the image is contained in $Z(wy-x^2,xz-y^2,wz-xy)$ since the
@@ -649,12 +650,12 @@
   %Note) This is a special case of the projective dimension ( page 48 theorem 1.7.2)
 \end{proof}
 
-\begin{problem}[The \emph{$d$-Uple} Embedding]
+\begin{problem}[The \emph{$d$-Uple} Embedding]\label{exc:2.12}
   For given $n, d>0$, let
   $M_0,\ldots, M_N$ be all the monomials of degree $d$ in the $n+1$ variables
   $x_0, \ldots x_n$, where $N = \binom{n+d}{n} -1.$ We define a mapping
-  $\rho_d\colon \PP^n \to \PP^N$ by sending the point $P = (a_0, \cdots, a_n)$
-  to the point $\rho_d(P) = (M_0(a), \cdots, M_N(a))$ obtained by substituting
+  $\rho_d\colon \PP^n \to \PP^N$ by sending the point $P = (a_0, \ldots, a_n)$
+  to the point $\rho_d(P) = (M_0(a), \ldots, M_N(a))$ obtained by substituting
   the $a_i$ in the monomials $M_j$. This is called the $d$-uple \emph{embedding}
   of $\PP^n$ in $\PP^N$. For example, if $n=1, d=2$, then $N= 2$, and the image
   $Y$ of the $2$-uple embedding of $\PP^1$ in $\PP^2$ is a conic. 
@@ -681,53 +682,207 @@
   hence $k[y_0, \ldots, y_N]/\mathfrak{a}$ is a domain and $\mathfrak{a}$ is prime. 
 \end{proof}
 \begin{proof}[Proof of $(b)$]
-  Let $\rho_d(P) \in \Im \rho_d$, and suppose $f \in \mathfrak{a} = \ker\theta$.
-  Then, $f(\rho_d(P)) = f(M_0(a), \ldots, M_N(a)) = (\theta f)(a) = 0$, and so
-  $\rho_d(P) \in Z(\mathfrak{a})$. Thus, $\Im \rho_d \subset Z(\mathfrak{a})$. 
-  \par Conversely, we claim $Z(\mathfrak{a}) \subset \Im \rho_d$. Suppose
-  $[a_0:\cdots:a_N] \in Z(\mathfrak{a})$. After permutation of coordinates, we
-  can assume $a_0 \ne 0$, so $a_0 = 1$, and that the $M_i$ are ordered such that
-  the first $n+1$ monomials are
-  $x_0^d,x_0^{d-1}x_1,x_0^{d-1}x_2,\ldots,x_0^{d-1}x_n$. Note that any other
-  $M_i = x_0^{d^i_0}x_1^{d^i_1}\cdots x_n^{d^i_n}$ satisfies
-  \begin{align*}
-    M_i &= x_0^{d^i_0} \left(\frac{M_1}{x_0^{d-1}}\right)^{d^i_1}
-    \left(\frac{M_2}{x_0^{d-1}}\right)^{d^i_2} \cdots
-    \left(\frac{M_n}{x_0^{d-1}}\right)^{d^i_n}\\
-    &= \frac{x_0^{d^i_0}}{x_0^{(d-d^i_0)(d-1)}}M_1^{d^i_1}M_2^{d^i_2}\cdots
-    M_n^{d^i_n}\\
-    &= \frac{M_0}{M_0^{d-d^i_0}} M_1^{d^i_1}M_2^{d^i_2}\cdots M_n^{d^i_n}
-  \end{align*}
-  hence $M_0^{d-d^i_0}M_i - M_0M_1^{d^i_1}M_2^{d^i_2}\cdots M_n^{d^i_n}$, and so
-  $y_0^{d-d^i_0} - y_0y_1^{d^i_1}y_2^{d^i_2}\cdots y_n^{d^i_n} \in \mathfrak{a}$.
-  Thus, we see that
+  We will show that if $Z(T) \subset \PP^n$ is a closed set in $\PP^n$, then
+  $\rho_d(Z(T)) = Z(\theta^{-1}(T))$. First let $P \in Z(T)$, and
+  suppose $f \in \theta^{-1}(T)$. Then,
   \begin{equation*}
-    \rho_d([1 : a_1 : a_2 : \cdots : a_n]) = [1 : \cdots : a_N],
+    f(\rho_d(P)) = f(M_0(a),\ldots,M_n(a)) = (\theta f)(P) = 0
   \end{equation*}
-  since $a_i = a_1^{d^i_1}a_2^{d^i_2}\cdots a_n^{d^i_n}$,
-  and so $Z(\mathfrak{a}) \subset \Im \rho_d$.
+  since $\theta f \in T$. Thus, $\rho_d(Z(T)) \subset Z(\theta^{-1}(T))$.
+  \par Conversely, suppose $[b_0:\cdots:b_N] \in Z(\theta^{-1}(T))$.
+  %Let $\rho_d(P) \in \Im \rho_d$, and suppose $f \in \mathfrak{a} = \ker\theta$.
+  %Then, $f(\rho_d(P)) = f(M_0(a), \ldots, M_N(a)) = (\theta f)(a) = 0$, and so
+  %$\rho_d(P) \in Z(\mathfrak{a})$. Thus, $\Im \rho_d \subset Z(\mathfrak{a})$. 
+  %\par Conversely, we claim $Z(\mathfrak{a}) \subset \Im \rho_d$. First suppose
+  %that we can show $\Im \rho_d$ is closed. Then, it suffices to show
+  %$\mathfrak{a} \supset I(\Im \rho_d)$. But any $f \in I(\Im \rho_d)$ has $f(Q)
+  %= 0$ for all $Q = [a_0 : \cdots : a_N] \in \Im \rho_d$, and so
+  %$f(M_0(a),\ldots,M_n(a)) = (\theta f)(a) = 0$, i.e., $f \in \ker\theta =
+  %\mathfrak{a}$.
+  %\par It remains to show $\Im\rho_d$ is in fact closed. We will actually show
+  %that $\rho_d$ is a closed map $\PP^n \to \PP^N$. So suppose $Y \subset \PP^n$
+  %is closed. We claim $\rho_d(Y) = Z(\theta^{-1}(I(Y)))$.
+  Suppose $b_0 \ne 0$ and that $M_0 = x_0^d$ and suppose $M_i = x_i^{d-1}x_0$
+  for $1 \le i \le n$; note that any other case follows analogously to
+  this one after permutation of coordinates in $\PP^n$ and $\PP^N$.
+  Note since $b_0 \ne 0$ that we can moreover assume $b_0 = 1$ since we are
+  working with projective coordinates.
+  Then, any other $M_\ell = x_0^{e^\ell_0}x_1^{e^\ell_1}\cdots
+  x_n^{e^\ell_n}$ satisfies
+  \begin{align*}
+    M_\ell &= x_0^{e^\ell_0} \left(\frac{M_1}{x_0^{d-1}}\right)^{e^\ell_1}
+    \left(\frac{M_{i_2}}{x_0^{d-1}}\right)^{e^\ell_2} \cdots
+    \left(\frac{M_n}{x_0^{d-1}}\right)^{e^\ell_n}\\
+    &= \frac{x_0^{e^\ell_0}}{x_0^{(d-e^\ell_0)(d-1)}}M_1^{e^\ell_1}M_2^{e^\ell_2}
+    \cdots M_n^{e^\ell_n}\\
+    &= \frac{M_0}{M_0^{d-e^\ell_0}} M_1^{e^\ell_1}M_2^{e^\ell_2}\cdots M_n^{e^\ell_n}
+  \end{align*}
+  hence
+  \begin{equation*}
+    M_0^{d-e^\ell_0}M_\ell - M_0M_1^{e^\ell_1}M_2^{e^\ell_2}\cdots
+    M_n^{e^\ell_n} = 0,
+  \end{equation*}
+  and so
+  \begin{equation}\label{eq:2.12b}
+    y_0^{d-e^\ell_0}y_\ell - y_0y_1^{e^\ell_1}y_2^{e^\ell_2}\cdots
+    y_n^{e^\ell_n} \in \ker\theta = \mathfrak{a} \subset \theta^{-1}(T).
+  \end{equation}
+  We therefore claim that $P = [1 : b_1 : \cdots : b_n] \mapsto [b_0:\cdots:b_N]$.
+  For, the $\ell$th coordinate of $\rho_d(P)$ is given by
+  \begin{equation*}
+    \rho_d(P)_\ell = M_\ell(b) = M_1^{e^\ell_1}(b)M_2^{e^\ell_2}(b) \cdots
+    M_n^{e^\ell_n}(b) = b_1^{e^\ell_1}b_2^{e^\ell_2} \cdots b_n^{e^\ell_n} =
+    b_\ell,
+  \end{equation*}
+  using \eqref{eq:2.12b} and the fact that we assumed $b_0 = 1$. Thus, $[b_0 :
+  \cdots : b_N] \in \Im\rho_d$; it remains to show $[b_0 : \cdots : b_N] \in
+  \rho_d(Z(T))$, i.e., that $P = [1 : b_1 : \cdots : b_n] \in Z(T)$. So let
+  $g \in T$; then, we know that if $\tilde{g} \in \theta^{-1}(g) \subset
+  \theta^{-1}(T)$, then
+  \begin{equation*}
+    g(P) = (\theta\tilde{g})(P) = \tilde{g}(M_0(b),\ldots,M_N(b)) =
+    \tilde{g}(\rho_d(P)) = 0,
+  \end{equation*}
+  since $\tilde{g} \in \theta^{-1}(T)$. Thus, $P = [1 : b_1 : \cdots : b_n] \in
+  Z(\theta^{-1}(T))$, and so $Z(\theta^{-1}(T)) \subset \rho_d(Z(T))$ as
+  claimed. Combined with the above, this shows $\rho_d(Z(T)) =
+  Z(\theta^{-1}(T))$. In particular, letting $T = \{0\}$, then $\theta^{-1}(0) =
+  \ker\theta = \mathfrak{a}$, and so $\Im \rho_d = Z(\mathfrak{a})$.
+  %$y_0^{d-e^\ell_0} - y_0y_1^{e^\ell_1}y_2^{e^\ell_2}\cdots y_n^{e^\ell_n} \in
+  %\mathfrak{a}$. In particular, this shows that 
+  %Let $l$ be a coordinate in $\PP^N$ such that $b_l \ne 0$ and $M_l = x_l^d$;
+  %Let $i_0,i_1,\ldots,i_n$ be the coordinates in $\PP^N$ such that $M_{i_j} =
+  %x_j^d$ for each $j$. Then, we claim that
+  %\begin{equation*}
+  %  \rho_d([b_{i_0}^{1/d} : b_{i_1}^{1/d} : \cdots : b_{i_n}^{1/d}]) =
+  %  [b_0:b_1:\cdots:b_N].
+  %\end{equation*}
+  %For, suppose $M_\ell = x_0^{e^\ell_0}x_1^{e^\ell_1}\cdots x_n^{e^\ell_n}$ is
+  %the monomial corresponding to the $\ell$th coordinate in $\PP^N$. Then,
+  %\begin{equation*}
+  %  M_\ell(a) = a_0^{e^\ell_0}a_1^{e^\ell_1} \cdots a_n^{e^{\ell_n}} = 
+  %\end{equation*}
+  %Suppose
+  %$[a_0:\cdots:a_N] \in Z(\mathfrak{a})$. After permutation of coordinates, we
+  %can assume $a_0 \ne 0$, so $a_0 = 1$, and that the $M_i$ are ordered such that
+  %the first $n+1$ monomials are
+  %$x_0^d,x_0^{d-1}x_1,x_0^{d-1}x_2,\ldots,x_0^{d-1}x_n$. Note that any other
+  %$M_i = x_0^{d^i_0}x_1^{d^i_1}\cdots x_n^{d^i_n}$ satisfies
+  %\begin{align*}
+  %  M_i &= x_0^{d^i_0} \left(\frac{M_1}{x_0^{d-1}}\right)^{d^i_1}
+  %  \left(\frac{M_2}{x_0^{d-1}}\right)^{d^i_2} \cdots
+  %  \left(\frac{M_n}{x_0^{d-1}}\right)^{d^i_n}\\
+  %  &= \frac{x_0^{d^i_0}}{x_0^{(d-d^i_0)(d-1)}}M_1^{d^i_1}M_2^{d^i_2}\cdots
+  %  M_n^{d^i_n}\\
+  %  &= \frac{M_0}{M_0^{d-d^i_0}} M_1^{d^i_1}M_2^{d^i_2}\cdots M_n^{d^i_n}
+  %\end{align*}
+  %hence $M_0^{d-d^i_0}M_i - M_0M_1^{d^i_1}M_2^{d^i_2}\cdots M_n^{d^i_n}$, and so
+  %$y_0^{d-d^i_0} - y_0y_1^{d^i_1}y_2^{d^i_2}\cdots y_n^{d^i_n} \in \mathfrak{a}$.
+  %Thus, we see that
+  %\begin{equation*}
+  %  \rho_d([1 : a_1 : a_2 : \cdots : a_n]) = [1 : \cdots : a_N],
+  %\end{equation*}
+  %since $a_i = a_1^{d^i_1}a_2^{d^i_2}\cdots a_n^{d^i_n}$,
+  %and so $Z(\mathfrak{a}) \subset \Im \rho_d$.
   %by Exercise $\ref{exc:2.3}$, it suffices to show $\mathfrak{a} \supset I(\Im \rho_d)$. Pick $f \in I(\Im \rho_d)$. Then, $f(Q) = 0$ for all $Q \in \Im \rho_d$. Then, $f(M_0, \cdots, M_N)= 0 \Rightarrow f \in \Ker \theta$. 
 \end{proof}
 \begin{proof}[Proof of $(c)$]
-  From $(b)$ we know that $Z(\mathfrak{a}) = \Im \rho_d$. $\rho$ is injective, and the inverse is also continuous.  
+  From $(b)$ we know that $Z(\mathfrak{a}) = \Im \rho_d$.
+  $\rho_d$ is injective since for $[b_0:\cdots:b_N] \in \Im\rho_d$,
+  assuming $b_0 = 1$ and that $M_i = x_i^{d-1}x_0$ for $1 \le i \le n$, we saw in
+  $(b)$ that the preimage $P = [b_0:\cdots:b_n]$ was uniquely determined by
+  $[b_0:\cdots:b_N]$; any other case is analogous after change of coordinates.
+  $\rho_d$ is closed as shown in $(b)$, and $\rho_d$ is continuous by Lem.~$3.6$
+  since $\rho_d$ is a regular map. Thus, $\rho_d$ is a homeomorphism onto its
+  image $Z(\mathfrak{a})$.
 \end{proof}
 \begin{proof}[Proof of $(d)$]
-  From ex 2.9, we know that the map $\pi: \PP^1 \to \PP^3$ such that $[s:t] \mapsto [s^3: s^2t: st^2: t^3]$ sends $\PP^1$ to the twisted cubic. Choose $M_0(s,t) = s^3, \cdots, M_3 = t^3$. Thus, the twisted cubic curve in $\PP^3$ is equal to the $3$-uple embedding of $\PP^1$ in $\PP^3$. 
+  From Exercise \ref{exc:2.9}, we know that the map $\PP^1 \to \PP^3$ defined as
+  $[s:t] \mapsto [s^3: s^2t: st^2: t^3]$ sends $\PP^1$ to the twisted cubic.
+  Choosing $M_0 = s^3, M_1 = s^2t, M_2 = st^2, M_3 = t^3$, we see that the twisted
+  cubic curve in $\PP^3$ is equal to the $3$-uple embedding of $\PP^1$ in $\PP^3$. 
 \end{proof}
 
 
-\begin{problem} Let $Y$ be the image of the $2$-uple embedding of $\PP^2$ in $\PP^5$. This is the \textbf{Veronese surface}. If $Z \subseteq Y$ is a closed curve(a curve is a variety of dimension 1), show that there exists a hypersurface $V \subseteq \PP^5$ such that $V \cap Y = Z$. 
+\begin{problem}
+  Let $Y$ be the image of the $2$-uple embedding of $\PP^2$ in $\PP^5$. This is the
+  \emph{Veronese surface}. If $Z \subseteq Y$ is a closed curve (a \emph{curve} is 
+  a variety of dimension $1$), show that there exists a hypersurface $V \subseteq
+  \PP^5$ such that $V \cap Y = Z$. 
 \end{problem}
-
 \begin{proof}
-The veronese mapping $\nu: \PP^2 \to \PP^5$ is defined to be $\nu: (x:y:z) \mapsto (x^2: y^2:z^2:xy:yz:zx)$. From exercise 2.8, a projective variety $Z$ is a curve (i.e. of dimension 1) if and only if it is the zero set of a single irreducible homogeneous polynomial $f$ of positive degree. Let $Z = Z(f)$ where $f \in k[x,y,z]$ is a homogeneous polynomial of positive degree. Then, $f^2 \in k[x^2:y^2:z^2:xy:yz:zx]$. Thus, there exists a homogeneous polynomial $g \in k[x_0, x_1, \cdots, x_5]$ such that $g|_Y = f$. $V = Z(g)$ is a hypersurface of $\PP^5$, and $V \cap Y = Z$. 
+  Let $\nu\colon \PP^2 \to \PP^5$ be the $2$-uple embedding of $\PP^2$ in
+  $\PP^5$. Suppose $Z \subset Y$ is a closed curve; then, its inverse image
+  $\nu^{-1}(Z)$ is a closed curve in $\PP^2$, hence by Exercise \ref{exc:2.8} is
+  given as the zero set of a single irreducible homogeneous polynomial $f$ of
+  positive degree, and so $\nu^{-1}(Z) = Z(f) = Z(f^2)$, where we note $f(P) =
+  0$ if and only if $f^2(P) = 0$. Then, by our proof of Exercise $\ref{exc:2.12}(b)$,
+  \begin{equation*}
+    Z = \nu(\nu^{-1}(Z)) = \nu(Z(f^2)) = Z(\theta^{-1}(f^2)).
+  \end{equation*}
+  Since $f^2 \in k[x^2,y^2,z^2,xy,yz,zx]$, there exists $g \in
+  k[x_0,\ldots,x_5]$,
+  a homogeneous polynomial, such that $\theta(g) = f^2$.
+  It therefore suffices to show $Z(\theta^{-1}(f^2)) = Z(g) \cap V$, for $Z(g)$
+  is a hypersurface of $\PP^5$. But this is clear, for
+  \begin{equation*}
+    Z(\theta^{-1}(f^2)) = Z((g)+\mathfrak{a}) = Z(g) \cap Z(\mathfrak{a}) =
+    Z(g) \cap V
+  \end{equation*}
+  since $Z(\mathfrak{a}) = V$ by Exercise $\ref{exc:2.12}(b)$.
+  %The Veronese map $\nu\colon \PP^2 \to \PP^5$ is defined to be $\nu\colon [x:y:z] \mapsto [x^2: y^2:z^2:xy:yz:zx]$. From exercise 2.8, a projective variety $Z$ is a curve (i.e. of dimension 1) if and only if it is the zero set of a single irreducible homogeneous polynomial $f$ of positive degree. Let $Z = Z(f)$ where $f \in k[x,y,z]$ is a homogeneous polynomial of positive degree. Then, $f^2 \in k[x^2:y^2:z^2:xy:yz:zx]$. Thus, there exists a homogeneous polynomial $g \in k[x_0, x_1, \cdots, x_5]$ such that $g|_Y = f$. $V = Z(g)$ is a hypersurface of $\PP^5$, and $V \cap Y = Z$. 
 \end{proof}
 
-\begin{problem} \textbf{The Segre Embedding} Let $\psi : \PP^r \times \PP^s \to \PP^N$ be the map defined by sending the ordered pair $(a_0, \cdots, a_r) \times (b_0, \cdots, b_s)$ to $(\cdots, a_ib_j, \cdots)$ in lexicographic order, where $N = rs + r +s$. Note that $\psi$ is well-defined and injective. It is called the \textbf{Segre Embedding}. Show that the image of $\psi$ is a subvariety of $\PP^N$. [Hint: Let the homogeneous coordinates of $\PP^N$ be $\{z_{ij}:i=0, \cdots, r, j = 0,\cdots, s\}$, and let $\mathfrak{a}$ be the kernel of the homomorphism $k[{z_{ij}}] \to k [x_1, \cdots, x_r, y_0, \cdots, y_s]$ which sends $z_{ij}$ to $x_iy_j$. Then show that $\Im \psi = Z(\mathfrak{a})$.]
+\begin{problem}[The Segre Embedding]
+  Let $\psi\colon \PP^r \times \PP^s \to \PP^N$ be the map defined by sending
+  the ordered pair $(a_0, \ldots, a_r) \times (b_0, \ldots, b_s)$ to $(\ldots,
+  a_ib_j, \ldots)$ in lexicographic order, where $N = rs + r +s$. Note that
+  $\psi$ is well-defined and injective. It is called the \emph{Segre embedding}.
+  Show that the image of $\psi$ is a subvariety of $\PP^N$.
+  %[Hint: Let the homogeneous coordinates of $\PP^N$ be $\{z_{ij}:i=0, \cdots, r, j = 0,\cdots, s\}$, and let $\mathfrak{a}$ be the kernel of the homomorphism $k[{z_{ij}}] \to k [x_1, \cdots, x_r, y_0, \cdots, y_s]$ which sends $z_{ij}$ to $x_iy_j$. Then show that $\Im \psi = Z(\mathfrak{a})$.]
 \end{problem}
-
 \begin{proof}
-Let's follow the hint. Let $\theta$ be the homomorphism $\theta: k[{z_{ij}}] \to k [x_1, \cdots, x_r, y_0, \cdots, y_s]$ which sends $z_{ij}$ to $x_iy_j$. If $\mathfrak{a} = \Ker \theta$, Then $z_{ij} z_{kl} \mapsto x_iy_jx_ky_l$, and $z_{kj}z_{il} \mapsto x_ky_jx_iy_l$. Thus, $\mathfrak{a} = (z_{ij}z_{kl} -z_{kj}z_{il}:0\leq i,j \leq r, 0 \leq k,l \leq s)$. We claim that $\Im \psi = Z(\mathfrak{a})$. If $P \in \Im \psi$, $P = (\cdots, a_ib_j,\cdots)$ This for any generator $f = z_{ij}z_{kl}-z_{kj}z_{il}$ of $\mathfrak{a}$, $f(P) = 0 \Rightarrow \Im \psi \subseteq Z(\mathfrak{a})$. Conversely, let's show $Z(\mathfrak{a}) \subseteq \Im\psi \iff \mathfrak{a} \supset I(\Im\psi)$. If $g \in I(\Im \psi)$, then, for every $Q = (\cdots,a_ib_j, \cdots) \in \Im\psi$, $g(Q) = 0$. Then, $g \in \Ker \theta = \mathfrak{a}$. Thus, $\Im \psi = Z(\mathfrak{a})$ is a subvariety of $\PP^N$. 
+  $\psi$ is well-defined since a $k$-multiple of $[a_0:\cdots:a_r]$ maps to the
+  same $k$-multiple of $[\cdots:a_ib_j:\cdots]$, and similarly for
+  $[b_0:\cdots:b_s]$. Now suppose that $\psi(a,b) = \psi(c,d)$. Then,
+  $[\cdots:a_ib_j:\cdots] = [\cdots:c_id_j:\cdots]$ so $a_ib_j = \lambda c_id_j$
+  for each $i,j$ for some $\lambda \in k$. There exists $j_0$ such that
+  $b_{j_0} \ne 0$, which implies $d_{j_0} \ne 0$ for we must have
+  $a_ib_{j_0} = \lambda c_id_{j_0}$. Then, we see $a_i = (\lambda
+  d_{j_0}/b_{j_0}) c_i$, hence $[a_0:\cdots:a_r] = [c_0:\cdots:c_r]$. Similarly,
+  $[b_0:\cdots:b_s] = [d_0:\cdots:d_s]$, hence $\psi$ is injective.
+  \par Now let $\theta$ be the homomorphism
+  \begin{align*}
+    \theta\colon k[\{z_{ij} : 0\le i \le r,\ 0 \le j \le s\}] &\to
+    k[x_0, \ldots, x_r, y_0, \ldots, y_s]\\
+    z_{ij} &\mapsto x_iy_j
+  \end{align*}
+  and let $\mathfrak{a} = \ker\theta$. Note that $\mathfrak{a}$ is prime since
+  $k[x_0, \ldots, x_r, y_0, \ldots, y_s]$ is a domain.
+  %Then, $z_{ij} z_{kl} \mapsto x_iy_jx_ky_l$,
+  %and $z_{kj}z_{il} \mapsto x_ky_jx_iy_l$. Thus, $\mathfrak{a} \supset
+  %(z_{ij}z_{kl} - z_{kj}z_{il}:0\leq i,j \leq r,\ 0 \leq k,l \leq s)$.
+  We claim that $\Im \psi = Z(\mathfrak{a})$. Let $P = (\ldots, a_ib_j,\ldots)
+  \in \Im \psi$, and let $f \in \mathfrak{a}$. Then, $f(P) = (\theta f)(a,b) =
+  0$, and so $P \in Z(\mathfrak{a})$, i.e., $\Im \psi \subset Z(\mathfrak{a})$.
+  \par Conversely, suppose $Q = [\cdots:c_{ij}:\cdots] \in Z(\mathfrak{a})$.
+  Fix $i_i,j_0$ such that $c_{i_0j_0} \ne 0$. We claim letting
+  $a_i = c_{ij_0}/c_{i_0j_0}$ and $b_j = c_{i_0j}/c_{i_0j_0}$, we have
+  $\psi(a,b) = Q$. First, note that
+  \begin{equation*}
+    \theta(z_{ij} z_{kl} - z_{kj}z_{il}) = x_iy_jx_ky_l - x_ky_jx_iy_l = 0,
+  \end{equation*}
+  hence $z_{ij} z_{kl} - z_{kj}z_{il} \in \mathfrak{a}$. Thus, we see
+  \begin{equation*}
+    a_ib_j = c_{ij_0}c_{i_0j}/c_{i_0j_0}^2 = c_{ij}c_{i_0j_0}/c_{i_0j_0}^2 =
+    c_{ij}/c_{i_0j_0}
+  \end{equation*}
+  since $c_{ij_0}c_{i_0j} = c_{ij}c_{i_0j_0}$, and so $[\cdots:a_ib_j:\cdots] =
+  [\cdots : c_{ij} : \cdots]$.
+  %This for any generator $f = z_{ij}z_{kl}-z_{kj}z_{il}$ of $\mathfrak{a}$, $f(P) = 0 \Rightarrow \Im \psi \subseteq Z(\mathfrak{a})$. Conversely, let's show $Z(\mathfrak{a}) \subseteq \Im\psi \iff \mathfrak{a} \supset I(\Im\psi)$. If $g \in I(\Im \psi)$, then, for every $Q = (\cdots,a_ib_j, \cdots) \in \Im\psi$, $g(Q) = 0$. Then, $g \in \Ker \theta = \mathfrak{a}$.
+  Thus, $Z(\mathfrak{a}) \subset \Im\psi$, and so 
+  $\Im \psi = Z(\mathfrak{a})$. Moreover, this is a subvariety of $\PP^N$ since
+  $\mathfrak{a}$ is prime, hence $Z(\mathfrak{a})$ is irreducible.
 \end{proof}
 
 \begin{problem} \textbf{The Quadric Surface in $\PP^3$}. Consider the surface $Q$ (a surface is variety of dimension 2) in $\PP^3$ defined by the equation $xy-zw = 0$

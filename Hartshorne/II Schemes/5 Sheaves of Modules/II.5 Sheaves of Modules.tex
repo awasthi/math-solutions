@@ -1,0 +1,1470 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{decorations.markings}
+\tikzset{
+  open/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} },
+  closed/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; } }, postaction = {decorate} },
+  imm/.style = {decoration = {markings, mark = at position 0.3 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; }, mark = at position 0.6 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} }
+}
+
+\usepackage{braket}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../Hartshorne}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumacounter}
+\newenvironment{enuma}
+{\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{universalproperty}{Universal Property}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{subproblem}{Problem}[problem]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}
+\newtheorem{property}{Property}[problem]
+\newtheorem*{lemma*}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{claim}{Claim}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{problem}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Ass}{Ass}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\WeakAss}{\widetilde{Ass}}
+\let\Im\relax
+\DeclareMathOperator{\Im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\SPEC}{\mathbf{Spec}}
+\DeclareMathOperator{\Sp}{sp}
+\DeclareMathOperator{\maxSpec}{maxSpec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Soc}{Soc}
+\DeclareMathOperator{\Ht}{ht}
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\V}{\mathbf{V}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\stimes}{\text{\footnotesize\textcircled{s}}}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{coker}
+\DeclareMathOperator{\LCM}{LCM}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\dv}{div}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\trd}{tr.d.}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\GL}{GL}
+\newcommand{\GR}{\mathbb{G}\mathrm{r}}
+\newcommand{\gR}{\mathrm{Gr}}
+\newcommand{\EE}{\mathscr{E}}
+\newcommand{\FF}{\mathscr{F}}
+\newcommand{\GG}{\mathscr{G}}
+\newcommand{\HH}{\mathscr{H}}
+\newcommand{\II}{\mathscr{I}}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\MM}{\mathscr{M}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\Ss}{\mathscr{S}}
+\newcommand{\Af}{\mathfrak{A}}
+\newcommand{\Aa}{\mathscr{A}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\Sh}{\mathfrak{Sh}}
+\newcommand{\Psh}{\mathfrak{Psh}}
+\newcommand{\LRS}{\mathsf{LRS}}
+\newcommand{\Sch}{\mathfrak{Sch}}
+\newcommand{\Var}{\mathfrak{Var}}
+\newcommand{\Rings}{\mathfrak{Rings}}
+\DeclareMathOperator{\In}{in}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Spe}{Sp\acute{e}}
+\DeclareMathOperator{\HHom}{\mathscr{H}\!\mathit{om}}
+\newcommand{\isoto}{\overset{\sim}{\to}}
+\newcommand{\isolongto}{\overset{\sim}{\longrightarrow}}
+\newcommand{\Mod}{\mathsf{mod}\mathchar`-}
+\newcommand{\MOD}{\mathsf{Mod}\mathchar`-}
+\newcommand{\gr}{\mathsf{gr}\mathchar`-}
+\newcommand{\qgr}{\mathsf{qgr}\mathchar`-}
+\newcommand{\uqgr}{\underline{\mathsf{qgr}}\mathchar`-}
+\newcommand{\qcoh}{\mathsf{qcoh}\mathchar`-}
+\newcommand{\Alg}{\mathsf{Alg}\mathchar`-}
+\newcommand{\coh}{\mathsf{coh}\mathchar`-}
+\newcommand{\vect}{\mathsf{vect}\mathchar`-}
+\newcommand{\imm}[1][imm]{\hspace{0.75ex}\raisebox{0.58ex}{%
+\begin{tikzpicture}[commutative diagrams/every diagram]
+\draw[commutative diagrams/.cd, every arrow, every label,hook,{#1}] (0,0ex) -- (2.25ex,0ex);
+\end{tikzpicture}}\hspace{0.75ex}}
+\newcommand{\dashto}[2]{\smash{\hspace{-0.7em}\begin{tikzcd}[column sep=small,ampersand replacement=\&] {#1} \rar[dashed] \& {#2} \end{tikzcd}\hspace{-0.7em}}}
+
+%\usepackage{todonotes}
+%\usepackage[notref,notcite]{showkeys}
+
+\title{Hartshorne Ch.~II, \S5 Sheaves of Modules}
+\author{Takumi Murayama}
+
+\begin{document}
+\maketitle
+\setcounter{section}{5}
+\begin{remark}
+  Since the number of Lemmas was getting a bit unreasonable, they are all at the end, labeled with alphabetic prefixes. Theorems, Lemmas, etc.~from the book are abbreviated, e.g., Thm.~3.3. Also, to fix notation, if $A$ is a ring, $\MOD A$ is the class of $A$-modules and $\Mod A$ the subclass of finitely generated modules; similarly, if $S$ is a graded ring, $\qgr S$ is the class of quasi-finitely generated graded modules over $S$, and $\gr S$ is the subclass of finitely generated graded modules. Likewise, if $(X,\OO_X)$ is a ringed space, $\qcoh X \supset \coh X \supset \vect X$ are the class of quasi-coherent $\OO_X$-modules, the subclass of coherent modules, and the subclass of locally free modules of finite rank respectively.
+\end{remark}
+\begin{problem}
+  Let $(X,\OO_X)$ be a ringed space, and let $\EE$ be a locally free $\OO_X$-module of finite rank. We define the \emph{dual} of $\EE$, denoted $\check{\EE}$, to be the sheaf $\HHom_{\OO_X}(\EE,\OO_X)$.
+  \begin{enuma}
+  \item Show that $(\check{\EE})\:\check{} \cong \EE$.
+  \item For any $\OO_X$-module $\FF$, $\HHom_{\OO_X}(\EE,\FF) \cong \check{\EE} \otimes_{\OO_X} \FF$.
+  \item For any $\OO_X$-modules $\FF,\GG$, $\Hom_{\OO_X}(\EE \otimes \FF,\GG) \cong \Hom_{\OO_X}(\FF,\HHom_{\OO_X}(\EE,\GG))$.
+  \item \emph{(Projection Formula)}. If $f\colon(X,\OO_X)\to(Y,\OO_Y)$ is a morphism of ringed spaces, if $\FF$ is an $\OO_X$-module, and if $\EE$ is a locally free $\OO_Y$-module of finite rank, then there is a natural isomorphism $f_*(\FF \otimes_{\OO_X} f^*\EE) \cong f_*(\FF) \otimes_{\OO_Y} \EE$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  We define the map
+  \begin{equation*}
+    \psi\colon\EE \to (\check{\EE})\:\check{}\: = \HHom_{\OO_X}(\HHom_{\OO_X}(\EE,\OO_X),\OO_X).
+  \end{equation*}
+  For every $s \in \EE(U)$, we want to define a map of sheaves $\HHom(\EE,\OO_X)\vert_U \to \OO_U$. For every $V \subset U$, then, since
+  \begin{equation*}
+    \left(\HHom(\EE,\OO_X)\vert_U(V) \to \OO_U(V) \right) = \left( \Hom_{\OO_X\vert_V}(\EE\vert_V,\OO_V) \to \OO_X(V) \right)
+  \end{equation*}
+  we can send $f \colon \EE\vert_V\to\OO_V$ to $f(V)(s\vert_V) \in \OO_X(V)$. This is a morphism since it respects restrictions as did $f$.
+  \par It suffices to show that this morphism $\psi$ is an isomorphism on an open cover of $X$. We can cover $X$ with open sets $W$ such that $\EE\vert_W \cong \OO_W^n$ since $\EE \in \vect X$. It thus suffices to show this map is an isomorphism $\psi\colon\OO_X^n \isoto (\check{\OO}_X^n)\:\check{}\:$.
+  \par We claim this map $\psi$ is bijective. Let $\{e_i\}_{1 \le i \le n}$ be our basis for $\OO_X(X)^n$; note that since $\{e_i\vert_W\}$ generates $\OO_X(W)^n$ for all $W \subset X$ as $\OO_X(W)$-modules, we can take $\{e_i\}$ to be our generators for any $W \subset X$. Let $e_i^* \in \Hom_{\OO_X}(\OO_X^n,\OO_X)$ be the dual maps defined by $e_i^*(e_j\vert_W) = \delta_i^j$ for any $W \subset X$. Now $\psi$ is injective since if $s \in \OO_X(U)^n$ maps to zero, then it maps to zero under the maps $e_i^*$ for all $i$, hence $s = 0$. $\psi$ is surjective since if $x \in (\check{\OO}_X^n)\:\check{}\:$, then letting $\lambda_i = x(e_i^*)$, if we set $s = \sum_{i=1}^n \lambda_i e_i$, then $(x - \psi(s))e_i^* = 0$ for all $i = 1,\ldots,n$, and so $x = \psi(s)$ since a morphism of free modules is determined by where it sends a basis. 
+   %\par By Prop.~1.1, it suffices to show $\varphi$ induces an isomorphism on all stalks $p \in X$. Repeated applications of Lemma \ref{homstalkslem} gives
+  %\begin{align*}
+  %  \HHom_{\OO_X}(\HHom_{\OO_X}(\EE,\OO_X),\OO_X)_p &\cong \Hom_{\OO_{X,p}}(\HHom_{\OO_X}(\EE,\OO_X)_p,\OO_{X,p})\\
+  %  &\cong \Hom_{\OO_{X,p}}(\Hom_{\OO_{X,p}}(\EE_p,\OO_{X,p}),\OO_{X,p})\\
+  %  &\cong \Hom_{\OO_{X,p}}(\Hom_{\OO_{X,p}}(\OO_{X,p}^n,\OO_{X,p}),\OO_{X,p})
+  %\end{align*}
+  %for some $n$, for $\EE$ is locally free of finite rank. But then, the map $\psi$ above restricts to the canonical isomorphism $(\check{\OO}_{X,p}^n)\:\check{}\:  \cong \OO_{X,p}^n$ as $\OO_{X,p}$ modules, and so we are done.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We define a map $\psi$ for the presheaf $U \mapsto \HHom(\EE,\OO_X)(U) \otimes_{\OO_X(U)} \FF(U)$, which automatically gives a sheaf map by Prop.-Def.~1.2. If we have
+  \begin{equation*}
+    \varphi \otimes t \in \Hom_{\OO_U}(\EE\vert_U,\OO_U) \otimes_{\OO_X(U)} \FF(U),
+  \end{equation*}
+  then we can define a map in $\Hom_{\OO_U}(\EE\vert_U,\FF\vert_U)$ by having $(\varphi \otimes t)(V)(s) = \varphi(V)(s)t$ for $s \in \EE(V)$ and $V \subset U$.
+  \par As in $(a)$, it suffices to show $\psi$ is an isomorphism $\check{\OO}_X^n \otimes_{\OO_X} \FF \isoto \HHom_{\OO_X}(\OO_X^n,\FF)$, i.e., $\psi(U)$ is an isomorphism for all $U \subset X$. As before, denote $\{e_i\}$ as our basis for $\OO_X^n(X)$ and $\{e_i^*\}$ the dual basis. Now, for any $U \subset X$, the map $\psi(U)$ is injective since if we have $\psi(U)(\varphi \otimes t) = 0$, then $\varphi(V)(s) \otimes t$ for all $s \in \OO_X^n(V)$, and so either $\varphi = 0$ or $t = 0$; in either case $\varphi \otimes t = 0$. Likewise, if we have map $f \in \Hom_{\OO_U}(\OO_U^n,\FF\vert_U)$, then letting
+  \begin{equation*}
+    \varphi \otimes t = \sum_{i=1}^n e_i^* \otimes f(e_i),
+  \end{equation*}
+  we see that $\psi(\varphi \otimes t) = f$.
+  %\par As in $(a)$, it suffices to show $\psi$ induces an isomorphism on stalks, also noting that stalks of a presheaf and its sheafification are the same. We first see that
+  %\begin{align*}
+  %  \left(\HHom(\EE,\OO_X) \otimes_{\OO_X} \FF\right) &\cong \HHom(\EE,\OO_X)_p \otimes_{\OO_{X,p}} \FF_p\\
+  %  &\cong \Hom_{\OO_{X,p}}(\EE_p,\OO_X) \otimes_{\OO_{X,p}} \FF_p\\
+  %  &\cong \Hom_{\OO_{X,p}}(\OO_{X,p}^n,\OO_X) \otimes_{\OO_{X,p}} \FF_p
+  %\end{align*}
+  %after applying Lemma \ref{tensorstalkslem}, then Lemma \ref{homstalkslem}, and finally since $\EE$ is locally free of finite rank. The map $\psi_p$ then gives a map
+  %\begin{equation*}
+  %  \Hom_{\OO_{X,p}}(\OO_{X,p}^n,\OO_X) \otimes_{\OO_{X,p}} \FF_p \to \Hom_{\OO_{X,p}}(\OO_{X,p}^n,\FF_p)
+  %\end{equation*}
+  %but this is an isomorphism since a map in $\Hom_{\OO_{X,p}}(\OO_{X,p}^n,\FF_p)$ is determined uniquely by where each generator of $\OO_{X,p}^n$ is mapped to.
+\end{proof}
+\begin{remark}[Generalization of $(c)$]
+  We will prove the following stronger statement: for any $\OO_X$-modules $\EE$, $\FF$, and $\GG$, we have
+  \begin{equation*}
+    \HHom_{\OO_X}(\EE\otimes\FF,\GG) \cong \HHom_{\OO_X}(\FF,\HHom_{\OO_X}(\EE,\GG)).
+  \end{equation*}
+\end{remark}
+\begin{proof}[Proof of $(c)$]
+  We first define the map
+  \begin{equation*}
+    \psi\colon \HHom_{\OO_X}(\EE\otimes\FF,\GG) \to \HHom_{\OO_X}(\FF,\HHom_{\OO_X}(\EE,\GG)).
+  \end{equation*}
+  Let $f \in \Hom_{\OO_U}(\EE\otimes\FF\vert_U,\GG\vert_U)$; define $\psi(f) \in \Hom_{\OO_U}(\FF\vert_U,\HHom_{\OO_X}(\EE,\GG)\vert_U)$, the image of $f$, as follows. For every $V \subset U$, define $\psi(f)(V)$ to be the map taking a section $t \in \FF(V)$ to the map in $\Hom_{\OO_V}(\EE\vert_V,\GG\vert_V)$ defined for all $W \subset V$ as the map taking $s \in \EE(W)$ to the map $f(W)(s \otimes_{\OO_X(W)} t\vert_W)$. Note here that we are considering $f$ to be the map from the tensor product presheaf to the image of $\GG$ in $\Psh(X)$.
+  \par We now define the map
+  \begin{equation*}
+    \varphi\colon \HHom_{\OO_X}(\FF,\HHom_{\OO_X}(\EE,\GG)) \to \HHom_{\OO_X}(\EE\otimes\FF,\GG).
+  \end{equation*}
+  Let $g \in \Hom_{\OO_U}(\FF\vert_U,\HHom_{\OO_X}(\EE,\GG)\vert_U)$; define $\varphi(g) \in \Hom_{\OO_X\vert_U}(\EE\otimes\FF\vert_U,\GG\vert_U)$, as follows. For any $V \subset U$, we have $g(V)\colon\FF(V) \to \Hom_{\OO_V}(\EE\vert_V,\GG\vert_V)$. For every $W \subset V$, this defines a bilinear map $\EE(W) \times \FF(W) \to \GG(W)$ defined as $(s,t) \mapsto g(W)(t)(s)$, and so induces a map of the tensor product $\EE(W) \otimes_{\OO_X(W)} \FF(W) \to \GG(W)$. Finally, we take the sheafification of $\varphi(g)$ to get a map from the tensor product sheaf.
+  \par We now check these are inverses of each other. But
+  \begin{equation*}
+    \varphi(\psi(f)) = \varphi\left( t \mapsto \left( s \mapsto f(s \otimes t) \right)\right) = \left( s \otimes t \mapsto f(s \otimes t) \right) = f
+  \end{equation*}
+  where we have suppressed some of the notation showing where each section lives as well as sheafifications for clarity. In the other direction, we have that
+  \begin{equation*}
+    \psi(\varphi(g)) = \psi\left( s \otimes t \mapsto g(t)(s) \right) = \left( t \mapsto \left( s \mapsto g(t)(s) \right) \right) = g.\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  We will define a series of morphisms
+  \begin{equation*}
+    f_*(\FF) \otimes_{\OO_Y} \EE \overset{\id\otimes\rho_\EE}{\longrightarrow} f_*(\FF) \otimes_{\OO_Y} f_*(f^*\EE) \overset{\alpha}{\longrightarrow} f_*(\FF \otimes_{\OO_X} f^*\EE).
+  \end{equation*}
+  \par For the first map, we let $\rho_\EE$ be the natural map defined in  Problem $1.18$. We note that then, $\id \otimes_{\OO_Y} \rho_\EE$ is also natural.
+  \par The second map we define as follows. First, for all $V \subset X$, we have the natural map
+  \begin{equation*}
+    \FF(V) \otimes_{\OO_X(V)} f^*(\EE)(V) \to (\FF \otimes_{\OO_X} f^*(\EE))(V)
+  \end{equation*}
+  by Prop.-Def.~$1.2$. Note by the universal property for tensor products this corresponds to a $\OO_X(V)$-bilinear map
+  \begin{equation*}
+    \FF(V) \times f^*(\EE)(V) \to (\FF \otimes_{\OO_X} f^*\EE)(V).
+  \end{equation*}
+  Next, for all open sets $U \subset Y$, we then have the map
+  \begin{equation*}
+    \FF(f^{-1}(U)) \times f^*(\EE)(f^{-1}(U)) \to (\FF \otimes_{\OO_X} f^*\EE)(f^{-1}(U))
+  \end{equation*}
+  which is $\OO_X(f^{-1}(U)) = f_*\OO_X(U)$-bilinear, hence $\OO_Y(U)$-bilinear by restriction of scalars with the map $f^\#\colon\OO_Y \to f_*\OO_X$. Thus, we have a natural map
+  \begin{equation*}
+    \FF(f^{-1}(U)) \otimes_{\OO_Y(U)} f^*(\EE)(f^{-1}(U)) \to (\FF \otimes_{\OO_X} f^*\EE)(f^{-1}(U))
+  \end{equation*}
+  that corresponds to a natural morphism $f_*(\FF) \otimes_{\OO_Y} f_*(f^*\EE) \overset{\alpha}{\longrightarrow} f_*(\FF \otimes_{\OO_X} f^*\EE)$.
+  \par This implies that we have a natural morphism $\alpha \circ (\id \otimes \rho_\EE)\colon f_*(\FF) \otimes_{\OO_Y} \EE \to f_*(\FF \otimes_{\OO_X} f^*\EE)$. We claim this is an isomorphism when $\EE \in \vect Y$. Since we will have an isomorphism if and only if we have an isomorphism on some open cover of $Y$, it suffices to check we have an isomorphism for open sets on which $\EE\vert_U \cong \OO_U^n$ since they cover $Y$. Moreover, since direct sums commute with $f_*$ and $f^*$, it suffices to show the claim for when $n = 1$.
+  \par In this case, it suffices to show $f^*\OO_Y \cong \OO_X$. But this is clear since
+  \begin{equation*}
+    f^*(\OO_Y)(V) = (f^{-1}\OO_Y \otimes_{f^{-1}\OO_Y} \OO_X)(V) = f^{-1}\OO_Y(V) \otimes_{f^{-1}\OO_Y(V)} \OO_X(V) \cong \OO_X(V),
+  \end{equation*}
+  where the middle equality is justified since the last isomorphism implies that the presheaf $f^{-1}\OO_Y \otimes_{f^{-1}\OO_Y} \OO_X$ is already a sheaf.
+\end{proof}
+
+\begin{problem}
+  Let $R$ be a discrete valuation ring with quotient field $K$, and let $X = \Spec R$.
+  \begin{enuma}
+    \item To give an $\OO_X$-module is equivalent to giving an $R$-module $M$, a $K$-vector space $L$, and a homomorphism $\rho\colon M \otimes_R K \to L$.
+    \item That $\OO_X$-module is quasi-coherent if and only if $\rho$ is an isomorphism.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  $X$ has two points corresponding to its generic point $\eta$ and its unique maximal ideal $\mathfrak{m} = (x)$. An $\OO_X$-module $\FF$ is determined by $\FF(X)$ an $\OO_X(X) = R$-module $M$ and $\FF(D(x))$ an $\OO_X(D(x)) = K$-module $L$, together with an $R$-module homomorphism $M \to L_R$, where $L_R$ is $L$ with scalars restricted to $R$ under the restriction map $\OO_X(X) = R \to K = \OO_X(D(x))$.
+  \par It therefore suffices to show $\Hom_R(M,L_R) \cong \Hom_K(M \otimes_R K,L)$. Given $\psi \in \Hom_K(M \otimes_R K,L)$, we can define $\varphi \in \Hom_R(M,L_R)$ by $m \mapsto \psi(m \otimes 1)$, and given $\varphi$ we can define $\psi$ by $m \otimes x \mapsto x\varphi(m)$. These operations are inverse to each other, so we are done.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  $K \cong R_x$ and so $M \otimes_R K \cong M \otimes_R R_x \cong M_x$. Thus, $\FF \in \qcoh X$ if and only if $\FF \cong \tilde{M}$ for $M \in \MOD R$ (since the only nonempty neighborhood of $\mathfrak{m}$ is $X$) if and only if $L \cong M_x$ if and only if $L \cong M \otimes_R K$ (since if this were not an isomorphism we would not have $\FF \in \qcoh X$) if and only if $\rho$ is an isomorphism.
+\end{proof}
+
+\begin{problem}
+  Let $X = \Spec A$ be an affine scheme. Show that the functors $\:\tilde{}$ and $\Gamma$ are adjoint, in the following sense: for any $A$-module $M$, and for any sheaf of $\OO_X$-modules $\FF$, there is a natural isomorphism
+  \begin{equation*}
+    \Hom_A(M,\Gamma(X,\FF)) \cong \Hom_{\OO_X}(\tilde{M},\FF).
+  \end{equation*}
+\end{problem}
+\begin{proof}
+  %We first recall the construction of $\tilde{M}$:
+  %\begin{equation*}
+  %  \tilde{M}(U) \coloneqq \left\{ s \colon U \to \coprod_{\mathfrak{p} \in U} M_{\mathfrak{p}}~\middle\vert\parbox{22.5em}{\begin{enumi}\item$\forall \mathfrak{p} \in U$, $s(\mathfrak{p}) \in M_{\mathfrak{p}}$,\item$\forall\mathfrak{p} \in U$, $\exists V \ni \mathfrak{p}$ in $U$, $m \in M$, and $f \in A$ such that $\forall\mathfrak{q} \in V$, $f \notin \mathfrak{q}$, and $s(\mathfrak{q}) = m/f \in M_{\mathfrak{q}}$.\end{enumi}}\right\}
+  %\end{equation*}
+  We define $\varphi\colon \Hom_{\OO_X}(\tilde{M},\FF) \to \Hom_A(M,\Gamma(X,\FF))$ as the map taking global sections for a map $\tilde{M} \to \FF$. We define $\psi\colon \Hom_A(M,\Gamma(X,\FF)) \to \Hom_{\OO_X}(\tilde{M},\FF)$ as the map taking a map $\eta\colon M \to \Gamma(X,\FF)$ and defining on distinguished open sets
+  \begin{equation*}
+    \psi(\eta)(D(f))\colon \tilde{M}(D(f)) = M_f \to \Gamma(D(f),\FF), \quad \frac{m}{f^n} \mapsto \frac{\eta(m)\vert_{D(f)}}{f^n}.
+  \end{equation*}
+  These morphisms clearly glue together to give a morphism $\psi(\eta)$ of sheaves since on each $D(f) \cap D(g) = D(fg)$, $\varphi$ is still given by the same definition above.
+  \par We want to show these are inverse to each other. $\varphi \circ \psi = \id$ since taking $\varphi$ of a map $\tilde{M} \to \FF$ is the same as taking $f=1$ in the definition above. We claim $\psi \circ \varphi = \id$. If $\xi \colon \tilde{M} \to \FF$, then $\varphi(\xi) = M \to \Gamma(X,\FF)$ is defined by global sections. To show $\xi = \psi(\varphi(\xi))$, it suffices to show $\xi(D(f)) = \psi(\varphi(\xi))(D(f))$ for all distinguished open sets $D(f)$. Then,
+  \begin{equation*}
+    \psi(\varphi(\xi))(D(f)) \colon \frac{m}{f^n} \mapsto \frac{\varphi(\xi)(m)\vert_{D(f)}}{f^n}.
+  \end{equation*}
+  It thus suffices to show $\xi(D(f))(m/f^n)$ is equal to the section on the right. But this is clear since $\xi(D(f))$ is a $\OO_X(D(f)) = A_f$-linear map, so $\xi(D(f))(m/f^n) = \xi(D(f))(m/1)/f^n = \varphi(\xi)(m)\vert_{D(f)}/f^n$ by the commutativity of the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      M \rar{\xi(X)}\dar & \Gamma(X,\FF)\dar\\
+      M_f \rar{\xi(D(f))} & \Gamma(D(f),\FF)
+    \end{tikzcd}
+  \end{equation*}
+  where the vertical maps are the restriction maps, noting $\xi(X) = \varphi(\xi)$. Thus, we have the desired isomorphism.
+  \par We need to show this isomorphism is natural. First let $f \colon M \to N$; we need to show that the diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=15ex]
+      \Hom_{\OO_X}(\tilde{M},\FF) \dar[swap]{\varphi} & \arrow{l}[swap]{\Hom_{\OO_X}(\tilde{f},\FF)} \Hom_{\OO_X}(\tilde{N},\FF) \dar{\varphi}\\
+      \Hom_A(M,\Gamma(X,\FF)) & \arrow{l}[swap]{\Hom_A(f,\Gamma(X,\FF))} \Hom_A(N,\Gamma(X,\FF))
+    \end{tikzcd}
+  \end{equation*}
+  commutes, where both $\Hom_{\OO_X}(\tilde{f},\FF) \eqqcolon \tilde{f}^*$ and $\Hom_A(f,\Gamma(X,\FF)) \eqqcolon f^*$ are defined by precomposition. If $\xi\colon \tilde{N} \to \FF$, then
+  \begin{equation*}
+    \varphi(\tilde{f}^*\xi) = (\tilde{f}^*\xi)(X) = (\xi\circ\tilde{f})(X) = \xi(X) \circ f = \varphi(\xi) \circ f = f^*\xi.
+  \end{equation*}
+  Now let $g\colon \FF \to \GG$; we need to show that the diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=huge]
+      \Hom_{\OO_X}(\tilde{M},\FF) \rar{\Hom_{\OO_X}(\tilde{M},g)}\dar[swap]{\varphi} & \Hom_{\OO_X}(\tilde{M},\GG)\dar{\varphi}\\
+      \Hom_A(M,\Gamma(X,\FF)) \rar{\Hom_A(M,g(X))} & \Hom_A(M,\Gamma(X,\GG))
+    \end{tikzcd}
+  \end{equation*}
+  commutes, where both $\Hom_{\OO_X}(\tilde{M},g) \eqqcolon g_*$ and $\Hom_A(M,g(X)) \eqqcolon g(X)_*$ are defined by postcomposition. If $\xi\colon \tilde{M} \to \FF$, then
+  \begin{equation*}
+    \varphi(g_*\xi) = (g_*\xi)(X) = (g \circ \xi)(X) = g(X) \circ \xi(X) = g(X) \circ \varphi(\xi) = g(X)_*\xi.\qedhere
+  \end{equation*}
+\end{proof}
+
+\begin{problem}
+  Show that a sheaf of $\OO_X$-modules $\FF$ on a scheme $X$ is quasi-coherent if and only if every point of $X$ has a neighborhood $U$, such that $\FF\vert_U$ is isomorphic to a cokernel of a morphism of free sheaves on $U$. If $X$ is noetherian, then $\FF$ is coherent if and only if it is locally a cokernel of a morphism of free sheaves of finite rank. (These properties were originally the definition of quasi-coherent and coherent sheaves.)
+\end{problem}
+\begin{proposition}\label{noethfpfg}
+  Over a noetherian ring $A$, $M \in \Mod A$ if and only if $M$ is of finite presentation, i.e., is the cokernel of a map of free modules of finite rank.
+\end{proposition}
+\begin{proof}
+  $\Leftarrow$ is true by \cite[Prop.~2.3]{AM69}. $\Rightarrow$ Suppose $M \in \Mod A$; then, by \cite[Thm.~7.6]{Rei95} there exists a filtration of finitely generated modules
+  \begin{equation*}
+    0 = M_0 \subset M_1 \subset \cdots \subset M_n = M
+  \end{equation*}
+  where $M_i/M_{i-1} \cong A/\mathfrak{p}_i$ for some prime ideals $\mathfrak{p}_i \subset A$. Each $\mathfrak{p}_i \in \Mod A$, so $A/\mathfrak{p}_i$ is of finite presentation. In particular, $M/M_{n-1}$ is of finite presentation, so we have the exact sequence
+  \begin{equation*}
+    0 \longrightarrow M_{n-1} \longrightarrow M \longrightarrow M/M_{n-1} \longrightarrow 0.
+  \end{equation*}
+  We proceed by induction on the length of the filtration $n$; note that the $n=0$ case is trivial, so we proceed to the inductive step. If $\{x_1,\ldots,x_p\}$ generate $M_{n-1}$ and $\{y_1,\ldots,y_q\}$ are the preimages in $M$ of the generators of $M/M_{n-1}$, we see $\{x_1,\ldots,x_p,y_1,\ldots,y_q\}$ generate $M$. We therefore have the commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      0 \rar & \ker \alpha \rar\dar & \ker \beta \rar\dar & \ker \gamma\arrow[out=0, in=180, looseness=1.5]{dddll}\arrow[crossing over]{d}\\
+      0 \rar & A^p \rar\dar[swap]{\alpha} & A^{p+q} \arrow[crossing over]{r}\arrow[crossing over]{d}[swap]{\beta} & A^q \rar\dar[swap]{\gamma} & 0\\
+      0 \rar & M_{n-1} \arrow[crossing over]{r}\arrow[crossing over]{d} & M \rar\dar & M/M_{n-1} \rar\dar & 0\\
+      & 0 \rar & 0 \rar & 0 \rar & 0
+    \end{tikzcd}
+  \end{equation*}
+  Since $M_{n-1},M/M_{n-1}$ are of finite presentation by inductive hypothesis, this implies $\ker\alpha,\ker\gamma \in \Mod A$, hence $\ker\beta \in \Mod A$ by the same argument as above, and so $M$ is of finite presentation by choosing a finite rank free module that surjects onto $\ker\beta$ by \cite[Prop.~2.3]{AM69}.
+\end{proof}
+\begin{proof}
+  $\FF \in \qcoh X$ (resp.~$\coh X$) if and only if there exists an affine cover $U_i = \Spec A_i$ such that for each $i$ there exists $M \in \MOD A_i$ (resp.~$\Mod A_i$) such that $\FF\vert_{U_i} \cong \tilde{M}_i$. Thus, it suffices to show that for all $X = \Spec A$ for $A$ a ring (resp.~$A$ a noetherian ring by Prop.~3.2), $\FF$ is isomorphic to some $\tilde{M}$ for $M \in \MOD A$ (resp.~$\Mod A$) if and only if it is the cokernel of a morphism of free sheaves (resp.~free sheaves of finite rank). Note that this means that the same claim holds for locally noetherian schemes.
+  \par Suppose $\FF$ fits in the exact sequence
+  \begin{equation*}
+    \OO_X^\beta \longrightarrow \OO_X^\alpha \longrightarrow \FF \longrightarrow 0
+  \end{equation*}
+  where in the coherent case $\alpha,\beta$ are finite. $\Gamma(X,-)$ gives us the exact sequence
+  \begin{equation*}
+    A^\beta \longrightarrow A^\alpha \longrightarrow \Gamma(X,\FF) \longrightarrow 0
+  \end{equation*}
+  by Prop.~5.6, where in the coherent case $\Gamma(X,\FF)$ is finitely generated by \cite[Prop.~2.3]{AM69}. Applying $\tilde{~}$ gives the exact sequence
+  \begin{equation*}
+    \OO_X^\beta \longrightarrow \OO_X^\alpha \longrightarrow (\Gamma(X,\FF))\tilde{~} \longrightarrow 0,
+  \end{equation*}
+  by Prop.~5.2$(a)$ and so $\FF \cong (\Gamma(X,\FF))\tilde{~}$.
+  \par Suppose $\FF \cong \tilde{M}$ for $M \in \MOD A$ (resp.~$\Mod A$). $M$ fits in the exact sequence
+  \begin{equation*}
+    0 \longrightarrow \ker f \longrightarrow A^\alpha \overset{f}{\longrightarrow} M \longrightarrow 0
+  \end{equation*}
+  where in the finitely generated case $\alpha$ is finite by \cite[Prop.~2.3]{AM69}. Taking a set of generators for $\ker f$, we have a surjection $A^\beta \to \ker f$. In the finitely generated case, $\beta$ is finite by Proposition \ref{noethfpfg}. Replacing $0 \to \ker f \to A^\alpha$ with $A^\beta \to A^\beta$, and then applying $\tilde{~}$ to this new exact sequence, we get an exact sequence
+  \begin{equation*}
+    \OO_X^\beta \longrightarrow\OO_X^\alpha \longrightarrow \tilde{M} \longrightarrow 0
+  \end{equation*}
+  by Prop.~5.2$(a)$.
+\end{proof}
+
+\begin{problem}
+  Let $f\colon X \to Y$ be a morphism of schemes.
+  \begin{enuma}
+    \item Show by example that if $\FF$ is coherent on $X$, then $f_*\FF$ need not be coherent on $Y$, even if $X$ and $Y$ are varieties over a field $k$.
+    \item Show that a closed immersion is a finite morphism $(\S3)$.
+    \item If $f$ is a finite morphism of noetherian schemes, and if $\FF$ is coherent on $X$, then $f_*\FF$ is coherent on $Y$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Solution for $(a)$]
+  Let $X = \Spec \mathbf{C}[x]$ and $Y = \Spec \mathbf{C}$ where $f$ is defined as the map associated to the inclusion $\mathbf{C} \hookrightarrow \mathbf{C}[x]$. Then, the structure sheaf $\OO_X$ is coherent on $X$, but $f_*\OO_X$ has $\Gamma(Y,f_*\OO_X) = \mathbf{C}[x]$, which is not finitely generated as a $k$-module.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Suppose $f$ is a closed immersion; let $V$ be an element of an affine cover of $Y$. Then, $f\vert_{f^{-1}(V)}$ is a closed immersion $f^{-1}(V) \hookrightarrow V = \Spec B$, and so by Problem $3.11$, $f^{-1}(V) \cong \Spec B/I$ for some ideal $I \subset B$. Since $B/I$ is a $B$-algebra generated by $1 \in B$ as a module over $B$, we see that $f$ is finite, for the $f^{-1}(V)$ cover $X$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $V = \Spec B \subset Y$. Since $f$ is finite, $f^{-1}(V) = U = \Spec A$ where $A \in \Mod B$ by Problem 3.4. By Prop.~5.4, $\FF\vert_U \cong \tilde{M}$ for some $M \in \Mod A$. By definition of $f_*$, $(f_*\FF)\vert_V = (f\vert_U)_*(\FF\vert_U) \cong (f\vert_U)_*(\tilde{M}) \cong \prescript{}{B}{\tilde{M}}$ by Prop.~$5.2(d)$, where $\prescript{}{B}{M}$ denotes $M$ considered as a $B$-module. But then, $M \in \Mod A$, and $A \in \Mod B$, hence $M \in \Mod B$ by \cite[Prop.~2.16]{AM69}. By Prop.~5.4, we are done.
+\end{proof}
+
+\begin{problem}
+  \emph{Support}. Recall the notions of support of a section of a sheaf, support of a sheaf, and subsheaf with supports from \emph{(Ex.~1.14)} and \emph{(Ex.~1.20)}.
+  \begin{enuma}
+    \item Let $A$ be a ring, let $M$ be an $A$-module, let $X = \Spec A$, and let $\FF = \tilde{M}$. For any $m \in M = \Gamma(X,\FF)$, show that $\Supp m = V(\Ann m)$, where $\Ann m$ is the \emph{annihilator} of $m = \{a \in A \vert am = 0\}$.
+    \item Now suppose that $A$ is noetherian, and $M$ finitely generated. Show that $\Supp \FF = V(\Ann M)$.
+    \item The support of a coherent sheaf on a noetherian scheme is closed.
+    \item For any ideal $\mathfrak{a} \subseteq A$, we define a submodule $\Gamma_{\mathfrak{a}}(M)$ of $M$ by $\Gamma_{\mathfrak{a}}(M) = \{m \in M\vert \mathfrak{a}^nm = 0~\text{for some}~n > 0\}$. Assume that $A$ is noetherian, and $M$ any $A$-module. Show that $\Gamma_{\mathfrak{a}}(M)\:\tilde{}\: \cong \HH^0_Z(\FF)$, where $Z = V(\mathfrak{a})$ and $\FF = \tilde{M}$.
+    \item Let $X$ be a noetherian scheme, and let $Z$ be a closed subset. If $\FF$ is a quasi-coherent (respectively, coherent) $\OO_X$-module, then $\HH^0_Z(\FF)$ is also quasi-coherent (respectively, coherent).
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Fix $P \in \Spec A$. By the definition of localization,
+  \begin{equation*}
+    m_P = 0 \iff tm = 0~\text{for some}~t \in A \setminus P \iff (A \setminus P) \cap \Ann m \ne \emptyset.
+  \end{equation*}
+  Taking the negation of this statement, we get
+  \begin{equation*}
+    m_P \ne 0 \iff P \supset \Ann m \iff P \in V(\Ann m).\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  $\Supp \FF = \{P \in X \vert \FF_P \ne 0\} = \{P \in X \vert M_P \ne 0\} = \Supp M$. Let $\{m_i\}$ be a finite set of generators; we claim $\Supp M = \bigcup_i \Supp m_i$. $m_i \in M$ and so $M_P = 0 \implies (m_i)_P = 0$. Conversely, if $(m_i)_P = 0$ for all $i$, then every element of $M$ is annihilated by some $t \notin P$, hence $M_P = 0$. Then, by part $(a)$ we have
+  \begin{equation*}
+    \Supp M = \bigcup_i \Supp m_i = \bigcup_i V(\Ann m_i) = V\Big( \bigcap_i  \Ann m_i \Big) = V(\Ann M),
+  \end{equation*}
+  where the third equality is from Lem.~$2.1(a)$. Note we do not rely on the fact that $A$ is noetherian.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $X$ be a scheme and $\FF \in \coh X$. Then, for some open affine cover $\{U_i = \Spec A_i\}$ we have $\FF\vert_{U_i} \cong \tilde{M}_i$ for some $M_i \in \Mod A_i$ for all $i$, using Prop.~$5.4$ since $X$ is noetherian. To show that $\Supp \FF$ is closed, it suffices to show $\Supp \FF \cap U_i$ is closed in $U_i$ for all $i$ by Lemma \ref{closedlocalcond}. But then, $\Supp \FF \cap U_i = \Supp \tilde{M}_i = V(\Ann M_i)$, so by part $(b)$, we are done.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  By part $(e)$ and by Cor.~5.5, it suffices to show that $\Gamma(X,\HH_{V(\mathfrak{a})}^0(\FF)) \cong \Gamma_\mathfrak{a}(M)$. Note that $\Gamma(X,\HH_{V(\mathfrak{a})}^0(\FF)) = \Gamma_{V(\mathfrak{a})}(X,\FF)$, the submodule of $\Gamma(X,\FF) = M$ consisting of all sections whose support is contained in $V(\mathfrak{a})$. We first have
+  \begin{equation*}
+    m \in \Gamma_{V(\mathfrak{a})}(X,\FF) \iff \Supp m \subset V(\mathfrak{a}) \iff V(\Ann m) \subset V(\mathfrak{a})
+  \end{equation*}
+  by $(a)$. By Lem.~$2.1(c)$, this is equivalent to $\sqrt{\Ann m} \supset \sqrt{\mathfrak{a}}$. We then claim that
+  \begin{equation*}
+    \sqrt{\Ann m} \supset \sqrt{\mathfrak{a}} \iff \Ann m \supset \mathfrak{a}^n~\text{for some}~n.
+  \end{equation*}
+  $\Leftarrow$ is trivial by taking the radical of the right side. $\Rightarrow$ is true since $A$ is noetherian, and so $\Ann m \supset \mathfrak{a}^n$ for some $n$, by taking the maximum $n$ for a finite generating set of $\mathfrak{a}$. The right side is equivalent to saying $\mathfrak{a}^nm = 0$ for some $n$, i.e., $m \in \Gamma_\mathfrak{a}(M)$.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  From Problem $2.10(b)$, if we let $U = X \setminus Z$ and $j\colon U \hookrightarrow X$ be the inclusion, we have the exact sequence of sheaves
+  \begin{equation*}
+    0 \longrightarrow \HH_{Z}^0(\FF) \longrightarrow \FF \longrightarrow j_*(\FF\vert_U).
+  \end{equation*}
+  Now $\FF\vert_U = j^*(\FF)$, hence is quasi-coherent by Prop.~$5.8(a)$. Thus, $j_*(\FF\vert_U)$ is also quasi-coherent by Prop.~$5.8(c)$. $\HH_{Z}^0(\FF)$ is then the kernel of a morphism of quasi-coherent sheaves, hence is quasi-coherent by Prop.~5.7. 
+  \par Now suppose that $\FF \in \coh X$, and so on an open affine cover $\{U_i = \Spec A_i\}$, $\FF\vert_{U_i} \cong \tilde{M}_i$ for $M_i \in \Mod A_i$ for all $i$. Let $V(\mathfrak{a}_i) = Z \cap U_i$. Then, $\HH_{Z}^0(\FF)\vert_{U_i} = \HH_{V(\mathfrak{a}_i)}^0(\FF\vert_{U_i}) \cong \HH_{V(\mathfrak{a}_i)}^0(\tilde{M}_i) \cong \Gamma_{\mathfrak{a}_i}(M_i)\:\tilde{}$ by $(d)$, and so since $\Gamma_{\mathfrak{a}_i}(M_i)$ is finitely generated since it is a submodule of $M_i$ \cite[Prop.~6.2]{AM69}, $\HH_{Z}^0(\FF) \in \coh X$.
+\end{proof}
+
+\begin{problem}
+  Let $X$ be a noetherian scheme, and let $\FF$ be a coherent sheaf.
+  \begin{enuma}
+    \item If the stalk $\FF_x$ is a free $\OO_x$-module for some point $x \in X$, then there is a neighborhood $U$ of $x$ such that $\FF\vert_U$ is free.
+    \item $\FF$ is locally free if and only if its stalks $\FF_x$ are free $\OO_x$-modules for all $x \in X$.
+    \item $\FF$ is invertible (i.e., locally free of rank $1$) if and only if there is a coherent sheaf $\GG$ such that $\FF \otimes \GG \cong \OO_X$. (This justifies the terminology invertible: it means that $\FF$ is an invertible element of the monoid of coherent sheaves under the operation $\otimes$.)
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Let $\braket{V_i,s_i} \in \FF_x$ be a free set of generators; since $\FF \in \coh X$, $\FF_x \in \Mod \OO_{X,x}$, hence $\bigcap_i V_i = V$ is open, and so these generators are of the form $\braket{V,s_i}$, and lift to sections $s_i \in \FF(V)$. This gives the exact sequence
+  \begin{equation*}
+    0 \longrightarrow \mathscr{K} \longrightarrow \OO_V^n \longrightarrow \FF\vert_V \longrightarrow \mathscr{C} \longrightarrow 0,
+  \end{equation*}
+  where the map $\OO_V^n \to \FF\vert_V$ is defined by mapping the $i$th generator of $\OO_V^n$ to $s_i$. Now, $\mathscr{C}_x = 0$, and so $\Supp \mathscr{C} \not\ni x$. Likewise, $\mathscr{K}_x = 0$, and so $\Supp \mathscr{K} \not\ni x$. By Problem $5.6(c)$, $\Supp \mathscr{C}$ and $\Supp \mathscr{K}$ are closed, and so $U \coloneqq V \setminus (\Supp \mathscr{C} \cup \Supp \mathscr{K})$ is open and is nonempty since it contains $x$. Restricting the exact sequence above to $U$ gives
+  \begin{equation*}
+    0 \longrightarrow \OO_U^n \isolongto \FF\vert_U \longrightarrow 0.\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  $\Rightarrow$ is clear. $\Leftarrow$ is true by part $(a)$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  $\Rightarrow$ Suppose $\FF$ is invertible, then $\FF \otimes \check{\FF} \cong \HHom_{\OO_X}(\FF,\FF)$. We want to show there exists an isomorphism $\psi\colon\OO_X\to\HHom_{\OO_X}(\FF,\FF)$. Define $\psi(U) \colon \OO_X(U) \to \Hom_{\OO_U}(\FF\vert_U,\FF\vert_U)$ to be the map $a \mapsto (s \mapsto as)$. It then suffices to show $\psi\vert_{U_i}$ is an isomorphism for all $i$, where the $U_i$ form an open cover of $X$ such that $\FF\vert_{U_i} \cong \OO_{U_i}$. Then, $\psi\vert_{U_i}$ clearly has the inverse $\varphi_i\colon \HHom_{\OO_{U_i}}(\OO_{U_i},\OO_{U_i}) \to \OO_{U_i}$, where we define $\varphi_i(U) \colon \Hom_{\OO_{V}}(\OO_{V},\OO_{V}) \to \OO_{U_i}(V)$ by $f \mapsto f(1)$, hence $\psi\vert_{U_i}$ is an isomorphism for all $i$, and so $\psi$ is an isomorphism.
+  \par $\Leftarrow$ Suppose there exists $\GG \in \coh X$ such that $\FF \otimes \GG \cong \OO_X$. By $(a)$, it suffices to show that on stalks, $\FF_x \otimes \GG_x \cong \OO_x$ implies $\FF_x \cong \OO_x$. Thus, it suffices to show that $M \otimes_R N \cong R$ for $(R,\mathfrak{m},\kappa)$ a local ring implies $M \cong R$, for $M,N \in \Mod R$. We first tensor $M \otimes_R N \cong R$ by $\kappa$:
+  \begin{align*}
+    \kappa &\cong (M \otimes_R N) \otimes_R \kappa \cong M \otimes_R (N \otimes_R \kappa) \cong M \otimes_R (\kappa \otimes_\kappa (N \otimes_R \kappa))\\
+    &\cong (M\otimes_R\kappa) \otimes_\kappa (N\otimes_R\kappa) \cong M/\mathfrak{m}M \otimes_\kappa N/\mathfrak{m}N.
+  \end{align*}
+  Thus, $M/\mathfrak{m}M$ has dimension one as a $\kappa$-vector space; by Nakayama's lemma \cite[Prop.~2.8]{AM69}, the generator of $M/\mathfrak{m}M$ lifts to a generator $m$ of $M$, so $M = Rm$. Similarly, $N = Rn$. Then, $m \otimes n$ generates $M \otimes_R N \cong R$ as an $R$-module. Since then, $m \otimes n$ doesn't map into $\mathfrak{m}$, the image of $m \otimes n$ in $R$ is a unit $u$, and so after multiplying $m \otimes n$ by $u^{-1}$, we can assume $m\otimes n$ maps to $1 \in R$. To show $m$ is a free generator, it suffices to show $\Ann m = 0$, but $r \in \Ann m$ implies $0 = (rm \otimes n) = r(m \otimes n) = r$, and so $r = 0$. Thus, $M \otimes R$, and so $\FF_x \cong \OO_x$, $\FF$ is locally free of rank $1$.
+\end{proof}
+
+\begin{problem}
+  Again let $X$ be a noetherian scheme, and $\FF$ a coherent sheaf on $X$. We will consider the function
+  \begin{equation*}
+    \varphi(x) = \dim_{k(x)} \FF_x \otimes_{\OO_x} k(x),
+  \end{equation*}
+  where $k(x) = \OO_x/\mathfrak{m}_x$ is the residue field at the point $x$. Use Nakayama's lemma to prove the following results.
+  \begin{enuma}
+  \item The function $\varphi$ is \emph{upper semi-continuous,} i.e., for any $n \in \mathbf{Z}$, the set $\{x\in X \vert \varphi(x) \ge n\}$ is closed.
+  \item If $\FF$ is locally free, and $X$ is connected, then $\varphi$ is a constant function.
+  \item Conversely, if $X$ is reduced, and $\varphi$ is constant, then $\FF$ is locally free.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  We show the complement is open. Suppose $x \in X$ is such that $\varphi(x) < n$, i.e., $\dim_{k(x)} \FF_x \otimes_{\OO_x} k(x) = \ell < n$. Let $\Spec A = U \ni x$ such that $\FF\vert_U \cong \tilde{M}$ for $M \in \Mod A$; let $\{m_i\}$ be the generators of $M$. Then, $\FF_x \cong M_\mathfrak{p}$, where $\mathfrak{p}$ is the prime ideal associated to $x \in \Spec A$. By Nakayama's lemma \cite[Prop.~2.8]{AM69}, the $\ell$ generators of $\FF_x \otimes_{\OO_x} k(x) \cong M_\mathfrak{p}/\mathfrak{p}M_\mathfrak{p}$ lift to a set of generators $\{u_j\}$ of $M_\mathfrak{p}$ as an $A_\mathfrak{p}$-module. Then, $m_i = \sum_j \frac{a_{ij}}{b_{ij}} u_j$ for some $a_{ij} \in A$, $b_{ij} \notin \mathfrak{p}$. Letting $b = \prod_{i,j} b_{ij}$, we see that $\mathfrak{p} \in D(b)$, and that if $\mathfrak{q} \in D(b)$, the $\{u_j\}$ will still generate $M_{\mathfrak{q}}$, thus if $y \in \Spec A$ is the point associated to $\mathfrak{q}$, we have that $\dim_{k(y)} \FF_y \otimes_{\OO_y} k(y) \le \ell <  n$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $x \in X$ such that $\varphi(x) = n$; then, by Problem $5.7(a)$, there is a neighborhood $U \ni x$ such that $\FF\vert_U \cong \OO_U^n$, and so $\varphi^{-1}(n)$ is open. Now fix $x_0 \in X$, and let $V = \{x\vert \varphi(x) = \varphi(x_0)\}$, $W = \{x\vert \varphi(x) \ne \varphi(x_0)\}$. $V \cap W = \emptyset$, and $V \cup W = X$. But both $V,W$ are unions of $\varphi^{-1}(n)$, hence are both open; thus, $V = X$ since $V$ is nonempty and using the connectedness of $X$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  By Problem $5.7(b)$, it suffices to show $\FF_x$ a free $\OO_x$-module for all $x \in X$. So let $U = \Spec A \ni x$ such that $\FF\vert_U \cong \tilde{M}$ for $M \in \Mod A$, and let $\mathfrak{p} \in \Spec A$ be the prime ideal associated to $x$. Then, the $\varphi(\mathfrak{p}) = n$ generators of $M_\mathfrak{p}/\mathfrak{p}M_\mathfrak{p}$ lift to generators $\{m_i\}$ of $M_\mathfrak{p}$ by Nakayama's lemma \cite[Prop.~2.8]{AM69}. It suffices to show these $m_i$ are linearly independent in $M_\mathfrak{p}$. So suppose $\sum \frac{a_i}{b_i} m_i = 0$ for some $a_i \in A$, $b_i \notin \mathfrak{p}$. Letting $b = \prod b_i$ and clearing denominators, we have $\prod a'_im_i = 0$, and since these $m_i$ generate $M_\mathfrak{q}/\mathfrak{q}M_\mathfrak{q}$ for all $\mathfrak{q} \subset \mathfrak{p}$, and are moreover linearly independent by the fact that $\varphi(\mathfrak{q}) = \varphi(\mathfrak{p}) = n$, we have that $a'_i \in \bigcap_{\mathfrak{q} \subset \mathfrak{p}} \mathfrak{q} = \mathfrak{N}(A_\mathfrak{p}) = 0$, using that $X$ is reduced. Thus, the $a_i/b_i = a'_i/b = 0$, and so the $m_i$ are linearly independent.
+\end{proof}
+
+\begin{problem}
+  Let $S$ be a graded ring, generated by $S_1$ as an $S_0$-algebra, let $M$ be a graded $S$-module, and let $X = \Proj S$.
+  \begin{enuma}
+    \item Show that there is a natural homomorphism $\alpha \colon M \to \Gamma_*(\tilde{M})$.
+    \item Assume now that $S_0 = A$ is a finitely generated $k$-algebra for some field $k$, that $S_1$ is a finitely generated $A$-module, and that $M$ is a finitely generated $S$-module. Show that the map $\alpha$ is an isomorphism in all large enough degrees, i.e., there is a $d_0 \in \mathbf{Z}$ such that for all $d \ge d_0$, $\alpha_d \colon M_d \to \Gamma(X,\tilde{M}(d))$ is an isomorphism. %Use methods of 5.19
+    \item With the same hypotheses, we define an equivalence relation $\approx$ on graded $S$-modules by saying $M \approx M'$ if there is an integer $d$ such that $M_{\ge d} \cong M'_{\ge d}$. Here $M_{\ge d} = \bigoplus_{n \ge d} M_n$. We will say that a graded $S$-module $M$ is \emph{quasi-finitely generated} if it is equivalent to a finitely generated module. Now show that the functors $\:\tilde{}$ and $\Gamma_*$ induce an equivalence of categories between the category of quasi-finitely generated graded $S$-modules modulo the equivalence relation $\approx$, and the category of coherent $\OO_X$-modules.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  It suffices to define $\alpha$ on homogeneous elements of $M$ by extending linearly. First suppose $m \in M_0$. Then, $m/1 \in M_{(\mathfrak{p})}$ for all $\mathfrak{p} \in X$. Thus, $m/1$ defines a section $\alpha(m)\colon X \to \prod_{\mathfrak{p}\in X} M_{(\mathfrak{p})}$ where $\mathfrak{p} \mapsto m/1 \in M_{(\mathfrak{p})}$, and so $\alpha(m) \in \Gamma(X,\tilde{M}) \subset \Gamma_*(\tilde{M})$. Now suppose $m \in M_d$. Then, $m \in M(d)_0$ and so the above construction gives a section $\alpha(m) \in \Gamma(X,\widetilde{M(d)})$. But then, $\widetilde{M(d)} \cong \tilde{M}(d)$ by Prop.~$5.12(b)$, and so $\alpha(m) \in \Gamma(X,\tilde{M}(d)) \subset \Gamma_*(\tilde{M})$.
+  \par We show $\alpha$ is a homomorphism of graded $S$-modules. Since we already have
+  \begin{equation*}
+    \alpha(M_d) \subset \Gamma(X,\tilde{M}(d)) = \Gamma_*(\tilde{M})_d,
+  \end{equation*}
+  it suffices to show $\alpha$ is an $S$-module homomorphism. First, for $m,n \in M_d$,
+  \begin{equation*}
+    \alpha(m+n) = \frac{m+n}{1} = \frac{m}{1} + \frac{n}{1} = \alpha(m) + \alpha(n) \in \Gamma(X,\tilde{M}(d)).
+  \end{equation*}
+  For $m,n$ of different degree, $\alpha$ was constructed by extending the definition on ho\-mo\-ge\-neous elements linearly. Now if $s \in S_e$, $m \in M_d$, we have $s \cdot \alpha(m) = \alpha(s) \otimes \alpha(m) \in \Gamma(X,\OO_X(e) \otimes \tilde{M}(d))$ by definition of the $S$-module structure on $\Gamma_*(\tilde{M})$, and $\alpha(s) \otimes \alpha(m) = s/1 \otimes m/1 = sm/1 = \alpha(sm) \in \Gamma(X,\tilde{M}(d+e))$, using the natural map $\tilde{M}(d) \otimes \OO_X(e) \cong \tilde{M}(d+e)$.
+  \par We now check naturality; this amounts to saying the diagram
+  \begin{equation}\label{alphnattrans}
+    \begin{tikzcd}
+      M \rar{f}\dar[swap]{\alpha} & N\dar{\alpha}\\
+      \alpha(M) \rar{\alpha(f)} & \alpha(N)
+    \end{tikzcd}
+  \end{equation}
+  commutes. But this is trivial since the map $\alpha_d(f)\colon \Gamma(X,\tilde{M}(d)) \to \Gamma(X,\tilde{N}(d))$ is just the map $m/1 \mapsto f(n)/1$, for $m \in M_d$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Letting $\{x_i\}_{0 \le i \le r}$ be our generators of $S_1$ as an $A$-module, we see that the $x_i$ generate $S$ as an $A$-algebra, and so $S$ is a finitely generated $A$-algebra. Then, $S$ is noetherian since $A$ is noetherian by \cite[Cor.~7.7]{AM69}. Now, by I, Prop.~7.4, there exists a finite filtration
+  \begin{equation*}
+    0 = M^0 \subset M^1 \subset \cdots \subset M^\ell = M
+  \end{equation*}
+  of $M$ by graded submodules, where for each $i$, $M^i/M^{i-1} \cong (S/\mathfrak{p}_i)(n_i)$ for some homogeneous prime ideal $\mathfrak{p}_i \subset S$, and some integer $n_i$. Let $\mathfrak{p} \coloneqq \mathfrak{p}_\ell$ and $n \coloneqq n_\ell$.
+  \par We induct on the length of the filtration $\ell$. If $\ell = 0$, then $M = 0$, and so $\tilde{M} = 0$ and $\alpha(M) = \Gamma_*(\tilde{M}) = 0$, and so we are done. Now consider the inductive step. We have the short exact sequence of graded modules
+  \begin{equation*}
+    0 \longrightarrow M^{\ell-1} \longrightarrow M \longrightarrow (S/\mathfrak{p})(n) \longrightarrow 0.
+  \end{equation*}
+  This gives rise to an sequence of coherent sheaves
+  \begin{equation}\label{essheaves}
+    0 \longrightarrow \tilde{M}^{\ell-1} \longrightarrow \tilde{M} \longrightarrow \widetilde{S/\mathfrak{p}}(n) \longrightarrow 0,
+  \end{equation}
+  by Prop.~5.11$(c)$, and this is exact by Lemma \ref{tildeexact}. Now, applying $\Gamma(X,-(d))$ to the sequence \eqref{essheaves} on degree $d$ gives the diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      0 \rar & M^{\ell-1}_d \rar\dar{\alpha_d} & M_d \rar\dar{\alpha_d} & (S/\mathfrak{p})_{n+d} \rar\dar{\alpha} & 0\\
+      0 \rar & \Gamma(X,\tilde{M}^{\ell-1}(d)) \rar & \Gamma(X,\tilde{M}(d)) \rar & \Gamma(X,\widetilde{S/\mathfrak{p}}(n+d))
+    \end{tikzcd}
+  \end{equation*}
+  where the bottom row is left-exact since $\Gamma(X,-(d))$ is left-exact (Problem $1.8$). By our inductive hypothesis, the map $\alpha_d$ on the left is an isomorphism for all $d \ge d_{0}^{\ell-1}$ large enough. If the map $\alpha_d$ on the right is an isomorphism for all $d \ge d_1$, then letting $d_0 = \max\{d_0^{\ell-1},d_1\}$, for any $d \ge d_0$, we have that $\ker \alpha_d = \Coker \alpha_d = 0$ for the map $\alpha_d$ in the middle by the snake lemma \cite[Prop.~2.10]{AM69}. Thus, it suffices to show that $\alpha_d\colon(S/\mathfrak{p})_{n+d} \isoto \Gamma(X,\widetilde{S/\mathfrak{p}}(n+d))$ for all $d \ge d_1$ for some $d_1$; by choosing $d_1 \coloneqq d_1 + n$, it suffices to show this for $n=0$.
+  \par We claim that it suffices to show $\alpha_d\colon(S/\mathfrak{p})_{d} \isoto \Gamma(\Proj S/\mathfrak{p},\widetilde{S/\mathfrak{p}}(d))$. This is true since $\Gamma(\Proj S/\mathfrak{p},\widetilde{S/\mathfrak{p}}(d)) = \Gamma(X,\widetilde{S/\mathfrak{p}}(d))$ using the identification of $\Proj S/\mathfrak{p}$ with $V(\mathfrak{p})$ from Problem $3.12(b)$, by the fact that $(S/\mathfrak{p}(d))_{(\mathfrak{q})} = 0$ for $\mathfrak{q} \notin V(\mathfrak{p})$, i.e., $\mathfrak{q} \not\supset \mathfrak{p}$, and since this identification is $(S/\mathfrak{p})_0$-linear.
+  \par Thus, it suffices to assume $S$ is an integral domain, and show that letting $X = \Proj S$, $\alpha_d\colon S_d \isoto \Gamma(X,\OO_X(d))$ is an isomorphism for all $d \ge D$ for some $D$. Let $S_1$ be generated by $\{x_i\}_{0\le i\le r}$ as an $A$-module. As in Prop.~5.13, to give a section $t \in \Gamma(X,\OO_X(n))$ is the same as giving sections $t_i \in \Gamma(D_+(x_i),\OO_X(n))$ for each $i$, which agree on intersections $D_+(x_ix_j)$. But then,
+  \begin{align*}
+    \Gamma(D_+(x_i),\OO_X(n)) &\cong \Gamma(D_+(x_i),\OO_X(n)\vert_{D_+(x_i)})\\
+    &\cong \Gamma(D_+(x_i),\widetilde{S(n)_{(x_i)}}) \cong S(n)_{(x_i)} = (S_{x_i})_n
+  \end{align*}
+  by applying Props.~$5.11(b),5.1(d)$, where we recall $D_+(x_i) \cong \Spec S_{(x_i)}$ by Prop.~$2.5(b)$. Thus, $t_i$ is just an element of degree $n$ in $S_{x_i}$, and by the same argument, its restriction to $D_+(x_ix_j)$ is just the image of that element in $S_{x_ix_j}$. Summing over all $n$, we see that $\Gamma_*(\OO_X)$ can be identified with the set of $(r+1)$-tuples $(t_0,\ldots,t_r)$, where for each $i$, $t_i \in S_{x_i}$, and for each $i,j$, the images of $t_i$ and $t_j$ in $S_{x_ix_j}$ are the same.
+  \par Now since $S$ is an integral domain, the $x_i$ are not zero divisors in $S$, so the localization maps $S \to S_{x_i}$ and $S_{x_i} \to S_{x_ix_j}$ are all injective, and these rings are all subrings of $S_{x_0\cdots x_r}$. Hence $S' \coloneqq \bigoplus_{n \ge 0}\Gamma(X,\OO_X(n))$ is contained in the intersection $\bigcap S_{x_i} \subset S_{x_0\cdots x_r}$. Note in particular that $S \subset S'$; thus, it suffices to show $S'_d \subset S_d$ for large enough $d$.
+  \par Let $s' \in S'_d$ for $d \ge 0$. Since $s' \in S_{x_i}$ for each $i$, there is an integer $m_i$ such that $x_i^{m_i}s' \in S$. Since the $x_i$ generate $S_1$, the monomials in the $x_i$ of degree $e$ generate $S_e$ for any $e$. So, by taking $m = \sum m_i - r$, we see that for any $y \in S_{\ge m}$, $ys' \in S_{\ge m}$. By induction, for any $q \ge 1$, $y(s')^q \in S_{\ge m}$ for any $y \in S_{\ge m}$. In particular, letting $y = x_i^m$, we see that for every $q \ge 1$, $(s')^q \in (1/x_i^m)S$. This is a finitely generated $S$-module that is a subring of the quotient field of $S'$, and so by \cite[Prop.~5.1]{AM69}, $s'$ is integral over $S$. Thus $S'$ is contained in the integral closure of $S$ in its quotient field.
+  \par Now since $S$ is a finitely generated $A$-algebra, it is a finitely generated $k$-algebra, and by the finiteness of integral closure (I, Thm.~3.9A), $S'$ is a finitely-generated $S$-module. Now let $\{z_j\}_{1 \le j \le p}$ be our generators of $S'$ over $S$. Then, letting $s' = z_j$ in the argument above, for all $j$, $yz_j \in S_{\ge m}$ for all $y \in S_{\ge m}$. Thus, letting $d_1 = \max\{\deg z_j + m\}$, we see that $S_d = S'_d$ for all $d \ge d_1$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  By part $(b)$, $M \approx \Gamma_*(\tilde{M})$ if $M \in \gr S$; similarly, by Prop.~5.15, $\Gamma_*(\FF)\:\tilde{}\: \cong \FF$ if $\FF \in \qcoh X$. Thus, we have to first show that if $M \in \qgr S$, $\tilde{M} \in \coh X$, and that for $\FF \in \coh X$, $\Gamma_*(\FF) \in \qgr S$.
+  \par So let $M \in \qgr S$. Let $M' \in \gr S$ such that $M_{\ge d} \cong M'_{\ge d}$. We can moreover choose $M'$ to be a submodule of $M$ since $S$ is noetherian, so $M'$ is noetherian \cite[Prop.~6.5]{AM69}, and so the submodule $M'_{\ge d} \subset M'$ is finitely generated and is a submodule of $M$ \cite[Prop.~6.2]{AM69}. Then, $M,M'$ fit into the short exact sequence
+  \begin{equation*}
+    0 \longrightarrow M' \longrightarrow M \longrightarrow M/M' \longrightarrow 0,
+  \end{equation*}
+  where $(M/M')_{\ge d} = 0$. We claim $\widetilde{M/M'} = 0$. For any $\mathfrak{p} \in X$, there exists $s \in S \setminus \mathfrak{p}$ such that $sm = 0$ for all $m \in M/M'$, by choosing $s$ of large enough degree. Thus, $(M/M')_{(\mathfrak{p})} = 0$ for all $\mathfrak{p} \in X$, and so $\widetilde{M/M'} = 0$. By the exactness of $\:\tilde{}\:$ in Lemma \ref{tildeexact}, we have an isomorphism $\tilde{M}' \cong \tilde{M}$, and since $M' \in \gr S$, $\tilde{M}' \in \coh X$ by Prop.~$5.11(c)$, and so $\tilde{M} \in \coh X$.
+  \par Now let $\FF \in \coh X$. By hypothesis $S$ is finitely generated by $S_1$ as an $A$-algebra, hence is a quotient of a polynomial ring $S' = A[x_0,\ldots,x_r]$, and so the surjection $S' \to S$ gives a closed immersion $\iota\colon\Proj S \to \Proj S' = \mathbf{P}^r_A$ by Problem $3.12(a)$. Thus the sheaf $\iota^*\OO(1)$ is very ample. Note also that $A$ is noetherian as in part $(b)$. Thus, by Thm.~5.17, there exists an integer $n_0$ such that for all $n \ge n_0$, the sheaf $\FF(n)$ is generated by a finite number of global sections. So let $M \subset \Gamma_*(\FF)$ be the submodule generated by these global sections; to show $\Gamma_*(\FF) \in \qgr S$, it suffices to show $M \in \gr S$. The inclusion $M \hookrightarrow \Gamma_*(\FF)$ induces an inclusion $\tilde{M} \hookrightarrow \Gamma_*(\FF)\:\tilde{}\: \cong \FF$ since $\:\tilde{}\:$ is exact by Lemma \ref{tildeexact}, and the last isomorphism is from Prop.~5.15. Tensoring by $\OO_X(n)$ for $n \ge n_0$, we have $\tilde{M}(n) \hookrightarrow \FF(n)$, for twisting is exact (Lemma \ref{twistexact}); this is an isomorphism by Prop.~1.1 since on stalks, we have $(M_\mathfrak{p})_n = (\FF_\mathfrak{p})_n$ by construction of $M$, using Prop.~$5.11(a)$. Tensoring by $\OO_X(-n)$, we then have the isomorphism $\tilde{M} \cong \FF$, and by part $(b)$, $M_d \cong \Gamma(X,\FF(d))$ for all $d \ge d_0$, i.e., $M_{\ge d_0} \cong \bigoplus_{\ge d_0} \Gamma(X,\FF(d))$, and so $\Gamma_*(\FF) \in \qgr S$.
+  \par Now consider $\qgr S$ modulo the equivalence relation $\approx$, i.e., the localization category $\uqgr S \coloneqq S^{-1}\qgr S$ where $S$ is the multiplicative system consisting of morphisms of $\qgr S$ that induce isomorphisms on degree $d$ for all $d \ge d_0$ for some $d_0$; see \cite[\S10.3, spec.~Exc.~10.3.2]{Wei94}. Then, by part $(b)$, the vertical maps $\alpha$ in \eqref{alphnattrans} are isomorphisms in $\uqgr S$. By Prop.~5.15, we have a natural isomorphism $\beta\colon \Gamma_*(\FF)\:\tilde\: \to \FF$. Since $\alpha = \Gamma_*(-) \circ (\tilde{-})$ and $\beta = (\tilde{-}) \circ \Gamma_*(-)$ are then both natural isomorphisms, we have that $\:\tilde{}\:$ and $\Gamma_*$ induce an equivalence of categories between $\uqgr S$ and $\coh X$.
+\end{proof}
+
+\begin{problem}
+  Let $A$ be a ring, let $S = A[x_0,\ldots,x_r]$ and let $X = \Proj S$. We have seen that a homogeneous ideal $I$ in $S$ defines a closed subscheme of $X$ \emph{(Ex.~3.12),} and that conversely every closed subscheme of $X$ arises in this way $(5.16)$.
+  \begin{enuma}
+  \item For any homogeneous ideal $I \subseteq S$, we define the \emph{saturation} $\bar{I}$ of $I$ to be $\{s \in S\vert\text{for each}~i = 0,\ldots,r,~\text{there is an $n$ such that}~x_i^ns \in I\}$. We say that $I$ is \emph{saturated} if $I = \bar{I}$. Show that $\bar{I}$ is a homogeneous ideal of $S$.
+  \item Two homogeneous ideals $I_1$ and $I_2$ of $S$ define the same closed subscheme of $X$ if and only if they have the same saturation.
+  \item If $Y$ is any closed subscheme of $X$, then the ideal $\Gamma_*(\II_Y)$ is saturated. Hence it is the largest homogeneous ideal defining the subscheme $Y$.
+  \item There is a $1$-$1$ correspondence between saturated ideals of $S$ and closed subschemes of $X$.
+  \end{enuma}
+\end{problem}
+%\begin{lemma}\label{sataltdef}
+%  Denote $(I : J^\infty) \coloneqq \bigcup_j (I : J^j)$. Then $(I : (x_i)^\infty) \cap (I : (x_j)^\infty) = (I : (x_i,x_j)^\infty)$. In particular, $\bar{I} = (I : S_+^\infty) \coloneqq \bigcup_j (I : S_+^j)$, where $S_+ \coloneqq (x_0,\ldots,x_r)$.
+%\end{lemma}
+%\begin{proof}[Proof of Lemma \ref{sataltdef}]
+%  Let $s \in (I : (x_i)^\infty) \cap (I : (x_j)^\infty)$; then, $x_i^{n_i}s, x_j^{n_j}s \in I$, so $(x_i,x_j)^ns \subset I$ for $n = n_i + n_j - 1$. Conversely, if $s \in (I : (x_i,x_j)^n)$, then $s \in (I : x_i^n) \cap (I : x_j^n)$. Repeatedly applying this, we have $\bar{I} = \bigcap_i (I : x_i^\infty) = (I : S_+^\infty)$.
+%\end{proof}
+\begin{proof}[Proof of $(a)$]
+  $\bar{I}$ is an ideal since if $x_i^na,x_i^mb \in I$, then $x_i^{n+m-1}(a+b) \in I$, and if $x_i^na \in I$, then $x_i^nsa \in I$ for any $s \in S$. Now let $a$ as above with homogeneous decomposition $a = \sum_{d \ge 0} a_d$ with $a_d \in S_d$. Then, for each $i$, $x_i^{n_i}a \in I$, but then by Lemma \ref{homoglem}, $x_i^{n_i}a_d \in I$, hence $a_d \in \bar{I}$, and so by Lemma \ref{homoglem} we are done.
+\end{proof}
+\begin{proposition}\label{projaffideal}
+  $\bar{I}_1 = \bar{I}_2 \iff (I_1)_{(x_i)} = (I_2)_{(x_i)}$ for all $i$, where $(I_1)_{(x_i)},(I_2)_{(x_i)}$ are the degree zero component of the extensions of $I_1,I_2$ in $S_{x_i}$.
+\end{proposition}
+\begin{proof}
+  $s \in \bar{I}$ if and only if $x_i^ns \in I$ for some $n \in \mathbf{N}$ for all $i$ if and only if $s/x_i^{n} \in I_{x_i}$ for some $n \in \mathbf{N}$ for all $i$ if and only if $x_i^ms \in I_{(x_i)}$ for some $m \in \mathbf{Z}$ for all $i$. The result follows by using this argument for both $I_1,I_2$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  The short exact sequence $0 \to I \to S \to S/I \to 0$ gives the short exact sequence of quasi-coherent sheaves
+  \begin{equation*}
+    0 \longrightarrow \tilde{I} \longrightarrow \OO_X \longrightarrow \iota_*\OO_{\Proj S/I} \longrightarrow 0
+  \end{equation*}
+  by Lemma \ref{tildeexact}, where $\iota$ is the closed immersion $\Proj S/I \hookrightarrow X$ from Problem $3.12(a)$, where we know $\iota_*\OO_{\Proj S/I} \cong \widetilde{S/I}$ since $\tilde{I} \cong \II_{\Proj S/I}$ as in the proof of Prop.~$5.16(a)$. Thus, by Prop.~5.9, $I_1,I_2$ define the same closed subscheme of $X$ if and only if $\tilde{I}_1 = \tilde{I}_2$.
+  \par We claim $\tilde{I}_1 = \tilde{I}_2$ if and only if $(I_1)_{(x_i)} = (I_2)_{(x_i)}$ for all $i$. The forward direction is clear since $\tilde{I}(D_+(x_i)) = I_{(x_i)}$ by Prop.~$5.11(b)$, so we prove the converse. We have that $(I_1)_{(x_i)} \hookrightarrow S_{(x_i)}$, and applying $\:\tilde{}\:$ we get $\widetilde{(I_1)_{(x_i)}} \hookrightarrow \widetilde{S_{(x_i)}}$ by Lemma \ref{tildeexact}. The $\widetilde{S_{(x_i)}}$ glue together to get $\OO_X$ via isomorphisms $D_+(x_i) \supset D_+(x_ix_j) \isoto D_+(x_ix_j) \subset D_+(x_j)$, and the same isomorphisms give a unique subsheaf of $\OO_X$ that is equal to $\tilde{I}_1$ by Problem $1.22$. But since $(I_1)_{(x_i)} = (I_2)_{(x_i)}$ for all $i$, and the glueing construction is unique, replacing $I_1$ with $I_2$ in the construction above gives $\tilde{I}_1 = \tilde{I}_2$. Now $(I_1)_{(x_i)} = (I_2)_{(x_i)}$ for all $i$ if and only if $\bar{I}_1 = \bar{I}_2$ by Proposition \ref{projaffideal}, so we are done.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  First, $\Gamma_*(\II_Y)$ is an ideal in $S$ since it is an $S$-submodule of $\Gamma_*(\OO_X) \cong S$ (Prop.~5.13), and is homogeneous by Lemma \ref{homoglem} since it is generated by the $\Gamma(X,\II_Y(n))$. Suppose $x_i^{n_i}s \in \Gamma_*(\II_Y)$ for some $n_i$ for all $i$ and $s \in S$; by letting $n \coloneqq \max\{n_i\}$ we can assume all the $n_i$ are the same. Splitting up $s = \sum s_d$ for $d \in S_d$, this implies $x_i^ns_d \in \Gamma_*(\II_Y)$ for all $d,i$, and so it suffices to show $s_d \in \Gamma_*(\II_Y)$.
+  \par Restriting to $D_+(x_i)$, we see $x_i^ns_d \in \Gamma(D_+(x_i),\II_Y(d+n))$, and so $x_i^{-n} \otimes x_i^ns_d = s_d \in \Gamma(D_+(x_i),\OO_X(-n) \otimes \II_Y(d+n)) = \Gamma(D_+(x_i),\II_Y(d))$. But then, by the glueing property of sheaves, these $s_d \in \Gamma(D_+(x_i),\II_Y(d))$ for all $x_i$ glue together to get a unique global section $s_d \in \Gamma(X,\II_Y(d)) \subset \Gamma_*(\II_Y)$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  By Prop.~5.9, closed subschemes of $X$ are in 1-1 correspondence with quasi-coherent ideal sheaves $\II_Y$. We need to show these $\II_Y$ are in 1-1 correspondence with saturated ideals. $\Gamma_*(\II_Y)$ is saturated by $(c)$, and $\tilde{I}$ is a quasi-coherent ideal sheaf as in part $(b)$. Since $\Gamma_*(\II_Y)\:\tilde{}\: \cong \II_Y$ by Prop.~5.15, it suffices to show $\Gamma_*(\tilde{I}) = I$ for $I$ saturated. But we know $\Gamma_*(\tilde{I})\:\tilde\: = \tilde{I}$ by Prop.~5.15, and our proof of $(b)$ shows that this implies $\overline{\Gamma_*(\tilde{I})} = \bar{I}$, but since both of these ideals are saturated by hypothesis and by $(c)$, we have $\Gamma_*(\tilde{I}) = I$ for $I$ saturated.
+\end{proof}
+
+\begin{problem}
+  Let $S$ and $T$ be two graded rings with $S_0 = T_0 = A$. We define the \emph{Cartesian product} $S \times_A T$ to be the graded ring $\bigoplus_{d \ge 0} S_d \otimes_A T_d$. If $X = \Proj S$ and $Y = \Proj T$, show that $\Proj(S \times_A T) \cong X \times_A Y$, and show that the sheaf $\OO(1)$ on $\Proj(S \times_A T)$ is isomorphic to the sheaf $p_1^*(\OO_X(1)) \otimes p_2^*(\OO_Y(1))$ on $X \times Y$.
+  \par The Cartesian product of rings is related to the \emph{Segre embedding} of projective space \emph{(I, Ex.~2.14)} in the following way. If $x_0,\ldots,x_r$ is a set of generators for $S_1$ over $A$, corresponding to a projective embedding $X \hookrightarrow \mathbf{P}^r_A$, and if $y_0,\ldots,y_s$ is a set of generators for $T_1$, corresponding to a projective embedding $Y \hookrightarrow \mathbf{P}_A^s$, then $\{x_i \otimes y_j\}$ is a set of generators for $(S \times_A T)_1$, and hence defines a projective embedding $\Proj(S \times_A T) \hookrightarrow \mathbf{P}^N_A$, with $N = rs + r + s$. This is just the image of $X \times Y \subseteq \mathbf{P}^r \times \mathbf{P}^s$ in its Segre embedding.
+\end{problem}
+\begin{proof}
+  We claim that $\Proj(S \times_A T)$ satisfies the universal property for $X \times_A Y$ from Thm.~3.3, namely, that it satisfies the pullback diagram
+  \begin{equation}\label{fpdiagram}
+    \begin{tikzcd}[column sep=small,row sep=large]
+      Z\arrow[bend left]{drr}\arrow[bend right]{ddr}\arrow[dashed]{dr}{\mathrm{H}}\\
+      &\Proj(S \times_A T)\dar[swap]{\Phi} \rar{\Psi} & Y\dar\\
+      &X \rar & \Spec A
+    \end{tikzcd}
+  \end{equation}
+  where $X \to \Spec A$, $Y \to \Spec A$ are the canonical maps.
+  \par We first construct the maps $\Phi$ and $\Psi$. $\Proj(S \times_A T)$ is covered by open subsets $D_+(x \otimes y) \cong \Spec(S \times_A T)_{(x \otimes y)}$ for $x \in S$, $y \in T$ of the same positive degree by Prop.~$2.5(b)$; similarly, $X$ is covered by $D_+(x) \cong \Spec S_{(x)}$ and $Y$ is covered by $D_+(y) \cong \Spec S_{(y)}$. We define ring morphisms by letting
+  \begin{equation}\label{ringmapsdef}
+    \begin{alignedat}{4}
+      \varphi_{xy}&\colon & S_{(x)} &\to (S \times_A T)_{(x \otimes y)} \qquad &\frac{s}{x^d} &\mapsto \frac{s \otimes y^d}{(x \otimes y)^d}\\
+      \psi_{xy}&\colon & T_{(y)} &\to (S \times_A T)_{(x \otimes y)} \qquad &\frac{t}{y^d} &\mapsto \frac{x^d \otimes t}{(x \otimes y)^d}
+    \end{alignedat}
+  \end{equation}
+  on simple tensors and extending linearly. These are well-defined since an equivalence relation on the left maps to one on the right, and these are unital, associative, and multiplicative by definition, where we use the $A$-algebra structure given as on \cite[p.~31]{AM69}; note $a/1 \mapsto a(1/1)$, hence these are $A$-algebra homomorphisms. To show the corresponding maps between affine open sets obtained from Prop.~$2.3(b)$ glue together as in Thm.~3.3, Step 3, we first show that
+  \begin{equation*}
+    \varphi_{xy}^*\left( D_+(xx' \otimes yy') \right) \subset D_+(xx') \quad \text{and} \quad \psi_{xy}^*\left( D_+(xx' \otimes yy') \right) \subset D_+(yy').
+  \end{equation*}
+  By symmetry, it suffices to show the first. We note that
+  \begin{equation*}
+    (S \times_A T)_{(xx' \otimes yy')} \cong ((S \times_A T)_{(x \otimes y)})_{\frac{(x' \otimes y')^{\deg x}}{(x \otimes y)^{\deg x'}}} \implies D_+(xx' \otimes yy') \cong D\left( \frac{(x' \otimes y')^{\deg x}}{(x \otimes y)^{\deg x'}} \right),
+  \end{equation*}
+  and similarly
+  \begin{equation}\label{Sxxiso}
+    S_{(xx')} \cong (S_{(x)})_{\frac{x^{\prime\deg x}}{x^{\deg x'}}} \implies D_+(xx') \cong D\left(\frac{x^{\prime\deg x}}{x^{\deg x'}}\right).
+  \end{equation}
+  Let
+  \begin{equation*}
+    \mathfrak{p} \in D\left( \frac{(x' \otimes y')^{\deg x}}{(x \otimes y)^{\deg x'}} \right),~\text{i.e.,}~\frac{(x' \otimes y')^{\deg x}}{(x \otimes y)^{\deg x'}} \notin \mathfrak{p} \subset (S \times_A T)_{(x \otimes y)},
+  \end{equation*}
+  but suppose that
+  \begin{equation*}
+    \varphi^*_{xy}(\mathfrak{p}) = \varphi^{-1}_{xy}(\mathfrak{p}) \notin D\left(\frac{x^{\prime\deg x}}{x^{\deg x'}}\right),~\text{i.e.,}~\frac{x^{\prime\deg x}}{x^{\deg x'}} \in \varphi^{-1}_{xy}(\mathfrak{p}).
+  \end{equation*}
+  But then,
+  \begin{equation*}
+    \varphi_{xy}\left( \frac{x^{\prime\deg x}}{x^{\deg x'}} \right)\frac{x^{\deg x'} \otimes y^{\prime\deg x}}{(x \otimes y)^{\deg x'}} = \frac{x^{\prime\deg x} \otimes y^{\deg x'}}{(x \otimes y)^{\deg x'}}\cdot\frac{x^{\deg x'} \otimes y^{\prime\deg x}}{(x \otimes y)^{\deg x'}} = \frac{(x' \otimes y')^{\deg x}}{(x \otimes y)^{\deg x'}} \in \mathfrak{p},
+  \end{equation*}
+  a contradiction.
+  \par Now we want to describe the maps induced by $\varphi_{xy}$, $\psi_{xy}$ on intersections $D_+(x \otimes y) \cap D_+(x' \otimes y') = D_+(xx' \otimes yy')$. We have the commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      D_+(x) & \arrow{l}[swap]{\varphi^*_{xy}} D_+(x \otimes y) \rar{\psi^*_{xy}} & D_+(y)\\
+      D_+(xx')\uar[hook] & \arrow{l} D_+(xx' \otimes yy') \uar[hook]\rar & D_+(yy')\uar[hook]
+    \end{tikzcd}
+  \end{equation*}
+  corresponding to the commutative diagram
+  \begin{equation}\label{glueringmaps}
+    \begin{tikzcd}
+      S_{(x)} \rar{\varphi_{xy}}\dar & (S \times_A T)_{(x \otimes y)}\dar & \arrow{l}[swap]{\psi_{xy}} T_{(y)}\dar\\
+      S_{(xx')} \rar & (S \times_A T)_{(xx' \otimes yy')} & \arrow{l} T_{(yy')}
+    \end{tikzcd}
+  \end{equation}
+  where the vertical maps are the standard localization maps restricted to degree zero, by Problem $2.4$. But using the isomorphism \eqref{Sxxiso}, and since $\varphi_{xy}(\frac{x^{\prime\deg x}}{x^{\deg x'}})$ is invertible in $(S \times_A T)_{(xx' \otimes yy')}$, and similarly for $\psi_{xy}$, the bottom horizontal maps in \eqref{glueringmaps} are unique by the universal property of localization \cite[Prop.~3.1]{AM69}, and are given expliticly by $\varphi_{xx'yy'},\psi_{xx'yy'}$ as in \eqref{ringmapsdef}. Thus, the morphisms $\varphi^*_{xy},\psi^*_{xy}$ match on intersections, and glue together to give maps $\Phi\colon \Proj(S \times_A T) \to X$ and $\Psi\colon \Proj(S \times_A T) \to Y$.
+  \par Now we want to show $\Proj(S \times_A T)$ satisfies the pullback diagram \eqref{fpdiagram}; restricting to open affines as above and using Problem $2.4$, we first show that $(S \otimes_A T)_{(x \otimes y)}$ satisfies the pushout diagram
+  \begin{equation}\label{podiagram}
+    \begin{tikzcd}[column sep=small,row sep=large]
+      B\arrow[bend left,leftarrow]{drr}{g}\arrow[bend right,leftarrow]{ddr}[swap]{f}\arrow[dashed,leftarrow]{dr}{h}\\
+      &(S \otimes_A T)_{(x \otimes y)}\dar[swap,leftarrow]{\varphi_{xy}} \rar[leftarrow]{\psi_{xy}} & T_{(y)}\dar[leftarrow]\\
+      &S_{(x)} \rar[leftarrow] & A
+    \end{tikzcd}
+  \end{equation}
+  in the category of $A$-algebras. The square commutes since $a \mapsto a/1$ in both $S_{(x)}$ and $T_{(y)}$, and since
+  \begin{equation*}
+    \varphi_{xy}\left( \frac{a}{1} \right) = \frac{a \otimes 1}{1 \otimes 1} = \frac{1 \otimes a}{1 \otimes 1} = \psi_{xy}\left( \frac{a}{1} \right).
+  \end{equation*}
+  Now suppose the maps $f,g$ exist. Define $h$ as
+  \begin{equation}\label{hdef}
+    h\bigg( \frac{s \otimes t}{(x \otimes y)^d} \bigg) = f\bigg( \frac{s}{x^d} \bigg) \cdot g\bigg( \frac{t}{y^d} \bigg)
+  \end{equation}
+  on simple tensors, and extend by linearity. This is well-defined since an equivalent argument on the left gets sent to equivalent arguments on the right. This makes the diagram commute since for the lower triangle
+  \begin{equation*}
+    (h\circ\varphi_{xy})\bigg( \frac{s}{x^d} \bigg) = h\bigg( \frac{s \otimes y^d}{(x \otimes y)^d} \bigg) = f\bigg( \frac{s}{x^d} \bigg) \cdot g\bigg( \frac{y^d}{y^d} \bigg) = f\bigg( \frac{s}{x^d} \bigg),
+  \end{equation*}
+  using that $g$ is an $A$-algebra homomorphism, and similarly for the upper triangle. Finally, suppose $h'$ is another $A$-algebra homomorphism satisfying \eqref{podiagram}; then,
+  \begin{multline*}
+    h'\bigg( \frac{s \otimes t}{(x \otimes y)^d} \bigg) = h'\left( \frac{sx^d \otimes ty^d}{(x \otimes y)^{2d}} \right) = h'\left( \varphi_{xy}\bigg( \frac{s}{x^d} \bigg) \cdot \psi_{xy}\bigg( \frac{t}{y^d} \bigg) \right)\\
+    = h'\left( \varphi_{xy}\bigg( \frac{s}{x^d} \bigg) \right) \cdot h'\left( \psi_{xy}\bigg( \frac{t}{y^d} \bigg) \right) = f\bigg( \frac{s}{x^d} \bigg) \cdot g\bigg( \frac{t}{y^d} \bigg),
+  \end{multline*}
+  and so $h = h'$, i.e., $h$ is unique. Then, $\Proj(S \times_A T)$ satisfies the pullback diagram \eqref{fpdiagram}, for uniqueness of $\mathrm{H}$ is clear by uniqueness on each $D_+(x \otimes y)$, and existence is clear since $h$ will be given by the same diagram \eqref{fpdiagram} for any $x \otimes y$, hence for intersections $D_+(xx' \otimes yy')$, they will be equal. Note, moreover, that then $(S \otimes_A T)_{(x \otimes y)} \cong S_{(x)} \otimes_A T_{(y)}$ by Lemma \ref{tpalg}.
+  \par It remains to show $\OO(1) \cong \Phi^*(\OO_X(1)) \otimes \Psi^*(\OO_Y(1))$; by the universal property of the tensor product (Lemma \ref{tensorup}), it suffices to show that $\OO(1)$ satisfies the diagram
+  \begin{equation}\label{p1p2tpdiagram}
+    \begin{tikzcd}
+      \Phi^*(\OO_X(1)) \times \Psi^*(\OO_Y(1)) \rar\arrow{dr} & \OO(1)\dar[dashed]{\Theta}\\
+      & \HH
+    \end{tikzcd}
+  \end{equation}
+  On each $D_+(x \otimes y)$, we have $\Phi(D_+(x \otimes y)) \subset D_+(x)$ by construction of $\varphi_{xy}^*$, and so
+  \begin{multline*}
+    \Phi^*(\OO_X(1))\vert_{D_+(x \otimes y)} = \varphi_{xy}^*(\OO_X(1)\vert_{D_+(x)}) \cong \varphi_{xy}^*(\widetilde{S(1)_{(x)}})\\
+    \cong (S(1)_{(x)} \otimes_{S_{(x)}} (S \times_A T)_{(x \otimes y)})\:\tilde{}\\
+    \cong (S(1)_{(x)} \otimes_{S_{(x)}} S_{(x)} \otimes_A T_{(y)})\:\tilde{} \cong (S(1)_{(x)} \otimes_A T_{(y)})\:\tilde{}
+  \end{multline*}
+  by Props.~$5.11(b),5.2(e)$, and the isomorphism $(S \otimes_A T)_{(x \otimes y)} \cong S_{(x)} \otimes_A T_{(y)}$ from above. So, applying $\Gamma(D_+(x \otimes y),-)$ from Cor.~5.5 to the diagram \eqref{p1p2tpdiagram}, we obtain the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      S(1)_{(x)} \otimes_A T_{(y)} \times S_{(x)} \otimes_A T(1)_{(y)} \rar{g_{xy}}\arrow{dr}[swap]{f_{xy}} & ((S \times_A T)(1))_{(x \otimes y)}\dar[dashed]{f'_{xy}}\\
+      & \HH(D_+(x \otimes y))
+    \end{tikzcd}
+  \end{equation*}
+  Define the map $g_{xy}$ as that associated via \cite[Props.~2.11, 2.12*]{AM69} to the map that is clearly $A$-linear in each factor
+  \begin{align*}
+    S(1)_{(x)} \times T_{(y)} \times S_{(x)} \times T(1)_{(y)} &\to ((S \times_A T)(1))_{(x \otimes y)},\\
+    \left( \frac{s}{x^d},\frac{t}{y^e},\frac{s'}{x^{d'}},\frac{t'}{y^{e'}} \right) &\mapsto \frac{ss'x^{e+e'} \otimes tt'y^{d+d'}}{(x \otimes y)^{d+d'+e+e'}}.
+  \end{align*}
+  Suppose we have a map $f_{xy}$; define
+  \begin{equation*}
+    f'_{xy}\left( \frac{s \otimes t}{(x \otimes y)^{d}} \right) = f_{xy}\left( \frac{s}{x^{d}} \otimes 1 \otimes 1 \otimes \frac{t}{y^{d}} \right)
+  \end{equation*}
+  on simple tensors and extend by linearity. This is well-defined since an equivalent argument on the left gets sent to an equivalent argument on the right.  This makes the diagram commute since
+  \begin{multline*}
+    (f'_{xy} \circ g_{xy})\left( \frac{s}{x^{d}}\otimes\frac{t}{y^e}\otimes\frac{s'}{x^{d'}}\otimes\frac{t'}{y^{e'}} \right)\\ = f'_{xy}\left( \frac{ss'x^{e+e'} \otimes tt'y^{d+d'}}{(x \otimes y)^{d+d'+e+e'}} \right)
+    = f_{xy}\left( \frac{ss'x^{e+e'}}{x^{d+d'+e+e'}} \otimes 1 \otimes 1 \otimes \frac{tt'y^{d+d'}}{y^{d+d'+e+e'}} \right)\\
+    = f_{xy}\left( \frac{ss'}{x^{d+d'}} \otimes 1 \otimes 1 \otimes \frac{tt'}{y^{e+e'}} \right) = f_{xy}\left( \frac{s}{x^{d}} \otimes \frac{t}{y^e}\otimes\frac{s'}{x^{d'}}\otimes\frac{t'}{y^{e'}} \right).
+  \end{multline*}
+  Now to show $f'_{xy}$ is unique, suppose $h'_{xy}$ also makes the diagram commute. Then,
+  \begin{equation*}
+    h'_{xy}\left( \frac{s \otimes t}{(x \otimes y)^{d}} \right) = h'_{xy}\left( g_{xy}\left( \frac{s}{x^d} \otimes 1 \otimes 1 \otimes \frac{t}{y^d} \right)\right) = f'_{xy}\left( \frac{s \otimes t}{(x \otimes y)^{d}} \right),
+  \end{equation*}
+  and so $f'_{xy} = h'_{xy}$, i.e., $f'_{xy}$ is unique. Now since the maps on each intersection $D_+(xx' \otimes yy')$ then has to correspond to $f'_{xx'yy'}$ via Cor.~5.5, we have that $\Theta$ in \eqref{p1p2tpdiagram} exists, and is unique. Thus, $\OO(1) \cong \Phi^*(\OO_X(1)) \otimes \Psi^*(\OO_Y(1))$ by the universal property of the tensor product (Lemma \ref{tensorup}).
+  \par Now for the last part of the problem, suppose $S,T$ are generated by $S_1,T_1$ over $A$. Let $\iota\colon \Proj(S \times_A T) \hookrightarrow \mathbf{P}^N_A$ be the immersion given by the surjective morphism of graded rings $A[x_0,\ldots,x_N] \to S \times_A T$ by Problem $3.12(a)$. Then, $\OO(1)$ is very ample because $i^*(\OO_{\mathbf{P}^N_A}(1)) = \OO(1)$ by Prop.~$5.12(c)$, and so since the very ample sheaves $\OO(1)$ on $\Proj(S \times_A T)$ and $p_1^*(\OO_X(1)) \otimes p_2^*(\OO_Y(1))$ on $X \times_A Y$ are isomorphic, they correspond to the same immersions into $\mathbf{P}^N_A$.
+\end{proof}
+\begin{remark}
+  For the purposes of the next problem, we must generalize this construction to an arbitrary base scheme $Y$; this is formulated in the Proposition below.
+\end{remark}
+\begin{proposition}\label{segre}
+  For an arbitrary scheme $Y$, the Segre embedding $\mathbf{P}_Y^r \times_Y \mathbf{P}_Y^s \hookrightarrow \mathbf{P}_Y^N$ for $N = rs + r + s$ exists and is a closed immersion; it is given by the very ample invertible sheaf $p_{1Y}^*(\OO_{\mathbf{P}_Y^r}(1)) \otimes p_{2Y}^*(\OO_{\mathbf{P}_Y^s}(1))$, where $p_{1Y}\colon\mathbf{P}_Y^r \times_Y \mathbf{P}_Y^s \to \mathbf{P}_Y^r$, $p_{2Y}\colon\mathbf{P}_Y^r \times_Y \mathbf{P}_Y^s \to \mathbf{P}_Y^s$ are the projection morphisms from the universal property of the fibre product.
+\end{proposition}
+\begin{proof}[Proof of Proposition \ref{segre}]
+  Draw the commutative diagram
+  \begin{equation}\label{scarydiag}
+    \begin{tikzcd}
+      \mathbf{P}_Y^r \times_Y \mathbf{P}_Y^s\arrow{dd}[swap]{\pi_1}\arrow[dashed,hook]{dr}[swap]{\sigma_Y}\arrow[bend left,crossing over]{drr}{\pi_2}\\
+      & \mathbf{P}_Y^N\dar[swap]{g_N} \rar & Y\dar\\
+      \mathbf{P}_{\mathbf{Z}}^r \times_{\mathbf{Z}} \mathbf{P}_{\mathbf{Z}}^s \rar[hook]{\sigma_{\mathbf{Z}}} & \mathbf{P}_{\mathbf{Z}}^N \rar & \Spec \mathbf{Z}
+    \end{tikzcd}
+  \end{equation}
+  where $\pi_1,\pi_2$ are induced by the isomorphism $\mathbf{P}^r_{\mathbf{Z}} \times_{\mathbf{Z}} \mathbf{P}^s_{\mathbf{Z}} \times_{\mathbf{Z}} Y \cong \mathbf{P}^r_Y \times_Y \mathbf{P}^s_Y$ from Lemma \ref{basechangedist}. We then define the Segre embedding $\sigma_Y$ as that induced by the universal property of the fibre product of the square for $\mathbf{P}_Y^N$ from the Segre embedding $\sigma_{\mathbf{Z}}$ from Problem $3.11$; it is a closed immersion by Lemma \ref{immbasechange}.
+  \par Now we claim that $\sigma_Y^*\OO_{\mathbf{P}_Y^N}(1) \cong p_{1Y}^*(\OO_{\mathbf{P}_Y^r}(1)) \otimes p_{2Y}^*(\OO_{\mathbf{P}_Y^s}(1))$. First, we have
+  \begin{equation*}
+    \sigma_Y^*\OO_{\mathbf{P}_Y^N}(1) = \sigma_Y^*g_N^*\OO_{\mathbf{P}_{\mathbf{Z}}^N}(1) \cong (g_N \circ \sigma_Y)^*\OO_{\mathbf{P}_{\mathbf{Z}}^N}(1) = (\sigma_{\mathbf{Z}} \circ \pi_1)^*\OO_{\mathbf{P}_{\mathbf{Z}}^N}(1)
+  \end{equation*}
+  using Lemma \ref{invimgcomp} and the commutativity of \eqref{scarydiag}. Then, using Lemma \ref{invimgcomp} again,
+  \begin{equation*}
+    (\sigma_{\mathbf{Z}} \circ \pi_1)^*\OO_{\mathbf{P}_{\mathbf{Z}}^N}(1) \cong \pi_1^*\sigma_{\mathbf{Z}}^*\OO_{\mathbf{P}_{\mathbf{Z}}^N}(1) \cong \pi_1^*(p_{1\mathbf{Z}}^*(\OO_{\mathbf{P}_\mathbf{Z}^r}(1)) \otimes p_{2\mathbf{Z}}^*(\OO_{\mathbf{P}_\mathbf{Z}^s}(1)))
+  \end{equation*}
+  by the Segre embedding in Problem $3.11$. Then, by Lemmas \ref{tpinvimg} and \ref{invimgcomp},
+  \begin{align*}
+    \pi_1^*(p_{1\mathbf{Z}}^*(\OO_{\mathbf{P}_\mathbf{Z}^r}(1)) \otimes p_{2\mathbf{Z}}^*(\OO_{\mathbf{P}_\mathbf{Z}^s}(1))) &\cong \pi_1^*p_{1\mathbf{Z}}^*(\OO_{\mathbf{P}_\mathbf{Z}^r}(1)) \otimes \pi_1^*p_{2\mathbf{Z}}^*(\OO_{\mathbf{P}_\mathbf{Z}^s}(1))\\
+    &\cong (p_{1\mathbf{Z}}\circ\pi_1)^*(\OO_{\mathbf{P}_\mathbf{Z}^r}(1)) \otimes (p_{2\mathbf{Z}}\circ\pi_1)^*(\OO_{\mathbf{P}_\mathbf{Z}^s}(1))\\
+    &\cong (g_r \circ p_{1Y})^*(\OO_{\mathbf{P}_\mathbf{Z}^r}(1)) \otimes (g_s \circ p_{2Y})^*(\OO_{\mathbf{P}_\mathbf{Z}^s}(1))
+  \end{align*}
+  by the commutativity of \eqref{bcdistdiag}, and finally
+  \begin{align*}
+    (g_r \circ p_{1Y})^*(\OO_{\mathbf{P}_\mathbf{Z}^r}(1)) \otimes (g_s \circ p_{2Y})^*(\OO_{\mathbf{P}_\mathbf{Z}^s}(1)) &\cong p_{1Y}^*g_r^*(\OO_{\mathbf{P}_\mathbf{Z}^r}(1)) \otimes p_{2Y}^*g_s^*(\OO_{\mathbf{P}_\mathbf{Z}^s}(1))\\
+    &\cong p_{1Y}^*(\OO_{\mathbf{P}_Y^r}(1)) \otimes p_{2Y}^*(\OO_{\mathbf{P}_Y^s}(1)).\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item Let $X$ be a scheme over a scheme $Y$, and let $\LL,\MM$ be two very ample invertible sheaves on $X$. Show that $\LL \otimes \MM$ is also very ample.
+    \item Let $f \colon X \to Y$ and $g\colon Y \to Z$ be two morphisms of schemes. Let $\LL$ be a very ample invertible sheaf on $X$ relative to $Y$, and let $\MM$ be a very ample invertible sheaf on $Y$ relative to $Z$. Show that $\LL \otimes f^*\MM$ is a very ample invertible sheaf on $X$ relative to $Z$.
+  \end{enuma}
+\end{problem}
+\begin{remark}
+  Because a composition of immersions is not an immersion in general (see \cite[\href{http://stacks.math.columbia.edu/tag/01QW}{Tag 01QW}]{stacks-project}) it seems that this claim might be false in full generality. There are a couple of assumptions we can make to make this work out; in particular, $f,g$ could factor into quasi-compact open immersions followed by closed immersions (e.g., $X$ is noetherian) by Lemma \ref{immislcimm}, $X$ could be reduced \cite[\href{http://stacks.math.columbia.edu/tag/03DQ}{03DQ}]{stacks-project}, or as we do here, we could assume that the base scheme $Y$ is locally noetherian in $(a)$, and that the base scheme $Z$ is locally noetherian in $(b)$.
+\end{remark}
+\begin{proof}[Proof of $(a)$]
+  Let $j\colon X \to \mathbf{P}^r_Y \times_Y \mathbf{P}^s_Y$ be the map induced by the fibre diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      X\arrow[dashed]{dr}{j}\arrow[bend right]{ddr}[swap]{\iota_1}\arrow[bend left]{drr}{\iota_2}\\
+      & \mathbf{P}^r_Y \times_Y \mathbf{P}^s_Y \rar{p_2}\dar[swap]{p_1} & \mathbf{P}^s_Y\dar\\
+      & \mathbf{P}^r_Y \rar & Y
+    \end{tikzcd}
+  \end{equation*}
+  where $\iota_1,\iota_2$ are the immersions associated with $\LL$ and $\MM$ respectively. Now letting $\sigma\colon \mathbf{P}^r_Y \times_Y \mathbf{P}^s_Y \to \mathbf{P}^N_Y$ be the Segre embedding which exists by Proposition \ref{segre}, we claim that $\sigma \circ j$ is an immersion. But $j$ is the composition of $X \to X \times_Y X \to \mathbf{P}^r_Y \times_Y \mathbf{P}^s_Y \to \mathbf{P}^N_Y$ by unicity of $j$, which is a composition of immersions since $X \to Y$ is separated by Lemma \ref{projsep}, the fibre product of two closed immersions is a closed immersion (Lemma \ref{immbasechange}), and $\sigma$ is a closed immersion (Proposition \ref{segre}). Since an immersion into $\mathbf{P}_Y^N$ is quasi-compact by Lemma \ref{locnoethimm}, we have $\sigma \circ j$ is an immersion by Lemma \ref{immislcimm}.
+  \par It now suffices to show $(\sigma \circ j)^*\OO(1) \cong \LL \otimes \MM$. First,
+  \begin{equation*}
+    (\sigma \circ j)^*\OO(1) \cong j^*(p_1^*\OO_{\mathbf{P}^r_Y}(1) \otimes p_2^*\OO_{\mathbf{P}^s_Y}(1)) \cong (p_1 \circ j)^*\OO_{\mathbf{P}^r_Y}(1) \otimes (p_2 \circ j)^*\OO_{\mathbf{P}^s_Y}(1)
+  \end{equation*}
+  using Lemmas \ref{invimgcomp} and \ref{tpinvimg}, and Proposition \ref{segre}. But now by construction of $\iota_1,\iota_2$, and the commutativity of the fibre diagram above, we have
+  \begin{equation*}
+    (p_1 \circ j)^*\OO_{\mathbf{P}^r_Y}(1) \otimes (p_2 \circ j)^*\OO_{\mathbf{P}^s_Y}(1) = \iota_1^*\OO_{\mathbf{P}^r_Y}(1) \otimes \iota_2^*\OO_{\mathbf{P}^s_Y}(1) \cong \LL \otimes \MM.\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  $\LL$ corresponds to an immersion $\iota_1\colon X \to \mathbf{P}^r_Y$ and $\MM$ corresponds to an immersion $\iota_2\colon Y \to \mathbf{P}^s_Z$. We first find an immersion $j\colon X \to \mathbf{P}^r_Z \times_Z \mathbf{P}^s_Z$:
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      X\arrow{dd}[swap]{\iota_1} \arrow{rr}{f}\arrow[dashed]{dr}{j} & & Y\dar{\iota_2}\\
+      & \mathbf{P}^r_Z \times_Z \mathbf{P}^s_Z\dar[swap]{p_1}\rar{p_2} & \mathbf{P}^s_Z\dar\\
+      \mathbf{P}^r_{\mathbf{Z}} \times_{\mathbf{Z}} Y \rar{\id \times g} & \mathbf{P}^r_{\mathbf{Z}} \times_{\mathbf{Z}} Z \rar & Z
+    \end{tikzcd}
+  \end{equation*}
+  Let $\sigma\colon \mathbf{P}^r_Z \times_Z \mathbf{P}^s_Z \to \mathbf{P}^N_Z$ be the Segre embedding from Proposition \ref{segre}. We claim $\sigma \circ j$ is an immersion. $\sigma \circ j$ factors as $X \to \mathbf{P}^r_Y \times_Y Y \to \mathbf{P}^r_Y \times_Y \mathbf{P}^s_Z \cong \mathbf{P}^r_Z \times_Z \mathbf{P}^s_Z \to \mathbf{P}^N_Z$, which are all immersions by Lemma \ref{immbasechange} and Proposition \ref{segre}, and by unicity of the map $j$. Thus, $\sigma \circ j$ is an immersion since any immersion into $\mathbf{P}^N_Z$ is quasi-compact by Lemma \ref{locnoethimm}, and by Lemma \ref{immislcimm}.
+  \par It now suffices to show $(\sigma \circ j)^*\OO_{\mathbf{P}^N_Z}(1) = \LL \otimes f^*\MM$. First,
+  \begin{equation*}
+    (\sigma \circ j)^*\OO_{\mathbf{P}^N_Z}(1) \cong j^*(p_1^*\OO_{\mathbf{P}^r_Z}(1) \otimes p_2^*\OO_{\mathbf{P}^s_Z}(1)) \cong (p_1 \circ j)^*\OO_{\mathbf{P}^r_Z}(1) \otimes (p_2 \circ j)^*\OO_{\mathbf{P}^s_Z}(1)
+  \end{equation*}
+  using Lemmas \ref{invimgcomp} and \ref{tpinvimg}, and Proposition \ref{segre}. But now by construction of $\iota_1,\iota_2$, and the commutativity of the fibre diagram above, we have
+  \begin{align*}
+    (p_1 \circ j)^*\OO_{\mathbf{P}^r_Z}(1) \otimes (p_2 \circ j)^*\OO_{\mathbf{P}^s_Z}(1) &= \iota_1^*(\id \times g)^*\OO_{\mathbf{P}^r_Z}(1) \otimes f^*\iota_2\OO_{\mathbf{P}^s_Z}(1)\\
+    &\cong \iota_1^*\OO_{\mathbf{P}^r_Y}(1) \otimes f^*\iota_2\OO_{\mathbf{P}^s_Z}(1) \cong \LL \otimes f^*\MM.\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{problem}
+  Let $S$ be a graded ring, generated by $S_1$ as an $S_0$-algebra. For any integer $d > 0$, let $S^{(d)}$ be the graded ring $\bigoplus_{n \ge 0} S_n^{(d)}$ where $S_n^{(d)} = S_{nd}$. Let $X = \Proj S$. Show that $\Proj S^{(d)} \cong X$, and that the sheaf $\OO(1)$ on $\Proj S^{(d)}$ corresponds via this isomorphism to $\OO_X(d)$.
+  \par This construction is related to the $d$-uple \emph{embedding (I, Ex.~2.12)} in the following way. If $x_0,\ldots,x_r$ is a set of generators for $S_1$, corresponding to an embedding $X \hookrightarrow \mathbf{P}^r_A$, then the set of monomials of degree $d$ in the $x_i$ is a set of generators for $S_1^{(d)} = S_d$. These define a projective embedding of $\Proj S^{(d)}$ which is none other than the image of $X$ under the $d$-uple embedding of $\mathbf{P}^r_A$.
+\end{problem}
+\begin{proof}
+  $S$ is generated by $S_1$ as an $S_0$-algebra, hence $S^{(d)}$ is generated by $S_1^{(d)} = S_d$ over $S_0$. Thus, the sets $D_+(f)$ for $f \in S_{nd} = S_n^{(d)}$ cover both $X$ and $\Proj S^{(d)}$, since they clearly cover the latter, and they cover the former since any prime $\mathfrak{p} \subset S$ that does not contain all of $S_+$ does not contain an element $x \in S_1$, and so $x^{d} \notin \mathfrak{p}$ by primeness, hence $\mathfrak{p} \in D_+(x^d)$. Now on these sets $D_+(f)$ where $f \in S_{nd} = S_n^{(d)}$, we define isomorphisms $\varphi_f^*$ from the ring map $\varphi_f\colon S_{(f)} \to S^{(d)}_{(f)}$ using Props.~$2.3(b)$ and $2.5(b)$
+  \begin{equation*}
+    \frac{s}{f^m} \mapsto \frac{s}{f^m}, \quad s \in S_{mnd} = S_{mn}^{(d)},
+  \end{equation*}
+  which are clearly isomorphisms of rings. But then, on intersections $D_+(f) \cap D_+(g) = D_+(fg)$, we have that the morphism induced by $D_+(f)$ and $D_+(g)$ have the same definition as above by using the universal property of localization at $g/f$ for $D_+(f)$ and $f/g$ for $D_+(g)$ \cite[Prop.~3.1]{AM69}; therefore, our isomorphisms glue together as in Thm.~3.3, Step 3 to give an isomorphism $\Proj S^{(d)} \isoto X$.
+  \par Now we claim $\OO_{\Proj S^{(d)}}(1) \cong \OO_X(d)$. First restricting to $D_+(f)$, we claim $\psi_f \colon S^{(d)}(1)_{(f)} \to S(d)_{(f)}$ is an isomorphism, which is sufficient to show the restriction on sheaves are the same by Prop.~$5.11(b)$ and Cor.~5.5. But this is true by defining as above
+  \begin{equation*}
+    \frac{s}{f^m} \mapsto \frac{s}{f^m}, \quad s \in S(d)_{mnd} = S_{(mn+1)d} = S(1)_{mn}^{(d)},
+  \end{equation*}
+  which are clearly isomorphisms of rings, and realizing as above that these isomorphisms glue by the universal property of localization at $g/f$ for $D_+(f)$ and $f/g$ for $D_+(g)$.
+  \par For the last part of the problem, we note that the surjective graded ring map $A[y_0,\ldots,y_N] \to S^{(d)}$ where $N = \binom{n+d}{n} - 1$ defined by mapping each $y_i$ to one of the $N$ monomials in the $x_i$ of degree $d$ in $S^{(d)}$ gives a closed immersion $\Proj S^{(d)} \hookrightarrow \mathbf{P}^N_A$ by Problem $3.12(a)$. Then, we get a diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathbf{P}^r_A \rar[hook]{v_d} & \mathbf{P}^N_A\\
+      X \rar{\sim} \uar[hook] & \Proj S^{(d)} \uar[hook]
+    \end{tikzcd}
+  \end{equation*}
+  where $v_d$ denotes the $d$-uple embedding, which commutes since it commutes locally on $D_+(f)$ by the argument above (note that $v_d$ is actually the composition $\mathbf{P}^r_A \isoto \Proj A[x_0,\ldots,x_r]^{(d)} \hookrightarrow \mathbf{P}^N_A$).
+\end{proof}
+
+\begin{problem}
+  Let $A$ be a ring, and let $X$ be a closed subscheme of $\mathbf{P}^r_A$. We define the \emph{homogeneous coordinate ring} $S(X)$ of $X$ for the given embedding to be $A[x_0,\ldots,x_r]/I$, where $I$ is the ideal $\Gamma_*(\II_X)$ constructed in the proof of $(5.16)$. (Of course if $A$ is a field and $X$ a variety, this coincides with the definition given in \emph{(I,\S2)}!) Recall that a scheme $X$ is \emph{normal} if its local rings are integrally closed domains. A closed subscheme $X \subseteq \mathbf{P}^r_A$ is \emph{projectively normal} for the given embedding, if its homogeneous coordinate ring $S(X)$ is an integrally closed domain \emph{(cf.~(I, Ex.~3.18))}. Now assume that $k$ is an algebraically closed field, and that $X$ is a connected, normal closed subscheme of $\mathbf{P}^r_k$. Show that for some $d > 0$, the $d$-uple embedding of $X$ is projectively normal, as follows.
+  \begin{enuma}
+  \item Let $S$ be the homogeneous coordinate ring of $X$, and let $S' = \bigoplus_{n \ge 0} \Gamma(X,\OO_X(n))$. Show that $S$ is a domain, and that $S'$ is its integral closure.
+    \item Use \emph{(Ex.~5.9)} to show that $S_d = S_d'$ for all sufficiently large $d$.
+    \item Show that $S^{(d)}$ is integrally closed for sufficiently large $d$, and hence conclude that the $d$-uple embedding of $X$ is projectively normal.
+    \item As a corollary of $(a)$, show that a closed subscheme $X \subseteq \mathbf{P}^r_A$ is projectively normal if and only if it is normal, and for every $n \ge 0$ the natural map $\Gamma(\mathbf{P}^r,\OO_{\mathbf{P}^r}(n)) \to \Gamma(X,\OO_X(n))$ is surjective.
+  \end{enuma}
+\end{problem}
+%\begin{lemma}[{\cite[VI, Exc.~17]{CE56}}]\label{tensorstalkslem}
+%  $(\FF \otimes_{\OO_X} \GG)_p \cong \FF_p \otimes_{\OO_{X,p}} \GG_p$.
+%\end{lemma}
+%\begin{proof}[Proof of Lemma \ref{tensorstalkslem}]
+%  It suffices to show this for the tensor product presheaf by Prop.~1.2 since the stalks of a presheaf and its sheafification are the same.
+%  \par For every $U$, we have map defined as the composition
+%  \begin{equation*}
+%    \FF(U) \otimes_{\OO_X(U)} \GG(U) \to \FF_p \otimes_{\OO_X(U)} \GG_p \to \FF_p \otimes_{\OO_{X,p}} \GG_p,
+%  \end{equation*}
+%  where the first map is the tensor of the two maps restricting to stalks, and the second is by considering the $\OO_X(U)$-bilinear map $\FF_p \times \GG_p \to \FF_p \otimes_{\OO_{X,p}} \GG_p$ defined by $s_p \times t_p \mapsto s_p \otimes_{\OO_{X,p}} t_p$. Taking the limit over these maps, we see we have a map
+%  \begin{equation*}
+%    f\colon (\FF \otimes_{\OO_X} \GG)_p \to \FF_p \otimes_{\OO_{X,p}} \GG_p.
+%  \end{equation*}
+%  \par In the other direction, we have the $\OO(U)$-bilinear maps defined as the composition
+%  \begin{equation*}
+%    \FF(U) \times \GG(U) \to \FF(U) \otimes_{\OO_X(U)} \GG(U) \to (\FF \otimes_{\OO_X} \GG)_p
+%  \end{equation*}
+%  which gives us a $\OO_{X,p}$-bilinear map $\FF_p \times \GG_p \to (\FF \otimes_{\OO_X} \GG)_p$ after passing through the limit, and so by the universal property of the tensor product, we have map
+%  \begin{equation*}
+%    g\colon\FF_p \otimes_{\OO_{X,p}} \GG_p \to (\FF \otimes_{\OO_X} \GG)_p.
+%  \end{equation*}
+%  \par We want to show that $g \circ f = f \circ g = \id$. For the first, let $(s \otimes_{\OO_X} t)_p$ be a stalk in $(\FF \otimes_{\OO_X} \GG)_p$; pick a representative $s \otimes_{\OO_X(U)} t$ for $s \in \FF(U)$, $t \in \GG(U)$. By the definition of $f$, this gets mapped to the element $s_p \otimes_{\OO_{X,p}} t_p \in \FF_p \otimes_{\OO_{X,p}} \GG_p$. Using the representatives chosen above, we see that by the definition of $g$, this gets mapped to $(s \otimes_{\OO_X} t)_p$ as desired. In the other direction, let $s_p \otimes_{\OO_X,p} t_p \in \FF_p \otimes_{\OO_X,p} \GG_p$. Picking representatives $s_p = \braket{U,s}$, $t_p = \braket{U,t}$, we have that $g(s_p \otimes_{\OO_X,p} t_p) = (s \otimes_{\OO_{X}(U)} t)_p$. By definition of $f$, this then gets mapped to $s_p \otimes_{\OO_X,p} t_p$, and we are done.
+%\end{proof}
+%\begin{lemma}\label{intfunctionfield}
+%  If $X = \Proj S$ is integral with $S$ generated by $S_1$ as an $S_0$-algebra, then $\Gamma(X,\OO_X) = \bigcap \Gamma(D_+(x_i),\OO_X) = \bigcap_{\mathfrak{p} \in X} \OO_{X,\mathfrak{p}}$, where the intersection takes place in $\Frac(S)$.
+%\end{lemma}
+%\begin{proof}[Proof of Lemma \ref{intfunctionfield}]
+%  Recall $\Gamma(D_+(x_i),\OO_X) \hookrightarrow \Frac(\Gamma(D_+(x_i),\OO_X)) = K(X) = \OO_\xi$ where $\xi \in X$ is the generic point by Problem $3.6$. Now $\Gamma(X,\OO_X) \to K(X)$ is injective since if $f_\xi = 0$, then it is zero on an affine neighborhood, and so on any $D_+(x_i)$ it is zero by the above. Thus, $\Gamma(X,\OO_X) \to \Gamma(D_+(x_i),\OO_X)$ is injective since $\Gamma(D_+(x_i),\OO_X) \to K(X)$ is injective for all $i$, and so $\Gamma(X,\OO_X) \to K(X)$ is injective. Thus, $\Gamma(X,\OO_X) = \bigcap \Gamma(D_+(x_i),\OO_X) = \bigcap S_{(x_i)}$ by the sheaf property. For the second equality, it then suffices to show $R = \cap_{\mathfrak{p} \in \Spec R} R_\mathfrak{p}$, but this is \cite[Lem.~8.7]{Rei95}.
+%\end{proof}
+\begin{proof}[Proof of $(a)$]
+  We know by Cor.~$5.16(a)$ that $X = \Proj S$, and so to show $S$ is a domain, it suffices to show that $\Proj S$ is irreducible, for otherwise $X = V(0) = V(fg) = V(f) \cup V(g)$. But $X$ is connected, so it is irreducible.
+  \par Now regard $S'$ as the global sections of the sheaf of rings $\mathscr{S} = \bigoplus_{n \ge 0} \OO_X(n)$ on $X$; we claim that $\mathscr{S}$ is a sheaf of integrally closed domains. We see
+  \begin{equation*}
+    \mathscr{S}_{\mathfrak{p}} = \bigoplus_{n \ge 0} (S_{\mathfrak{p}})_n = \left\{ \frac{s}{f} \in S_{\mathfrak{p}} \middle\vert \deg s \ge \deg f \right\}
+  \end{equation*}
+  by using Prop.~$2.5(a)$. Now suppose $t$ is integral over $\mathscr{S}_{\mathfrak{p}}$, hence integral over $S_{\mathfrak{p}}$; by Lemma \ref{gradedic} we can assume $t$ is homogeneous. Moreover, we can assume $t$ has nonnegative degree since otherwise it cannot be integral over $\mathscr{S}_{\mathfrak{p}}$. Let $h(y) = \sum_{i=0}^n a_iy^{n-i}$ be the monic polynomial with $t$ as root; we can assume $a_i \in (S_\mathfrak{p})_{di}$ since $h(t) = 0$ implies its degree $dn$ piece is zero. Now let $x_j \in S \setminus \mathfrak{p}$, which exists since $\mathfrak{p} \not\supset S_+$; note $x_j \in S_{\mathfrak{p}}^\times$. Then, $t/x_j^d$ is integral over $S_{\mathfrak{p}}$ with monic polynomial $h'(y) = \sum_{i=0}^n (a_i/x_j^{di}) y^{n-i}$. But the coefficients are all in $S_{(\mathfrak{p})}$, hence $t/x_j^d \in S_{(\mathfrak{p})}$ since $X$ is normal, and finally $t \in S_{\mathfrak{p}}$. But $t$ has nonnegative degree, hence $t \in \mathscr{S}_{\mathfrak{p}}$, hence $\mathscr{S}_{\mathfrak{p}}$ is integrally closed.
+  \par We now claim $\mathscr{S}$ is a sheaf of integrally closed domains. On $D_+(f)$, $\mathscr{S}(D_+(f)) = (S_f)_{\ge0}$ by Prop.~$2.5(b)$, which is a domain; hence, for arbitrary $U = \bigcup D_+(f_i)$, $\mathscr{S}(U)$ is a domain. Now suppose $t \in \Frac(\mathscr{S}(U))$ is integral. Then, $t_\mathfrak{p}$ is integral in $\mathscr{S}_\mathfrak{p}$, and so $t_\mathfrak{p} \in \mathscr{S}_{\mathfrak{p}}$ for all $\mathfrak{p} \in X$. Hence representatives $t_\mathfrak{p} = \braket{t,V_\mathfrak{p}}$ glue together to a section $t \in \mathscr{S}(U)$, hence $\mathscr{S}$ is a sheaf of integrally closed domains. Thus, $S' = \mathscr{S}(X)$ is integrally closed, and since it contains $S$ by the proof of Prop.~5.13 and is contained in $\Frac S$ by the proof of Thm.~5.19, $S'$ is the integral closure of $S$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  By Problem $5.9(b)$, $S_d \cong \Gamma(X,\OO_X(d)) = S'_d$ for sufficiently large $d$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  By part $(b)$, choose $d$ such that $S_{dn} = S'_{dn}$ for all $n > 0$. Now if $t \in \Frac(S^{(d)})$ is integral over $S^{(d)}$, then $t \in S^{\prime(d)} = S^{(d)}$. Thus, since $S(X) = S^{(d)}$ by Cor.~$5.16(a)$, and $S^{(d)}$ is integrally closed as shown above, the $d$-uple embedding of $X$ is projectively normal.
+\end{proof}
+\begin{remark}[concerning $(d)$]
+  We keep the assumption that $X$ is connected; otherwise, we cannot apply $(a)$ to get the $\Leftarrow$ direction.
+\end{remark}
+\begin{proof}[Proof of $(d)$]
+  If $X$ is projectively normal, then $S$ is an integrally closed domain, hence $S = S'$ by $(a)$, and so $S_n = \Gamma(X,\OO_X(n))$ for all $n$. Then, $\OO_{X,\mathfrak{p}} \cong S_{(\mathfrak{p})} = S'_{(\mathfrak{p})}$ is an integrally closed domain for any $\mathfrak{p} \in X$ since $S'$ is integrally closed by \cite[Prop.~5.13]{AM69}, hence $X$ is normal. Now let $T = A[x_0,\ldots,x_r]$; then, $T \to S$ is surjective and since $T_n = \Gamma(\mathbf{P}^r_A,\OO_{\mathbf{P}^r_A}(n))$ by Prop.~5.13, $\Gamma(\mathbf{P}^r_A,\OO_{\mathbf{P}^r_A}(n)) \twoheadrightarrow \Gamma(X,\OO_X(n))$ for all $n \ge 0$. Conversely, we have the exact sequence
+  \begin{equation*}
+    0 \longrightarrow \II_X(n) \longrightarrow \OO_{\mathbf{P}^r_A}(n) \longrightarrow \iota_*\OO_X(n) \longrightarrow 0
+  \end{equation*}
+  for all $n$ by exactness of twisting (Lemma \ref{twistexact}), and taking global sections and summing over all $n \ge 0$, we have
+  \begin{equation*}
+    0 \longrightarrow I \longrightarrow T \longrightarrow S' \longrightarrow 0
+  \end{equation*}
+  by the surjective hypothesis where $T = A[x_0,\ldots,x_r]$, $S'$ is as above, and $I$ is as in the statement of the problem. Note then that $S = S'$, and by $(a)$ we have that $S'$ is integrally closed, hence $X$ is projectively normal.
+\end{proof}
+
+\begin{problem}\emph{Extension of Coherent Sheaves}.
+  We will prove the following theorem in several steps: Let $X$ be a noetherian scheme, let $U$ be an open subset, and let $\FF$ be a coherent sheaf on $U$. Then there is a coherent sheaf $\FF$ on $X$ such that $\FF\vert_U \cong \FF$.
+  \begin{enuma}
+  \item On a noetherian affine scheme, every quasi-coherent sheaf is the union of its coherent subsheaves. We say a sheaf $\FF$ is \emph{union} of its subsheaves $\FF_\alpha$ if for every open set $U$, the group $\FF(U)$ is the union of the subvroups $\FF_\alpha(U)$.
+  \item Let $X$ be an affine noetherian scheme, $U$ an open subset, and $\FF$ coherent on $U$. Then there exists a coherent sheaf $\FF'$ on $X$ with $\FF'\vert_U \cong \FF$.
+  \item With $X,U,\FF$ as in $(b)$, suppose furthermore we are given a quasi-coherent sheaf $\GG$ on $X$ such that $\FF \subseteq \GG\vert_U$. Show that we can find $\FF'$ a coherent subsheaf of $\GG$, with $\FF'\vert_U \cong \FF$.
+  \item Now let $X$ be any noetherian scheme, $U$ an open subset, $\FF$ a coherent sheaf on $U$, and $\GG$ a quasi-coherent sheaf on $X$ such that $\FF \subseteq \GG\vert_U$. Show that there is a coherent subsheaf $\FF' \subseteq \GG$ on $X$ with $\FF'\vert_U \cong \FF$. Taking $\GG = i_*\FF$ proves the result announced at the beginning.
+  \item As an extra corollary, show that on a noetherian scheme, any quasi-coherent sheaf $\FF$ is the union of its coherent subsheaves.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Suppose our scheme is $\Spec B$. By Prop.~5.4, $\FF \cong \tilde{M}$ for $M \in \MOD B$. Then $M = \bigcup M_\alpha$ for $M_\alpha \in \Mod B$. Applying $\:\tilde{}\:$ to both sides gives the claim.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $X = \Spec B$. $U$ is noetherian by Lemma \ref{noethinherit}, hence by Prop.~5.4, $\FF\vert_{D(f_i)} \cong \tilde{M}_i$ for $M_i \in \Mod B_{f_i}$, and by \cite[Prop.~6.5]{AM69}, these $M_i$ are noetherian.
+  \par Now consider $\iota\colon U \hookrightarrow X$. Then, $\iota_*\FF$ is quasi-coherent by Prop.~$5.8(c)$, and $\iota_*\FF\vert_U \cong \FF$. By $(a)$, $\iota_*\FF = \bigcup_\alpha \tilde{M}_\alpha$ for $\tilde{M} \in \Mod B$. Restricting to each $D(f_i)$ gives $\FF\vert_{D(f_i)} = \bigcup_\alpha (M_\alpha)_{f_i}\!\!\tilde{}\:\:$ by Prop.~$5.1(c)$. But then, $\bigcup_\alpha (M_\alpha)_{f_i} = M_i$ by Cor.~5.5, hence by the noetherian property we only need finitely many $\alpha$; let $A_i$ be these $\alpha$. Letting $A = \bigcup A_i$, which is finite since we have finitely many $D(f_i)$, then $\FF' \coloneqq \bigcup_{\alpha \in A} \tilde{M}_\alpha$ is such that $\FF'\vert_U \cong \FF$, for on each $D(f_i)$ they are equal. But $\bigcup_{\alpha \in A} \tilde{M}_\alpha = \left(\bigcup_{\alpha \in A} M_\alpha\right)\tilde{}\:$, so the latter module is in $\Mod B$, hence $\FF'$ is coherent.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $\rho$ be the natural map $\GG \to \iota_*\iota^*\GG$, and consider the subsheaf $\GG' = \rho^{-1}(i_*\FF) \subset \GG$. On open sets $V \subset U$, $\GG(V) \to \iota_*\iota^*\GG$ is an isomorphism, hence $\GG'\vert_U \cong \FF$. Now by the same argument as in $(b)$ replacing $\iota_*\FF$ with $\GG'$, there is a coherent subsheaf $\FF' \subset \GG'$ such that $\FF'\vert_U = \FF$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  First let $\{U_i\}_{i=1}^n$ be an affine cover of $X$, which is finite since $X$ is noetherian. Let $X_i = \bigcup_{j=1}^i U_j$. Let $\FF'_0 = \FF$. We will construct coherent subsheaves $\FF'_i$ of $\GG\vert_{X_i}$ such that $\FF'_i\vert_{U \cap X_i} \cong \FF\vert_{U \cap X_i}$ by induction for each $i > 0$. By $(c)$, we can extend $\FF'_{i-1}\vert_{U_i \cap (U \cup X_{i-1})}$ to a coherent sheaf $\HH'_i \subset \GG\vert_{U_i}$; glueing $\FF'_{i-1}$ and $\HH'_i$ together on $U_i \cap (U \cup X_{i-1})$ gives a coherent subsheaf $\FF'_i$ of $\GG\vert_{X_i}$ such that $\FF'_i\vert_{U \cap X_i} \cong \FF\vert_{U \cap X_i}$. By induction, $\FF' \coloneqq \FF'_n$ is a coherent subsheaf of $\GG$ that satisfies the claim.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  Let $s \in \FF(U)$ and $\GG$ the sheaf on $U$ generated by $s$. $\GG$ is coherent since on any affine open set in $U$, $\GG\vert_U$ is isomorphic to the sheaf associated to the module generated by the image of $s$. Thus, $\GG$ extends to a coherent subsheaf $\GG'$ of $\FF$, and $s \in \GG'(U)$. We see that $\FF$ is equal to the union over all such $\GG'$.
+\end{proof}
+
+\begin{problem}
+  \emph{Tensor Operations on Sheaves}. First we recall the definitions of various tensor operations on a module. Let $A$ be a ring, and let $M$ be an $A$-module. Let $T^n(M)$ be the tensor product $M \otimes \cdots \otimes M$ of $M$ with itself $n$ times, for $n \ge 1$. For $n = 0$ we put $T^0(M) = A$. Then $T(M) = \bigoplus_{n \ge 0} T^n(M)$ is a (noncommutative) $A$-algebra, which we call the \emph{tensor algebra} of $M$. We define the \emph{symmetric algebra} $S(M) = \bigoplus_{n \ge 0} S^n(M)$ to be the quotient of $T(M)$ by the two-sided ideal generated by all expressions $x \otimes y - y \otimes x$, for all $x,y \in M$. Then $S(M)$ is a commutative $A$-alegbra. Its component $S^n(M)$ in degree $n$ is called the $n$th \emph{symmetric product} of $M$. We denote the image of $x \otimes y$ in $S(M)$ by $xy$, for any $x,y \in M$. As an example, note that if $M$ is a free $A$-module of rank $r$, then $S(M) \cong A[x_1,\ldots,x_r]$.
+  \par We define the \emph{exterior algebra} $\bigwedge(M) = \bigoplus_{n \ge 0} \bigwedge^n(M)$ of $M$ to be the quotient of $T(M)$ by the two-sided ideal generated by all expressions $x \otimes x$ for $x \in M$. Note that this ideal contains all expressions of the form $x \otimes y + y \otimes x$, so that $\bigwedge(M)$ is a \emph{skew commutative} graded $A$-algebra. This means that if $u \in \bigwedge^r(M)$ and $v \in \bigwedge^s(M)$, then $u \wedge v = (-1)^{rs} v \wedge u$ (here we denote by $\wedge$ the multiplication in this algebra; so the image of $x \otimes y$ in $\bigwedge^2(M)$ is denoted by $x \wedge y$). The $n$th component $\bigwedge^n(M)$ is called the $n$the \emph{exterior power} of $M$.
+  \par Now let $(X,\OO_X)$ be a ringed space, and let $\FF$ be a sheaf of $\OO_X$-modules. We define the \emph{tensor algebra}, \emph{symmetric algebra}, and \emph{exterior algebra} of $\FF$ by taking the sheaves associated to the presheaf, which to each open set $U$ assigns the corresponding tensor operation applied to $\FF(U)$ as an $\OO_X(U)$-module. The results are $\OO_X$-algebras, and their components in each degree are $\OO_X$-modules.
+  \begin{enuma}
+  \item Suppose that $\FF$ is locally free of rank $n$. Then $T^r(\FF)$, $S^r(\FF)$, and $\bigwedge^r(\FF)$ are also locally free, of ranks $n^r$, $\binom{n+r-1}{n-1}$, and $\binom{n}{r}$ respectively.
+  \item Again let $\FF$ be locally free of rank $n$. Then the multiplication map $\bigwedge^r\FF\otimes\bigwedge^{n-r}\FF \to \bigwedge^n\FF$ is a perfect pairing for any $r$, i.e., it induces an isomorphism of $\bigwedge^r\FF$ with $(\bigwedge^{n-r}\FF)\:\check{}\: \otimes \bigwedge^n\FF$. As a special case, note if $\FF$ has rank $2$, then $\FF \cong \FF\:\check{}\: \otimes \bigwedge^2\FF$.
+  \item Let $0 \to \FF' \to \FF \to \FF'' \to 0$ be an exact sequence of locally free sheaves. Then for any $r$ there is a finite filtration of $S^r(\FF)$,
+    \begin{equation*}
+      S^r(\FF) = F^0 \supseteq F^1 \supseteq \cdots \supseteq F^r \supseteq F^{r+1} = 0
+    \end{equation*}
+    with quotients
+    \begin{equation*}
+      F^p/F^{p+1} \cong S^p(\FF') \otimes S^{r-p}(\FF'')
+    \end{equation*}
+    for each $p$.
+  \item Same statement as $(c)$, with exterior powers instead of symmetric powers. In particular, if $\FF',\FF,\FF''$ have ranks $n',n,n''$ respectively, there is an isomorphism $\bigwedge^n\FF\cong\bigwedge^{n'}\FF'\otimes\bigwedge^{n''}\FF''$.
+  \item Let $f\colon X \to Y$ be a morphism of ringed spaces, and let $\FF$ be an $\OO_Y$-module. Then $f^*$ commutes with all the tensor operations on $\FF$, i.e., $f^*(S^n(\FF)) = S^n(f^*\FF)$ etc.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Suppose $\FF\vert_U \cong \OO_U^n$; for any $V \subset U$, note $R^n \coloneqq \OO^n(V)$ is free of rank $n$. Now $T^r(R^n)$ is generated by simple tensors $x_{i_1} \otimes \cdots \otimes x_{i_r}$ for $1 \le i_j \le n$, hence is free of rank $n^r$, and $T^r(\FF)$ is then locally free of rank $n^r$. Next, $\bigwedge^r(R^n)$ is generated by exterior products $x_{i_1} \wedge \cdots \wedge x_{i_r}$ for $1 \le i_1 < i_2 < \cdots < i_r \le n$, hence is free of rank $\binom{n}{r}$, and $\bigwedge^r(\FF)$ is then locally free of rank $\binom{n}{r}$.
+  \par For $S^r(R^n)$, we note that $S(R^n) \cong R[x_1,\ldots,x_n]$, and that $S^r(R^n)$ is generated by monomials $x_{i_1} \cdots x_{i_r}$. To count these, we use the ``stars and bars'' argument. We have $r$ ``stars'' which we want to separate into $n$ groups. To count how many ways we could do this, we count the number of ways we can put $n+r$ stars into $n$ groups thare are non-empty, and then we subtract one star from each bin to allow for empty ones. But this is the same as considering the ways you can put $n-1$ bars in $n+r-1$ gaps to make $n$ bins. Thus, we have that $S(R^n)$ has rank $\binom{n+r-1}{n-1}$, and $S^r(\FF)$ is then locally free of rank $\binom{n+r-1}{n-1}$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We recall first that $(\bigwedge^{n-r}\FF)\:\check{}\: \otimes \bigwedge^n\FF \cong \HHom(\bigwedge^{n-r}\FF,\bigwedge^n\FF)$ by Problem $5.1(b)$, hence it suffices to show that we have an isomorphism $\bigwedge^r\FF \cong \HHom(\bigwedge^{n-r}\FF,\bigwedge^n\FF)$.
+  \par We first define the map $\bigwedge^r\FF \to \HHom(\bigwedge^{n-r}\FF,\bigwedge^n\FF)$; by Prop.~$1.2$, it suffices to construct the map from the presheaf $\bigwedge^r_\PP\FF$. Now, using Prop.~$1.2$ again, if $f \in \bigwedge^r_p\FF(U)$, it suffices to write down a map from the presheaf $\bigwedge^{n-r}_\PP\FF\vert_U$ to the sheaf $\bigwedge^n\FF$. So, define the map to be $g \mapsto (f\vert_V \wedge g)^+$ for all $V$.
+  \par It suffices to show the restriction of this map has a two-sided inverse for all $U$ such that $\FF\vert_U \cong \OO_U^n$. Note that on $U$, $\bigwedge^n\FF\vert_U \cong \OO_U$ by $(a)$, and that the sheafifications involved in the construction of our exterior algebra have no effect by $(a)$. Now given a morphism $\bigwedge^{n-r}\FF\vert_U \to \bigwedge^n \FF\vert_U \cong \OO_U$, this induces a morphism on sections over $U$, i.e., $\varphi\colon\bigwedge^{n-r}\FF(U) \to \OO(U)$. We can then define
+  \begin{equation*}
+    h = \sum_{j_1 < j_2 < \cdots < j_{n-r}}\sgn(\sigma)x_{i_1}\wedge\cdots\wedge x_{i_r}\varphi(x_{j_1} \wedge \cdots \wedge x_{j_{n-r}}),
+  \end{equation*}
+  where the $x_{i_\ell}$ are the basis elements of $\OO^n(U)$ listed in ascending order that have index not in $\{j_1,\ldots,j_{n-r}\}$, and $\sgn(\sigma)$ is the sign of the permutation $(i_1,\ldots,i_r,j_1,\ldots,j_{n-r})$.
+  \par We check these operations are inverses of each other; we can do this by checking on basis elements since our maps were constructed linearly. Suppose $f = x_{i_1} \wedge \cdots \wedge x_{i_r}$. This corresponds to the map $g \mapsto x_{i_1} \wedge \cdots \wedge x_{i_r} \wedge g$, which is nonzero only when the $i$'s and $j$'s are all distinct, hence $h = \sgn(\sigma)x_{i_1} \wedge \cdots \wedge x_{i_r}\sgn(\sigma) = f$.
+  \par Conversely, suppose we start off with a morphism $\bigwedge^{n-r}\FF\vert_U \to \bigwedge^n \FF\vert_U \cong \OO_U$. This corresponds to $h$ as above, and corresponds further to the map
+  \begin{equation*}
+    g \mapsto \left[ \sum_{j_1 < j_2 < \cdots < j_{n-r}}\sgn(\sigma)x_{i_1}\wedge\cdots\wedge x_{i_r}\varphi(x_{j_1} \wedge \cdots \wedge x_{j_{n-r}}) \right] \wedge g.
+  \end{equation*}
+  Now if $g = x_{j_1} \wedge \cdots \wedge x_{j_{n-r}}$, the summand is nonzero only when the $i$'s and $j's$ are all distinct. Hence,
+  \begin{equation*}
+    g \mapsto \sgn(\sigma) x_{i_1}\wedge\cdots\wedge x_{i_r} \wedge x_{j_1} \wedge \cdots \wedge x_{j_{n-r}} \varphi(g),
+  \end{equation*}
+  and $x_{i_1}\wedge\cdots\wedge x_{i_r} \wedge x_{j_1} \wedge \cdots \wedge x_{j_{n-r}}$ corresponds to $\sgn(\sigma)$ in $\OO(V)$, hence the contributions $\sgn(\sigma)$ cancel, and we have $g \mapsto \varphi(g)$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $U$ be an open subset of $X$. Define $F^p_{\PP}$ to be the sub-presheaf of $S^r_\PP \FF$ where $F^p_\PP(U)$ is generated by elements of the form
+  \begin{equation*}
+    x'_1 \cdots x'_p \cdot y_{p+1} \cdots y_r, \quad x'_1,\ldots,x'_p \in \FF'(U),~y_{p+1},\ldots,y_r \in \FF(U).
+  \end{equation*}
+  We have a filtration $F^p_\PP \supset F^{p+1}_\PP$ of presheaves, hence one of sheaves by Lemma \ref{sheafifyexact}.
+  \par We now find a map $F^p/F^{p+1} \to S^p(\FF') \otimes S^{r-p}(\FF'')$. First define a map from $F^p_\PP$:
+  \begin{equation}\label{symmmapdef}
+    x'_1 \cdots x'_p \cdot y_{p+1} \cdots y_r \mapsto \left((x'_1 \cdots x'_p) \otimes (y_{p+1} \cdots y_r)\right)^\#
+  \end{equation}
+  where $x''_{p+1},\ldots,x''_r$ are the images of $y_{p+1},\ldots,y_r$ in $F''$. This clearly factors through $F_\PP^{p+1}(U)$ since the image of any $x'_i \in \FF'(U)$ in $\FF''(U)$ is zero, hence we have a map $F^p_\PP(U)/F^{p+1}_\PP(U) \to (S^p(\FF') \otimes S^{r-p}(\FF''))(U)$ by the universal property of the quotient. Sheafifying, we have a map $F^p/F^{p+1} \to S^p(\FF') \otimes S^{r-p}(\FF'')$.
+  \par Now to show this map is an isomorphism, it suffices to show it is an isomorphism on each $U$ such that $\FF',\FF,\FF''$ are all free; note that in this case, sheafification has no effect since our sheaves are all free by $(a)$. So, it suffices to show that the kernel of the morphism \eqref{symmmapdef} is exactly $F^{p+1}(U)$. But this is true since the right side of \eqref{symmmapdef} is zero if and only if one of the factors in the tensor are zero, but if the left side is non-zero, then the only way this could happen is if one of the $x''_i$ are zero. But this is true if and only if $y_i$ is in the image of $\FF'(U)$, for our original exact sequence is exact on $U$ by the fact that our sheaves are free on $U$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  Let $U$ be an open subset of $X$. Define $F^p_{\PP}$ to be the sub-presheaf of $\bigwedge^r_\PP \FF$ where $F^p_\PP(U)$ is generated by elements of the form
+  \begin{equation*}
+    x'_1 \wedge \cdots \wedge x'_p \wedge y_{p+1} \wedge \cdots \wedge y_r, \quad x'_1,\ldots,x'_p \in \FF'(U),~y_{p+1},\ldots,y_r \in \FF(U).
+  \end{equation*}
+  We have a filtration $F^p \supset F^{p+1}$ as in $(c)$.
+  \par We now find a map $F^p/F^{p+1} \to \bigwedge^p \FF' \otimes \bigwedge^{r-p}\FF''$. First define a map from $F^p_\PP$:
+  \begin{equation}\label{exteriormapdef}
+    x'_1 \wedge \cdots \wedge x'_p \wedge y_{p+1} \wedge \cdots \wedge y_r \mapsto \left((x'_1 \wedge \cdots \wedge x'_p) \otimes (x''_{p+1} \wedge \cdots \wedge x''_r)\right)^\#
+  \end{equation}
+  where $x''_{p+1},\ldots,x''_r$ are as in $(c)$. This clearly factors through $F_\PP^{p+1}(U)$ as in $(c)$, hence we have a map $F^p_\PP(U)/F^{p+1}_\PP(U) \to \left(\bigwedge^p \FF' \otimes \bigwedge^{r-p}\FF''\right)(U)$ as in $(c)$. Sheafifying, we have a map $F^p/F^{p+1} \to \bigwedge^p \FF' \otimes \bigwedge^{r-p}\FF''$.
+  \par As in $(c)$, it suffices to show $F^{p+1}(U)$ is the entire kernel of the morphism \eqref{exteriormapdef}. But this follows by considering when the right side of \eqref{exteriormapdef} is zero as in $(c)$.
+  \par Finally, we show $\bigwedge^n\FF \cong \bigwedge^{n'}\FF' \otimes \bigwedge^{n''}\FF''$ if $\FF',\FF,\FF''$ have ranks $n',n,n''$ respectively. Letting $r = n$, we have $F^p/F^{p+1} \cong \bigwedge^p\FF' \otimes \bigwedge^{n-p} \FF'' = 0$ unless $p = n'$ and $n-p = n''$ by $(a)$, and hence $F^{n'} = F^n = \bigwedge^n\FF$.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  For $T^n(\FF)$, we induct on $n$. The $n=0$ case is clear. Lemma \ref{tpinvimg} gives
+  \begin{equation*}
+    f^*(T^n(\FF)) \cong f^*(\FF \otimes T^{n-1}(\FF)) \cong f^*\FF \otimes f^*T^{n-1}(\FF)) \cong T^n(f^*\FF)
+  \end{equation*}
+  by inductive hypothesis.
+  \par Now for $S^n$, we first have the exact sequence
+  \begin{equation*}
+    0 \longrightarrow \II \longrightarrow T^n(\FF) \longrightarrow S^n(\FF) \longrightarrow 0
+  \end{equation*}
+  for some ideal sheaf $\II$ since $T^n(\FF) \to S^n(\FF)$ is surjective (it is surjective on each open set such that $\FF$ is free, hence is surjective on stalks, and so it is surjective by Problem $1.2(b)$). Now, since $f^*$ is a left adjoint by Problem $1.18$, it is right exact by \cite[Thm.~2.6.1]{Wei94}, giving us the top row in the diagram below. Moreover, by the argument above for $T^n$, we have that $f^*(x_1 \otimes \cdots \otimes x_n) \in f^*\II$ is equal to $f^*x_1 \otimes \cdots \otimes f^*x_n$, hence we have the bottom row in the diagram below. Provided we can show the map $\gamma$ exists, we have $f^*S^n(\FF) \cong S^n(f^*\FF)$ by applying the snake lemma \cite[Lem.~1.3.2]{Wei94} to the diagram below.
+  \begin{equation*}
+    \begin{tikzcd}
+      {}& f^*\II \rar\dar[equals] & f^*T^n(\FF) \rar\dar[equals] & f^*S^n(\FF) \rar\dar{\gamma} & 0\\
+      0 \rar & f^*\II \rar & T^n(f^*\FF) \rar{\psi} & S^n(f^*\FF) \rar & 0
+    \end{tikzcd}
+  \end{equation*}
+  But we can define $f^*T^n(\FF) \to S^n(f^*\FF)$ as the composition of the middle isomorphism and $\psi$; this has kernel $f^*\II$ by the exactness of the bottom row, hence factors through $f^*S^n(\FF)$ by the universal property for the quotient. Thus, $f^*S^n(\FF) \cong S^n(f^*\FF)$. The same proof shows $f^*\bigwedge^n(\FF) \cong \bigwedge^n(f^*\FF)$.
+\end{proof}
+
+\begin{problem}
+  \emph{Affine Morphism}. A morphism $f\colon X \to Y$ of schemes is \emph{affine} if there is an open affine cover $\{V_i\}$ of $Y$ such that $f^{-1}(V_i)$ is affine for each $i$.
+  \begin{enuma}
+  \item Show that $f\colon X \to Y$ is an affine morphism if and only if for \emph{every} open affine $V \subseteq Y$, $f^{-1}(V)$ is affine.
+  \item An affine morphism is quasi-compact and separated. Any finite morphism is affine.
+  \item Let $Y$ be a scheme, and let $\Aa$ be a quasi-coherent sheaf of $\OO_Y$-algebras (i.e., a sheaf of rings which is at the same time a quasi-coherent sheaf of $\OO_Y$-modules). Show that there is a unique scheme $X$, and a morphism $f\colon X \to Y$, such that for every open affine $V \subseteq Y$, $f^{-1}(V) \cong \Spec \Aa(V)$, and for every inclusion $U \hookrightarrow V$ of open affines of $Y$, the morphism $f^{-1}(U) \hookrightarrow f^{-1}(V)$ corresponds to the restriction homomorphism $\Aa(V) \to \Aa(U)$. The scheme $X$ is called $\SPEC \Aa$.
+  \item If $\Aa$ is a quasi-coherent $\OO_Y$-algebra, then $f\colon X = \SPEC \Aa \to Y$ is an affine morphism, and $\Aa \cong f_*\OO_X$. Conversely, if $f\colon X \to Y$ is an affine morphism, then $\Aa = f_*\OO_X$ is a quasi-coherent sheaf of $\OO_Y$-algebras, and $X \cong \SPEC \Aa$.
+  \item Let $f\colon X \to Y$ be an affine morphism, and let $\Aa = f_*\OO_X$. Show that $f_*$ induces an equivalence of categories from the category of quasi-coherent $\OO_X$-modules to the category of quasi-coherent $\Aa$-modules (i.e., quasi-coherent $\OO_Y$-modules having a structure of $\Aa$-module).
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(b)$]
+  Since each $U_i \coloneqq f^{-1}(V_i)$ is affine hence quasi-compact by Problem $2.13(b)$, $f$ is quasi-compact. Now consider the diagonal morphism $\Delta \colon X \to X \times_Y X$. By Thm.~3.3, $X \times_Y X$ is covered by open affines $U_i \times_{V_i} U_i$. By Cor.~4.2 to show that $f$ is separated, it suffices to show that $\Delta(X) \cap U_i \times_{V_i} U_i$ is closed for all $i$ by Lemma \ref{closedlocalcond}. Now, $\Delta^{-1}(\Delta(X) \cap U_i \times_{V_i} U_i) = U_i$, hence it suffices to show $U_i \to U_i \times_{V_i} U_i$ is a closed immersion; but this is Prop.~4.1. Finally, a finite morphism is affine by definition.
+\end{proof}
+\begin{proof}[Proof of $(a)$]
+  $\Leftarrow$ is clear, so we show $\Rightarrow$. By $(b)$, we have that $f_*\OO_X$ is quasi-coherent by Prop.~5.8. Now suppose $V \subset Y$ is affine; we want to show $f^{-1}(V)$ is affine. Let $A = f_*\OO_X(V) = \OO_X(f^{-1}(V))$; by Problem $2.4$, the morphism $A \to \OO_X(f^{-1}(V))$ corresponds to a scheme morphism $\psi\colon f^{-1}(V) \to \Spec A$. By Lemma \ref{nikecor}, there is an open cover $V = \bigcup D(f_i)$, $f_i \in R$ such that $D(f_i)$ are distinguished in some $V_j$. Now the inverse image through a map of affine schemes of a distinguished open subset is distinguished by the proof of Prop.~$2.3(b)$, hence $f^{-1}(D(f_i))$ is distinguished in $f^{-1}(V_j)$, and so the $f^{-1}(D(f_i))$ are affine. Now since $f_*\OO_X$ is quasi-coherent, $A_{f_i} = f_*\OO_X(D(f_i)) = \OO_X(f^{-1}(D(f_i)))$, so $f^{-1}(D(f_i)) = \Spec A_{f_i}$, and the morphism $\psi$ is an isomorphism $f^{-1}(D(f_i)) \isoto \Spec A_{f_i}$. We are done since $f^{-1}(V) = \bigcup f^{-1}(D(f_i))$ and $\Spec A = \bigcup \Spec A_{f_i}$.
+\end{proof}
+%\begin{proof}[Proof of $(d)$]
+%  If $f\colon X = \SPEC \Aa \to Y$ exists, $f$ is affine since $f^{-1}(V) \cong \Spec \Aa(V)$, and then by $(a)$. $\Aa \cong f_*\OO_X$ since for any affine $V$, we have $(f_*\OO_X)(V) = \OO_X(f^{-1}(V)) = \Aa(V)$, 
+%\end{proof}
+%\begin{definition}
+%  Let $f\colon X \to S$ be a morphism of schemes. Denote $\Af(X) \coloneqq f_*\OO_X$ when there is no chance of confusion. If $g\colon Y \to S$ is another morphism of schemes, a morphism $h \colon Y \to X$ with sheaf map $\OO_X \to h_*\OO_Y$ gives a map $\Af(h)\colon f_*\OO_X \to f_*h_*\OO_Y = g_*\OO_Y$ by applying $f_*$ and Lemma \ref{invimgcomp}. This defines a (contravariant) functor $\Af(-) \colon \Sch(S) \to \Alg S$, where $\Alg S$ is the category of $\OO_S$-algebras.
+%\end{definition}
+%\begin{proposition}
+%  Let $f\colon X \to S$ be an affine morphism. For all schemes $g \colon Y \to S$, the functor $\Af(-)$ is fully faithful, i.e., $\Hom_S(Y,X) \cong \Hom_{\OO_S}(\Af(X),\Af(Y))$ as sets.
+%\end{proposition}
+%\begin{proof}
+%  Suppose first that $S = \Spec A$ and $X = \Spec B$ are affine for an $A$-algebra $B$. The claim comes from the fact that $\Af(X) \cong \tilde{B}$, and so we have diagrams
+%  \begin{equation*}
+%    \begin{tikzcd}[column sep=small,row sep=tiny]
+%      \Af(X) \arrow{rr} & & \Af(Y) & & B \arrow{rr} & & \OO_Y(Y) & & X\arrow{ddr} & & Y\arrow{ll}\arrow{ddl}\\
+%      & & {}\arrow[Leftrightarrow]{rr}[swap,yshift=-2pt]{\text{Problem 5.3}} & & {} & & {}\arrow[Leftrightarrow]{rr}[swap,yshift=-2pt]{\text{Problem 2.4}} & & {}\\
+%      & \OO_S\arrow{uul}\arrow{uur} & & & & A\arrow{uul}\arrow{uur} & & & & S
+%    \end{tikzcd}
+%  \end{equation*}
+%  where the two functors from Problems $5.3$ and $2.4$ are fully faithful, hence their composition is also.
+%  \par Now for the general case, let $S_\alpha$ be a cover of $S$ such that $f^{-1}(S_\alpha)$ are affine. Now for any homomorphism $\varphi\colon\Af(X) \to \Af(Y)$ of $\OO_S$-alegbras, we have by restriction the family of homomorphisms $\varphi_\alpha\colon \Af(f^{-1}(S_\alpha)) \to \Af(g^{-1}(S_\alpha))$ of $\OO_{S_\alpha}$-algebras, which correspond bijectively to $S_\alpha$-morphisms $h_\alpha\colon g^{-1}(S_\alpha) \to f^{-1}(S_\alpha)$ by the above. If $\Af(h) = \Af(h')$, they are equal on each $S_\alpha$, hence correspond uniquely to the same $h_\alpha$; since the $S_\alpha$ cover $Y$, $\Af(-)$ is then faithful. Moreover, since for any affine open cover $U$ of $S_\alpha \cap S_\beta$, the restrictions of $h_\alpha$ and $h_\beta$ on $g^{-1}(U)$ coincide since the correspondence above for affine open sets applies to $U$, and so the $h_\alpha$ glue together by Thm.~3.3, Step 3 to a map $h\colon Y \to X$ such that $\Af(h) = \varphi$.
+%\end{proof}
+%\begin{proof}[Proof of $(c)$]
+%  We first show unicity. If $f'\colon X' \to Y$ is another scheme that satisfies the properties in $(c)$, then we have for every open affine $V \subset Y$, an isomorphism $f^{-1}(V) \isoto \Spec \Aa(V) \isoto f^{\prime-1}(V)$. It suffices to show these isomorphisms glue together to form 
+%\end{proof}
+
+\begin{proof}[Proof of $(c)$]
+  For all affine open sets $V \subset Y$, let $X_V \coloneqq \Spec\Aa(V)$. For an inclusion $U \hookrightarrow V$ of affine subsets of $Y$, let $\rho^*_{V,U} \colon X_U \to X_V$ be the morphism of affine schemes induced by the restriction morphism $\rho_{V,U} \colon \Aa(V) \to \Aa(U)$ as in Prop.~$2.3(b)$. We then claim we have the following fibre diagram:
+  \begin{equation}\label{xufibdiag}
+    \begin{tikzcd}
+      X_U \rar{\rho^*_{V,U}}\dar[swap]{f_U} & X_V\dar{f_V}\\
+      U \rar[hook]{\iota} & V
+    \end{tikzcd}
+  \end{equation}
+  By Problem $2.4$, it suffices to show that we have following the pushforward diagram:
+  \begin{equation*}
+    \begin{tikzcd}
+      \Aa(U) & \arrow{l}[swap]{\rho_{V,U}} \Aa(V)\\
+      \OO_Y(U)\uar & \arrow{l} \OO_Y(V)\uar
+    \end{tikzcd}
+  \end{equation*}
+  The square commutes since this is the diagram for the structure morphism $\OO_Y \to \Aa$ associated to the $\OO_Y$-algebra structure on $\Aa$. Letting $\iota$ be the inclusion as above,
+  \begin{equation*}
+    \Aa(V) \otimes_{\OO_Y(V)} \OO_Y(U) = (\Aa(V) \otimes_{\OO_Y(V)} \OO_Y(U))\:\tilde{}\:(U) \cong \iota^*\widetilde{\Aa(V)}(U) = \Aa(U)
+  \end{equation*}
+  by Prop.~$5.2(e)$, hence we have the pushforward diagram above by Lemma \ref{tpalg}. Then, $\rho_{V,U}^*$ is map $X_V \times_V U \to X_V = X_V \times_V V$ obtained by base change, and so is an open immersion by Lemma \ref{immbasechange}. But $f_V^{-1}(U)$ also satisfies the fibre diagram \eqref{xufibdiag}, since it clearly satisfies the diagram on the level of topological spaces, and since the open subscheme structure is unique (Problem $2.2$); thus, we have a canonical isomorphism $f_V^{-1}(U) \cong X_U$ by Thm.~3.3. Finally, we see that the open immersion $f_V^{-1}(U) \hookrightarrow f_V^{-1}(V)$ is given by the restriction $\Aa(V) \to \Aa(U)$.
+  \par Now we want to glue together the $X_V$; we proceed by showing the conditions in Problem $2.12$. Denote $X_{V,U} \coloneqq f_V^{-1}(U \cap V) \subset X_V$. We first claim that $\varphi_{V,U}\colon X_{V,U} \isoto X_{U,V}$. Note that for any open subset $W \subset U \cap V$ that is affine in $Y$, we have unique isomorphisms $f_V^{-1}(W) \cong X_W \cong f_U^{-1}(W)$ by the fibre diagram above, and if $W'$ is any other such affine set, that $W \cap W'$ can be covered by affine subsets of $Y$ on which we have a unique isomorphism again. Thus, the isomorphism glues to give a unique isomorphism $X_{V,U} \cong X_{U,V}$ by Thm.~3.3, Step 3, and we therefore satisfy condition $(1)$ in Problem $2.12$. Next, $\varphi_{V,U}(X_{V,U} \cap X_{V,W}) = X_{U,V} \cap X_{U,W}$ since $X_{V,U} \cap X_{V,W} = f_V^{-1}(V \cap U \cap W)$ and so $\varphi_{V,U}(X_{V,U} \cap X_{V,W}) = f_U^{-1}(V \cap U \cap W) = X_{U,V} \cap X_{U,W}$. The condition $\varphi_{ij} = \varphi_{jk} \circ \varphi_{ij}$ follows by the uniqueness of the isomorphisms $X_{V,U} \cong X_{U,V}$. Thus, condition $(2)$ in Problem $2.2$ is satisfied, and we have a unique scheme $X$ with open immersions $\psi_V\colon X_V \hookrightarrow X$. Now we claim the structure morphisms $f_V'\colon X_V \to Y$ defined by composing $f_V$ with the inclusion $V \hookrightarrow Y$ glue together to give a structure morphism $X \to Y$; however, this is clear since on any intersection $U \cap V$, $f_V\vert_{U \cap V} = f_U\vert_{U \cap V}$ by the argument above, hence we have a structure morphism $f\colon X \to Y$ by Thm.~3.3, Step 3. By construction, for any open affine $V \subset Y$, $f^{-1}(V) \cong \Spec \Aa(V)$, and for any inclusion $U \hookrightarrow V$ of open affines, the open immersion $f_V^{-1}(U) \hookrightarrow f_V^{-1}(V)$ is given by the restriction $\Aa(V) \to \Aa(U)$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  $f\colon X \to Y$ is an affine morphism since for any affine $V \subset Y$, $f^{-1}(V) = \Spec \Aa(V)$, which is affine. Moreover, $f_*\OO_X(V) = \OO_X(f^{-1}(V)) \cong \OO_X(X_V) = \Aa(V)$ by construction in $(b)$, where the isomorphism is given by the canonical isomorphisms $f^{-1}(V) \isoto X_V$ from the fibre diagram in $(b)$. We claim that these isomorphisms glue as in Thm.~3.3, Step 3; however, on any $W \subset V \cap U$ where $W$ is an open affine in $Y$, we have a canonical isomorphism $f^{-1}(W) \isoto X_W$ for the same reasoning, hence the isomorphisms trivially glue to give an isomorphism $\Aa \cong f_*\OO_X$.
+  \par Now, for the other direction, suppose that $f\colon X \to Y$ is affine. Then, $\Aa = f_*\OO_X$ is quasi-coherent by $(b)$ and Prop.~$5.8(c)$, and the sheaf morphism $f^\#\colon \OO_Y \to f_*\OO_X = \Aa$ gives $\Aa$ the structure of an $\OO_Y$-algebra. Now, if $V \subset Y$ is affine, then $f^{-1}(V)$ is affine with coordinate ring $\OO_X(f^{-1}(V)) = \Aa(V)$ by Prop.~$2.2(c)$. Moreover, if $U \hookrightarrow V$ is an inclusion of open affines in $Y$, the morphism $f^{-1}(U) \to f^{-1}(V)$ is that given via Prop.~$2.3(c)$ by the restriction morphism $\OO_X(f^{-1}(V)) \to \OO_X(f^{-1}(U))$, i.e., $\Aa(V) \to \Aa(U)$. By uniqueness of $\SPEC \Aa$ in $(c)$, we have $X \cong \SPEC \Aa$.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  Let $\FF\in \qcoh X$. Then, $f_*\FF$ is quasi-coherent by $(b)$ and Prop.~$5.8(c)$, and has the structure of an $\Aa = f_*\OO_X$-module by construction. Now let $\GG$ be a quasi-coherent $\Aa$-module. We want to define $\tilde{\GG} \in \qcoh X$. For each affine $V \subset Y$, we have that $\HH_V \coloneqq \GG\vert_V \cong \widetilde{\GG(V)}$ by Prop.~$5.1(d)$, where $\GG(V)$ has the structure of an $\OO_X(f^{-1}(V))$-module. Thus, $\HH_V$ is an $\OO_{f^{-1}(V)}$-module; we want to glue these sheaves $\HH_V$ together to get an $\OO_X$-module as in Problem $1.22$. We have equalities $(\HH_V)(f^{-1}(V) \cap f^{-1}(U)) = (\HH_V)(f^{-1}(V \cap U)) = \GG(V \cap U) = (\HH_U)(f^{-1}(V) \cap f^{-1}(U))$, and the tricycle condition holds on $f^{-1}(U) \cap f^{-1}(V) \cap f^{-1}(W)$ since this just corresponds to the tricycle condition for $\GG$ on $U \cap V \cap W$. Hence we have a unique sheaf $\tilde{\GG}$ obtained by gluing the $\HH_V$ by Problem $1.22$.
+  \par We claim $\FF \cong \widetilde{f_*\FF}$ and $\GG \cong f_*\tilde{\GG}$. The former is true since we have isomorphisms on all affines $f^{-1}(V)$ for affines $V \subset Y$, and then by Cor.~5.5, since the gluing operation is unique by Problem $1.22$. The latter is similarly true since we have isomorphisms on all affines $V \subset Y$ by construction, and then by Cor.~5.5, since the gluing operation is again unique.
+\end{proof}
+
+\begin{problem}
+  \emph{Vector Bundles}. Let $Y$ be a scheme. \emph{A (geometric) vector bundle} of rank $n$ over $Y$ is a scheme $X$ and a morphism $f\colon X \to Y$, together with additional data consisting of an open covering $\{U_i\}$ of $Y$, and isomorphisms $\psi_i\colon f^{-1}(U_i) \to \mathbf{A}^n_{U_i}$, such that for any $i,j$, and for any open affine subset $V = \Spec A \subseteq U_i \cap U_j$, the automorphism $\psi = \psi_j \circ \psi_i^{-1}$ of $\mathbf{A}^n_V = \Spec A[x_1,\ldots,x_n]$ is given be a \emph{linear} automorphism $\theta$ of $A[x_1,\ldots,x_n]$, i.e., $\theta(a) = a$ for any $a \in A$, and $\theta(x_i) = \sum a_{ij}x_j$ for suitable $a_{ij} \in A$.
+  \par An \emph{isomorphism} $g\colon(X,f,\{U_i\},\{\psi_i\}) \to (X',f',\{U_i'\},\{\psi_i'\})$ of one vector bundle of rank $n$ to another one is an isomorphism $g\colon X \to X'$ of the underlying schemes, such that $f = f' \circ g$, and such that $X,f$, together with the covering of $Y$ consisting of all the $U_i$ and $U_i'$, and the isomorphisms $\psi_i$ and $\psi_i' \circ g$, is also a vector bundle structure on $X$.
+  \begin{enuma}
+  \item Let $\EE$ be a locally free sheaf of rank $n$ on a scheme $Y$. Let $S(\EE)$ be the symmetric algebra on $\EE$, and let $X = \SPEC S(\EE)$, with projection morphism $f\colon X \to Y$. For each open affine subset $U \subseteq Y$ for which $\EE\vert_U$ is free, choose a basis of $\EE$, and let $\psi\colon f^{-1}(U) \to \mathbf{A}^n_U$ be the isomorphism resulting from the identification of $S(\EE(U))$ with $\OO(U)[x_1,\ldots,x_n]$. Then $(X,f,\{U\},\{\psi\})$ is a vector bundle of rank $n$ over $Y$, which (up to isomorphism) does not depend on the bases of $\EE_U$ chosen. We call it the \emph{geometric vector bundle associated} to $\EE$, and denote it by $\V(\EE)$.
+  \item For any morphism $f\colon X \to Y$, a \emph{section} of $f$ over an open set $U \subseteq Y$ is a morphism $s\colon U \to X$ such that $f\circ s = \id_U$. It is clear how to restrict sections to smaller open sets, or how to glue them together, so we see that the presheaf $U \mapsto \{\text{set of sections of $f$ over $U$}\}$ is a sheaf of sets on $Y$, which we denote by $\Ss(X/Y)$. Show that if $f\colon X \to Y$ is a vector bundle of rank $n$, then the sheaf of sections $\Ss(X/Y)$ has a natural structure of $\OO_Y$-module, which makes it a locally free $\OO_Y$-module of rank $n$.
+  \item Again let $\EE$ be a locally free sheaf of rank $n$ on $Y$, let $X = \V(\EE)$, and let $\Ss = \Ss(X/Y)$ be the sheaf of sections of $X$ over $Y$. Show that $\Ss \cong \EE\:\check{}\:$, as follows. Given a section $s \in \Gamma(V,\EE\:\check{}\:)$ over any open set $V$, we think of $s$ as an element of $\Hom(\EE\vert_V,\OO_V)$. So $s$ determines an $\OO_V$-algebra homomorphism $S(\EE\vert_V) \to \OO_V$. This determines a morphism of spectra $V = \SPEC \OO_V \to \SPEC S(\EE\vert_V) = f^{-1}(V)$, which is a section of $X/Y$. Show that this contruction gives an isomorphism of $\EE\:\check{}\:$ to $\Ss$.
+  \item Summing up, show that we have established a one-to-one correspondence between isomorphism classes of locally free sheaves of rank $n$ on $Y$, and isomorphism classes of vector bundles of rank $n$ over $Y$. Because of this, we sometimes use the words ``locally free sheaf'' and ``vector bundle'' interchangeably, if no confusion seems likely to result.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  To show $(X,f,\{U\},\{\psi\})$ gives a vector bundle, it suffices to show that for any two affine opens $U,U' \subset Y$ and an affine open $V = \Spec A \subset U \cap U'$, the automorphism $\psi' \circ \psi^{-1}$ of $\mathbf{A}_V^n$ is linear. First, $\psi' \circ \psi^{-1}$ corresponds by Prop.~$2.3(c)$ to a ring automorphism $\theta$ of $A[x_1,\ldots,x_n]$. Then, $\theta$ is linear by definition in Problem $5.16$, since the different identifications of $S(\EE(V))$ with $A[x_1,\ldots,x_n]$ correspond to different choices of bases $x_i$ over $A$. Moreover, $(X,f,\{U\},\{\psi\})$ does not depend on the bases of $\EE_U$ chosen, for if $\{U\},\{\varphi\}$ give another vector bundle structure, then any $\varphi \circ \psi^{-1}$ is still linear by the same argument as above.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We want to show $\Ss(X/Y)(U)$ has an $\OO_Y(U)$-module structure for all $U \subset Y$. We first show this for affine sets $U = \Spec R \subset U_i$ for some $i$; note then that $f^{-1}(U) = \mathbf{A}^n_U = \Spec R[x_1,\ldots,x_n] \eqqcolon \Spec S$. If $s \in \Ss(X/Y)(U)$, this is a morphism $s\colon U \to f^{-1}(U) = \Spec S$, hence by Problem $2.4$, corresponds to a ring morphism $\sigma\colon S \to R$. These morphisms are in correspondence with ordered $n$-tuples $\braket{\sigma(x_1),\ldots,\sigma(x_n)}$ with components in $R = \OO_Y(U)$, hence define the $\OO_Y(U)$-module structure by adding these ordered $n$-tuples coordinate-wise, and by scalar multiplication by elements in $\OO_Y(U)$.
+  \par Now for arbitrary $U$, we can define an $\OO_Y(U)$-module structure by taking the desired expression (e.g., $as + s'$ for $s,s' \in \Ss(X/Y)(U)$ and $a \in \OO_Y(U)$), restricting it to each affine $V_{ij} \subset U_i$ and following the process above. These glue as in Thm.~3.3, Step 3 since on $V_{ij} \cap V_{k\ell}$, the process above gives morphisms that restrict to the same morphism $V_{ij} \cap V_{k\ell} \to \mathbf{A}^n_{V_{ij}}$ by definition of restriction, and so are the same morphism $V_{ij} \cap V_{j\ell} \to X$. Thus, $\Ss(X/Y)$ is an $\OO_Y$-module. It is moreover locally free since we have the identification of sections in each $\Ss(X/Y)(V_{ij})$ with ordered $n$-tuples $\braket{\sigma(x_1),\ldots,\sigma(x_n)}$ with components in $\OO_Y(V_{ij})$ as above.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $s \in \Gamma(V,\EE\:\check{}\:)$ for any open $V$; then, $s \in \Hom(\EE\vert_V,\OO_V)$. $s$ determines an $\OO_V$-algebra homomorphism $S(\EE\vert_V) \to \OO_V$ since $s$ can be described as the gluing together of morphisms $\EE\vert_W \to \OO_{W}$ where $W$ are affines such that $\EE\vert_W$ is free, and so these define unique morphisms $S(\EE\vert_W) \to \OO_W$ on each $W$, hence they glue together to a morphism $S(\EE\vert_V) \to \OO_V$ as in Thm.~3.3, Step 3. This determines a morphism of spectra $V = \SPEC \OO_V \to \SPEC S(\EE\vert_V) = f^{-1}(V)$ by construction of $\SPEC$ in Problem $3.17$ and Problem $2.4$, which is a section of $X/Y$. We claim this is an isomorphism; it suffices to show it is an isomorphism for all $V$. It is injective since if two maps $s,s' \colon \EE\vert_V \to \OO_V$ mapped to the same section, then they would be the same map $\EE\vert_W \to \OO_W$ for all $W$ such that $\EE\vert_W$ is free by looking at the maps' action on a basis. It is surjective since if we have a section $V \to f^{-1}(V)$, this corresponds by above to a morphism $S(\EE\vert_V) \to \OO_V$, and we can recover a map $\EE\vert_V \to \OO_V$ by just looking at the $S^0(\EE\vert_V)$ part of the map.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  If we have a vector bundle $(X,f,\{U_i\},\{\psi_i\})$, then the vector bundle $\V(\Ss(X/Y))$ is isomorphic to it by our constructions in $(a)$ and $(b)$. Likewise, if we have a locally free sheaf $\EE$, then $\Ss(\V(\EE)) \cong \check{\EE}$ by $(c)$.
+\end{proof}
+
+\appendix
+\section{Commutative Algebra}
+\begin{lemma}\label{homoglem}
+  An ideal $I \subset S$ is homogeneous (i.e., generated by homogeneous elements) if and only if every homogeneous component (with respect to the decomposition $S = \bigoplus_{d \ge 0} S_d$) of an element of $I$ is also in $I$.
+\end{lemma}
+\begin{proof}
+  $\Rightarrow$ Suppose $I$ is homogeneous, and let $\{h_\alpha\}$ be its homogeneous generators; denote $\deg h_\alpha$ to be the unique $d$ such that $h_\alpha \in S_d$. Let $a \in I$. $a$ has the homogeneous decomposition $a = \sum_{d \ge 0} a_d$ with $a_d \in S_d$ for each $d$. We claim each $a_d \in I$. We have $a = \sum_\alpha b_\alpha h_\alpha$, where $b_\alpha \in S$. We have the homogeneous decomposition $b_\alpha = \sum_{d \ge 0} b_{\alpha d}$ where $b_{\alpha d} \in S_d$, and so $a_d = \sum_\alpha b_{\alpha(n - \deg h_\alpha)}h_\alpha \in I$.
+  \par $\Leftarrow$ Suppose we have the homogeneous decomposition $a = \sum_{d \ge 0} a_d$ for any $a \in I$, where $a_d \in I \cap S_d$ for all $d$. Since this is true for any $a \in I$, $I$ is generated by $\bigcup_{d \ge 0} (I \cap S_d)$, which consists purely of homogeneous elements.
+\end{proof}
+\begin{lemma}\label{tpalg}
+  Let $S,T$ be $A$-algebras. Then, a tensor product $S \otimes_A T$ defined on \emph{\cite[p.~30--31]{AM69}} satisfies the universal property for pushout:
+  \begin{universalproperty}[Tensor Product of Algebras]
+    Recall from \emph{\cite[p.~30--31]{AM69}} that $S \otimes_A T$ comes with morphisms $\iota_1\colon S \to S \otimes_A T$ such that $\iota_1(s) = s \otimes 1$ and $\iota_2\colon T \to S \otimes_A T$ such that $\iota_2(s) = t \otimes 1$ making the square below commute:
+    \begin{equation*}
+      \begin{tikzcd}[column sep=small]
+        B\arrow[bend left,leftarrow]{drr}{j_2}\arrow[bend right,leftarrow]{ddr}[swap]{j_1}\arrow[dashed,leftarrow]{dr}{h}\\
+        &S \otimes_A T\dar[swap,leftarrow]{\iota_1} \rar[leftarrow]{\iota_2} & T\dar[leftarrow]\\
+        &S \rar[leftarrow] & A
+      \end{tikzcd}
+    \end{equation*}
+    Then, given any $A$-algebra $B$ with morphisms $j_1\colon S \to B$, $j_2\colon T \to B$ that also make the square commute, there exists a unique map $h\colon S \otimes_A T \to B$ such that $h \circ \iota_1 = j_1$, $h \circ \iota_2 = j_2$.
+  \end{universalproperty}
+\end{lemma}
+\begin{proof}
+  The square commutes as on \cite[p.~31]{AM69}. Let $h(s \otimes t) = j_1(s) \cdot j_2(t)$ on simple tensors and extend by linearity. This makes the upper triangle commute since
+  \begin{equation*}
+    (h \circ \iota_1)(s) = h(s \otimes 1) = j_1(s) \cdot j_2(1) = j_1(s),
+  \end{equation*}
+  using that $j_2$ is an $A$-algebra homomorphism; the lower triangle similarly commutes. Suppose $h'$ is another $A$-algebra homomorphism satisfying the diagram; then
+  \begin{equation*}
+    h'(s \otimes t) = h'(\iota_1(s) \cdot \iota_2(t)) = h'(\iota_1(s)) \cdot h'(\iota_2(t)) = j_1(s) \cdot j_2(t),
+  \end{equation*}
+  so $h = h'$, i.e., $h$ is unique.
+\end{proof}
+\begin{lemma}[{\cite[Thm.~2.3.2]{HS06}}]\label{gradedic}
+  Let $R \subset S$ be graded rings. If $s \in S$ is integral over $R$, then $s_d$ is integral over $R$ for all $d$.
+\end{lemma}
+\begin{proof}
+  Let $s = \sum_{d=d_0}^{d_1} s_d$, $s_d \in S_d$; let $n \coloneqq d_1 - d_0 + 1$. If $r \in k^\times$, then the map $\varphi_r\colon S \to S$ that multiplies each $S_d$ by $r^d$ is a graded automorphism of $S$ that restricts to a graded automorphism of $R$ and is the identity on $S_0$. Thus $\varphi_r(s) = \sum r^ds_d$ is integral over $R$.
+  \par Now suppose there exist $n$ distinct units $r_i \in R_0$, all of whose differences are also units in $R_0$. Let $b_i \coloneqq \varphi_{r_i}(s)$; they are integral over $R$. Let $A$ be the $n \times n$ matrix whose $(i,j)$th entry is $r_i^{j+d_0-1}$. Then,
+  \begin{equation*}
+    A\begin{bmatrix}
+      s_{d_0}\\
+      s_{d_0+1}\\
+      \vdots\\
+      s_{d_1}
+    \end{bmatrix}
+    = \begin{bmatrix}
+      b_{d_0}\\
+      b_{d_0+1}\\
+      \vdots\\
+      b_{d_1}
+    \end{bmatrix}.
+  \end{equation*}
+  Since $A$ is a Vandermonde matrix, it is invertible by choice of $r_i$, so
+  \begin{equation*}
+    \begin{bmatrix}
+      s_{d_0}\\
+      s_{d_0+1}\\
+      \vdots\\
+      s_{d_1}
+    \end{bmatrix}
+    = A^{-1}\begin{bmatrix}
+      b_{d_0}\\
+      b_{d_0+1}\\
+      \vdots\\
+      b_{d_1},
+    \end{bmatrix}
+  \end{equation*}
+  i.e., each $s_d$ is an $R$-linear combination of the $b_i$, hence are integral over $R$.
+  \par We now reduce to the case when $R_0$ has $n$ distinct units, whose differences are also units. Let $t_1,\ldots,t_n$ be variables of degree $0$ over $R$, and define
+  \begin{align*}
+    R' &\coloneqq R\left[t_j,t_j^{-1},(t_j-t_i)^{-1} \middle\vert i,j = 1,\ldots,n\right]\\
+    S' &\coloneqq S\left[t_j,t_j^{-1},(t_j-t_i)^{-1} \middle\vert i,j = 1,\ldots,n\right]
+  \end{align*}
+  Then by the previous case, each $s_d$ is integral over $R'$. Now suppose the monic polynomial over $R'$ that $s_d$ satisfies is of degree $m$. Clearing denominators, it is a polynomial $f$ over $R[t_i \mid 1 \le i \le n]$, and picking out the appropriate multi $t_i$-degree of $f$ gives an integral equation of $s_d$ over $R$, and so $s_d$ is integral over $R$.
+\end{proof}
+
+\section{Topology of Schemes}
+\begin{lemma}\label{closedlocalcond}
+  Let $X$ be a topological space and $\{U_i\}$ an open cover. Then, $C \subset X$ is closed in $X$ if and only if $C \cap U_i$ is closed in all $U_i$.
+\end{lemma}
+\begin{proof}
+  $\Rightarrow$ is trivial. $\Leftarrow$ It suffices to show that $V \subset X$ is open if $V \cap U_i$ is open in all $U_i$. But then, $V \cap U_i$ is open in $X$, and so $V = \bigcup_i V \cap U_i$ is a union of open sets in $X$, hence is open.
+\end{proof}
+\begin{lemma}\label{noethinherit}
+  If $X$ is a noetherian scheme, any $U \subset X$ is also noetherian.
+\end{lemma}
+\begin{proof}
+  $U$ is locally noetherian by \cite[Prop.~7.3]{AM69} since it is covered by $\Spec (B_i)_{f_f}$, where the $\Spec B_i$ form our affine cover of $X$, and $X$ is moreover noetherian since $U$ is quasi-compact by Problem $2.13(a)$.
+\end{proof}
+\begin{lemma}[Nike's trick]\label{niketrick}
+  Let $U_i = \Spec(A_i)$ for $i=1,2$ be two affine neighborhoods in a scheme $X$. Then for any $x \in U_1 \cap U_2$, there exists an open subscheme $V$ such that $x \in V \subset U_1 \cap U_2$, and $V$ is a distinguished open set in both $U_1$ and $U_2$.
+\end{lemma}
+\begin{proof}
+  Since the distinguished open subsets of $U_1$ form a basis of $U_1$, we know that $D(f) \subset U_1 \cap U_2$ for some $f \in A_1$. Since $D(f) = \Spec (A_1)_f$, we can replace $U_1$ with $D(f)$ and assume that $D(f) = U_1 \subset U_2$ is an open immersion, given by a ring map $\varphi\colon A_2 \to A_1$. Let $g \in A_2$ such that $D(g) \subset D(f)$; we can do this since again, the distinguished open subsets of $U_2$ form a basis for $U_2$, and $D(f)$ is open in $U_2$.
+  \par We claim we then have an isomorphism $D(g) \cong D(\varphi(g))$ induced by $\varphi$; by the fact that open subsets of a scheme have unique subscheme structures (Problem $2.2$), it suffices to show that they are equal as sets, i.e., to show that $\varphi^{*-1}(\Spec(A_2)_g) = \Spec(A_1)_{\varphi(g)}$, where $\varphi^*$ denotes the morphism of affine schemes induced by $\varphi$. Note that $D(g) = \Spec (A_2)_g$ and $D(\varphi(g)) = \Spec(A_1)_{\varphi(g)}$.
+  \par Let $\mathfrak{p} \in \varphi^{*-1}(D(g)) = \varphi^{*-1}(\Spec (A_2)_g)$. Then, $g \notin \varphi^{-1}(\mathfrak{p}) = \mathfrak{q}$. If $\varphi(g) \in \mathfrak{p}$, then $g \in \varphi^{-1}(\mathfrak{p})$, a contradiction. Thus, $\varphi(g) \notin \mathfrak{p}$, and $\mathfrak{p} \in \Spec (A_1)_{\varphi(g))}$.
+  \par Now let $\mathfrak{q} \in D(\varphi(g)) = \Spec(A_1)_{\varphi(g)}$. Then, $\varphi(g) \notin \mathfrak{q}$. Thus, $g \notin \varphi^{-1}(\mathfrak{p}) = \varphi^*(\mathfrak{p})$, so $\varphi^*(\mathfrak{p}) \in \Spec(A_2)_g$. This implies $\mathfrak{p} \in \varphi^{*-1}(\varphi^*(\mathfrak{p})) \subset \varphi^{*-1}(\Spec (A_2)_g)$.
+\end{proof}
+\begin{lemma}\label{nikecor}
+  Let $X = \bigcup U_i$ be an affine cover. Let $V \subset X$ be an affine open. Then, there is a finite open cover $V = \bigcup V_j$ such that the $V_j$ are distinguished in $V$ and are distinguished in some $U_i$.
+\end{lemma}
+\begin{proof}
+  By Nike's trick (Lemma \ref{niketrick}), each $v \in V$ is in some $U_i$, hence there is a $V_j \ni v$ that is distinguished in both $V$ and $U_i$. Since $V$ is affine hence quasi-compact by Problem $2.13(b)$, we can choose a finite cover.
+\end{proof}
+
+\section{Sheaves and Modules}
+\begin{lemma}\label{tildeexact}
+  The functor $\:\tilde{}\:$ from graded $S$-modules to $\OO_X$-modules is exact.
+\end{lemma}
+\begin{proof}
+  Let $0 \to M' \to M \to M'' \to 0$ be exact; we claim $0 \to \tilde{M}' \to \tilde{M} \to \tilde{M}'' \to 0$ is exact. By Problem, $1.2(c)$, it suffices to show it is it exact on stalks. But on stalks, we have $0 \to M'_{(\mathfrak{p})} \to M'_{(\mathfrak{p})} \to M'_{(\mathfrak{p})} \to 0$, which is exact since localization is exact \cite[Prop.~3.3]{AM69} and since if a sequence of graded modules is exact, then the corresponding sequence of $A$-modules in each degree is exact.
+\end{proof}
+\begin{lemma}\label{twistexact}
+  The functor $- \otimes \OO_X(n)$ is exact.
+\end{lemma}
+\begin{proof}
+   Every quasi-coherent sheaf is the sheaf associated to a graded module by Prop.~5.15, and passing to stalks, we get the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      0 \rar & \tilde{M}'(n)_{\mathfrak{p}} \rar\dar[equals] & \tilde{M}(n)_{\mathfrak{p}} \rar\dar[equals] & \tilde{M}''(n)_{\mathfrak{p}} \rar\dar[equals] & 0\\
+      0 \rar & (M'_{\mathfrak{p}})_n \rar & (M_{\mathfrak{p}})_n \rar & (M''_{\mathfrak{p}})_n \rar & 0
+    \end{tikzcd}
+  \end{equation*}
+  using Props.~$5.11(a),5.12(b)$, which suffices to show exactness by Problem $1.2(c)$.
+\end{proof}
+\begin{lemma}\label{tensorup}
+  Let $\FF$, $\GG$ be quasi-coherent $\OO_X$-modules; then, the tensor product $\FF \otimes_{\OO_X} \GG$ satisfies the universal property for the tensor product:
+  \begin{universalproperty}[Tensor Product of Sheaves]
+    Let $\FF \times \GG$ be the presheaf of sets $U \mapsto \FF(U) \times \GG(U)$. If $f\colon\FF \times \GG \to \HH$ is an $\OO_X$-bilinear map of sheaves, i.e., for each $U \subset X$, and each $x \in \FF(U)$, the map $y \mapsto f(x,y)$ is $\OO_X(U)$-linear, and for each $y \in \GG(U)$, the map $x \mapsto f(x,y)$ is $\OO_X(U)$-linear, then $f$ factors uniquely through $\FF \otimes_{\OO_X} \GG$.
+    \begin{equation*}
+      \begin{tikzcd}
+        \FF \times \GG \rar{g}\arrow{dr}[swap]{f} & \FF \otimes_{\OO_X} \GG\dar[dashed]{f'}\\
+        & \HH
+      \end{tikzcd}
+    \end{equation*}
+  \end{universalproperty}
+\end{lemma}
+\begin{proof}
+  If $X = \Spec A$, then applying $\Gamma(X,-)$ from Cor.~5.5 gives
+  \begin{equation*}
+    \begin{tikzcd}
+      L \times M \rar{g_A}\arrow{dr}[swap]{f_A} & L \otimes_A M\dar[dashed]{f'_A}\\
+      & N
+    \end{tikzcd}
+  \end{equation*}
+  where $f_A$ is $A$-bilinear, hence $f'_A$ exists and is unique by the universal property of the tensor product \cite[Prop.~2.12]{AM69}.
+  \par For arbitrary $X$, it suffices to show the $f'_A$ glue together uniquely as in Thm.~3.3, Step 3. But this is clear since any intersection $\Spec A \cap \Spec A'$ can be covered by open affines $\Spec B$, and the maps $f'_B$ exist and are unique by the above.
+\end{proof}
+\begin{lemma}\label{sheafifyexact}
+  Sheafification of $\OO_X$-modules is exact.
+\end{lemma}
+\begin{proof}
+  Note sheafification is automatically right exact since it is a left adjoint by Prop.~1.2, and since left adjoints are right exact by \cite[Thm.~2.6.1]{Wei94}. It is left exact by Problem $1.4(a)$.
+\end{proof}
+
+\section{Direct and Inverse Image Functors}
+\begin{lemma}\label{invimgcomp}
+  Let $X \overset{f}{\to} Y \overset{g}{\to} Z$ be maps of ringed spaces, and $\FF$ an $\OO_X$-module, $\HH$ an $\OO_Z$-module. Then, $g_*f_*\FF \cong (g \circ f)_*\FF$ and $f^*g^*\HH \cong (g \circ f)^*\HH$.
+\end{lemma}
+\begin{proof}
+  First, $g_*f_*\FF \cong (g \circ f)_*\FF$ since for all $U \subset Z$,
+  \begin{align*}
+    g_*(f_*\FF)(U) = (f_*\FF)(g^{-1}(U)) &= \FF(f^{-1}(g^{-1}(U)))\\
+    &= \FF((g \circ f)^{-1}(U)) = (g \circ f)_*\FF(U).
+  \end{align*}
+  Now, by the natural adjunctions from Problem $1.18$,
+  \begin{multline*}
+    \Hom_{\OO_X}(f^*g^*\HH,-) \cong \Hom_{\OO_Y}(g^*\HH,f_*-) \cong \Hom_{\OO_Z}(\HH,g_*f_*-)\\
+    = \Hom_{\OO_Z}(\HH,(g \circ f)_*-) \cong \Hom_{\OO_X}((g \circ f)^*\HH,-),
+  \end{multline*}
+  and so $f^*g^*\HH$ and $(g \circ f)^*\HH$ represent the same functor, and are therefore naturally isomorphic by the Yoneda lemma \cite[p.~61]{Mac98}.
+\end{proof}
+\begin{lemma}\label{pfhom}
+  Let $f\colon X \to Y$ be a map of ringed spaces, and let $\FF$ be an $\OO_X$-module, $\GG$ be an $\OO_Y$-module. Then, $f_*\HHom_{\OO_X}(f^*\GG,\FF) \cong \HHom_{\OO_Y}(\GG,f_*\FF)$.
+\end{lemma}
+\begin{proof}
+  Using the adjunction from Problem $1.18$,
+  \begin{align*}
+    f_*\HHom_{\OO_X}(f^*\GG,\FF)(U) &= \HHom_{\OO_X}(f^*\GG,\FF)(f^{-1}(U))\\
+    &= \Hom_{\OO_X\vert_{f^{-1}(U)}}((f^*\GG)\vert_{f^{-1}(U)},\FF\vert_{f^{-1}(U)})\\
+    &= \Hom_{\OO_X\vert_{f^{-1}(U)}}(f^*(\GG\vert_U),\FF\vert_{f^{-1}(U)})\\
+    &\cong \Hom_{\OO_Y\vert_{U}}(\GG\vert_U,f_*(\FF\vert_{f^{-1}(U)}))\\
+    &= \Hom_{\OO_Y\vert_{U}}(\GG\vert_U,f_*(\FF)\vert_U)\\
+    &= \HHom_{\OO_Y}(\GG,f_*\FF)(U).\qedhere
+  \end{align*}
+\end{proof}
+\begin{lemma}\label{tpinvimg}
+  Let $f\colon X \to Y$ be a map of ringed spaces, and let $\FF,\GG$ be $\OO_Y$-modules. Then, $f^*(\FF \otimes_{\OO_Y} \GG) \cong f^*\FF \otimes_{\OO_X} f^*\GG$.
+\end{lemma}
+\begin{proof}
+  Using the adjunction from Problem $1.18$, tensor-hom adjointness from the generalization proved of Problem $5.1(c)$, and Lemma \ref{pfhom}, we have
+  \begin{align*}
+    \Hom_{\OO_X}(f^*(\FF \otimes_{\OO_Y} \GG),-) &\cong \Hom_{\OO_Y}(\FF \otimes_{\OO_Y} \GG,f_*-)\\
+    &\cong \Hom_{\OO_Y}(\FF,\HHom_{\OO_Y}(\GG,f_*-))\\
+    &\cong \Hom_{\OO_Y}(\FF,f_*\HHom_{\OO_X}(f^*\GG,-))\\
+    &\cong \Hom_{\OO_X}(f^*\FF,\HHom_{\OO_X}(f^*\GG,-))\\
+    &\cong \Hom_{\OO_X}(f^*\FF \otimes_{\OO_X} f^*\GG,-),
+  \end{align*}
+  and so $f^*(\FF \otimes_{\OO_Y} \GG)$ and $f^*\FF \otimes_{\OO_X} f^*\GG$ represent the same functor, and are therefore naturally isomorphic by the Yoneda lemma \cite[p.~61]{Mac98}.
+\end{proof}
+
+\section{Constructions of Schemes}
+\begin{lemma}\label{basechangedist}
+  Base change distributes, i.e., for $X,Y,Z,S'$ schemes over $S$, $X \times_Y Z \times_S S' \cong X' \times_{Y'} Z'$, where $X' \coloneqq X \times_S S'$.
+\end{lemma}
+\begin{proof}
+  First, we draw the commutative diagram
+  \begin{equation}\label{bcdistdiag}
+    \begin{tikzcd}[column sep=scriptsize]
+      Y' & \arrow{l} Z'\arrow[bend left]{ddrr}{g_Z}\\
+      X'\arrow[bend right]{ddrr}[swap]{g_X}\uar & \arrow{l}{p_1'}X' \times_{Y'} Z'\uar[swap]{p_2'}\arrow[dashed]{dr}{\pi_1}\\
+      && X \times_Y Z\dar[swap]{p_1} \rar{p_2} & Z\dar\\
+      && X \rar & Y
+    \end{tikzcd}
+  \end{equation}
+  where we omitted a map $Y' \to Y$, and maps everywhere to $S$. $\pi_1$ exists and is unique by the universal property of the lower square. Now suppose $T \to X \times_Y Z$ and $T \to S'$ make the diagram commute; then, this gives maps $T \to X$ and $T \to Z$ that make the diagram commute, but this induces unique maps $T \to X'$ and $T \to Z'$ since $g_X,g_Z$ are part of the fibre product squares for $X',Z'$, and these induce a unique map $T \to X' \times_{Y'} Z'$ by the upper square. Thus, $X \times_Y Z \times_S S' \cong X' \times_{Y'} Z'$ since it satisfies the universal property for $X \times_Y Z \times_S S'$.
+\end{proof}
+\begin{lemma}[Scheme-theoretic image]\label{stimg}
+  Let $f \colon Z \to X$ be a quasi-compact and separated morphism. Then, the scheme-theoretic image \emph{(Problem $3.11(d)$)} is the closed subscheme associated to the ideal sheaf $\II \coloneqq \ker(\OO_X \to f_*\OO_Z)$.
+\end{lemma}
+\begin{proof}
+  Since $f$ is quasi-compact and separated, $\II \in \qcoh X$ by Prop.~$5.8(c)$, and so $\II$ defines a closed subscheme $Y$. So, it suffices to show the universal property in Problem $3.11(d)$. Let $U = \Spec A$ be an open affine in $X$, and let $V$ be its preimage in $Z$. By Problem $2.4$, the map $f\vert_V$ corresponds to a ring morphism $A \to \Gamma(V,\OO_Z)$. But $\II(U) = \ker(A \to f_*\OO_Z) = \ker(A \to \Gamma(V,\OO_Z))$, hence $f\vert_V$ factors uniquely through $\Spec A/\II(U)$, the preimage of $U$ in $Y$. To show that if we have any other closed subscheme $Y'$ that $f$ factors through, then $Y \to X$ factors through $Y'$ also, then, by the universal property of the quotient on rings associated to the affine open sets above, it suffices to show that the factorization above for $f\vert_V$ glues together to give a factorization of $f$. But this is true since any intersection of affine opens $U,U' \subset X$ can be covered by open affines on which the factorizations of $f$ are unique by the argument above; thus, we have a glueing of morphisms as in Thm.~3.3, Step 3.
+\end{proof}
+
+
+\section{Open and Closed Immersions}
+\begin{lemma}\label{immbasechange}
+  If $f\colon X \to Y$, $f'\colon X' \to Y'$ are (closed, open) immersions over $S$, then $f \times f'\colon X \times_S X' \to Y \times_S Y'$ uniquely exists and is a (closed, open) immersion. In particular, (closed, open) immersions are stable under base change: letting $S' \coloneqq X' = Y'$, $f \times \id \colon X \times_S S'\to Y \times_S S'$ uniquely exists and is a (closed, open) immersion.
+\end{lemma}
+\begin{proof}
+  First write down the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      X \times_S X'\arrow[dashed]{dr}[description]{\id \times f'}\arrow[bend right]{dddr}[swap]{\pi_1}\arrow[bend left=20]{drrr}{\pi_2}\\
+      & X \times_S Y'\arrow{dd}\arrow[dashed]{dr}[description]{f \times \id}\arrow[bend left=20,crossing over]{drr} & & X'\dar{f'}\\
+      & & Y \times_S Y' \rar[swap]{p_2}\dar{p_1} & Y'\dar\\
+      & X \rar{f} & Y \rar & S
+    \end{tikzcd}
+  \end{equation*}
+  $f \times \id$ exists uniquely by the universal property for the fibre product (Thm.~3.3) for $Y \times_S Y'$ as do $\id \times f'$ (by $X \times_S Y'$) and $f \times f' = (f \times \id) \circ (\id \times f')$ (by $Y \times_S Y'$).
+  \par Let $f,f'$ be closed immersions. We first show $f \times \id$ is a closed immersion. Suppose $Z \to X$ and $Z \to Y \times_S Y'$ make the diagram commute; then, a map $Z \to X \times_S Y'$ exists uniquely by the universal property for the square for $X \times_S Y'$. Thus, $X \times_S Y' \cong X \times_Y Y \times_S Y'$, and so $f \times \id\colon X \times_Y Y \times_S Y' \to Y \times_S Y'$ is a closed immersion by Problem $3.11(a)$.
+  \par To show $f \times f'$ is a closed immersion, first suppose $Z \to X \times_S Y'$ and $Z \to X'$ make the diagram commute; then, a map $Z \to X \times_S X'$ exists uniquely by the universal property for the square for $X \times_S Y'$, and so $X \times_S X' \cong X \times_S Y' \times_{Y'} X'$. Thus, $\id \times f' \colon X \times_S Y' \times_{Y'} X' \to X \times_S Y'$ is a closed immersion by Problem $3.11(a)$, and so $f \times f'$ is a composition of closed immersions, hence is a closed immersion itself.
+  \par Now suppose $f,f'$ are open immersions. Consider $U \coloneqq p_1^{-1}(f(X)) \cap p_2^{-1}(f'(X'))$ with the morphisms $p_1\colon U \to f(X)$ and $p_2\colon U \to f'(X')$. Suppose $Z \to f(X)$, $Z \to f'(X')$ makes the diagram commute; then, a map $Z \to Y \times_S Y'$ exists by the universal property of $Y \times_S Y'$, and the image of $Z$ is contained in $U$. Thus, $p_1^{-1}(f(X)) \cap p_2^{-1}(f'(X')) \cong f(X) \times_S f'(X')$. Now we claim $(f \times f')(X \times_S X') \cong f(X) \times_S f'(X')$, with the maps $\pi_1,\pi_2$ mapping $(f \times f')(X \times_S X')$ into $f(X),f'(X')$ by the commutativity of the diagram. If $Z \to f(X)$, $Z \to f'(X')$ makes the diagram commute, then a map $Z \to Y \times_S Y'$ exists and is unique as above, but this factors through $f \times f'$ using the map $Z \to X \times_S X'$ induced using the maps $f^{-1},f^{\prime-1}$ and the universal property for $X \times_S X'$, hence the image of $Z$ is in $(f \times f')(X \times_S X')$. Thus, $(f \times f')(X \times_S X') \cong f(X) \times_S f'(X') \cong p_1^{-1}(f(X)) \cap p_2^{-1}(f'(X'))$, and so we have an open immersion $f \times f'$.
+  \par Now if $f,f'$ are immersions, we have that $g \colon X \to f(X)$, $g'\colon X' \to f'(X')$ are open immersions, and $h\colon f(X) \to Y$, $h'\colon f'(X') \to Y'$ are closed immersions. By the above, $g \times g'$ is a closed immersion $X \times_S X' \to f(X) \times_S f'(X')$, and $(h \times h')$ is an open immersion $f(X) \times_S f'(X') \to Y \times Y'$, and so $(h \times h') \circ (g \times g')$ is an immersion $X \times_S X' \to Y \times_S Y'$.
+\end{proof}
+\begin{lemma}\label{closedsubschemelem}
+  Let $\iota\colon Y \to X$ be a closed immersion. Then, $\iota_*$ induces an exact equivalence of categories between sheaves on $Y$ and sheaves on $X$ with support in $Y$.
+\end{lemma}
+\begin{proof}
+  If $\FF$ is a sheaf on $Y$, then $\iota_*\FF$ is the $\OO_X(U)$-module consisting of maps $U \to \coprod_{\mathfrak{q} \in \iota^{-1}(U)} \FF_\mathfrak{q}$ that are sufficiently ``local'' by Prop.-Def.~1.2. This clearly defines a sheaf on $X$ that has support in $Y$ since
+  \begin{equation*}
+    (\iota_*\FF)_\mathfrak{p} = \varinjlim_{U \ni \mathfrak{p}} (\iota_*\FF)(U) = \varinjlim_{U \ni \mathfrak{p}} \FF(Z \cap U) = \FF_\mathfrak{p}
+  \end{equation*}
+  if $\mathfrak{p} \in Y$, and $0$ otherwise, using that $\iota$ is injective, hence we can identify points in $Y$ and those lying in the image of $Y$ in $X$. Conversely, any such sheaf on $X$ with support in $Y$ can be made into a sheaf on $Y$ using the above fact. Functoriality on morphisms follows since a morphism of sheaves with support in $Y$ is just the zero map on stalks not in $Y$.
+  \par $f_*$ is left exact since it is a right adjoint by \cite[Thm.~2.6.1]{Wei94}, hence it suffices to show right exactness. But then, on stalks we have the zero maps outside of $Y$, and in $Y$ we have the same stalks as we would on $Y$ itself, hence we have a surjection by Problem $1.2(b)$.
+\end{proof}
+\begin{lemma}\label{openclosedimmcomp}
+  The composition of two open (resp.~closed) immersions is an open (resp.~closed) immersion.
+\end{lemma}
+\begin{proof}
+  The claim is true on the level of topological spaces, so it suffices to show this on the level of the scheme structure. For open immersions it follows by uniqueness of open scheme structures in Problem $2.2$. For closed immersions, if we have closed immersions $X \overset{f}{\to} Y \overset{g}{\to} Z$, we have surjective sheaf maps $\OO_Z \to g_*\OO_Y$ and $\OO_Y \to f_*\OO_X$. By exactness of the direct image functor (Lemma \ref{closedsubschemelem}), we then have that $\OO_Z \to g_*\OO_Y \to (g \circ f)_*\OO_X$ is surjective, where we have used Lemma \ref{invimgcomp}.
+\end{proof}
+
+
+\section{Separated Morphisms}
+\begin{remark}
+  Since Hartshorne only covers the noetherian case in II.4, we collect here some equivalent statements for the general case.
+\end{remark}
+\begin{lemma}[Cor.~$4.6(a)$]\label{separatedimm}
+  Open and closed immersions are separated.
+\end{lemma}
+\begin{proof}
+  Let $f\colon X \to Y$ be an open or closed immersion. Then, $X \cong X \times_X X \cong X \times_Y X$ by the universal property of the fibre product (Thm.~3.3), and so $f$ is separated. 
+\end{proof}
+\begin{lemma}[Cor.~$4.6(b)$]\label{separatedcomp}
+  A composition of two separated morphisms is separated.
+\end{lemma}
+\begin{proof}
+  Let $X \overset{f}{\to} Y \overset{g}{\to} Z$ be a composition of separated morphisms. The diagonal morphism $X \to X \times_Z X$ then decomposes as $X \to X \times_Y X = X \times_Y Y \times_Y X$ and
+  \begin{equation*}
+    \id_X \times_Y \Delta_{Y/Z} \times_Y \id_X \colon X \times_Y Y \times_Y X \to X \times_Y (Y \times_Z Y) \times_Y X = X \times_Z X.
+  \end{equation*}
+  The former is a closed immersion since $f$ is separated and the latter is also since $g$ is separated and then by Lemma \ref{immbasechange}; the result follows by Lemma \ref{openclosedimmcomp}.
+\end{proof}
+\begin{lemma}[Cor.~$4.6(b)$]\label{separatedbc}
+  Separated morphisms are stable under base change.
+\end{lemma}
+\begin{proof}
+  Let $Y' \to Y$ be a morphism and $X' = X \times_Y Y'$. Then, the morphism $X' \to X' \times_{Y'} X'$ is the morphism $\Delta_{X/Y} \times \id_{Y'}\colon X \times_Y Y' \to (X \times_Y X) \times_Y Y' = X' \times_{Y'} X'$ by Lemma \ref{basechangedist}, which is a closed immersion by Lemma \ref{immbasechange}.
+\end{proof}
+\begin{lemma}[Thm.~4.9]\label{projsep}
+  (Quasi-)projective morphisms are separated.
+\end{lemma}
+\begin{proof}
+  The proof of Thm.~4.9 shows $\mathbf{P}^n_\mathbf{Z} \to \Spec \mathbf{Z}$ is separated, and so by Lemmas \ref{separatedimm}, \ref{separatedcomp}, and \ref{separatedbc} we are done.
+\end{proof}
+
+\section{Immersions and Locally Closed Immersions}
+\begin{definition}
+  $f\colon X \to Z$ is a \emph{locally closed immersion} if it factors as a closed immersion $X \to Y$ composed with an open immersion $Y \to Z$.
+\end{definition}
+\begin{lemma}\label{immislcimm}
+  An immersion is a locally closed immersion; the converse holds if the immersion is quasi-compact. Thus, locally closed immersions are closed under composition, and the composition of two immersions is an immersion if the second one is quasi-compact.
+\end{lemma}
+\begin{proof}
+  Let our immersion $X \to Z$ be given by an open immersion $f\colon X \to Y$ and a closed immersion $g\colon Y \to Z$. Then, $f(X)$ is open in $Y$ with respect to the topology induced by $Z$ and therefore there is an open subscheme $U \subset Z$ such that $(g \circ f)(X) = g(Y) \cap U$. Now we claim $X \cong Y \times_Z U$ by fitting into the fibre diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      X \dar[hook,swap]{\text{closed?}}\rar[hook]{\text{open}}[swap]{f} & Y\dar[hook]{\text{closed}}[swap]{g}\\
+      U \rar[hook,swap]{\text{open}} & Z
+    \end{tikzcd}
+  \end{equation*}
+  where the left map is the map of $X$ in $U$ by $g \circ f$. If $S \to Y$, $S \to U$ make the diagram commute, then the image of $S$ in $Z$ must be contained in the image of $X$ in $Z$, and similarly for $U$, and so there is a unique map $S \to X$ making the diagram commute. Finally, the left map is a closed immersion by Problem $3.11(a)$.
+  \par Now suppose we have a quasi-compact locally closed immersion $(g \circ f)\colon X \to Z$ given by a closed immersion $f\colon X \to U$ and an open immersion $g \colon U \to Z$. Then, $(g \circ f)_*\OO_X$ is quasi-coherent by Prop.~$5.8(c)$ since $g \circ f$ is also separated by Lemmas \ref{separatedimm} and \ref{separatedcomp}, and so the ideal sheaf $\II \coloneqq \ker(\OO_Z\to(g \circ f)_*\OO_X)$ corresponds to a closed subscheme $Y$ by Prop.~5.9, and we have a morphism $h\colon X \to Y$ which we claim is an open immersion. $\II\vert_U$ corresponds to the closed immersion $X \to U$ by Lemma \ref{stimg} since $\II\vert_U = \ker(\OO_U \to ((g \circ f)_*\OO_X)\vert_U) = \ker(\OO_U \to f_*\OO_X)$. Thus, $h(Z) = Y \cap U$, and so $h$ is an open immersion since $h$ is injective.
+  \par For compositions, a composition of locally closed immersion factors into a closed immersion, then an immersion, then an open immersion; hence, by the above, this composition is the same as a locally closed immersion.
+  \par Likewise, a composition of immersions factors into an open immersion, then a closed immersion, then a quasi-compact immersion. By the above, the latter immersion is also a quasi-compact locally closed immersion, hence our composition is of an open immersion followed by a quasi-compact locally closed immersion since closed immersions are quasi-compact by Problems $3.3(a),3.13(a)$. But a quasi-compact locally closed immersion is an immersion by the above, hence our entire composition is also an immersion.
+\end{proof}
+\begin{lemma}\label{locnoethimm}
+  A locally closed immersion $f$ into $Z$ with $Z$ locally noetherian is quasi-compact. If $Z = \mathbf{P}^r_Y$ with $Y$ locally noetherian, then $f$ is quasi-compact.
+\end{lemma}
+\begin{proof}
+  The second part follows immediately since $\mathbf{P}^r_Y = \mathbf{P}^r_{\mathbf{Z}} \times_{\mathbf{Z}} Y$ is covered by $\Spec A_i[x_0/x_i,\ldots,x_r/x_i]$ by construction in Thm.~3.3, where the $A_i$ are noetherian by assumption on $Y$, hence the $A_i[x_0/x_i,\ldots,x_r/x_i]$ are noetherian by the Hilbert basis theorem \cite[Thm.~7.5]{AM69}.
+  \par Now, a locally closed immersion factors into a closed immersion followed by an open immersion, hence it suffices to show an open immersion into $Z$ is quasi-compact. By Problem $3.2$, consider an affine open set $U \subset Z$; note $U = \Spec A$ for $A$ noetherian, hence $U$ is a noetherian topological space by Problem $2.13(c)$. But then, any open subset of a noetherian topological space is quasi-compact by Problem $2.13(a)$.
+\end{proof}
+%\begin{lemma}\label{diagimm}
+%  The diagonal morphism $X \to X \times_Y X$ is a locally closed immersion.
+%\end{lemma}
+%\begin{proof}
+%  Let $\pi\colon X \times_Y X \to X$ be the projection. If $Y$ is covered by $V_i$ and $X$ by $U_{ij}$ with $\pi\colon U_{ij} \to V_i$, then $X \times_Y X$ is covered by $U_{ij} \times_{V_i} U_{ij}$ by Thm.~3.3. Now $\Delta^{-1}(U_{ij} \times_{V_i} U_{ij}) = U_{ij}$ since $\supset$ is clear and $\subset$ follows since $\pi \circ \Delta = \id_X$. $U_{ij} \to U_{ij} \times_{V_i} U_{ij}$ is a closed immersion by Prop.~4.1; thus, the map $\OO_{X \times_Y X} \to f_*\OO_X$ is surjective since it is surjective on stalks (Problem $1.2(b)$). Now $\Delta(X) \cap U_{ij} \times_{V_i} U_{ij}$ is locally closed for all $i,j$, hence, $\Delta(X)$ is closed in $\bigcup_{ij} U_{ij} \times_{V_i} U_{ij}$, and we have a homemorphism since it is a homeomorphism locally.
+%\end{proof}
+
+
+\printbibliography
+\end{document}

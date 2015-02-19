@@ -18,7 +18,10 @@
 \usepackage{tikz-cd}
 \tikzset{->-/.style={decoration={
   markings,
-  mark=at position #1 with {\arrow[scale=2]{>}}},postaction={decorate}}}
+  mark=at position #1 with {\arrow[scale=2,draw=black]{>}}},postaction={decorate}}}
+\tikzset{-<-/.style={decoration={
+  markings,
+  mark=at position #1 with {\arrow[scale=2,draw=black]{<}}},postaction={decorate}}}
 \tikzset{->--/.style={decoration={
   markings,
   mark=at position #1 with {\arrow[scale=1.2]{>}}},postaction={decorate}}}
@@ -41,6 +44,7 @@
 \DeclareFieldFormat{multipostnote}{#1}
 
 \usepackage{bm}
+\usepackage{bookmark}
 
 \newtheorem{probaux}[subsubsection]{Exercise}
 \newtheorem*{claim}{Claim}
@@ -98,7 +102,7 @@ of 2013 at Princeton University. This is not a \emph{complete} set of solutions;
 \pdfbookmark[1]{Contents}{toc}
 \begingroup
 \setlength{\cftsubsecnumwidth}{2.75em}
-\shorttoc{Contents}{1}
+\shorttoc{Contents}{2}
 \endgroup
 \newpage
 \setcounter{section}{-1}
@@ -292,7 +296,17 @@ of 2013 at Princeton University. This is not a \emph{complete} set of solutions;
 \begin{problem}
   Show that $S^\infty$ is contractible.
 \end{problem}
-\begin{proof}
+\begin{proof}[Proof following Prop.~$0.16$]
+  Let $r_n\colon S^n \times \left[\frac{1}{2^{n+1}},\frac{1}{2^n}\right] \to
+  S^n$ be the homotopy pushing the equator $S^{n-1}$ to a point $p \in e_2^n$; note
+  that this also contracts $e_2^n$ to the point $p$. Then, combining the
+  homotopies $r_n$ gives a homotopy $r\colon S^\infty \times I \to S^\infty$
+  between the identity map and a constant map. There is no continuity issues at
+  $t=0$ since $r$ is continuous on $S^n \times I$, since it is stationary on
+  $\left[ 0,\frac{1}{2^{n+1}} \right]$, and since CW complexes have the weak
+  topology with respect to skeleta.
+\end{proof}
+\begin{proof}[Proof following \emph{Ex.~1B.3}]
   Let $I = [0,1]$. Define
   \begin{align*}
     f \colon \RR^\infty \times I &\to \RR^\infty\\
@@ -520,7 +534,10 @@ of 2013 at Princeton University. This is not a \emph{complete} set of solutions;
 %  If $X$ is a connected Hausdorff space that is a union of a finite number of $2$-spheres, any two of which intersect in at most one point, show that $X$ is homotopy equivalent to a wedge sum of $S^1$'s and $S^2$'s.
 %\end{problem}
 %\begin{proof}
-%  First, every sphere must intersect with at least one other sphere, for suppose not, and $S^1_i$ does not intersect with any other sphere. Then, $X$ would be disconnected, for $S^1_i$ is both open and closed in $S^1_i$ and hence open and closed in $X$; thus, $S^1_i \amalg X \setminus S^1_i$ is a separation of $X$.
+%  First, every sphere must intersect with at least one other sphere, for suppose
+%  not, and $S^2_i$ does not intersect with any other sphere. 
+%  
+%  Then, $X$ would be disconnected, for $S^1_i$ is both open and closed in $S^1_i$ and hence open and closed in $X$; thus, $S^1_i \amalg X \setminus S^1_i$ is a separation of $X$.
 %  \par We proceed by strong induction on number of spheres. The claim is trivial for one sphere, and so we consider the case for $n+1$ spheres. Suppose $S^2_{n+1}$ has intersection points $\{p_j\}_{1 \le j \le J}$ with unions of spheres $X_j$. Then, identifying the $p_j$'s using $1$-cells as in Example 0.8, we see that $S^2_{n+1} \cup \bigcup_{j=1}^J X_j$ is homotopy equivalent to $S^2_{n+1} \wedge \bigcup_{j=1}^J X_j \wedge \bigwedge_{j=1}^J S_1$. By inductive hypothesis, each $X_j$ is a wedge of circles and spheres, and so we are done.
 %\end{proof}
 
@@ -557,8 +574,326 @@ of 2013 at Princeton University. This is not a \emph{complete} set of solutions;
   \end{equation*}
   and so $X \ast Y \simeq S(X \wedge Y)$.
 \end{proof}
-
 \endgroup
+
+\section{The Fundamental Group}
+\subsection{Basic Constructions}
+\setcounter{subsubsection}{7}
+\begin{problem}
+  Does the Borsuk-Ulam theorem hold for the torus? In other words, for every map $f\colon S^1 \times S^1 \to \mathbb{R}^2$ must there exist $(x,y) \in S^1 \times S^1$ such that $f(x,y) = f(-x,-y)$?
+\end{problem}
+\begin{proof}[Solution]
+  We consider the torus $S^1 \times S^1$ embedded into $\mathbb{R}^3$ via an
+  immersion $\iota\colon S^1 \times S^1 \hookrightarrow \mathbb{R}^3$, such that
+  the torus is symmetric about the $z$-axis and across the $xy$-plane. Then, let
+  $f(x,y,z) = (x,y)$ be the projection map from torus to the $xy$-plane. It is
+  continuous since the projection $\mathbb{R}^3 \to \mathbb{R}^2$ is continuous,
+  and since the topology on the torus is then the same as the subspace topology
+  inherited from $\mathbb{R}^3$. Since $(f \circ \iota)(-x,-y) \ne
+  (f \circ \iota)(x,y)$, we see that the Borsuk-Ulam theorem does not hold for this
+  map.
+\end{proof}
+
+\begin{problem}
+  Let $A_1$, $A_2$, $A_3$ be compact sets in $\mathbb{R}^3$. Use the Borsuk-Ulam theorem to show that there is one plane $P \subset \mathbb{R}^3$ that simultaneously divides each $A_i$ into two planes of equal measure.
+\end{problem}
+\begin{proof}
+  Since $A_3$ is compact, it is closed and bounded; thus, we can assume without loss of generality that $A_3$ lies in the region $z > 0$ by changing coordinates. Then, embed $S^2$ into $\mathbb{R}^3$ such that the center of $S^2$ and the origin in $\mathbb{R}^3$ coincide; every unit vector $s \in S^2$ then defines a direction in $\mathbb{R}^3$. We first note that every pair $(s,r) \in S^2 \times \mathbb{R}$ defines a unique plane $P(s,r)$ with normal vector $s$ distance $r$ from the origin. Note that negative $r$ denotes that the plane lies in the negative direction with respect to the direction defined by $s$. Thus, we can define $\rho(s,r) = \mu(A_3^+(s,r))$, the measure of the subset of $A_3$ on the positive side of the plane $P(s,r)$. $\rho(s,r)$ is continuous in $r$ since $\mu$ is continuous from above and below.
+  \par Now fix $s$. Since $\rho(s,r) = \mu(A_3)$ for $r$ sufficiently small and $\rho(s,r) = 0$ for $r$ sufficiently large, by the intermediate value theorem there exists for this fixed $s$ some $r_0$ such that $\rho(s,r_0) = \frac{1}{2} \mu(A_3)$. If there are multiple such $r_0$ that form an interval $I$, then we take $r_0$ to be the midpoint of the interval $I$. Thus, for each $s$ we can define a unique plane $P(s)$ such that $\mu(A_3^+(s,r)) = \frac{1}{2} \mu(A_3)$.
+  \par We now let $f(s) = (\mu(A_1^+(s)),\mu(A_2^+(s)))$, where $A_i^+(s)$ denotes the subset of $A_i$ on the positive side of $P(s)$, is continuous. $f$ is continuous since small perturbation in $s$ will only lead to small changes in our plane $P(s)$, and therefore in $\mu(A_1^+(s))$ and $\mu(A_2^+(s))$. Note that since $P(s) = -P(-s)$, i.e., the plane defined for $-s$ is the same as that defined for $s$, except oriented in the other direction, we have the equality $f(s) + f(-s) = (\mu(A_1),\mu(A_2))$.
+  \par By the Borsuk-Ulam theorem, there now exists $s_0 \in S^2$ such that $f(s_0) = f(-s_0)$. But by the equality $f(s) + f(-s) = (\mu(A_1),\mu(A_2))$, we see that then $f(s_0) = f(-s_0) = \frac{1}{2} (\mu(A_1),\mu(A_2))$, and so our plane $P(s_0)$ divides the sets $A_1,A_2,A_3$ into halves of equal measure.
+\end{proof}
+
+\setcounter{subsubsection}{15}
+\begin{problem}
+  Show that there are no retractions $r\colon X \to A$ in the following cases:
+  \begin{enuma}
+    \item $X = \mathbb{R}^3$ with $A$ any subspace homeomorphic to $S^1$.
+    \item $X = S^1 \times D^2$ with $A$ its boundary torus $S^1 \times S^1$.
+    \item $X = S^1 \times D^2$ and $A$ the circle shown in the figure.
+    \item $X = D^2 \vee D^2$ with $A$ its boundary $S^1 \vee S^1$.
+    \item $X$ a disk with two points on its boundary identified and $A$ its boundary $S^1 \vee S^1$.
+    \item $X$ the M\"obius band and $A$ its boundary circle.
+  \end{enuma}
+\end{problem}
+%\begin{remark}
+%  We will repeatedly use Proposition $1.17$, i.e., if $X$ retracts onto $A$, then $i_* \colon \pi_1(A,x_0) \to \pi_1(X,x_0)$ induced by $i\colon A \hookrightarrow X$ is injective.
+%\end{remark}
+\begin{proof}[Proof of $(a)$]
+  Since $\mathbb{R}^3$ is convex, $\pi_1(X) = 0$ by Example 1.4. Also, $\pi_1(A) = \mathbb{Z}$ by Theorem $1.7$. But $\mathbb{Z}$ does not inject into $0$, contradicting Proposition $1.17$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Since $X$ deformation retracts to its center circle, $\pi_1(X) = \mathbb{Z}$ by Proposition $1.17$. However, $\pi_1(A) = \mathbb{Z}^2$ by Example $1.13$. But $\mathbb{Z}^2$ does not inject into $\mathbb{Z}$, for every non-trivial subgroup of $\mathbb{Z}$ is isomorphic to $\mathbb{Z}$, and free $\mathbb{Z}$-modules of different rank are non-isomorphic, contradicting Proposition $1.17$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Recall that $X$ deformation retracts to its center circle $C$, and so we have the chain $A \overset{i}{\hookrightarrow} X \overset{p}{\to} C$ which induces the maps $\pi_1(A) \overset{i_*}{\to} \pi_1(X) \overset{p_*}{\to} \pi_1(C)$, where $p_*$ is an isomorphism by Proposition $1.17$. But if $f$ is a representative of the generator of $\pi_1(A) = \mathbb{Z}$, we see that $(i \circ p)(f)$ is nulhomotopic since it has the same start and end points when lifted up into $\mathbb{R}$ as in Theorem $1.7$, and so $(i_* \circ p_*)(1) = 0$ the constant loop. Hence, $i_*$ is not an injection, contradicting Proposition $1.17$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  By Example $1.21$, $\pi_1(X) = \pi_1(D^2) \ast \pi_1(D^2) = 0$ by Example $1.4$ since $D^2$ is convex. However, $\pi_1(A) = \mathbb{Z} \ast \mathbb{Z}$ again by Example $1.21$. $\mathbb{Z} \ast \mathbb{Z}$ does not inject into $0$, contradicting Proposition $1.17$.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  We see that $D^2$ with a $1$-cell attached to two points on the boundary is homotopy equivalent to $X$, since the $1$-cell is contractible. On the other hand, since $D^2$ is contractible, $X$ is homotopy equivalent to $S^1$. Thus, $\pi_1(X) = \mathbb{Z}$, while $\pi_1(A) = \mathbb{Z} \ast \mathbb{Z}$ by Example $1.21$. Since $\mathbb{Z} \ast \mathbb{Z}$ is not abelian while all subgroups of $\mathbb{Z}$ are abelian, $\mathbb{Z} \ast \mathbb{Z}$ does not inject into $\mathbb{Z}$, contradicting Proposition $1.17$.
+\end{proof}
+\begin{proof}[Proof of $(f)$]
+  Recall that $X$ deformation retracts to its center circle $C$, and so we have the chain $A \overset{i}{\hookrightarrow} X \overset{p}{\to} C$ which induces the maps $\pi_1(A) \overset{i_*}{\to} \pi_1(X) \overset{p_*}{\to} \pi_1(C)$, where $p_*$ is an isomorphism by Proposition $1.17$. But if $f$ is a representative of a generator of $\pi_1(A) = \mathbb{Z}$, we see that $(i \circ p)(f)$ maps to $g^2$ where $g$ is a representative of the generator of $\pi_1(C) = \mathbb{Z}$, and so $(i_* \circ p_*)(1) = 2$, and in particular $i_*(1) = 2$. This contradicts that $i_* \circ r_* = \id_{\pi(A)}$ since every homomorphism $\mathbb{Z} \to \mathbb{Z}$ is of the form $n \mapsto kn$ for some $k \in \mathbb{Z}$, and so there is no homomorphism such that $2 \mapsto 1$.
+\end{proof}
+
+\subsection{Van Kampen's Theorem}
+\setcounter{subsubsection}{3}
+\begin{problem}
+  Let $X \subset \mathbb{R}^3$ be the union of $n$ lines through the origin. Compute $\pi_1(\mathbb{R}^3 - X)$.
+\end{problem}
+\begin{proof}
+  We will perform a series of deformation retractions. For any point $p \in \mathbb{R}^3 - X$, we can retract it onto $S^2$ by moving it along the line joining $0$ and $p$. This is clearly continuous and is moreover a retraction since points already on $S^2$ do not move. The retract of $\mathbb{R}^3 - X$ is then the $2n$-punctured sphere since each line that passes through the origin punctures the sphere in two locations; let $\{x_i\}_{1 \le i \le 2n}$ be the set of missing points. Then, picking $x_{2n}$ as our pole, we can stereographically project $S^2 - \{x_i\}_{1 \le i \le 2n}$ onto $\mathbb{R}^2 - \{x_i'\}_{1 \le i \le 2n-1}$, which as we recall is a homeomorphism. Finally, we can deformation retract the $(2n-1)$-punctured plane to $\bigvee_{i=1}^{2n-1} S^1$ in the same way we usually retract the doubly punctured plane to $S^1 \vee S^1$, and so $\pi_1(\mathbb{R}^3 - X) = \bigast_{i=1}^{2n-1} \mathbb{Z}$ by Example $1.21$.
+\end{proof}
+
+\setcounter{subsubsection}{7}
+\begin{problem}
+  Compute the fundamental group of the space obtained from two tori $S^1 \times S^1$ by identifying a circle $S^1 \times \{x_0\}$ in on one torus with the corresponding circle $S^1 \times \{x_0\}$ in the other torus.
+\end{problem}
+\begin{proof}
+  Let $X$ be this topological space. Recall that the torus has $1$-skeleton $S^1
+  \vee S^1$; by identifying one circle with that of another torus, we get the
+  $1$-skeleton $X^1$ of $X$ to be $S^1 \vee S^1 \vee S^1$. Thus $\pi_1(X^1) =
+  \mathbb{Z} \ast \mathbb{Z} \ast \mathbb{Z}$; let $a,b,c$ be representatives of
+  the generators of each copy of $\mathbb{Z}$. If $a$ is the generator of the
+  circle that is identified from the two tori, then the normal subgroup $N$ on
+  p.~50 is the normalizer of the subgroup generated by all elements of the form
+  $aba^{-1}b^{-1}$ and $aca^{-1}c^{-1}$, for each $2$-cell is attached along the
+  loop given by these two generators. By Proposition $1.26$, $\pi_1(X) \approx
+  \pi_1(X_1)/N = \mathbb{Z} \times (\mathbb{Z} \ast \mathbb{Z})$.
+\end{proof}
+
+\setcounter{subsubsection}{8}
+\begin{problem}
+  In the surface $M_g$ of genus $g$, let $C$ be the circle that separates $M_g$ into two compact subsurfaces $M_h'$ and $M_k'$ obtained from the closed surfaces $M_h$ and $M_k$ by deleting an open disk from each. Show that $M_h'$ does not retract onto its boundary circle $C$, and hence $M_g$ does not retract onto $C$. But show that $M_g$ does retract onto the nonseparating circle $C'$ in the figure.
+\end{problem}
+\begin{proof}
+  Suppose $C$ is a retract. We have the following commutative diagram:
+  \begin{center}
+    \begin{tikzcd}[row sep=tiny]
+      {}& \pi_1(M_h')\arrow[twoheadrightarrow]{dd}{q}\\
+      \pi_1(C)\arrow[hookrightarrow]{ur}{\iota_*}\arrow{dr}[swap]{\tilde{\iota}_*}\\
+      & H_1(M_h')
+    \end{tikzcd}
+  \end{center}
+  Proposition $1.17$ implies $\iota_*$ is injective. We claim $\tilde{\iota}_*$
+  is also. Since $\iota_*$ is injective, $\tilde{\iota}_*(x) = 0$ for $x \in
+  \pi_1(C)$ if and only if $x$ is in the derived subgroup of $\pi_1(M_h')$. But
+  this implies that $x=0$, for any element in the derived subgroup of
+  $\pi_1(M_h')$ is of the form $aba^{-1}b^{-1}$, and the only element in the
+  image of $\iota_*$ of this form is $\iota_*(0) = 1$, since $\pi_1(C) =
+  \mathbb{Z}$. Thus, $\tilde{\iota}_* = \iota_* \circ q$ is injective.
+  \par We claim this is a contradiction. We first draw the cell structure of $M_h'$:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+      \fill[fill=gray] (0,0) -- (0,1) -- (0.71,1.71) -- (1.71,1.71) -- (2.41,1) -- (2.41,0) -- (1.71,-0.71) -- (0.71,-0.71) -- (0,0);
+      \path
+        (0,0) edge[<-] node[anchor=east] {$b_g^{-1}$} (0,1)
+        (0,1) edge[->] node[anchor=south east] {$a_1$} (0.71,1.71)
+        (0.71,1.71) edge[->] node[anchor=south] {$b_1$} (1.71,1.71)
+        (1.71,1.71) edge[<-] node[anchor=south west] {$a_1^{-1}$} (2.41,1)
+        (2.41,1) edge[<-] node[anchor=west] {$b_1^{-1}$} (2.41,0)
+        (2.41,0) edge[dashed] (1.71,-0.71)
+        (0.71,-0.71) edge[dashed] (1.71,-0.71)
+        (0.71,-0.71) edge[<-] node[anchor=north east] {$a_g^{-1}$} (0,0);
+      \pgfplothandlerlineto
+        \pgfplotfunction{\x}{0,1,...,45}{
+            \pgfpointxy     
+            {1.25*cos(\x - 45 * 0.5 - 22.5) * sin(4 * \x)}
+            {1.25*sin(\x - 45 * 0.5 - 22.5) * sin(4 * \x) + 1}
+        }
+      \pgfsetfillcolor{white}
+      \pgfusepath{fill,stroke}
+      \pgfsetfillcolor{black}
+      \path (0.82,0.84) edge[->] (0.72,0.89);
+      \draw (0.9,0.9) node[anchor=west] {$c$};
+    \end{tikzpicture}
+  \end{center}
+  Note that $c$ is the generator of $\pi_1(C)$. We see that the 2-cell is attached using the scheme $c[a_1,b_1]\cdots[a_g,b_g]$, and so the fundamental group is given by
+  \begin{equation*}
+    \pi_1(M_h') = \Braket{a_1,\ldots,a_g,b_1,\ldots,b_g,c | c\prod_{i=1}^g [a_i,b_i]}
+  \end{equation*}
+  which has the abelianization
+  \begin{equation*}
+    H_1(M_h') = \braket{a_1,\ldots,a_g,b_1,\ldots,b_g,c | c} = \braket{a_1,\ldots,a_g,b_1,\ldots,b_g},
+  \end{equation*}
+  since $\prod_{i=1}^g [a_i,b_i] \mapsto 0$ under the abelianization map. This implies that $\tilde{\iota}_*(c) = 0$, contradicting injectivity. Thus, $M_g$ does not retract onto $C$, for the restriction of this retraction to $M_h'$ would then be a retract $M_h' \longrightarrow C$.
+  \par We now claim that $M_g$ retracts onto the nonseparating circle $C'$. We consider part of our cell structure in the following diagram:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+      \fill[fill=gray] (-0.4,0) -- (1,0) -- (2,1) -- (3.4,1) -- (3.4,2.4) -- (2,2.4) -- (1,3.4) -- (-0.4,3.4) -- (-0.4,0);
+      \path
+        (-0.4,0) edge[->] (1,0)
+        (1,0) edge[->] node[anchor=north west] {$b_i$} (2,1)
+        (2,1) edge[->] node[anchor=north] {$a_i$} (3.4,1)
+        (3.4,1) edge[<-] node[anchor=west] {$b_i$} (3.4,2.4)
+        (3.4,2.4) edge[<-] node[anchor=south] {$a_i$} (2,2.4)
+        (2,2.4) edge[->] (1,3.4)
+        (1,3.4) edge[->] (-0.4,3.4)
+        (2,2.4) edge[dashed] (2,1);
+    \end{tikzpicture}
+  \end{center}
+  where $a_i$ is identified with the circle $C'$. We claim that we can extend a retraction projecting the top copy of $a_i$ to the bottom copy in the square on the right side can be extended to a retraction of the whole complex. This retracts the left dashed edge of the square into one point $p$, and the same applies to $b_i$ on the other side of this square. We can map the rest of the polygon outside of the right square onto $p$; this is a well-defined map since every edge not equal to $a_i$ maps to $p$ and the edge $a_i$ stays constant throughout our map. This is moreover a continuous map since an open subset $U$ of $a_i$ has preimage of a union of open vertical slices of the right square if it does not contain $p$, and if it does, has preimage another union of open vertical slices unioned with the rest of the polygon on the left.
+\end{proof}
+
+\begin{problem}
+  Consider two arcs $\alpha$ and $\beta$ embedded in $D^2 \times I$ as shown in the figure. The loop $\gamma$ is obviously nullhomotopic in $D^2 \times I$, but show that there is no nullhomotopy of $\gamma$ in the complement of $\alpha \cup \beta$.
+\end{problem}
+\begin{proof}
+  Recall that we have the following diagram for $X$:
+  \begin{center}
+    \begin{tikzpicture}
+      \node[anchor=north west] (1210) at (0,0) {\includegraphics{1210.pdf}};
+      \draw [decorate,decoration={brace,amplitude=10pt},yshift=-2pt] (0.2,0) -- (1.8,0) node[midway,anchor=south,yshift=0.3cm] {$A_1$};
+      \draw [decorate,decoration={brace,amplitude=10pt},yshift=2pt] (3.3,-2) -- (1.7,-2) node[midway,anchor=north,yshift=-0.3cm] {$A_2$};
+    \end{tikzpicture}
+  \end{center}
+  where $A_1,A_2$ describe the range of the two open sets we use for our decomposition for van Kampen's theorem. Omitting the cylinder for clarity, we get that the three sets $A_1,A_1 \cap A_2,A_2$ are represented by the ``missing'' segments as follows:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,y=1cm,x=1.3cm]
+      \path
+        (-4,3) edge node[anchor=south] {$c_1$} (-1,3)
+        (-4,0) edge node[anchor=north] {$a_1$} (-1,0)
+        (-1,1) edge node[anchor=north,yshift=2pt] {$b_1$} (-2,1)
+        (-1,2) edge node[anchor=south,yshift=-2pt] {$b_1^{-1}$} (-2,2);
+      \draw (-2,1) .. controls(-2.5,1) and (-2.5,2) .. (-2,2);
+      \path
+        (0,3) edge (2,3)
+        (0,0) edge (2,0)
+        (2,1) edge (0,1)
+        (2,2) edge (0,2);
+      \draw (0,3) node[anchor=east] {$c_1$};
+      \draw (0,2) node[anchor=east] {$b_1^{-1}$};
+      \draw (0,1) node[anchor=east] {$b_1$};
+      \draw (0,0) node[anchor=east] {$a_1$};
+      \draw (2,3) node[anchor=west] {$b_2^{-1}$};
+      \draw (2,2) node[anchor=west] {$c_2$};
+      \draw (2,1) node[anchor=west] {$a_2$};
+      \draw (2,0) node[anchor=west] {$b_2$};
+      \path
+        (3,3) edge node[anchor=south] {$c_2$} (6,3)
+        (3,0) edge node[anchor=north] {$a_2$} (6,0)
+        (3,1) edge node[anchor=north,yshift=2pt] {$b_2$} (4,1)
+        (3,2) edge node[anchor=south,yshift=-2pt] {$b_2^{-1}$} (4,2);
+      \draw (4,1) .. controls(4.5,1) and (4.5,2) .. (4,2);
+      \draw (-2.5,-0.5) node[anchor=north] {$A_1$};
+      \draw (1,-0.5) node[anchor=north] {$A_1 \cap A_2$};
+      \draw (4.5,-0.5) node[anchor=north] {$A_2$};
+    \end{tikzpicture}
+  \end{center}
+  Note that the identifications given by the line segments for $A_1 \cap A_2$ in the center follow from following the path of the loops in our original picture, and that we get inverses because any loop around, say, $b_1$ is homotopy equivalent to one around $b_1^{-1}$ looping the other way, just by moving the loop around the horseshoe-shaped segment labeled $b_1,b_1^{-1}$. Since we can deformation retract each of $A_1$, $A_1 \cap A_2$, and $A_2$ to circles going around each of the labeled segments, we see that the loops around the segments $a_i,b_i,c_i$ act as our generators for the fundamental groups $\pi_1(A_1),\pi_1(A_1 \cap A_2),\pi_1(A_2)$ (note that we omit base points since all our sets are path connected, and so the fundamental groups are not dependent on the choice of base point). Now we see that
+  \begin{gather*}
+    \pi_1(A_1) = \braket{a_1,b_1,c_1} = \bigast_{i=1}^3 \mathbb{Z},\\
+    \pi_1(A_1 \cap A_2) = \braket{a_1,b_1,b_1^{-1},c_1} = \braket{b_2,a_2,c_2,b_2^{-1}} = \bigast_{i=1}^4 \mathbb{Z},\\
+    \pi_1(A_2) = \braket{a_2,b_2,c_2} = \bigast_{i=1}^3 \mathbb{Z},
+  \end{gather*}
+  and so by van Kampen's theorem, we have that
+  \begin{equation*}
+    \pi_1(X) = \frac{\pi_1(A_1) \ast \pi_1(A_2)}{\braket{\iota_{12}(\omega)\iota_{21}(\omega)^{-1}}} = \frac{\braket{a_1,a_2,b_1,b_2,c_1,c_2}}{\braket{c_1b_2,c_2b_1,b_1a_2^{-1},a_1b_2^{-1}}} = \frac{\braket{a_1,a_2,c_1,c_2}}{\braket{a_1c_1,a_2c_2}}.
+  \end{equation*}
+  \par Now we consider the loop $\gamma$ in our original picture, which is in the region $A_1 \cap A_2$. Drawn looking at a vertical cross-section of our original cylinder, we see that the $\gamma$ loops around the segments of $A_1 \cap A_2$ in the following fashion:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+      \draw[decoration={markings, mark=at position 0.375 with {\arrow{<}}}, postaction={decorate}] (0,0) circle (2);
+      \fill (0,1) circle (0.05);
+      \fill (0,-1) circle (0.05);
+      \fill (1,0) circle (0.05);
+      \fill (-1,0) circle (0.05);
+      \draw (-1.4,1.4) node[anchor=south east] {$\gamma$};
+      \draw (0,1) node[anchor=south] {$c_1$};
+      \draw (0,-1) node[anchor=north] {$a_1$};
+      \draw (1,0) node[anchor=west] {$b_1^{-1}$};
+      \draw (-1,0) node[anchor=east] {$b_1$};
+    \end{tikzpicture}
+  \end{center}
+  Choosing our base point $x_0$ to be the center of this circle, we then have that $\gamma$ is homotopy equivalent to the loop $a_1b_1c_1b_1^{-1}$ in the diagram below:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+      \fill (0,1) circle (0.05);
+      \fill (0,-1) circle (0.05);
+      \fill (1,0) circle (0.05);
+      \fill (-1,0) circle (0.05);
+      \fill (0,0) circle (0.1);
+      \draw (0,0) node[anchor=north,yshift=-3pt] {$x_0$};
+      \draw (0,1) node[anchor=south] {$c_1$};
+      \draw (0,-1) node[anchor=north] {$a_1$};
+      \draw (1,0) node[anchor=west] {$b_1^{-1}$};
+      \draw (-1,0) node[anchor=east] {$b_1$};
+      \pgfplothandlerlineto
+      \pgfplotfunction{\x}{0, 1, ..., 360}{
+          \pgfpointxy     
+          {2*cos(\x) * sin(2 * \x + 90)}
+          {2*sin(\x) * sin(2 * \x + 90)}
+      }
+      \pgfusepath{stroke}
+      \path (0.05,2) edge[->] (0.1,2);
+      \path (-0.05,-2) edge[->] (-0.1,-2);
+      \path (-2,0.05) edge[->] (-2,0.1);
+      \path (2,-0.05) edge[->] (2,-0.1);
+    \end{tikzpicture}
+  \end{center}
+  Since $a_1b_1c_1b_1^{-1} = a_1a_2c_1a_2^{-1} \ne 1$ in $\pi_1(X)$, $\gamma$ is not represented by $1 \in \pi_1(X)$, and so is not nulhomotopic in $X$.
+\end{proof}
+
+\setcounter{subsubsection}{13}
+\begin{problem}
+  Consider the quotient space of a cube $I^3$ obtained by identifying each square face with the opposite face via the right-handed screw motion consisting of a translation by one unit in the direction perpendicular to the face combined with a one-quarter twist of the face about its center point. Show that this quotient space $X$ is a cell complex with two $0$-cells, four $1$-cells, three $2$-cells, and one $3$-cell. Using this structure, show that $\pi_1(X)$ is the quaternion group $\{\pm1,\pm i,\pm j,\pm k\}$, of order eight.
+\end{problem}
+\begin{proof}
+  We first draw the $2$-cell with the given identifications:
+  \begin{center}
+    \begin{tikzpicture}[line cap=round,line join=round,>=stealth,x=2cm,y=2cm]
+      %back square
+      \path
+        (0,0) edge[-<-=0.52] (0,2)
+        (0,2) edge[->-=0.52] node[anchor=south] {$a$} (2,2)
+        (2,2) edge[-<-=0.52] node[anchor=west] {$b$} (2,0)
+        (2,0) edge[->-=0.52] node[anchor=north] {$c$} (0,0)
+        ;
+      %front square
+      \path
+        (-.75,1.25) edge[-<-=0.52,commutative diagrams/crossing over] node[anchor=south] {$b$} (1.25,1.25)
+        (1.25,1.25) edge[->-=0.52,commutative diagrams/crossing over] node[anchor=west] {$c$} (1.25,-0.75)
+        (1.11,1.25) edge (1.25,1.25)
+        (-.75,-.75) edge[->-=0.52] node[anchor=east] {$a$} (-.75,1.25)
+        (1.25,-0.75) edge[-<-=0.52] node[anchor=north] {$d$} (-.75,-.75)
+        ;       
+      %connecting segments
+      \path
+        (0,0) edge[-<-=0.52] node[anchor=north west,yshift=4pt] {$b$} (-.75,-.75)
+        (0,2) edge[->-=0.52] node[anchor=south east] {$c$} (-.75,1.25)
+        (2,2) edge[-<-=0.52] node[anchor=south east] {$d$} (1.25,1.25)
+        (2,0) edge[->-=0.52] node[anchor=north west] {$a$} (1.25,-0.75)
+        ;
+      \draw (0,1) node[anchor=east] {$d$};
+      \fill (-.75,-.75) circle (0.05);
+      \fill (1.25,1.25) circle (0.05);
+      \fill (2,0) circle (0.05);
+      \fill (0,2) circle (0.05);
+      \draw (-.75,1.25) node {$\bigstar$};
+      \draw (1.25,-.75) node {$\bigstar$};
+      \draw (0,0) node {$\bigstar$};
+      \draw (2,2) node {$\bigstar$};
+    \end{tikzpicture}
+  \end{center}
+  where edges with the same label are identified, the vertices $\bullet$ are identified, as are the vertices $\bigstar$, and opposite faces are identified. These edge identifications follow just by considering opposite faces and using the one-quarter twist identification, and by matching heads/tails of edges to the vertices. Since this cube is then filled with a 3-cell, we see that $X$ is a cell complex with $0$-cells, four $1$-cells, three $2$-cells, and one $3$-cell.
+  \par Now we calculate the fundamental group. Recall that attaching $n$-cells for $n>2$ in a CW decomposition has no effect on the fundamental group, so we only have to consider the fundamental group for the $2$-skeleton drawn above.
+  \par To calculate this fundamental group, we first deformation retract $d$ to a point. Thus, our 2-cells attach according to the schema $ac^{-1}b^{-1}$, $c^{-1}ba^{-1}$, and $bc^{-1}a$, and we have the presentation
+  \begin{equation*}
+    \pi_1(X) = \frac{\braket{a,b,c}}{\braket{ac^{-1}b^{-1}, c^{-1}ba^{-1}, bc^{-1}a}}.
+  \end{equation*}
+  Letting $a = i$, $b = j$, $c = k$ this is equivalent to the presentation
+  \begin{equation*}
+    \pi_1(X) = \braket{i,j,k | i = jk,~ j = ki,~ ij = k}.
+  \end{equation*}
+  We can multiply $i = jk$ by $i$ and $ij = k$ by $k$. Substituting $i = jk$ into $j = ki$ to get $j = kjk$, multiplying by $j$ to get $j^2 = jkjk$, and then substituting $i = jk$ again to get $j^2 = ijk$, we finally have the presentation
+  \begin{equation*}
+    \pi_1(X) = \braket{i,j,k | i^2 = j^2 = k^2 = ijk},
+  \end{equation*}
+  which is the usual presentation for the quaternion group.
+\end{proof}
+
 \printbibliography
 \cleardoublepage
 \pdfbookmark[1]{List of Solved Exercises}{det}

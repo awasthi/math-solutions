@@ -1,0 +1,697 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,matrix}
+\usepackage{tikz-cd}
+\usepackage{braket}
+
+\usepackage{paralist}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../Hartshorne}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumacounter}
+\newenvironment{enuma}
+{\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumdcounter}
+\newenvironment{enumd}
+{\begin{list}{$(d\arabic{enumdcounter})$}{\usecounter{enumdcounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumcounter}
+\newenvironment{enum}
+{\begin{list}{$(\arabic{enumcounter})$}{\usecounter{enumcounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumicounter}
+\newenvironment{enumi}
+{\begin{list}{$(\roman{enumicounter})$}{\usecounter{enumicounter} \parsep=0em \itemsep=0em \leftmargin=2.0em \labelwidth=2.0em \topsep=0em}}
+{\end{list}}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{universalproperty}{Universal Property}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{subproblem}{Problem}[problem]
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{property}{Property}[problem]
+\newtheorem{lemma}{Lemma}[problem]
+\newtheorem*{lemma*}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{claim}{Claim}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{problem}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Ass}{Ass}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\WeakAss}{\widetilde{Ass}}
+\let\Im\relax
+\DeclareMathOperator{\Im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\maxSpec}{maxSpec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Soc}{Soc}
+\DeclareMathOperator{\height}{ht}
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\V}{\mathcal{V}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\stimes}{\text{\footnotesize\textcircled{s}}}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{coker}
+\DeclareMathOperator{\LCM}{LCM}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\dv}{div}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\GL}{GL}
+\newcommand{\GR}{\mathbb{G}\mathrm{r}}
+\newcommand{\gR}{\mathrm{Gr}}
+\DeclareMathOperator{\Sh}{Sh}
+\DeclareMathOperator{\PSh}{PSh}
+\newcommand{\FF}{\mathscr{F}}
+\newcommand{\OO}{\mathcal{O}}
+\DeclareMathOperator{\In}{in}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Spe}{Sp\acute{e}}
+\DeclareMathOperator{\HHom}{\mathscr{H}\!\mathit{om}}
+\newcommand{\isoto}{\overset{\sim}{\to}}%{\ensuremath\overset{\raisebox{-5pt}{$\displaystyle\sim\:$}}{\to}}
+
+\usepackage{todonotes}
+
+\title{Hartshorne Ch.~II, \S1 Sheaves}
+\author{Takumi Murayama}
+\date{\today}
+
+\begin{document}
+\maketitle
+\setcounter{section}{1}
+\begin{problem}
+  Let $A$ be an abelian group, and define the \emph{constant presheaf} associated to $A$ on the topological space $X$ to be the presheaf $U \mapsto A$ for all $U \ne \emptyset$, with restriction maps the identity. Show that the constant sheaf $\mathscr{A}$ defined in the text is the sheaf associated to this presheaf.
+\end{problem}
+\begin{proof}
+  Let $\mathcal{P}$ be the presheaf above. It suffices to show the constant sheaf $\mathscr{A}$ satisfies the universal property in Prop.-Def.~1.2. Define $\theta\colon\mathcal{P} \to \mathscr{A}$ where $\theta(U)\colon\mathcal{P}(U)\to\mathscr{A}(U)$ is defined by having $a \in \mathcal{P}(U) = A$ map to the constant function $x \mapsto a$ for all $x \in U$; standard restrictions give that $\theta$ is indeed a morphism. Now suppose we have a morphism $\varphi\colon\mathcal{P}\to\mathscr{G}$, where $\mathscr{G}$ is a sheaf. Let $f\colon U\to A$ in $\mathscr{A}(U)$. Letting $U_a = f^{-1}(a)$, $\{U_a\}_{a \in A}$ is a cover of $U$ by pairwise disjoint open sets. Then, letting $s_a = \varphi(U_a)(a) \in \mathscr{G}(U_a)$, by the sheaf property there exists $s \in \mathscr{G}(U)$ such that $s\vert_{U_a} = s_a$ for all $a$. Letting $\psi(U)\colon\mathscr{A}(U) \to \mathscr{G}(U)$ such that $f \mapsto s$, we see that $\mathscr{A}$ satisfies the universal property.
+\end{proof}
+
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item For any morphism of sheaves $\varphi\colon\mathscr{F}\to\mathscr{G}$, show that for each point $P$, $(\ker \varphi)_P = \ker(\varphi_P)$ and $(\Im\varphi)_P = \Im(\varphi_P)$.
+    \item Show that $\varphi$ is injective (respectively, surjective) if and only if the induced maps on the stalks $\varphi_P$ is injective (respectively, surjective) for all $P$.
+    \item Show that a sequence $\cdots\mathscr{F}^{i-1}\xrightarrow{\varphi^{i-1}} \mathscr{F}^i \xrightarrow{\varphi^i} \mathscr{F}^{i+1} \to \cdots$ of sheaves and morphisms is exact if and only if for each $P \in X$ the corresponding sequence of stalks is exact as a sequence of abelian groups.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Note first that we have the commutative diagram:
+  \begin{equation}\label{stalkscd}
+    \begin{tikzcd}
+      \mathscr{F}(U) \rar{\varphi(U)}\dar & \mathscr{G}(U)\dar\\
+      \mathscr{F}_P \rar{\varphi_P} & \mathscr{G}_P
+    \end{tikzcd}
+  \end{equation}
+  where the vertical arrows are given by $s \mapsto \braket{U,s}$. Suppose $\braket{U,s} \in (\ker\varphi)_P$ for $s \in \ker\varphi(U)$ and $U$ a neighborhood of $P$. Then, $\varphi(U)(s) = 0$, which means $\varphi_P(\braket{U,s}) = \braket{U,0} = 0 \in \mathscr{G}_P$ by the commutativity of the diagram. Thus, $(\ker\varphi)_P \subseteq \ker(\varphi_P)$. Conversely, suppose $\braket{U,s} \in \ker(\varphi_P)$, i.e., $\braket{U,s} \mapsto \braket{V,0}$ for some neighborhood $V$ of $P$. Redefining $U$ to be the intersection $U \cap V$, we see that $s \in \mathscr{F}(U)$ maps to $0 \in \mathscr{G}(U)$ by the commutativity of the diagram, and so $\ker(\varphi_P) \subseteq (\ker\varphi)_P$, and equality follows.
+  \par We work with the presheaf $\Im\varphi$ since the sheafification $(\Im \varphi)^+$ has the same stalks by Prop.-Def.~1.2. Now suppose $\braket{U,t} \in (\Im\varphi)_P$ for $t \in \Im\varphi(U)$ and $U$ a neighborhood of $P$. Then, there exists $s \in \mathscr{F}(U)$ such that $\varphi(U)(s) = t$, and so by the commutativity of the diagram $\varphi_P(\braket{U,s}) = \braket{U,t}$. Thus, $(\Im\varphi)_P \subseteq \Im(\varphi_P)$. Conversely, suppose $\braket{U,t} \in \Im(\varphi_P)$, i.e., $\braket{V,s} \mapsto \braket{U,t}$ for some neighborhood $V$ of $P$ and $s \in \mathscr{F}(V)$. Redefining $U$ to be the intersection $U \cap V$, we see that $s \in \mathscr{F}(U)$ maps to $t \in \mathscr{G}(U)$ by the commutativity of the diagram, and so $\Im(\varphi_P) \subseteq (\Im\varphi)_P$, and equality follows.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  $\varphi$ is injective (resp.~surjective), if and only if $\ker\varphi = 0$ (resp.~$\Im\varphi = \mathscr{G}$), if and only if $(\ker\varphi)_P = 0$ (resp.~$(\Im\varphi)_P = \mathscr{G}_P$) for all $P$ by the proof of Prop.~1.1, if and only if $\ker(\varphi_P) = 0$ (resp.~$\Im(\varphi_P) = \mathscr{G}_P$) by part $(a)$ for all $P$, if and only if $\varphi_P$ is injective (resp.~surjective) for all $P$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Such a sequence is exact, if and only if $\ker\varphi^i = \Im\varphi^{i-1}$ for all $i$ if and only if $(\ker\varphi^i)_P = (\Im\varphi^{i-1})_P$ by Prop.~1.1 for all $i,P$, if and only if $\ker(\varphi^i_P) = \Im(\varphi^{i-1}_P)$ by part $(a)$ for all $i,P$, if and only if the sequence of stalks is exact as abelian groups for all stalks $P$.
+\end{proof}
+
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item Let $\varphi\colon\mathscr{F}\to\mathscr{G}$ be a morphism of sheaves on $X$. Show that $\varphi$ is surjective if and only if the following condition holds: for every open set $U \subseteq X$, and for every $s \in \mathscr{G}(U)$, there is a covering $\{U_i\}$ of $U$, and there are elements $t_i \in \mathscr{F}(U_i)$, such that $\varphi(t_i) = s\vert_{U_i}$ for all $i$.
+    \item Give an example of a surjective morphism of sheaves $\varphi\colon\mathscr{F}\to\mathscr{G}$, and an open set $U$ such that $\varphi(U)\colon\mathscr{F}(U)\to\mathscr{G}(U)$ is not surjective.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Suppose the latter condition holds; by Problem $1.2(b)$ it suffices to show $\varphi_P$ is surjective for all $P \in X$. Suppose $\braket{U,s} \in \mathscr{G}_P$, where $s \in \mathscr{G}(U)$. There is then a covering $\{U_i\}$ of $U$ and elements $t_i \in \mathscr{F}(U_i)$, such that $\varphi(U_i)(t_i) = s\vert_{U_i}$ for all $i$. We then note that the germs $\braket{U_i,t_i} \in \mathscr{F}_P$ are such that $\varphi_P(\braket{U_i,t_i}) = \braket{U_i,s\vert_{U_i}} = \braket{U,s}$ by the commutativity of \eqref{stalkscd}; thus, $\varphi_P$ is surjective.
+  \par Conversely, suppose $\varphi$ is surjective; by Problem $1.2(b)$ this is equivalent to $\varphi_P$ being surjective at every $P \in X$. So let $U \subseteq X$ be open and let $s \in \mathscr{G}(U)$. For every $P \in U$, since $\varphi_P$ is surjective, there exists some open set $U_P \ni P$ with $t_P \in \mathscr{F}(U_P)$ such that $\varphi(U_P)(t_P) = s\vert_{U_P}$. We are done since $\{U_P\}_{P \in U}$ is an open cover of $U$.
+\end{proof}
+\begin{proof}[Solution for $(b)$]
+  Let $\OO_{\mathbf{C}}$ denote the sheaf consisting of holomorphic functions $U \mapsto \mathbf{C}$ for all $U \subset \mathbf{C}$ under addition, and let $\OO_{\mathbf{C}}^\times$ denote the sheaf consisting of holomorphic functions $U \mapsto \mathbf{C}^\times$ for all $U \subset \mathbf{C}$ under multiplication. These are sheaves since a function on $U$ is holomorphic if and only if it is holomorphic on each set of any open cover of $U$. Now let $\varphi\colon \OO_{\mathbf{C}} \to \OO_{\mathbf{C}}^\times$ be given by $f \mapsto e^f$ for $f \in \OO_{\mathbf{C}}(U)$. This is surjective by Problem $1.2(b)$ since, after possibly restricting to a smaller neighborhood, every non-vanishing holomorphic function on $\mathbf{C}$ has a logarithm. However, if $U = \mathbf{C}$, $\varphi(U)$ is not surjective, since there does not exist a global logarithm on $\mathbf{C}$.
+\end{proof}
+
+\begin{problem}\mbox{}
+  \begin{enuma}
+    \item Let $\varphi\colon\mathscr{F} \to \mathscr{G}$ be a morphism of presheaves such that $\varphi(U)\colon\mathscr{F}(U) \to \mathscr{G}(U)$ is injective for each $U$. Show that the induced map $\varphi^+\colon\mathscr{F}^+\to\mathscr{G}^+$ of associated sheaves is injective.
+    \item Use part $(a)$ to show that if $\varphi\colon\mathscr{F}\to\mathscr{G}$ is a morphism of sheaves, then $\Im\varphi$ can be naturally identified with a subsheaf of $\mathscr{G}$, as mentioned in the text.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Since for all $P$, $\mathscr{F}_P = \mathscr{F}^+_P$ by Prop.-Def.~1.2, by Problem $1.2(b)$ it suffices to show $\varphi_P = \varphi^+_P$ is injective for all $P$. But this follows since if $\varphi_P$ were not injective, then $\varphi$ would not be injective either.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We first see that $\Im\varphi(U) \hookrightarrow \mathscr{G}(U)$ is injective for all $U$, where $\Im\varphi$ here denotes the presheaf image, and so $(\Im\varphi)^+ \hookrightarrow \mathscr{G}$ is injective by part $(a)$.
+\end{proof}
+
+\begin{problem}
+  Show that a morphism of sheaves is an isomorphism if and only if it is both injective and surjective.
+\end{problem}
+\begin{proof}
+  By Prop.~1.1., a morphism $\varphi$ of sheaves is an isomorphism if and only if $\varphi_P$ is an isomorphism on every stalk. Now since isomorphisms of abelian groups are exactly the morphisms which are injective and surjective, $\varphi_P$ is an isomorphism for all $P$ if and only if $\varphi$ is injective and surjective by Problem $1.2(b)$.
+\end{proof}
+
+\begin{problem}\mbox{}
+  \begin{enuma}
+  \item Let $\mathscr{F}'$ be a subsheaf of a sheaf $\mathscr{F}$. Show that the natural map of $\mathscr{F}$ to the quotient sheaf $\mathscr{F}/\mathscr{F}'$ is surjective, and has kernel $\mathscr{F}'$. Thus there is an exact sequence
+    \begin{equation*}
+      0 \to \mathscr{F}' \to \mathscr{F} \to \mathscr{F}/\mathscr{F}' \to 0.
+    \end{equation*}
+  \item Conversely, if $0 \to \mathscr{F}' \to \mathscr{F} \to \mathscr{F}'' \to 0$ is an exact sequence, show that $\mathscr{F}'$ is isomorphic to a subsheaf of $\mathscr{F}$, and that $\mathscr{F}''$ is isomorphic to the quotient of $\mathscr{F}$ by this subsheaf.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  The map $\varphi\colon\mathscr{F} \to \mathscr{F}/\mathscr{F}'$ is defined by the natural map on sections $\varphi(U)\colon\mathscr{F}(U) \to \mathscr{F}(U)/\mathscr{F}'(U)$. The induced map $\varphi_P$ on stalks is the natural quotient map $\mathscr{F}_P \to \mathscr{F}_P/\mathscr{F}'_P$ by definition, and so $\varphi$ is surjective by Problem $1.2(b)$. The kernel sheaf is given by $U \mapsto \ker(\varphi(U)) = \mathscr{F}'(U)$, and so $\varphi$ has kernel $\mathscr{F}'$. Since the exact sequence is then exact on stalks, it is exact by Problem $1.2(c)$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $\varphi\colon\mathscr{F}' \to \mathscr{F}$ and $\psi\colon\mathscr{F} \to \mathscr{F}''$. By exactness, $\Im\varphi = \ker\psi$. By Problem $1.4(b)$, we know $\Im\varphi$ is a subsheaf of $\mathscr{F}$ and $\mathscr{F}' \cong \Im\varphi$ since $\ker\varphi=0$. The second statement follows from $1.7(a)$.
+\end{proof}
+
+\begin{problem}
+  Let $\varphi\colon\mathscr{F}\to\mathscr{G}$ be a morphism of sheaves
+  \begin{enuma}
+  \item Show that $\Im\varphi \cong \mathscr{F}/\ker\varphi$.
+  \item Show that $\Coker\varphi \cong \mathscr{G}/\Im\varphi$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Consider the map on stalks $\varphi_P\colon\mathscr{F}_P\to\mathscr{G}_P$. By the first isomorphism theorem, we have $\Im(\varphi_P) \cong \mathscr{F}_P/\ker(\varphi_P)$. Combined with Problem $1.2(a)$ and Prop.~1.1, we then have $\Im\varphi \cong \mathscr{F}/\ker\varphi$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We have $\Coker(\varphi_P) = \mathscr{G}_P/\Im(\varphi_P) = (\mathscr{G}/\Im(\varphi))_P = (\Coker\varphi)_P$ on stalks, and so by Prop.~1.1 we are done.
+\end{proof}
+
+\begin{problem}
+  For any open subset $U \subseteq X$, show that the functor $\Gamma(U,\cdot)$ from sheaves on $X$ to abelian groups is a left exact functor, i.e., if $0 \to \mathscr{F}' \to \mathscr{F} \to \mathscr{F}''$ is an exact sequence of sheaves, then $0 \to \Gamma(U,\mathscr{F}') \to \Gamma(U,\mathscr{F}) \to \Gamma(U,\mathscr{F}'')$ is an exact sequence of groups. The functor $\Gamma(U,\cdot)$ need not be exact; see (Ex.~1.21) below.
+\end{problem}
+\begin{proof}
+  We note the sequence is automatically injective at $\Gamma(U,\FF')$ since a morphism of sheaves is injective if and only if it is injective on sections as on p.~64. It remains to show $\Im\varphi(U) = \ker\psi(U)$. We have the commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      0 \rar & \Gamma(U,\mathscr{F}') \rar{\varphi(U)}\dar & \Gamma(U,\mathscr{F}) \rar{\psi(U)}\dar & \Gamma(U,\mathscr{F}'')\dar\\
+      0 \rar & \mathscr{F}'_P \rar{\varphi_P} & \mathscr{F}_P \rar{\psi_P} & \mathscr{F}''_P
+    \end{tikzcd}
+  \end{equation*}
+  Since the bottom row is exact, any $s \in \Gamma(U,\mathscr{F}')$ is such that $\psi(U)(\varphi(U)(s))_P = \psi_P(\varphi_P(s_P)) = 0$ for all $P \in U$, and so by the sheaf property $\psi(\varphi(s)) = 0$; thus, $\Im\varphi \subseteq \ker\psi$. To show the other direction, suppose $t \in \ker\psi(U)$; then, $\psi(U)(t) = 0$ and so $\psi(U)(t)_P = \psi_P(t_P) = 0$ for all $P \in U$. Since the bottom row is exact, there exists $s_P \in \mathscr{F}'_P$ such that $\varphi_P(s_P) = t_P$. We claim we can lift $s_P$ to some $s \in \mathscr{F}'(U)$. For each $P$, pick an open set $V_P \ni P$ and $r_P \in \mathscr{F}'(V_P)$ such that $s_P = \braket{V_P,r_P}$; then, for each $W \coloneqq V_P \cap V_Q$ we have $\varphi(W)(r_P\vert_W) = \varphi(W)(r_Q\vert_W) = t\vert_W$, and so by injectivity of $\varphi$ we have that $r_P\vert_W = r_Q\vert_W$; by the sheaf property we then have a section $s \in \mathscr{F}(U)$. Thus, since $\varphi(U)(s) = t$ for all $P$, we have $\ker\psi(U) \subseteq \Im\varphi(U)$.
+\end{proof}
+
+\begin{problem}
+  \emph{Direct Sum}. Let $\mathscr{F}$ and $\mathscr{G}$ be sheaves on $X$. Show that the presheaf $U \mapsto \mathscr{F}(U) \oplus \mathscr{G}(U)$ is a sheaf. It is called the \emph{direct sum} of $\mathscr{F}$ and $\mathscr{G}$, and is denoted by $\mathscr{F} \oplus \mathscr{G}$. Show that it plays the role of direct sum and of direct product in the category of sheaves of abelian groups on $X$.
+\end{problem}
+\begin{proof}[Proof that $\mathscr{F} \oplus \mathscr{G}$ is a sheaf]
+  Let $U$ be open and $\{V_i\}$ an open covering of $U$, with $s = (t,u) \in (\mathscr{F} \oplus \mathscr{G})(U) = \mathscr{F}(U) \oplus \mathscr{G}(U)$ such that $s\vert_{V_i} = 0$ for all $i$. Then, $(t,u)\vert_{V_i} = (t\vert_{V_i}, u\vert_{V_i}) = 0$. Since $\mathscr{F}$, $\mathscr{G}$ are sheaves, then we see $s = (t,u) = 0$.
+  \par Now suppose we have elements $s_i \in \mathscr{F}(V_i)$ for each $i$, such that $s_i\vert_{V_i \cap V_j} = s_j\vert_{V_i \cap V_j}$ for each $i,j$. $s_i = (t_i,u_i)$ and $s_j = (t_j,s_j)$, and so we have $(t_i\vert_{V_i \cap V_j},u_i\vert_{V_i \cap V_j}) = (t_j\vert_{V_i \cap V_j},u_j\vert_{V_i \cap V_j})$. Since $\mathscr{F}$, $\mathscr{G}$ are sheaves, there exists $s = (t,u)$ such that $s\vert_{V_i} = (t\vert_{V_i},u\vert_{V_i})$ for all $i$.
+\end{proof}
+\begin{universalproperty}[Direct Sum]
+  A \emph{direct sum} of $A,B \in \mathscr{C}$ a category, denoted $A \oplus B$, is an object of $\mathscr{C}$ with a pair of morphisms $\iota_A\colon A \to A \oplus B$ and $\iota_B\colon B \to A \oplus B$ such that for any pair of morphisms $f\colon A \to C$ and $g\colon B \to C$ there is a unique morphism $u \colon A \oplus B \to C$ making the following diagram commute:
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+      A \rar{\iota_A}\arrow{dr}[swap]{f} & A \oplus B\dar[dashed]{u} & B\lar[swap]{\iota_B}\arrow{dl}{g}\\
+      & C
+    \end{tikzcd}
+  \end{equation*}
+\end{universalproperty}
+\begin{proof}[Proof of universal property]
+  Let $\mathscr{F} \oplus \mathscr{G}$ be the direct sum sheaf, with morphisms $\iota_\mathscr{F}$, $\iota_\mathscr{G}$ defined by $\iota_{\mathscr{F}}(U)(s) = (s,0)$ and $\iota_{\mathscr{G}}(U)(t) = (0,t)$ respectively. Let $f\colon \mathscr{F} \to \mathscr{H}$ and $g\colon \mathscr{G} \to \mathscr{H}$ be a pair of morphisms of sheaves. Then, let $u\colon\mathscr{F}\oplus\mathscr{G} \to \mathscr{H}$ be defined by $u(U)(s,t) = f(U)(s) + g(U)(t)$; this clearly makes the diagram commute. Now if $u'\colon\mathscr{F}\oplus\mathscr{G} \to \mathscr{H}$ also makes the diagram commute, and since $u'(U)$ is a morphism of groups, we have
+  \begin{align*}
+    u'(U)(s,t) &= u'(U)(s,0) + u'(U)(0,t)\\
+    &= (u' \circ \iota_\mathscr{F})(U)(s) + (u' \circ \iota_\mathscr{G})(U)(t)\\
+    &= f(U)(s) + g(U)(t)\\
+    &= u(U)(s,t),
+  \end{align*}
+  and so $u$ is unique.
+\end{proof}
+\begin{universalproperty}[Direct Product]
+  A \emph{direct product} of $A,B \in \mathscr{C}$ a category, denoted $A \times B$, is an object of $\mathscr{C}$ with a pair of morphisms $\pi_A\colon A \to A \oplus B$ and $\pi_B\colon B \to A \oplus B$ such that for any pair of morphisms $f\colon C \to A$ and $g\colon C \to B$ there is a unique morphism $u \colon C \to A \times B$ making the following diagram commute:
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large]
+      & C\arrow{dl}[swap]{f}\arrow{dr}{g}\dar[dashed]{u}\\
+      A & A \times B \lar{\pi_A} \rar[swap]{\pi_B} & B
+    \end{tikzcd}
+  \end{equation*}
+\end{universalproperty}
+\begin{proof}[Proof of universal property]
+  Let $\mathscr{F} \oplus \mathscr{G}$ be the direct sum sheaf, with morphisms $\pi_\mathscr{F}$, $\pi_\mathscr{G}$ defined by $\pi_{\mathscr{F}}(U)(s,t) = s$ and $\pi_{\mathscr{G}}(U)(s,t) = t$ respectively. Let $f\colon \mathscr{H} \to \mathscr{F} \oplus \mathscr{G}$ and $g\colon \mathscr{H} \to \mathscr{F} \oplus \mathscr{G}$ be a pair of morphisms of sheaves. Now let $u\colon\mathscr{H} \to \mathscr{F} \oplus \mathscr{G}$ be defined by $u(U)(x) = (f(U)(x),g(U)(x))$; this clearly makes the diagram commute. Now if $u'\colon \mathscr{H} \to \mathscr{F} \oplus \mathscr{G}$ also makes the diagram commute, it is uniquely determined by its value on each of $\mathscr{F},\mathscr{G}$, it must be equal to $u$.
+\end{proof}
+
+\begin{problem}
+  \emph{Direct Limit}. Let $\{\mathscr{F}_i\}$ be a direct system of sheaves and morphisms on $X$. We define the \emph{direct limit} of the system $\{\mathscr{F}_i\}$, denoted $\varinjlim \mathscr{F}_i$, to be the sheaf associated to the presheaf $U \mapsto \varinjlim \mathscr{F}_i(U)$. Show that this is a direct limit in the category of sheaves on $X$, i.e., that it has the following universal property: given a sheaf $\mathscr{G}$, and a collection of morphisms $\mathscr{F}_i \to \mathscr{G}$, compatible with the maps of the direct system, then there is a unique map $\varinjlim \mathscr{F}_i \to \mathscr{G}$ such that for each $i$, the original map $\mathscr{F}_i \to \mathscr{G}$ is obtained by composing the maps $\mathscr{F}_i \to \varinjlim\mathscr{F}_i \to \mathscr{G}$.
+\end{problem}
+\begin{universalproperty}[Direct Limit]
+  Let $\{X_i,f_{ij}\}$ be a direct system of objects and morphisms in a category $\mathscr{C}$. The \emph{direct limit} of the system $\{X_i,f_{ij}\}$ is an object of $\mathscr{C}$ denoted by $\varinjlim X_i$ with morphisms $\{\varphi_i \colon X_i \to \varinjlim X_i\}$ such that $\varphi_j \circ f_{ij} = \varphi_i$ for all $i \le j$. Moreover, if $Y \in \mathscr{C}$ is another object with morphisms $\{\psi_i\colon X_i \to Y\}$ such that $\psi_j \circ f_{ij} = \psi_i$ for all $i \le j$, then there is a unique morphism $u\colon \varinjlim X_i \to Y$ making the following diagram commute:
+  \begin{equation*}
+    \begin{tikzcd}
+      X_i \arrow{rr}{f_{ij}}\arrow{dr}{\varphi_i}\arrow{ddr}[swap]{\psi_i} & & X_j\arrow{dl}[swap]{\varphi_j}\arrow{ddl}{\psi_j}\\
+      & \varinjlim X_i\arrow[dashed]{d}[description,yshift=3pt]{u}\\
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+\end{universalproperty}
+\begin{proof}[Proof of universal property]
+  Suppose $\mathscr{G}$ is a sheaf as in the statement of the problem. Consider for each inclusion of open sets $V \subset U$ the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=small]
+      \mathscr{F}_i(U) \arrow{rr}{f_{ij}(U)}\arrow{ddr}{\varphi_i(U)}\arrow{ddd} & & \mathscr{F}_j(U)\arrow{ddl}[swap]{\varphi_j(U)}\arrow{ddr}{\varphi_j(U)} & & \mathscr{F}_i(U)\arrow{ll}[swap]{f_{ij}(U)}\arrow{ddl}[swap]{\varphi_i(U)}\arrow{ddd}\\
+      \\
+      & \varinjlim \mathscr{F}_i(U)\arrow[dashed]{ddd}[description,yshift=-10pt]{\rho_{UV}}\arrow[equal]{rr} & & \varinjlim \mathscr{F}_i(U)\arrow[dashed]{ddd}[description,yshift=-10pt]{u(U)}\\
+      \mathscr{F}_i(V)\arrow{ddr}{\varphi_i(V)}\arrow{ddddr}[swap]{\psi_i(V)}\arrow{rr}[fill=white]{f_{ij}(V)} & & \mathscr{F}_j(V)\arrow{ddl}[swap]{\varphi_j(V)}\arrow{ddddl}{\psi_j(V)}\arrow[leftarrow,crossing over]{uuu}& & \mathscr{F}_i(V) \arrow{ll}[swap,fill=white]{f_{ij}(V)}\\
+      \\
+      & \varinjlim \mathscr{F}_i(V)\arrow[dashed]{dd}[description,yshift=3pt]{u(V)} & & \mathscr{G}(U)\arrow{dd}[description,yshift=3pt]{\rho^{\mathscr{G}}_{UV}}\arrow[leftarrow,crossing over]{uuuuul}[description]{\psi_j(U)}\arrow[leftarrow, crossing over]{uuuuur}[description]{\psi_i(U)}\\
+      \\
+      & \mathscr{G}(V) \arrow[equal]{rr} & & \mathscr{G}(V) \arrow[leftarrow]{uuuul}{\psi_j(V)}\arrow[leftarrow]{uuuur}[swap]{\psi_i(V)}
+    \end{tikzcd}
+  \end{equation*}
+  where unmarked vertical maps are restrictions, and where our direct system is given by maps $f_{ij}\colon\mathscr{F}_i \to \mathscr{F}_j$, and where $\psi_i \colon \mathscr{F}_i \to \mathscr{G}$ is our collection of morphisms compatible with the maps of the direct system. Note that the diagram without the dashed arrows commutes since $f_{ij}$, $\psi_i$ are sheaf morphisms. Recall that $\varinjlim\mathscr{F}_i(U)$ satisfies the universal property for the direct limit of abelian groups \cite[III, Thm.~10.1]{Lan02}; hence we have maps $\varphi_i(U),\varphi_i(V)$ given by the construction for $\varinjlim\mathscr{F}_i(U)$ and $\varinjlim\mathscr{F}_i(V)$ as direct limits of abelian groups. $\rho_{UV}$ exists uniquely by the universal property for $\varinjlim\mathscr{F}_i(U)$, making $U \mapsto \varinjlim \mathscr{F}_i(U)$ into a presheaf with the restriction maps $\rho_{UV}$, and so $\varphi_i$ are presheaf maps $\mathscr{F}_i \to (U \mapsto \varinjlim\mathscr{F}_i(U))$. We moreover have a unique map $u(V)\colon\varinjlim\mathscr{F}_i(V) \to \mathscr{G}(V)$ by the universal property for $\varinjlim\mathscr{F}_i(V)$ on the left half; similarly, we have a unique map $u(U)$ on the right side. $u$ is a morphism of presheaves since we have $u(V) \circ \rho_{UV} = \rho_{UV}^\mathscr{G} \circ u(U)$ by the universal property of $\varinjlim \mathscr{F}_i(U)$ with the collection of morphisms $\psi_i(V) \circ \rho_{UV}^\mathscr{F}$. The $\varphi_i$ can be turned into sheaf maps $\mathscr{F}_i \to \varinjlim\mathscr{F}_i$ by composition with the map $\theta$ from Prop.-Def.~1.2, and $u$ induces a unique morphism $u^+\colon\varinjlim \mathscr{F}_i \to \mathscr{G}$ such that $\psi = u \circ \varphi_i = u^+ \circ \theta \circ \varphi_i$, by uniqueness of $\theta,u^+$. Thus, $u^+$ satisfies the desired universal property.
+\end{proof}
+
+\begin{problem}
+  Let $\{\mathscr{F}_i\}$ be a direct system of sheaves on a noetherian topological space $X$. In this case show that the presheaf $U \mapsto \varinjlim \mathscr{F}_i(U)$ is already a sheaf. In particular, $\Gamma(X,\varinjlim \mathscr{F}_i) = \varinjlim\Gamma(X,\mathscr{F}_i)$.
+\end{problem}
+\begin{proof}
+  Let $U$ be open with open cover $\{V_\alpha\}$, and let $s \in \varinjlim\mathscr{F}_i(U)$ such that $s\vert_{V_\alpha} = 0$ for all $\alpha$. Since $X$ is noetherian, there is a finite subcover $\{V_j\}_{1\le j \le n}$ of $U$. Pick a representative $s' \in \mathscr{F}_{i_0}(U)$ of $s$; then, $s'\vert_{V_j}$ maps to zero in the direct limit for all $j$. Moreover, for each $1 \le j \le n$, we can pick a $i_j > i_0$ such that $s'\vert_{V_j}$ maps to zero in $\mathscr{F}_{i_j}(V_j)$. Since $n$ is finite, there exists a maximum $N$ of all the $i_j$, $1 \le j \le n$; let $s''$ be the image of $s'$ in $\mathscr{F}_N(U)$; since we have a direct system, $s''$ maps to $s$ in the direct limit. By construction, $s''\vert_{V_j} = 0$ for all $j$, and so $s'' = 0$ in $\mathscr{F}_N(U)$ since $\mathscr{F}_N$ is a sheaf. This implies $s = 0$ since $s''$ maps to zero in the direct limit, and the morphisms in our direct system are group homomorphisms.
+  \par Now suppose $s_\alpha \in \varinjlim\mathscr{F}_i(V_\alpha)$ for all $\alpha$, such that $s_\alpha\vert_{V_\alpha \cap V_\beta} = s_\beta\vert_{V_\alpha \cap V_\beta}$ for all $\alpha,\beta$. Since $X$ is noetherian, there is a finite subcover $\{V_j\}_{1\le j \le n}$ of $U$ with local sections $s_j$ satisfying $s_j\vert_{V_j \cap V_k} = s_k\vert_{V_j\cap V_k}$ for all $i,j$. Each $s_j$ has a representative $s'_j \in \mathscr{F}_{i_j}(V_j)$ for some $i_j$, and as before, there exists a maximum $N$ of the $i_j$ such that $s''_j \in \mathscr{F}_N(V_j)$ satisfy the gluing criterion for sections; thus, there exists $s'' \in \mathscr{F}_N(U)$ such that $s'' \vert_{V_j} = s_j$ for all $j$. Taking the image $\tilde{s}$ of $s''$ in the direct limit, we have $\tilde{s}\vert_{V_\alpha} = s_\alpha$ for all $\alpha$, since this is true by construction on all $j$, and this is true in general since $\{V_j \cap V_\alpha\}_{1\le j \le n}$ cover $V_\alpha$.
+  \par Now $U \mapsto \varinjlim \mathscr{F}_i(U)$ is a sheaf, so $\Gamma(X,\varinjlim \mathscr{F}_i) = \varinjlim\mathscr{F}_i(X) = \varinjlim\Gamma(X,\mathscr{F}_i)$.
+\end{proof}
+
+\begin{problem}
+  \emph{Inverse Limit}. Let $\{\mathscr{F}_i\}$ be an inverse system of sheaves on $X$. Show that the presheaf $U \mapsto \varprojlim \mathscr{F}_i(U)$ is a sheaf. It is called the \emph{inverse limit} of the system $\{\mathscr{F}_i\}$, and is denoted by $\varprojlim \mathscr{F}_i$. Show that it has the universal property of an inverse limit in the category of sheaves.
+\end{problem}
+\begin{universalproperty}[Inverse Limit]
+  Let $\{X_i,f_{ij}\}$ be a inverse system of objects and morphisms in a category $\mathscr{C}$. The \emph{inverse limit} of the system $\{X_i,f_{ij}\}$ is an object of $\mathscr{C}$ denoted by $\varprojlim X_i$ with morphisms $\{\pi_i \colon \varprojlim X_i \to X_i\}$ such that $f_{ij} \circ \pi_j = \pi_i$ for all $i \le j$. Moreover, if $Y \in \mathscr{C}$ is another object with morphisms $\{\psi_i\colon Y \to X_i\}$ such that $f_{ij} \circ \psi_j = \psi_i$ for all $i \le j$, then there is a unique morphism $u\colon Y \to \varprojlim X_i$ making the following diagram commute:
+  \begin{equation*}
+    \begin{tikzcd}
+      {}& Y\arrow[dashed]{d}[description,yshift=3pt]{u}\arrow{ddl}[swap]{\psi_j}\arrow{ddr}{\psi_i}\\
+      & \varprojlim X_i\arrow{dl}{\pi_j}\arrow{dr}[swap]{\pi_i}\\
+      X_j \arrow{rr}[swap]{f_{ij}} & & X_i
+    \end{tikzcd}
+  \end{equation*}
+\end{universalproperty}
+\begin{proof}[Proof of universal property]
+  Suppose $\mathscr{G}$ is such an object $Y$ in the category of sheaves. Consider for each inclusion of open sets $V \subset U$ the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=small]
+      {}& \mathscr{G}(U) \arrow[equal]{rr}\arrow[dashed]{dd}[description,yshift=3pt]{u(U)}\arrow{ddddl}[swap]{\psi_j(U)}\arrow{ddddr}{\psi_i(U)} & & \mathscr{G}(U)\arrow{dd}[description,yshift=3pt]{\rho_{UV}^\mathscr{G}}\arrow{ddddl}[swap]{\psi_i(U)}\arrow{ddddr}{\psi_j(U)}\\
+      \\
+      & \varprojlim \mathscr{F}_i(U)\arrow{ddl}{\pi_j(U)}\arrow{ddr}[swap]{\pi_i(U)}\arrow[dashed]{ddd}[description,yshift=10pt]{\rho_{UV}} & & \mathscr{G}(V)\arrow[dashed]{ddd}[description,yshift=10pt]{u(V)}\\
+      \\
+      \mathscr{F}_j(U) \arrow{rr}[swap,fill=white]{f_{ij}(U)}\arrow{ddd} & & \mathscr{F}_i(U) & & \mathscr{F}_i(U)\arrow{ll}[fill=white]{f_{ij}(U)}\arrow{ddd}\\
+      & \varprojlim \mathscr{F}_i(V) \arrow[equal]{rr}\arrow{ddl}{\pi_j(V)}\arrow{ddr}[swap]{\pi_i(V)} & & \varprojlim \mathscr{F}_j(V)\arrow{ddl}{\pi_i(V)}\arrow{ddr}[swap]{\pi_j(V)}\\
+      \\
+      \mathscr{F}_j(V) \arrow{rr}[swap]{f_{ij}(V)} & & \mathscr{F}_i(V)\arrow[leftarrow,crossing over]{uuu}\arrow[leftarrow,crossing over]{uuuuur}[description]{\psi_i(V)} & & \mathscr{F}_j(V)\arrow{ll}{f_{ij}(V)}\arrow[leftarrow,crossing over]{uuuuul}[description]{\psi_j(V)}
+    \end{tikzcd}
+  \end{equation*}
+  where unmarked vertical maps are restrictions, and where our inverse system is given by maps $f_{ij}\colon \mathscr{F}_j \to \mathscr{F}_i$, and where $\psi_i\colon \mathscr{F}_i \to \mathscr{G}$ is our collection of morphisms compatible with the maps of the inverse system. Note that the diagram without the dashed arrows commutes since $f_{ij}$, $\psi_i$ are sheaf morphisms. Recall that $\varprojlim\mathscr{F}_i(U)$ satisfies the universal property for the inverse limit of abelian groups \cite[III, Thm.~10.2]{Lan02}; hence we have maps $\pi_i(U),\pi_i(V)$ given by the construction for $\varprojlim\mathscr{F}_i(U)$ and $\varprojlim\mathscr{F}_i(V)$ as inverse limits of abelian groups. $\rho_{UV}$ exists uniquely by the universal property for $\varprojlim\mathscr{F}_i(V)$, making $\varprojlim \mathscr{F}_i(U)$ into a presheaf with the restriction maps $\rho_{UV}$, and so $\pi_i$ are presheaf maps $\mathscr{F}_i \to \varprojlim \mathscr{F}_i(U)$. We moreover have a unique map $u(U)\colon \mathscr{G}(U) \to \varprojlim \mathscr{F}_i(U)$ by the universal property for $\varprojlim\mathscr{F}_i(U)$ on the left half; similarly, we have a unique map $u(V)$ on the right side. $u$ is a morphism of presheaves since we have $\rho_{UV} \circ u(U) = u(V) \circ \rho_{UV}^\mathscr{G}$ by the universal property of $\varprojlim\mathscr{F}_i(U)$ with the collection of morphisms $\rho_{UV}^\mathscr{F} \circ \psi(U)$. $u$ satisfies the desired universal property.
+\end{proof}
+\begin{proof}[Proof of sheaf property]
+  Let $U$ be open with open cover $\{V_\alpha\}$, and let $s \in \varprojlim\mathscr{F}_i(U)$ such that $s\vert_{V_\alpha} = 0$ for all $\alpha$. Then, $\pi_i(U)(s)\vert_{V_\alpha} = 0$ for all $i,\alpha$, and so $\pi_i(U)(s) = 0$ for all $i$ by the sheaf property, hence $s = 0$.
+  \par Now suppose $s_\alpha \in \varprojlim\mathscr{F}_i(V_\alpha)$ are such that $s_\alpha\vert_{V_\alpha \cap V_\beta} = s_\beta\vert_{V_\alpha \cap V_\beta}$. For any $i$, we have that $\pi_i(U)(s_\alpha)\vert_{V_\alpha\cap V_\beta} = \pi_i(U)(s_\beta)\vert_{V_\alpha \cap V_\beta}$, and so by the sheaf property there exists $s_i \in \mathscr{F}_i(U)$ such that $s_i\vert_{V_\alpha} = \pi_i(U)(s_\alpha)$ for all $\alpha$, for all $i$. We claim that the direct product $s = (s_i)$ is in $\varprojlim\mathscr{F}_i(U)$; note that since $s$ satisfies the gluing condition, we will be done. It suffices to show that for all $\alpha$, $s_i\vert_{V_\alpha} = f_{ij}(s_j)\vert_{V_\alpha}$ for all $i \le j$ since the $\mathscr{F}_i$ are sheaves. But this is true since $s_i\vert_{V_\alpha} = \pi_i(V_\alpha)(s_\alpha)$, and since $\pi_i(V_\alpha)(s_\alpha) = f_{ij}(\pi_j(V_\alpha)(s_\alpha))$, by the fact that $s_\alpha \in \varprojlim\mathscr{F}_i(V_\alpha)$.
+\end{proof}
+
+\begin{problem}
+  \emph{Espace \'Etal\'e of a Presheaf}. Given a presheaf $\mathscr{F}$ on $X$, we define a topological space $\Spe(\mathscr{F})$, called the \emph{espace \'etal\'e} of $\mathscr{F}$, as follows. As a set, $\Spe(\mathscr{F}) = \bigcup_{P\in X} \mathscr{F}_P$. We define a projection map $\pi\colon\Spe(\mathscr{F}) \to X$ by sending $s \in \mathscr{F}_P$ to $P$. For each open set $U \subseteq X$ and each section $s \in \mathscr{F}(U)$, we obtain a map $\overline{s}\colon U \to \Spe(\mathscr{F})$ by sending $P \mapsto s_P$, its germ at $P$. This map has the property that $\pi \circ \overline{s} = \id_U$, in other words, it is a ``section'' of $\pi$ over $U$. We now make $\Spe(\mathscr{F})$ into a topological space by giving it the strongest topology such that all the maps $\overline{s}\colon U \to \Spe(\mathscr{F})$ for all $U$, and all $s \in \mathscr{F}(U)$, are continuous. Now show that the sheaf $\mathscr{F}^+$ associated to $\mathscr{F}$ can be described as follows: for any open set $U \subseteq X$, $\mathscr{F}^+(U)$ is the set of \emph{continuous} sections of $\Spe(\mathscr{F})$ over $U$. In particular, the original presheaf $\mathscr{F}$ was a sheaf if and only if for each $U$, $\mathscr{F}(U)$ is equal to the set of all continuous sections of $\Spe(\mathscr{F})$ over $U$.
+\end{problem}
+\begin{proof}
+  We first show that any section $s \in \mathscr{F}^+(U)$ is a continuous section. Recall that any such $s$ is a function $U \to \Spe(\mathscr{F})$ such that for each $P \in U$, $s(P) \in \mathscr{F}_P$, which ensures $s$ is a section, so it remains to show continuity. Let $W \subseteq \Spe(\mathscr{F})$ be open, and consider the preimage $s^{-1}(W)$. If $s^{-1}(W) = \emptyset$, we will be done, so suppose not. Then, there exists $P \in s^{-1}(W) \subseteq U$, and so there exists $V \subseteq U$ such that there is $t \in \mathscr{F}(V)$ such that for all $Q \in V$, the germ $t_Q$ of $t$ at $Q$ is equal to $s(Q)$. But then, $s\vert_V^{-1}(W) = t^{-1}(W)$ is open by definition of $\Spe(\mathscr{F})$, for $t$ is continuous; thus, $P \in t^{-1}(W) \subseteq s^{-1}(W)$. Since we can cover $s^{-1}(W)$ with such $t^{-1}(W)$ for each $P$, $s^{-1}(W)$ is a union of open sets, hence open, and so $s$ is continuous.
+  \par Now suppose $\overline{s}\colon U \to \Spe(\mathscr{F})$ is a continuous section associated with $s \in \mathscr{F}(U)$; we want to show $\overline{s} \in \mathscr{F}^+(U)$. Let $P \in U$; we have $\overline{s}(P) = s_P \in \mathscr{F}_P$ by definition, and so property $(1)$ in Prop.-Def.~1.2 is satisfied. Now consider property $(2)$. We first show that $\overline{s}$ is an open map, i.e., $\overline{s}(V) \subset \Spe(\mathscr{F})$ is open for all $V$ open in $U$. By assumption on the topology on $\Spe(\mathscr{F})$, to show $W \subset \Spe(\mathscr{F})$ is open, it suffices to show that $\overline{t}^{-1}(W)$ is open for all $t \in \mathscr{F}(U)$. Fix $s \in \mathscr{F}(U)$ and let $t \in \mathscr{F}(U)$ be arbitrary; we want to show $\overline{t}^{-1}(\overline{s}(V))$ is open. Note that for $P \in \overline{t}^{-1}(\overline{s}(V))$, we have that $t(P) = s(P)$, and so there exists an open neighborhood $W \ni P$ in $V$ such that $t\vert_W = s\vert_W$; thus, $W \subset \overline{t}^{-1}(\overline{s}(V))$. Since for every $P \in \overline{t}^{-1}(\overline{s}(V))$ there exists such a set $W$, these $W$ form an open cover of $\overline{t}^{-1}(\overline{s}(V))$, and so $\overline{t}^{-1}(\overline{s}(V))$ is open. Finally, we would like to show property $(2)$ in Prop.-Def.~1.2. Let $P \in U$; then, $\overline{s}(P) = s_P = \braket{t,W}$, where $W$ is an open neighborhood of $P$ and $t \in \mathscr{F}(W)$. Then, $W' \coloneqq \overline{s}^{-1}(\overline{t}(W))$ is open in $U$ by the above, and $W'$ is an open neighborhood of $P$ such that for all $Q \in W'$, the germ $t_Q = \overline{s}(Q) = s_Q$.
+\end{proof}
+
+\begin{problem}
+  \emph{Support}. Let $\mathscr{F}$ be a sheaf on $X$, and let $s \in \mathscr{F}(U)$ be a section over an open set $U$. The \emph{support} of $s$, denoted $\Supp s$, is defined to be $\{P \in U \mid s_P \ne 0\}$, where $s_P$ denotes the germ of $s$ in the stalk $\mathscr{F}_P$. Show that $\Supp s$ is a closed subset of $U$. We define the \emph{support} of $\mathscr{F}$, $\Supp \mathscr{F}$, to be $\{P \in X \mid \mathscr{F}_P \ne 0\}$. It need not be a closed subset.
+\end{problem}
+\begin{proof}
+  Let $s \in \mathscr{F}(U)$. It suffices to show that the complement of $\Supp s$, $\{P \in U \mid s_P = 0\}$, is open. But this is true since if $s_P = 0$, then there exists an open neighborhood $V \ni P$ such that $s\vert_P = 0$; since these $V$ then form an open cover of $\{P \in U \mid s_P = 0\}$, we know that it is open.
+  \par Now consider $\Supp\mathscr{F}$. Let $U \subset X$ be open with $j\colon U \hookrightarrow X$ its inclusion. Let $\mathscr{G}$ be a sheaf on $U$ with full support. Then, the sheaf $\mathscr{F} \coloneqq j_!(\mathscr{G})$ from Problem $1.19(b)$ is a sheaf such that $\Supp\mathscr{F} = U$, which is open.
+\end{proof}
+
+\begin{problem}
+  \emph{Sheaf $\HHom$}. Let $\mathscr{F}$, $\mathscr{G}$ be sheaves of abelian groups on $X$. For any open set $U \subseteq X$, show that the set $\Hom(\mathscr{F}\vert_U,\mathscr{G}\vert_U)$ of morphisms of the restricted shaves has a natural structure of abelian group. Show that the presheaf $U \mapsto \Hom(\mathscr{F}\vert_U,\mathscr{G}\vert_U)$ is a sheaf. It is called the \emph{sheaf of local morphisms} of $\mathscr{F}$ into $\mathscr{G}$, ``sheaf hom'' for short, and is denoted $\HHom(\mathscr{F},\mathscr{G})$.
+\end{problem}
+\begin{proof}
+  Let $\varphi,\psi \in \Hom(\mathscr{F}\vert_U,\mathscr{G}\vert_U)$; having $(\varphi + \psi)(V)(s) = \varphi(V)(s) + \psi(V)(s)$ gives the structure of an abelian group for $s \in \mathscr{F}(V)$, $V$ open in $U$, for $\mathscr{G}(V)$ is an abelian group for all $V$. To show that $U \mapsto \Hom(\mathscr{F}\vert_U,\mathscr{G}\vert_U)$ is a sheaf, suppose $\{V_i\}$ is an open cover of $U$ and $s \in \Hom(\mathscr{F}\vert_U,\mathscr{G}\vert_U)$ is such that $s\vert_{V_i} = s(V_i) = 0$ for all $i$. Let $f \in \mathscr{F}(V)$ be arbitrary for some $V \subset U$. Then, $s(V_i \cap V)(f\vert_{V_i \cap V}) = 0$, and so since $\mathscr{G}$ is a sheaf, $s(V)(f) = 0$. Thus, $s = 0$. Now suppose that we have elements $s_i \in \Hom(\mathscr{F}\vert_{V_i},\mathscr{G}\vert_{V_i})$ such that for each $i,j$, $s_i\vert_{V_i \cap V_j} = s_j\vert_{V_i \cap V_j}$. If $f \in \mathscr{F}(V)$, then $s_i(V \cap V_i \cap V_j)(f\vert_{V \cap V_i \cap V_j}) = s_j(V \cap V_i \cap V_j)(f\vert_{V \cap V_i \cap V_j}) \in \mathscr{G}(V \cap V_i \cap V_j)$ gives that there exists a well-defined image $s(V)(f) \in \mathscr{G}(V)$ since $\mathscr{G}$ is a sheaf.
+\end{proof}
+
+\begin{problem}
+  \emph{Flasque Shaves}. A sheaf $\mathscr{F}$ on a topological space $X$ is \emph{flasque} if for every inclusion $V \subseteq U$ of open sets, the restriction map $\mathscr{F}(U) \to \mathscr{F}(V)$ is surjective.
+  \begin{enuma}
+    \item Show that a constant sheaf on an irreducible topological space is flasque. See $(\mathrm{I},\S1)$ for irreducible topological spaces.
+    \item If $0 \to \mathscr{F}' \to \mathscr{F} \to \mathscr{F}'' \to 0$ is an exact sequence of sheaves, and if $\mathscr{F}'$ is flasque, then for any open set $U$, the sequence $0 \to \mathscr{F}'(U) \to \mathscr{F}(U) \to \mathscr{F}''(U) \to 0$ of abelian groups is also exact.
+    \item If $0 \to \mathscr{F}' \to \mathscr{F} \to \mathscr{F}'' \to 0$ is an exact sequence of sheaves, and if $\mathscr{F}'$ and $\mathscr{F}$ are flasque, then $\mathscr{F}''$ is flasque.
+    \item If $f\colon X \to Y$ is a continuous map, and if $\mathscr{F}$ is a flasque sheaf on $X$, then $f_*\mathscr{F}$ is a flasque sheaf on $Y$.
+    \item Let $\mathscr{F}$ be any sheaf on $X$. We define a new sheaf $\mathscr{G}$, called the sheaf of \emph{discontinous sections} of $\mathscr{F}$ as follows. For each open set $U \subseteq X$, $\mathscr{G}(U)$ is the set of maps $s\colon U \to \bigcup_{P \in U} \mathscr{F}_P$ such that for each $P \in U$, $s(P) \in \mathscr{F}_P$. Show that $\mathscr{G}$ is a flasque sheaf, and that there is a natural injective morphism of $\mathscr{F}$ to $\mathscr{G}$.
+  \end{enuma}
+\end{problem}
+\begin{remark}
+  We denote $0 \to \mathscr{F}' \overset{\varphi}{\to} \mathscr{F} \overset{\psi}{\to} \mathscr{F}'' \to 0$.
+\end{remark}
+\begin{proof}[Proof of $(a)$]
+  If $X$ irreducible, then the restriction maps $\rho_{UV}$ for $V \ne \emptyset$ are just the identity map by Problem $1.1(a)$, which are surjective. If $V = \emptyset$, then $\rho_{UV}$ is the zero map, which is also surjective.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  By Problem $1.8$, it suffices to show that $\psi(U)$ is surjective for all open subsets $U \subset X$. So suppose $s \in \mathscr{F}''(U)$. By Problem $1.3(a)$, there is a covering $\{U_\alpha\}$ of $U$ and elements $t_\alpha \in \mathscr{F}(U_\alpha)$ such that $\psi(U_\alpha)(t_\alpha) = s\vert_{U_\alpha}$ for all $\alpha \in A$. By the well-ordering theorem \cite[p.~253]{Sho01}, $A$ has a well-ordering. Write $V_\alpha \coloneqq \bigcup_{\beta \le \alpha} U_\alpha$. We proceed by transfinite induction \cite[p.~247]{Sho01} to show that there exists $u_\alpha \in \mathscr{F}(V_\alpha)$ such that $\psi(V_\alpha)(u_\alpha) = s\vert_{V_\alpha}$ for all $\alpha \in A$, and $u_\alpha\vert_{V_\beta} = u_\beta$ for all $\beta < \alpha$. The base case $\alpha = 0$ is clear since then $u_0 = t_0 \in \mathscr{F}(V_0)$ is such that $\psi(V_0)(u_0) = s\vert_{V_0}$.
+  \par Now consider arbitrary $\alpha$. By exactness, for all $\beta < \alpha$, $(u_\beta - t_\alpha)\vert_{V_\beta\cap U_\alpha}$ is in the image of $\mathscr{F}'(V_\beta \cap U_\alpha)$, and so since $\mathscr{F}'$ is flasque, there is $v_\beta \in \mathscr{F}'(V_\beta \cup U_\alpha)$ such that $\varphi(V_\beta \cup U_\alpha)(v_\beta) = u_\beta - t_\alpha$ on $V_\beta \cap U_\alpha$ for all $\beta < \alpha$. Thus, $u_\beta = t_\alpha + \varphi(V_\beta \cup U_\alpha)(v_\beta)$ on $V_\beta \cap U_\alpha$ for all $\beta < \alpha$. Moreover, $u_\beta = u_{\beta'}\vert_{V_{\beta}}$ on $V_\beta$ for any $\beta < \beta' < \alpha$ by inductive hypothesis; thus, by the sheaf property there exists $u_\alpha \in \mathscr{F}(V_\alpha)$ such that $u_\alpha\vert_{V_\beta} = u_\beta$ for all $\beta < \alpha$. Finally, $\psi(V_\alpha)(u_\alpha) = s\vert_{V_\alpha}$ by the sheaf property since this equality holds on $V_\beta$ for all $\beta < \alpha$ by inductive hypothesis, and holds on $U_\alpha$ by construction.
+  \par Now we can glue these $u_\alpha \in \mathscr{F}(V_\alpha)$ together to get $u \in \mathscr{F}(U)$ by the sheaf property since $u_\alpha\vert_{V_\beta} = u_\beta$ for all $\beta < \alpha$ by construction. $\psi(U)(u) = s$ since this equality holds on every $V_\alpha$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  If $U \subset V$, then we have the commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      0 \rar & \mathscr{F}'(U) \rar\dar & \mathscr{F}(U) \rar\dar & \mathscr{F}''(U) \rar\dar & 0\\
+      0 \rar & \mathscr{F}'(V) \rar & \mathscr{F}(V) \rar & \mathscr{F}''(V) \rar & 0
+    \end{tikzcd}
+  \end{equation*}
+  The two left vertical maps are surjective, and so the map on the right is also since its cokernel is zero by the snake lemma \cite[Prop.~2.10]{AM69}.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  Let $s \in f_*(\mathscr{F})(V)$ for $V \subset U \subset X$. Then, $s \in \mathscr{F}(f^{-1}(V))$, and since $\mathscr{F}$ is flasque, there exists $t \in \mathscr{F}(f^{-1}(U))$ such that $t\vert_U = s$. But then, $t \in f_*(\mathscr{F})(U)$, so we are done.
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  Let $V \subset U \subset X$ be open, and suppose $s\colon V \to \bigcup_{P \in V} \mathscr{F}_P$ is such that for all $P \in V$, $s(P) \in \mathscr{F}_P$, i.e., $s \in \mathscr{G}(V)$. We claim we can define $\tilde{s} \in \mathscr{G}(U)$ such that
+  \begin{equation*}
+    \tilde{s}(P) = \begin{cases}
+      s(P) \in \mathscr{F}_P & \text{if}~P \in V,\\
+      0 \in \mathscr{F}_P & \text{otherwise}.
+    \end{cases}
+  \end{equation*}
+  Then we have $\tilde{s}\vert_V = s$, and so $\mathscr{G}$ is flasque. We see that since $\mathscr{F} \cong \mathscr{F}^+$ its sheafification by Prop.-Def.~1.2, and $\mathscr{F}^+(U) \hookrightarrow \mathscr{G}(U)$ by construction, we have an injective morphism $\mathscr{F} \hookrightarrow \mathscr{G}$.
+\end{proof}
+
+\begin{problem}
+  \emph{Skyscraper Sheaves}. Let $X$ be a topological space, let $P$ be a point, and let $A$ be an abelian group. Define a sheaf $i_P(A)$ on $X$ as follows: $i_P(A)(U) = A$ if $P \in U$, $0$ otherwise. Verify that the stalk of $i_P(A)$ is $A$ at every point $Q \in \{P\}^-$, and $0$ elsewhere, where $\{P\}^-$ denotes the closure of the set consisting of the point $P$. Hence the name ``skyscraper sheaf.'' Show that this sheaf could also be described as $i_*(A)$, where $A$ denotes the constant sheaf $A$ on the closed subspace $\{P\}^-$, and $i\colon\{P\}^- \to X$ is the inclusion.
+\end{problem}
+\begin{proof}
+  Let $Q \in \overline{\{P\}}$, and let $U \ni Q$ be a neighborhood. We claim $P \in U$, for, suppose not. Then, $U^c$ is a closed set not containing $Q$ but containing $P$, contradicting that $\overline{\{P\}}$ is the smallest closed set containing $P$. Thus, $(i_P(A))_Q = A$, for $i_P(A)(U) = A$ for all $U \ni Q$. Now if $Q \notin \overline{\{P\}}$, then a small enough neighborhood $U$ of $Q$ does not contain $P$, and so $i_P(A)(U) = 0$, and $(i_P(A))_Q$ will be $0$.
+  \par Now consider $i_*(A)$. $i_*(A) = A(i^{-1}(U))$, and so if $U \ni P$ we have $A(i^{-1}(U)) = A$; otherwise, $A(i^{-1}(U)) = A(\emptyset) = 0$, as is the case for $i_P(A)$.
+\end{proof}
+
+\begin{problem}
+  \emph{Adjoint Property of $f^{-1}$}. Let $f\colon X \to Y$ be a continuous map of topological spaces. Show that for any sheaf $\mathscr{F}$ on $X$ there is a natural map $f^{-1}f_*\mathscr{F} \to \mathscr{F}$, and for any sheaf $\mathscr{G}$ on $Y$ there is a natural map $\mathscr{G} \to f_*f^{-1}\mathscr{G}$. Use these maps to show that there is a natural bijection of sets, for any sheaves $\mathscr{F}$ on $X$ and $\mathscr{G}$ on $Y$,
+  \begin{equation*}
+    \Hom_X(f^{-1}\mathscr{G},\mathscr{F}) = \Hom_Y(\mathscr{G},f_*\mathscr{F}).
+  \end{equation*}
+  Hence we say that $f^{-1}$ is the \emph{left adjoint} of $f_*$, and that $f_*$ is a \emph{right adjoint} of $f^{-1}$.
+\end{problem}
+\begin{remark}
+  It suffices to show that, if $f^{-1}_\mathcal{P}\mathscr{G}$ denotes the presheaf $U \mapsto \varinjlim_{V \supset f(U)} \mathscr{G}(U)$, we have natural bijections
+  \begin{equation}\label{adjointeqs}
+    \begin{tikzcd}[column sep=scriptsize]
+      \Hom_X(f^{-1}_\mathcal{P}\mathscr{G},\mathscr{F}) \arrow[yshift=2pt]{r}{H_2} & \arrow[yshift=-2pt]{l}{H_1} \Hom_Y(\mathscr{G},f_*\mathscr{F})
+    \end{tikzcd}
+  \end{equation}
+  for any presheaves $\mathscr{F}$ on $X$ and $\mathscr{G}$ on $Y$. For, in the special case when $\mathscr{F}$ is in fact a sheaf, we have the desired natural bijection by composition with the bijection $\Hom_{\mathsf{Psh}}(\mathcal{P},\mathscr{F}) \cong \Hom_{\mathsf{Sh}}(\mathcal{P}^+,\mathscr{F})$ for presheaves $\mathcal{P}$ and sheaves $\mathscr{F}$ in Prop.-Def.~1.2.
+  \par We describe how $f^{-1}_\mathcal{P}$ acts on maps. If $\mathscr{F} \overset{\varphi}{\to} \mathscr{G} \overset{\psi}{\to} \mathscr{H}$ are maps of presheaves on $Y$, then we have the commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=tiny]
+      \mathscr{F}(V) \arrow{rr} \arrow{dd}[swap]{\varphi(V)}\arrow{dr} & & \mathscr{F}(V') \arrow{dd}{\varphi(V')}\arrow{dl}\\
+      & f_\mathcal{P}^{-1}\mathscr{F}(U)\arrow[dashed]{dd}[yshift=10pt]{f_\mathcal{P}^{-1}\varphi(U)}\\
+      \mathscr{G}(V)\arrow{dd}[swap]{\psi(V)}\arrow{dr} \arrow[crossing over]{rr} & & \mathscr{G}(V')\arrow{dd}{\psi(V')}\arrow{dl}\\
+      & f_\mathcal{P}^{-1} \mathscr{G}(U) \arrow[dashed]{dd}[yshift=10pt]{f_\mathcal{P}^{-1}\psi(U)}\\
+      \mathscr{H}(V)\arrow[crossing over]{rr}\arrow{dr} & & \mathscr{H}(V')\arrow{dl}\\
+      & f_\mathcal{P}^{-1} \mathscr{H}(U)
+    \end{tikzcd}
+  \end{equation*}
+  where the horizontal morphisms are the restriction morphisms $\rho_{VV'}$ running over $V \supset V' \supset f(U)$, and where $f_\mathcal{P}^{-1}\varphi(U)$, $f_\mathcal{P}^{-1}\psi(U)$ are induced by the universal property for the direct limit of abelian groups \cite[III, Thm.~10.1]{Lan02}. Note by the universal property applied to $\psi \circ \varphi$, we then get that $f_\mathcal{P}^{-1}(\psi \circ \varphi)(U) = f_\mathcal{P}^{-1}(\psi)(U) \circ f_\mathcal{P}^{-1}(\varphi)(U)$.
+  \par Now if $\mathscr{F} \overset{\varphi}{\to} \mathscr{G} \overset{\psi}{\to} \mathscr{H}$ are maps of presheaves on $X$, then defining $f_*\varphi(V) \coloneqq \varphi(f^{-1}(V))$ respects composition since $f_*(\varphi \circ \psi)(V) = (\varphi \circ \psi)(f^{-1}(V)) = \varphi(f^{-1}(V)) \circ \psi(f^{-1}(V)) = f_*\varphi(V) \circ f_*\psi(V)$.
+\end{remark}
+\begin{proof}
+  First, noting
+  \begin{equation*}
+    f_\mathcal{P}^{-1}f_*\mathscr{F}(U) = \varinjlim_{V \supset f(U)} f_*\mathscr{F}(V) = \varinjlim_{V \supset f(U)} \mathscr{F}(f^{-1}(V)),
+  \end{equation*}
+  we can define $h_1\colon f^{-1}_\mathcal{P}f_*\mathscr{F} \to \mathscr{F}$ as the dashed map in the left side of the diagram below, where $V,V'$ range over all open subsets of $X$ such that $V \supset V' \supset f(U)$; note that this implies $f^{-1}(V) \supset f^{-1}(V') \supset f^{-1}(f(U)) \supset U$. The naturality of $h_1$ (the red square) follows since if we have a map $\xi\colon \mathscr{F} \to \mathscr{F}'$, the map $f_\mathcal{P}^{-1}f_*\mathscr{F}(U) \to \mathscr{F}'(U)$ is unique by the universal property for $f_\mathcal{P}^{-1}f_*\mathscr{F}(U)$ applied to $\rho_{f^{-1}(V)U} \circ f_*\xi(V)$ and $\rho_{f^{-1}(V')U} \circ f_*\xi(V')$.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=2.4ex]
+      f_*\mathscr{F}(V) \arrow[bend left=20]{rrrrrr}{f_*\xi(V)}\arrow{rr}{\rho_{VV'}}\arrow{dr}{\pi_V}\arrow[bend right]{ddr}[swap]{\rho_{f^{-1}(V)U}} & & f_*\mathscr{F}(V')\arrow{rr}{f_*\xi(V')}\arrow{dl}[swap]{\pi_{V'}}\arrow[bend left]{ddl}{\rho_{f^{-1}(V')U}} & & f_*\mathscr{F}'(V')\arrow{dr}{\pi'_{V'}}\arrow[bend right]{ddr}[swap]{\rho_{f^{-1}(V')U}} & & f_*\mathscr{F}'(V)\arrow{ll}[swap]{\rho_{VV'}}\arrow{dl}[swap]{\pi'_V}\arrow[bend left]{ddl}{\rho_{f^{-1}(V)U}}\\
+      & f^{-1}_\mathcal{P}f_*\mathscr{F}(U)\arrow[red,crossing over]{rrrr}{f_\mathcal{P}^{-1}f_*\xi(U)}\dar[red,dashed]{h_1} & & & & f^{-1}_\mathcal{P}f_*\mathscr{F}'(U)\dar[red,dashed,swap]{h_1}\\
+      & \mathscr{F}(U) \arrow[red,crossing over]{rrrr}{\xi(U)} & & & & \mathscr{F}'(U)
+    \end{tikzcd}
+  \end{equation*}
+  Now noting that
+  \begin{equation}\label{dirlimh2}
+    f_*f^{-1}_\mathcal{P}\mathscr{G}(U) = f^{-1}_\mathcal{P}\mathscr{G}(f^{-1}(U)) = \varinjlim_{V \supset f(f^{-1}(U))} \mathscr{G}(V),
+  \end{equation}
+  we can define $h_2\colon\mathscr{G} \to f_*f^{-1}_\mathcal{P}\mathscr{G}$ as the vertical maps in the left side of the diagram below, where $V,V'$ range over all open subsets of $Y$ such that $U \supset V \supset V' \supset f(f^{-1}(U))$. The naturality of $h_2$ (the red square) follows since if we have a map $\eta\colon \mathscr{G} \to \mathscr{G}'$, the map $f_*f_\mathcal{P}^{-1}\mathscr{G}(U) \to f_*f_\mathcal{P}^{-1}\mathscr{G}'(U)$ is the unique map induced by the universal property for $f_*f_\mathcal{P}^{-1}\mathscr{G}(U)$, that is, the universal property for the direct limit in \eqref{dirlimh2}, applied to $\pi'_V \circ \eta(V)$ and $\pi'_{V'} \circ \eta(V')$, and observing that $h_2 = \pi_U,\pi'_U$.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=scriptsize]
+      {} & \mathscr{G}(U) \arrow[red]{rrr}{\eta(U)}\arrow[red]{ddd}{h_2}\arrow{dl}[swap]{\rho_{UV}}\arrow[bend left]{ddr}{\rho_{UV'}} & & & \mathscr{G}'(U)\arrow[red]{ddd}[swap]{h_2}\arrow{dr}{\rho_{UV}}\arrow[bend right]{ddl}[swap]{\rho_{UV'}}\\
+      \mathscr{G}(V) \arrow[crossing over]{rrrrr}{\eta(V)} \arrow[crossing over,bend right=15]{drr}[swap]{\rho_{VV'}}\arrow[bend right]{ddr}[swap]{\pi_V} & & & & & \mathscr{G'}(V)\arrow[crossing over,bend left=15]{dll}{\rho_{VV'}}\arrow[bend left]{ddl}{\pi'_V}\\
+      & & \mathscr{G}(V')\arrow{dl}{\pi_{V'}}\arrow{r}{\eta(V')} & \mathscr{G}'(V')\arrow{dr}[swap]{\pi'_{V'}}\\
+      & f_*f_\mathcal{P}^{-1}\mathscr{G}(U) \arrow[red]{rrr}{f_*f_\mathcal{P}^{-1}\eta(U)} & & & f_*f_\mathcal{P}^{-1}\mathscr{G}'(U)
+    \end{tikzcd}
+  \end{equation*}
+  \par Now we want to define the maps $H_1,H_2$ from \eqref{adjointeqs}. If $\psi \in \Hom_Y(\mathscr{G},f_*\mathscr{F})$, then $f_\mathcal{P}^{-1}\psi \in \Hom_X(f_\mathcal{P}^{-1}\mathscr{G},f_\mathcal{P}^{-1}f_*\mathscr{F})$, and so $H_1(\psi) \coloneqq h_1 \circ f_\mathcal{P}^{-1}\psi \in \Hom_X(f^{-1}_\mathcal{P}\mathscr{G},\mathscr{F})$. Likewise, if $\varphi \in \Hom_X(f^{-1}_\mathcal{P}\mathscr{G},\mathscr{F})$, then $f_*\varphi \in \Hom_Y(f_*f^{-1}_\mathcal{P}\mathscr{G},f_*\mathscr{F})$, and so $H_2(\varphi) \coloneqq f_*\varphi \circ h_2 \in \Hom_Y(\mathscr{G},f_*\mathscr{F})$.
+  \par We now show they are inverse to each other. $H_1 \circ H_2 = \id$ since for all $V \supset V' \supset f(U)$, we have the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=small]
+      \mathscr{G}(V) \arrow{rr} \arrow{dd}[swap]{(f_*\varphi \circ h_2)(V)}\arrow{dr}[swap]{\pi_V} & & \mathscr{G}(V') \arrow{dd}{(f_*\varphi \circ h_2)(V')}\arrow{dl}{\pi_{V'}}\\
+      & f_\mathcal{P}^{-1}\mathscr{G}(U)\arrow[dashed]{dd}[yshift=15pt]{f_\mathcal{P}^{-1}(f_*\varphi \circ h_2)(U)}\\
+      f_*\mathscr{F}(V)\arrow{dddr}[swap]{\rho_{f^{-1}(V)U}}\arrow{dr} \arrow[crossing over]{rr} & & f_*\mathscr{F}(V')\arrow{dl}\arrow{dddl}{\rho_{f^{-1}(V)U}}\\
+      & f_\mathcal{P}^{-1}f_* \mathscr{F}(U) \arrow{dd}{h_1}\\\\
+      & \mathscr{F}(U)
+    \end{tikzcd}
+  \end{equation*}
+  and applying the universal property of $f_\mathcal{P}^{-1}\mathscr{G}(U)$ to the morphisms $\varphi(U) \circ \pi_V$ and $\varphi(U) \circ \pi_{V'}$ gives us $\varphi(U) = h_1(U) \circ f_\mathcal{P}^{-1}(f_*\varphi\circ h_2)(U) = (H_1 \circ H_2)(\varphi)(U)$ by unicity. $H_2 \circ H_1 = \id$ since \eqref{dirlimh2} combined with
+  \begin{align*}
+    \varinjlim_{V \supset f(f^{-1}(U))} f_*\mathscr{F}(V) &= \varinjlim_{V \supset f(f^{-1}(U))} \mathscr{F}(f^{-1}(V))\\
+    &= \varinjlim_{f^{-1}(V) \supset f^{-1}(f(f^{-1}(U)))} \mathscr{F}(f^{-1}(V))\\
+    &= \varinjlim_{f^{-1}(V) \supset f^{-1}(U)} \mathscr{F}(f^{-1}(V))\\
+    &= f_*\mathscr{F}(U)
+  \end{align*}
+  gives that for all $U \supset V \supset V' \supset f(f^{-1}(U))$, we have the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=small]
+      {} & \mathscr{G}(U)\arrow{ddl}\arrow{ddr}\arrow{ddd}[near start,yshift=-3pt]{h_2}\\
+      \\
+      \mathscr{G}(V) \arrow{dr}\arrow{dd}[swap]{\psi(V)}\arrow[crossing over]{rr} & & \mathscr{G}(V')\arrow{dl}\arrow{dd}{\psi(V')}\\
+      & f_*f_\mathcal{P}^{-1}\mathscr{G}(U)\arrow[dashed]{ddd}[near start,yshift=5pt]{f_*(h_1 \circ f_\mathcal{P}^{-1}\psi)(U)}\\
+      f_*\mathscr{F}(V) \arrow[crossing over]{rr}\arrow{ddr} & & f_*\mathscr{F}(V')\arrow{ddl}\\
+      \\
+      & f_*\mathscr{F}(U)
+    \end{tikzcd}
+  \end{equation*}
+  and so in particular letting $U = V$, we have $\psi(U) = (f_*(h_1 \circ f_\mathcal{P}^{-1}\psi) \circ h_2)(U) = (H_2 \circ H_1)(\psi)(U)$.
+  \par Now, naturality in $\mathscr{F}$ follows since if $\xi\colon\mathscr{F} \to \mathscr{F}'$, the diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=16ex]
+      \Hom_Y(\mathscr{G},f_*\mathscr{F}) \rar{\Hom_Y(\mathscr{G},f_*\xi)}\dar[swap]{f_\mathcal{P}^{-1}} & \Hom_Y(\mathscr{G},f_*\mathscr{F}')\dar{f_\mathcal{P}^{-1}}\\
+      \Hom_X(f_\mathcal{P}^{-1}\mathscr{G},f_\mathcal{P}^{-1}f_*\mathscr{F}) \rar{\Hom_X(f_\mathcal{P}^{-1}\mathscr{G},f_\mathcal{P}^{-1}f_*\xi)} \dar[swap]{\Hom_X(f_\mathcal{P}^{-1}\mathscr{G},h_1)} & \Hom_X(f_\mathcal{P}^{-1}\mathscr{G},f_\mathcal{P}^{-1}f_*\mathscr{F}')\dar{\Hom_X(f_\mathcal{P}^{-1}\mathscr{G},h_1)}\\
+      \Hom_X(f_\mathcal{P}^{-1}\mathscr{G},\mathscr{F}) \rar{\Hom_X(f_\mathcal{P}^{-1}\mathscr{G},\xi)} & \Hom_X(f_\mathcal{P}^{-1}\mathscr{G},\mathscr{F}')
+    \end{tikzcd}
+  \end{equation*}
+  commutes by functoriality of $f_\mathcal{P}^{-1}$ in the top square and naturality of $h_1$ in the bottom square, and then since the composition of the vertical maps gives $H_1$. Finally, naturality in $\mathscr{G}$ follows since if $\eta\colon\mathscr{G} \to \mathscr{G}'$, the diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=16ex]
+      \Hom_X(f^{-1}_\mathcal{P}\mathscr{G},\mathscr{F})\dar[swap]{f_*} & \Hom_X(f^{-1}_\mathcal{P}\mathscr{G}',\mathscr{F}) \arrow{l}[swap]{\Hom_X(f_\mathcal{P}^{-1}\eta,\mathscr{F})}\dar{f_*}\\
+      \Hom_Y(f_*f^{-1}_\mathcal{P}\mathscr{G},f_*\mathscr{F})\dar[swap]{\Hom_Y(h_2,f_*\mathscr{F})} & \Hom_Y(f_*f^{-1}_\mathcal{P}\mathscr{G}',f_*\mathscr{F}) \arrow{l}[swap]{\Hom_Y(f_*f_\mathcal{P}^{-1}\eta,f_*\mathscr{F})}\dar{\Hom_Y(h_2,f_*\mathscr{F})}\\
+      \Hom_Y(\mathscr{G},f_*\mathscr{F}) & \Hom_Y(\mathscr{G}',f_*\mathscr{F}) \arrow{l}[swap]{\Hom_Y(\eta,f_*\mathscr{F})}
+    \end{tikzcd}
+  \end{equation*}
+  commutes by functoriality of $f_*$ in the top square and naturality of $h_2$ in the bottom square, and then since the composition of the vertical maps gives $H_2$.
+\end{proof}
+
+\begin{problem}
+  \emph{Extending a Sheaf by Zero}. Let $X$ be a topological space, let $Z$ be a closed subset, let $i\colon Z \to X$ be the inclusion, let $U = X - Z$ be the complementary open subset, and let $j\colon U \to X$ be its inclusion.
+  \begin{enuma}
+  \item Let $\mathscr{F}$ be a sheaf on $Z$. Show that the stalk $(i_*\mathscr{F})_P$ of the direct image sheaf on $X$ is $\mathscr{F}_P$ if $P \in Z$, $0$ if $P \notin Z$. Hence we call $i_*\mathscr{F}$ the sheaf obtained by extending $\mathscr{F}$ by zero outside $Z$. By abuse of notation we will sometimes write $\mathscr{F}$ instead of $i_*\mathscr{F}$, and say ``consider $\mathscr{F}$ as a sheaf on $X$,'' when we mean ``consider $i_*\mathscr{F}$.''
+  \item Now let $\mathscr{F}$ be a sheaf on $U$. Let $j_!(\mathscr{F})$ be the sheaf on $X$ associated to the presheaf $V \mapsto \mathscr{F}(V)$ if $V \subseteq U$, $V \mapsto 0$ otherwise. Show that the stalk $(j_!(\mathscr{F}))_P$ is equal to $\mathscr{F}_P$ if $P \in U$, $0$ if $P \notin U$, and show that $j_!\mathscr{F}$ is the only sheaf on $X$ which has this property, and whose restriction to $U$ is $\mathscr{F}$. We call $j_!\mathscr{F}$ the sheaf obtained by \emph{extending $\mathscr{F}$ by zero} outside $U$.
+  \item Now let $\mathscr{F}$ be a sheaf on $X$. Show that there is an exact sequence of sheaves on $X$,
+    \begin{equation}\label{suppexact}
+      0 \to j_!(\mathscr{F}\vert_U) \to \mathscr{F} \to i_*(\mathscr{F}\vert_Z) \to 0.
+    \end{equation}
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  We see that
+  \begin{equation*}
+    (i_*\mathscr{F})_P = \varinjlim_{V \ni P} i_*\mathscr{F}(V) = \varinjlim_{V \ni P} \mathscr{F}(i^{-1}(V)),
+  \end{equation*}
+  and so if $P \notin Z$, any germ is equivalent to one defined on a neighborhood $V \cap U \ni P$. We have that $i^{-1}(V \cap U) = \emptyset$, and so $(i_*\mathscr{F})_P = 0$. On the other hand, if $P \in Z$, a neighborhood $V \ni P$ is such that $i^{-1}(V) = V \cap Z$, and so $(i_*\mathscr{F})_P = \mathscr{F}_P$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  We recall that a presheaf and its sheafification have the same stalks by Prop.-Def.~1.2; thus, it suffices to consider the presheaf $j_!^\mathcal{P}(\mathscr{F}) \coloneqq V \mapsto \mathscr{F}(V)$ if $V \subset U$, $V \mapsto 0$ otherwise. We see that
+  \begin{equation*}
+    (j_!^\mathcal{P}(\mathscr{F}))_P = \varinjlim_{V \ni P} j_!^\mathcal{P}(\mathscr{F})(V).
+  \end{equation*}
+  If $P \in U$, then any germ is equivalent to one defined on $V \cap U$, giving that $\varinjlim_{V \ni P} j_!^\mathcal{P}(\mathscr{F})(V) = \mathscr{F}_P$. If $P \notin U$, then any open set containing $P$ is not contained in $U$, and so $j_!^\mathcal{P}(\mathscr{F})(V) = 0$, i.e., $\mathscr{F}_P = 0$.
+  \par Now suppose $\mathscr{G}$ is such that $\mathscr{G}_P = \mathscr{F}_P$ for $P \in U$ and zero otherwise, and such that $\mathscr{G}\vert_U = \mathscr{F}$. Then, we have a morphism $\mathscr{G}(V) \to j_!^\mathcal{P}(\mathscr{F})(V) \to j_!(\mathscr{F})(V)$ where the first map is the identity if $V \subset U$ and $0$ otherwise, and the second map is the sheafification map $\theta$ from Prop.-Def.~1.2. This clearly respects restrictions, hence is a morphism of sheaves. But at each stalk $P$, we have an isomorphism by assumption, hence $\mathscr{G} \cong j_!(\mathscr{F})$ by Prop.~1.1.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Define a morphism $j_!(\mathscr{F}\vert_U)(V) \to \mathscr{F}(V)$ by the identity if $V \subset U$ and the zero map otherwise; this clearly respects restriction hence is a morphism of sheaves. Likewise, since $\mathscr{F}\vert_Z = i^{-1}\mathscr{F}$ by definition, let $\mathscr{F} \to i_*(\mathscr{F}\vert_Z)$ be the morphism obtained from the identity on $\mathscr{F}\vert_Z$ through the bijection $H_2$ from Problem $1.18$. Then, the resulting sequence \eqref{suppexact} restricts to
+  \begin{equation*}
+    0 \to 0 \to \mathscr{F}_P \isoto \mathscr{F}_P \to 0
+  \end{equation*}
+  on stalks $P \in Z$ and restricts to
+  \begin{equation*}
+    0 \to \mathscr{F}_P \isoto \mathscr{F}_P \to 0 \to 0
+  \end{equation*}
+  on stalks $P \in U$ by $(a),(b)$, and so \eqref{suppexact} is exact by Problem $1.2(c)$.
+\end{proof}
+
+\begin{problem}
+  \emph{Subsheaf with Supports}. Let $Z$ be a closed subset of $X$, and let $\mathscr{F}$ be a sheaf on $X$. We define $\Gamma_Z(X,\mathscr{F})$ to be the subgroup of $\Gamma(X,\mathscr{F})$ consisting of all sections whose support \emph{(Ex.~1.14)} is contained in $Z$.
+  \begin{enuma}
+  \item Show that the presheaf $V \mapsto \Gamma_{Z\cap V}(V,\mathscr{F}\vert_V)$ is a sheaf. It is called the subsheaf of $\mathscr{F}$ with supports in $Z$, and is denoted by $\mathscr{H}_Z^0(\mathscr{F})$.
+  \item Let $U = X - Z$, and let $j\colon U \to X$ be the inclusion. Show there is an exact sequence of sheaves on $X$
+    \begin{equation}\label{subsheafwsuppseq}
+      0 \to \mathscr{H}_Z^0(\mathscr{F}) \to \mathscr{F} \to j_*(\mathscr{F}\vert_U).
+    \end{equation}
+    Furthermore, if $\mathscr{F}$ is flasque, the map $\mathscr{F} \to j_*(\mathscr{F}\vert_U)$ is surjective.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  This is a presheaf since a section with support in $Z$ will still have support in $Z$ after restricting to a smaller open set. Now we have that $\Gamma_{Z\cap V}(V,\mathscr{F}\vert_V)$ is a subgroup of $\Gamma(V,\mathscr{F}\vert_V) = \mathscr{F}(V)$ by definition. Thus, the sheaf property $(3)$ on p.~61 for $\mathscr{F}$ implies $(3)$ holds for $\Gamma_{Z\cap V}(V,\mathscr{F}\vert_V)$. For sheaf property $(4)$, suppose $\{V_i\}$ is an open cover of $V$ and we have $s_i \in \Gamma_{Z \cap V_i}(V_i,\mathscr{F}\vert_{V_i})$ that are pairwise compatible. By the same argument as above, there exists $s \in \mathscr{F}(V)$ that is locally equal to the $s_i$. It suffices to show $\Supp s \subset Z \cap V$: if $P \in V \setminus Z$, then $P \in V_i$ for some $i$, and so $s_P = (s\vert_{V_i})_P = (s_i)_P = 0$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Define the map $\mathscr{H}_Z^0(\mathscr{F}) \hookrightarrow \mathscr{F}$ as in $(a)$; it is injective since it is injective for all $V \subset X$ since each $\Gamma_{Z \cap V}(V,\mathscr{F}\vert_V)$ is a subgroup of $\Gamma(V,\mathscr{F}\vert_V)$. The map $\mathscr{F}(V) \to j_*(\mathscr{F}\vert_U)(V) = \mathscr{F}(U \cap V)$ is the restriction map, which respects restrictions hence gives a map $\mathscr{F} \to j_*(\mathscr{F}\vert_U)$. This gives us a sequence \eqref{subsheafwsuppseq}; it suffices to show exactness at $\mathscr{F}$.
+  \par Consider the sequence \eqref{subsheafwsuppseq} on $V$:
+  \begin{equation}\label{subsheafwsuppseqsections}
+    0 \longrightarrow \Gamma_{Z\cap V}(V,\mathscr{F}\vert_V) \longrightarrow \mathscr{F}(V) \overset{\psi(V)}{\longrightarrow} \mathscr{F}(U \cap V).
+  \end{equation}
+  We claim that
+  \begin{equation*}
+    \psi(V)(s) = 0 \iff s\vert_{U \cap V} = 0 \iff \Supp s \cap (U \cap V) = \emptyset \iff \Supp s \subset Z \cap V,
+  \end{equation*}
+  where the only nontrivial equivalence is the middle one. $\Rightarrow$ is clear, and $\Leftarrow$ follows since if $s_P = 0$ for all $P \in U \cap V$, then we can pick open neighborhoods $W_P \ni P$ contained in $U \cap V$ such that $s\vert_{W_P} = 0$; however, these $W_P$ cover $U \cap V$, hence $s\vert_{U \cap V} = 0$ by the sheaf property. Thus, the sequence \eqref{subsheafwsuppseqsections} is exact, and so $\mathscr{H}_Z^0(\mathscr{F})(V) = \ker\psi(V)$ for all $V \subset X$. Since $\mathscr{H}_Z^0(\mathscr{F})$ is a sheaf by $(a)$ and $V \mapsto \ker\psi(V)$ is always a sheaf, we then have the equality $\mathscr{H}_Z^0(\mathscr{F}) = \ker\psi$, i.e., \eqref{subsheafwsuppseq} is exact, where we identify $\mathscr{H}_Z^0(\mathscr{F})$ with its image in $\mathscr{F}$.
+  \par If $\mathscr{F}$ is flasque, then $\psi(V)$ is surjective for all $V$, hence $\psi$ is surjective by Problem $1.3(a)$ where we use the trival cover of $V$ by $V$ itself.
+\end{proof}
+
+\begin{problem}
+  \emph{Some Examples of Sheaves on Varieties}. Let $X$ be a variety over an algebraically closed field $k$, as in Ch.~I. Let $\OO_X$ be the sheaf of regular functions on $X$ $(1.0.1)$.
+  \begin{enuma}
+  \item Let $Y$ be a closed subset of $X$. For each open set $U \subseteq X$, let $\mathscr{I}_Y(U)$ be the ideal in the ring $\OO_X(U)$ consisting of those regular functions which vanish at all points of $Y \cap U$. Show that the presheaf $U \mapsto \mathscr{I}_Y(U)$ is a sheaf. It is called the \emph{sheaf of ideals} $\mathscr{I}_Y$ of $Y$, and it is a subsheaf of the sheaf of rings $\OO_X$.
+  \item If $Y$ is a subvariety, then the quotient sheaf $\OO_X/\mathscr{I}_Y$ is isomorphic to $i_*(\OO_Y)$, where $i\colon Y \to X$ is the inclusion, and $\OO_Y$ is the sheaf of regular functions on $Y$.
+  \item Now let $X = \mathbf{P}^1$, and let $Y$ be the union of two distinct points $P,Q\in X$. Then there is an exact sequence of sheaves on $X$, where $\mathscr{F} = i_*\OO_P \oplus i_*\OO_Q$,
+    \begin{equation}\label{21cseq}
+      0 \to \mathscr{I}_Y \to \OO_X \to \mathscr{F} \to 0.
+    \end{equation}
+    Show however that the induced map on global sections $\Gamma(X,\OO_X) \to \Gamma(X,\mathscr{F})$ is not surjective. This shows that the global section functor $\Gamma(X,\cdot)$ is not exact (cf.~\emph{(Ex.~1.8)} which shows that it is left exact).
+  \item Again let $X = \mathbf{P}^1$, and let $\OO$ be the sheaf of regular functions. Let $\mathscr{K}$ be the constant sheaf on $X$ associated to the function field $K$ of $X$. Show that there is a natural injection $\OO \to \mathscr{K}$. Show that the quotient sheaf $\mathscr{K}/\OO$ is isomorphic to the direct sum of sheaves $\sum_{P \in X} i_P(I_P)$, where $I_P$ is the group $K/\OO_P$, and $i_P(I_P)$ denotes the skyscraper sheaf \emph{(Ex.~1.17)} given by $I_P$ at the point $P$.
+  \item Finally show that in the case of $(d)$ the sequence
+    \begin{equation*}
+      0 \to \Gamma(X,\OO) \to \Gamma(X,\mathscr{K}) \to \Gamma(X,\mathscr{K}/\OO) \to 0
+    \end{equation*}
+    is exact.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Since $\mathscr{I}_Y(U) \subset \OO_X(U)$, we have that $\mathscr{I}_Y$ satisfies the sheaf property $(3)$ from p.~61. Now if we have an open set $U = \bigcup V_i$ and we have regular functions $s_i \in \OO_X(V_i)$ that vanish on $Y \cap V_i$ for all $i$, then they glue together to a regular function $s \in \OO_X(U)$ that vanishes on $Y \cap U$ since regular functions are local. Thus, $\mathscr{I}_Y$ is a sheaf, and is a subsheaf of $\OO_X$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Let $i\colon Y \to X$ be the inclusion. We have the sheaf morphism $\psi\colon \OO_X \to i_*\OO_Y$ given by restriction, i.e., if $s \in \OO_X(U)$, then $\psi(s) \coloneqq s\vert_{U \cap Y}$ is a regular function on $i^{-1}(U) = U \cap Y$. The kernel of this morphism consists of exactly those regular functions that vanish on all points of $Y \cap U$, giving us the sequence
+  \begin{equation*}
+    0 \to \mathscr{I}_Y \to \OO_X \overset{\psi}{\to} i_*\OO_Y \to 0
+  \end{equation*}
+  which is exact at $\mathscr{I}_Y$ by $(a)$ and at $\OO_X$ by the above. By Problem $1.6(b)$, it then suffices to show that $\psi$ is surjective; by Problem $1.2(b)$, it suffices to show $\psi_P$ is surjective for all $P$. For $P \notin Y$, $(i_*\OO_Y)_P = 0$ and so $\psi_P$ is trivially surjective. For $P \in Y$, then $s \in (i_*\OO_Y)_P = \OO_{Y,P}$ is given by $\braket{Y \cap U,g/h}$ for some $g,h \in k[x_0,\ldots,x_n]$ since $Y$ is quasi-projective. The same equations $g,h$ define a regular function on $X \setminus Z(h)$, where $Z(h) \subset \mathbf{P}^n$. The germ $\braket{X \setminus Z(h),g/h}$ then has image $\braket{Y \setminus Z(h),g/h}$ in $\OO_{Y,P}$; $\braket{Y \setminus Z(h),g/h} = \braket{Y \cap U,g/h}$ since $Y \cap U \subset Y \setminus Z(h)$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  The sequence \eqref{21cseq} is given by the inclusion $\mathscr{I}_Y \to \OO_X$ from $(a)$, and the map $\OO_X \to \mathscr{F}$ given by the restriction $s \mapsto (s\vert_P,s\vert_Q)$ for $s \in \OO_X(U)$, where $s\vert_P = 0$ if $P \notin U$. To show \eqref{21cseq} is exact, since by $(a)$ we know \eqref{21cseq} is already exact at $\mathscr{I}_Y$, it suffices to show exactness at $\OO_X$ and $\mathscr{F}$. By Problem $1.2(c)$ it suffices to show exactness on stalks. For $R \ne P,Q$, $\mathscr{F}_R = 0$, and $\mathscr{I}_{Y,R} = \OO_{X,R}$, and so we have exactness away from $P,Q$. At $P$, the sequence is exact by $(b)$ since $\mathscr{I}_{Y,P} = \mathscr{I}_{\{P\},P}$, and $\mathscr{F}_P = (i_*\OO_P)_P = \OO_P$ by Problem $1.17$, and similarly for $Q$. Thus, \eqref{21cseq} is exact.
+  \par On the other hand, the induced sequence on global sections is not exact, for $\Gamma(X,\OO_X)$ consists of constant functions, and so there is no global section mapping to $(a,b) \in \Gamma(X,\mathscr{F})$ for $a \ne b$.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  It suffices to show that $\OO$ injects into the constant presheaf $U \mapsto K$ from Problem $1.1$ by Problem $1.4(a)$. Define a map $\OO(U) \to K$ by $s \mapsto \braket{U,s}$; this is injective by I, Rem.~1.1.1, since if $\braket{U,s} = \braket{V,t}$, then $s=t$ on $U \cap V$, and so the set $V(s-t)$ is dense and closed in $\mathbf{P}^1$, hence equal to $\mathbf{P}^1$. 
+  \par To show the second claim, we first consider a map $\mathscr{K} \to \sum_{P \in X} i_P(I_P)$: if $s \in \mathscr{K}(U)$, then $s \mapsto \sum_{P \in U} s_P$. We then claim we have the short exact sequence
+  \begin{equation*}
+    0 \to \OO \to \mathscr{K} \to \sum_{P \in X} i_P(I_P) \to 0;
+  \end{equation*}
+  it suffices to show it is exact on stalks $Q$. But then, we have the short exact sequence
+  \begin{equation*}
+    0 \to \OO_Q \to K \to K/\OO_Q \to 0,
+  \end{equation*}
+  since $\mathscr{K}_Q = K$, and since by Problem $1.17$,
+  \begin{equation*}
+    \left( \sum_{P \in X} i_P(I_P) \right)_Q = \varinjlim_{V \ni Q} \sum_{P \in X} i_P(I_P) = \left(i_Q(I_Q)\right)_Q = I_Q = K/\OO_Q.\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of $(e)$]
+  Since $\Gamma(X,\cdot)$ is left exact, it suffices to show $\Gamma(X,\mathscr{K}) \to \Gamma(X,\mathscr{K}/\mathscr{O})$ is surjective. We note that $\mathscr{K}/\mathscr{O} \cong \sum_{P \in X} i_P(I_P)$ by $(d)$; thus, $\Gamma(X,\mathscr{K}/\mathscr{O}) = \sum_{P \in X} K/\OO_P$, and we have to show $K \to \sum_{P \in X} K/\OO_P$ is surjective. This is the same as saying that for each $f \in K$, we want to find $f' \in K$ such that $f' \in \OO_Q$ for all $Q \ne P$, and such that $f = f'$ in $K/\OO_P$, i.e., $f - f' \in \OO_P$.
+  \par After suitable change of coordinates, we can assume $P = 0$; moreover, restricting to an affine open set, we can assume
+  \begin{equation*}
+    f(x) = x^{-\nu} \frac{\alpha(x)}{\beta(x)}, \quad \alpha(x),\beta(x) \in k[x]~\text{with nonzero constant term}.
+  \end{equation*}
+  If $\nu \le 0$, letting $f' = 1$ works, so suppose $\nu > 0$. Letting $\alpha(x) = \sum \alpha_i x^i$ and $\beta(x) = \sum \beta_i x^i$, we claim that having
+  \begin{equation*}
+    f' = x^{-\nu}\sum_{i=0}^\nu c_ix^i, \qquad 
+    c_0 = \frac{\alpha_0}{\beta_0},~c_i = \beta_0^{-1}\left(\alpha_i - \sum_{j=0}^{i-1} c_j\beta_{i-j}\right)
+  \end{equation*}
+  works. We see $f' \in \OO_Q$ for all $Q \notin P$, and so it remains to show $f - f' \in \OO_P$. So,
+  \begin{equation*}
+    f - f' = \frac{\alpha(x) - \beta(x)\sum_{i=0}^\nu c_ix^i}{x^\nu\beta(x)}.
+  \end{equation*}
+  We claim that the $i$th coefficient in the numerator is zero for $i < \nu$. We proceed by induction. For $i=0$, this is clear by construction. Now for arbitrary $i$, we see the coordinate is given by
+  \begin{equation*}
+    \alpha_i - \sum_{j=0}^i c_j\beta_{i-j} = \alpha_i - \sum_{j=0}^{i-1} c_j\beta_{i-j} - c_i\beta_0 = c_i\beta_0 - c_i\beta_0 = 0,
+  \end{equation*}
+  and so $f-f' \in \OO_P$.
+\end{proof}
+
+\begin{problem}
+  \emph{Glueing Sheaves}. Let $X$ be a topological space, let $\mathfrak{U} = \{U_i\}$ be an open cover of $X$, and suppose we are given for each $i$ a sheaf $\mathscr{F}_i$ on $U_i$, and for each $i,j$ an isomorphism $\varphi_{ij}\colon \mathscr{F}_i\vert_{U_i \cap U_j} \isoto \mathscr{F}_j\vert_{U_i \cap U_j}$ such that $(1)$ for each $i$, $\varphi_{ii} = \id$, and $(2)$ for each $i,j,k$, $\varphi_{ik} = \varphi_{jk} \circ \varphi_{ij}$ on $U_i \cap U_j \cap U_k$. Then there exists a unique sheaf $\mathscr{F}$ on $X$, together with isomorphisms $\psi_i \colon \mathscr{F}\vert_{U_i} \isoto \mathscr{F}_i$ such that for each $i,j$, $\psi_j = \varphi_{ij} \circ \psi_i$ on $U_i \cap U_j$. We say loosely that $\mathscr{F}$ is obtained by \emph{glueing} the sheaves $\mathscr{F}_i$ via the isomorphisms $\varphi_{ij}$.
+\end{problem}
+\begin{proof}
+  Define
+  \begin{equation*}
+    \mathscr{F}(W) \coloneqq \left\{ (s_i)_{i \in I} \middle\vert s_i \in \mathscr{F}_i(W \cap U_i)~\text{and}~\varphi_{ij}(s_i\vert_{W \cap U_i \cap U_j}) = s_j\vert_{W \cap U_i \cap U_j}~\text{for all}~i,j\right\}.
+  \end{equation*}
+  This is a presheaf with restriction morphisms $\rho_{WW'}\colon (s_i)_{i \in I} \mapsto (s_i\vert_{W' \cap U_i})_{i \in I}$. Let $W = V_\alpha$ be an open cover. For sheaf property $(3)$ on p.~61, we note that if $(s_i)_{i \in I}\vert_{V_\alpha} = 0$ for all $\alpha$, then $s_i\vert_{U_i \cap V_\alpha} = 0$ for all $i,\alpha$, hence $s_i = 0$ for all $i$ by the sheaf property for $\mathscr{F}_i$, and so $(s_i)_{i \in I} = 0$. For sheaf property $(4)$, let $(s_{\alpha i})_{i \in I} \in \mathscr{F}(V_\alpha)$ be such that $(s_{\alpha i})_{i \in I}\vert_{V_\beta} = (s_{\beta i})_{i \in I}\vert_{V_\alpha}$ for all $\alpha,\beta$. Then, the $\{s_{\alpha i}\}_\alpha$ glue together to give a section $s_i \in \mathscr{F}_i(W \cap U_i)$, and so we have a section $(s_i)_{i \in I}$. This section is in $\mathscr{F}(W)$ since
+  \begin{equation*}
+    \varphi_{ij}(s_i\vert_{W \cap U_i \cap U_j})\vert_{V_\alpha} = \varphi_{ij}(s_i\vert_{V_\alpha \cap U_i \cap U_j}) = \varphi_{ij}(s_{\alpha i}\vert_{U_i \cap U_j}) = s_{\alpha j}\vert_{U_i \cap U_j} = s_j\vert_{V_\alpha \cap U_i \cap U_j}.
+  \end{equation*}
+  \par Now define morphisms $\psi_i\colon\mathscr{F}\vert_{U_i} \to \mathscr{F}_i$ by projection onto the $i$th coordinate. This is a clearly a morphism. We claim $\theta_i\colon \mathscr{F}_i \to \mathscr{F}\vert_{U_i}$ defined for $s \in \mathscr{F}_i(W)$ for $W \subset U_i$ by $s \mapsto (\varphi_{ij}(s\vert_{W \cap U_j}))_{j \in I}$ is an inverse for $\psi_i$. Note that $(\varphi_{ij}(s\vert_{W \cap U_j}))_{j \in I}\in \mathscr{F}(W)$ since we have $\varphi_{jk}(\varphi_{ij}(s\vert_{W \cap U_j})\vert_{W \cap U_k}) = \varphi_{ik}(s\vert_{W \cap U_k})$ by the cocycle condition. $\psi_i \circ \theta_i = \operatorname{id}$ is clear. If $W \subset U_i$ and $(s_i)_{i \in I} \in \mathscr{F}(W)$, then $\theta_i \circ \psi_i = \operatorname{id}$ since
+  \begin{equation*}
+    (\theta_i \circ \psi_i)(s_i)_{i \in I} = (\varphi_{ij}(s_i\vert_{W \cap U_j}))_{j \in I} = (s_j\vert_{W \cap U_j})_{j \in I} = (s_j)_{j \in I}
+  \end{equation*}
+  noting that $s_j \in \mathscr{F}_j(W \cap U_j)$. Finally, $\psi_j = \varphi_{ij} \circ \psi_i$ since if $(s_i)_{i \in I} \in \mathscr{F}(W)$ for $W \subset U_i \cap U_j$, we have $(\varphi_{ij} \circ \psi_j)(s_i)_{i \in I} = \varphi_{ij}(s_i) = s_j = \psi_j(s_i)_{i \in I}$. Note $\theta_i = \theta_j \circ \varphi_{ij}$.
+  \par We claim that $\mathscr{F}$ is unique. Suppose $\mathscr{G}$ has isomorphisms $\psi'_i\colon \mathscr{G}\vert_{U_i} \isoto \mathscr{F}_i$ that are compatible with the $\varphi_{ij}$. Then, we have the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=0.1ex,column sep=small]
+      {}& \mathscr{G}(W \cap U_i) \rar{\psi'_i} \arrow{ddd} & \mathscr{F}_i(W \cap U_i) \rar{\theta_i}\arrow{dd} & \mathscr{F}(W \cap U_i)\arrow{ddd}\arrow[dashed]{dddr}\\
+      \vphantom{\vert}\\
+      & & \mathscr{F}_i(W \cap U_i \cap U_j)\arrow{dd}{\varphi_{ij}} \arrow{dr}{\theta_i}\\
+      \mathscr{G}(W) \arrow{uuur}\arrow{dddr}\rar & \mathscr{G}(W \cap U_i \cap U_j)\arrow{ur}{\psi'_i}\arrow{dr}[swap]{\psi'_j} & & \mathscr{F}(W \cap U_i \cap U_j) \rar[dashed] & \mathscr{F}(W)\\
+      & & \mathscr{F}_j(W \cap U_i \cap U_j)\arrow{ur}[swap]{\theta_j}\\
+      \vphantom{\vert}\\
+      {}& \mathscr{G}(W \cap U_j) \rar{\psi'_j}\arrow{uuu} & \mathscr{F}_j(W \cap U_j) \rar{\theta_j}\arrow{uu} & \mathscr{F}(W \cap U_j)\arrow{uuu}\arrow[dashed]{uuur}
+    \end{tikzcd}
+  \end{equation*}
+  where unmarked maps are restrictions, sending sections $s \in \mathscr{G}(W)$ to sections defined on $W \cap U_i$ that glue together to give the dashed arrows on the right. Since all non-restriction maps here are isomorphisms, we have an isomorphism $\mathscr{G} \cong \mathscr{F}$ since the glueing of sections is exists and is unique by the sheaf properties on p.~61.
+\end{proof}
+
+\printbibliography
+\end{document}

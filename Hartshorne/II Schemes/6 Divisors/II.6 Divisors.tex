@@ -1,0 +1,351 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{decorations.markings}
+\tikzset{
+  open/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} },
+  closed/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; } }, postaction = {decorate} },
+  imm/.style = {decoration = {markings, mark = at position 0.3 with { \node[transform shape, xscale = .8, yscale=.4] {\upshape{/}}; }, mark = at position 0.6 with { \node[transform shape] {\tikz\draw[fill=white] (0,0) circle (.3ex);}; } }, postaction = {decorate} }
+}
+
+\usepackage{braket}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../Hartshorne}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumacounter}
+\newenvironment{enuma}
+{\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newcounter{enumdcounter}
+\newenvironment{enumd}
+{\begin{list}{$(\arabic{enumdcounter})$}{\usecounter{enumdcounter} \parsep=0em \itemsep=0em \leftmargin=1.75em \labelwidth=1.5em \topsep=0em}}
+{\end{list}}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{universalproperty}{Universal Property}
+\newtheorem{problem}{Problem}[section]
+\newtheorem{subproblem}{Problem}[problem]
+\newtheorem{lemma}{Lemma}%[section]
+\newtheorem{proposition}{Proposition}
+\newtheorem{property}{Property}[problem]
+\newtheorem*{lemma*}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{claim}{Claim}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{problem}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Ass}{Ass}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\WeakAss}{\widetilde{Ass}}
+\let\Im\relax
+\DeclareMathOperator{\Im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\SPEC}{\mathbf{Spec}}
+\DeclareMathOperator{\Sp}{sp}
+\DeclareMathOperator{\maxSpec}{maxSpec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Soc}{Soc}
+\DeclareMathOperator{\Ht}{ht}
+\DeclareMathOperator{\A}{\mathcal{A}}
+\DeclareMathOperator{\V}{\mathbf{V}}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\stimes}{\text{\footnotesize\textcircled{s}}}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{coker}
+\DeclareMathOperator{\LCM}{LCM}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\dv}{div}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\trd}{tr.d.}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\GL}{GL}
+\newcommand{\GR}{\mathbb{G}\mathrm{r}}
+\newcommand{\gR}{\mathrm{Gr}}
+\newcommand{\EE}{\mathscr{E}}
+\newcommand{\FF}{\mathscr{F}}
+\newcommand{\GG}{\mathscr{G}}
+\newcommand{\HH}{\mathscr{H}}
+\newcommand{\II}{\mathscr{I}}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\MM}{\mathscr{M}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\Ss}{\mathscr{S}}
+\newcommand{\Af}{\mathfrak{A}}
+\newcommand{\Aa}{\mathscr{A}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\red}{\mathrm{red}}
+\newcommand{\Sh}{\mathfrak{Sh}}
+\newcommand{\Psh}{\mathfrak{Psh}}
+\newcommand{\LRS}{\mathsf{LRS}}
+\newcommand{\Sch}{\mathfrak{Sch}}
+\newcommand{\Var}{\mathfrak{Var}}
+\newcommand{\Rings}{\mathfrak{Rings}}
+\DeclareMathOperator{\In}{in}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Spe}{Sp\acute{e}}
+\DeclareMathOperator{\HHom}{\mathscr{H}\!\mathit{om}}
+\newcommand{\isoto}{\overset{\sim}{\to}}
+\newcommand{\isolongto}{\overset{\sim}{\longrightarrow}}
+\newcommand{\Mod}{\mathsf{mod}\mathchar`-}
+\newcommand{\MOD}{\mathsf{Mod}\mathchar`-}
+\newcommand{\gr}{\mathsf{gr}\mathchar`-}
+\newcommand{\qgr}{\mathsf{qgr}\mathchar`-}
+\newcommand{\uqgr}{\underline{\mathsf{qgr}}\mathchar`-}
+\newcommand{\qcoh}{\mathsf{qcoh}\mathchar`-}
+\newcommand{\Alg}{\mathsf{Alg}\mathchar`-}
+\newcommand{\coh}{\mathsf{coh}\mathchar`-}
+\newcommand{\vect}{\mathsf{vect}\mathchar`-}
+\newcommand{\imm}[1][imm]{\hspace{0.75ex}\raisebox{0.58ex}{%
+\begin{tikzpicture}[commutative diagrams/every diagram]
+\draw[commutative diagrams/.cd, every arrow, every label,hook,{#1}] (0,0ex) -- (2.25ex,0ex);
+\end{tikzpicture}}\hspace{0.75ex}}
+\newcommand{\dashto}[2]{\smash{\hspace{-0.7em}\begin{tikzcd}[column sep=small,ampersand replacement=\&] {#1} \rar[dashed] \& {#2} \end{tikzcd}\hspace{-0.7em}}}
+
+\usepackage{todonotes}
+%\usepackage[notref,notcite]{showkeys}
+
+\title{Hartshorne Ch.~II, \S6 Divisors}
+\author{Takumi Murayama}
+
+\begin{document}
+\maketitle
+\setcounter{section}{6}
+\begin{problem}
+  Let $X$ be a scheme satisfying $(*)$. Then $X \times \mathbf{P}^n$ also satisfies $(*)$, and $\Cl(X \times \mathbf{P}^n) \cong (\Cl X) \times \mathbf{Z}$.
+\end{problem}
+\begin{lemma}\label{irredlem}
+  $X$ is irreducible if and only if there exists an open cover $U_i$ where each $U_i$ is irreducible, and $U_i \cap U_j \ne \emptyset$ for all $i,j$.
+\end{lemma}
+\begin{proof}[Proof of Lemma \ref{irredlem}]
+  $X$ is reducible $\Leftrightarrow X = A \cup B \Leftrightarrow\emptyset = (X\setminus A) \cap (X\setminus B)$, and so $X$ is irreducible if and only if every open subset is dense.
+  \par $\Rightarrow$ Clearly $U_i \cap U_j \ne \emptyset$ for all $i,j$. If $U \subset U_i$, $\overline{U}$ is of the form $A \cap U_i$ for $A$ closed in $X$. But since $U$ is open in $X$, $A = X$ and so $\overline{U} = U_i$.
+  \par $\Leftarrow$ Let $U \subset X$. Suppose $U \cap U_i \ne \emptyset$ but $U \cap U_j = \emptyset$; then, $U \cap (U_i \cap U_j) = \emptyset$, contradicting that $U$ is dense in $U_i$. So $U$ intersects all $U_i$, and since a set containing $U$ is closed if and only if it is closed in every element of the open cover $U_i$, and since $U$ is dense in each $U_i$, the closure must contain all $U_i$'s, hence is equal to $X$.
+\end{proof}
+\begin{proof}
+  Let $X$ have a finite open cover $U_i = \Spec A_i$ for $A_i$ noetherian domains. Then, $X \times \mathbf{P}^n$ has cover $\Spec R_{ij} \coloneqq \Spec A_i[x_0/x_j,\ldots,x_n/x_j]$ by construction in Thm.~3.3 and Prop.~$2.5(b)$, and so is noetherian since the $R_{ij}$ are noetherian by the Hilbert basis theorem \cite[Thm.~7.5]{AM69}. To show integrality, it suffices to show $X \times \mathbf{P}^n$ is reduced and irreducible by Prop.~3.1. $X \times \mathbf{P}^n$ is reduced since any local ring $\OO_\mathfrak{p}$ is a localization of $R_{ij}$, hence has zero nilradical by \cite[Cor.~3.12]{AM69}. $X \times \mathbf{P}^n$ is irreducible since it has a cover $R_{ij}$ of irreducible open sets (these rings are domains since $A_i$ is a domain \cite[Prop.~7.2.4]{DF04}) that pairwise intersect (their projections in $X$, $\mathbf{P}^n$ pairwise intersect). To show $X \times \mathbf{P}^n$ is separated, $X \times \mathbf{P}^n \to \Spec \mathbf{Z} \times \mathbf{P}^n = \mathbf{P}^n$ is a base change of a separated morphism hence is separated by Cor.~$4.6(c)$, and since $\mathbf{P}^n \to \Spec \mathbf{Z}$ is separated by Thm.~4.9, the composition of these two morphisms $X \times \mathbf{P}^n \to \Spec \mathbf{Z}$ is separated by Cor.~$4.6(b)$.
+  \par To show $X \times \mathbf{P}^n$ is reduced in codimension one, we note that every local ring $\OO_\mathfrak{p}$ of dimension one is a localization of an $R_{ij}$ at a prime $\mathfrak{p}$ of height one. There are two types of height one primes $\mathfrak{p}$: Type 1 is such that $\Ht \mathfrak{p} \cap A_i = 1$, and Type 2 is such that $\mathfrak{p} \cap A_i = 0$. Note these correspond to Types 1 and 2 in the proof of Prop.~6.6.
+  \par Suppose $\mathfrak{p}$ is of Type $1$, with $(p) = \mathfrak{p} \cap A_i$ by \cite[Prop.~9.2]{AM69}. We claim $\mathfrak{p} \cap \mathbf{Z}[x_0/x_j,\ldots,x_n/x_j] \subset \mathbf{Z}$. For, suppose not, and it contains non-constant $f \in \mathbf{Z}[x_0/x_j,\ldots,x_n/x_j]$. Then, $f \in \mathfrak{p}$, and so $\mathfrak{p} \supset (p,f) \supsetneq (p)$, i.e., $\Ht \mathfrak{p} > 1$, a contradiction. Thus, $\OO_{\mathfrak{p}} = \OO_{X,\mathfrak{p} \cap A_i}(x_0/x_j,\ldots,x_n/x_j)$, which is a DVR since $\OO_{X,\mathfrak{p} \cap A_i}$ is by extending the valuation on $\OO_{X,\mathfrak{p} \cap A_i}$ by $0$ for all $x_k/x_j$, hence is a regular local ring by \cite[Prop.~9.2]{AM69}.
+  \par Suppose $\mathfrak{p}$ is of Type 2; then, letting $K = \Frac(A_i)$, $\OO_{\mathfrak{p}}$ is a localization of $S \coloneqq K[x_0/x_j,\ldots,x_n/x_j]$ at a height one prime $\mathfrak{q}$. But $S$ is a UFD, hence every height one prime is principal by I, Prop.~1.12A, and so the maximal ideal of $S$ is principal, hence $\OO_{\mathfrak{p}}$ is a regular local ring by \cite[Prop.~9.2]{AM69}. Thus we have shown $X \times \mathbf{P}^n$ satisfies $(*)$.
+  \par It now remains to show the isomorphism $\Cl(X \times \mathbf{P}^n) \cong (\Cl X) \times \mathbf{Z}$. First, letting $Z = X \times V(x_0)$, which is of codimension one since $V(x_0)$ is of codimension one in $\mathbf{P}^n$ and is irreducible by Lemma \ref{irredlem} since it is covered by $\Spec A_i[x_1/x_j,\ldots,x_n/x_j]$ for $j\ne0$ which are irreducible and pairwise intersect (by looking at their projections in $X$, $V(x_0)$), we have $X \times \mathbf{P}^n \setminus Z = X \times D_+(x_0) \cong X \times \mathbf{A}^n$, and so we have the exact sequence
+  \begin{equation*}
+    \mathbf{Z} \overset{\iota}{\longrightarrow} \Cl(X \times \mathbf{P}^n) \overset{j}{\longrightarrow} \Cl(X) \longrightarrow 0
+  \end{equation*}
+  where $j$ is the composition of $\Cl(X \times \mathbf{P}^n) \to \Cl(X \times \mathbf{A}^n)$ and the isomorphism $\Cl(X \times \mathbf{A}^n) \isoto \Cl(X)$ which exists by applying Prop.~6.6 and the noting that $\mathbf{A}^n = \Spec \mathbf{Z}[x_1,\ldots,x_n] \cong \Spec (\mathbf{Z}[x] \otimes \cdots \otimes \mathbf{Z}[x]) = \mathbf{A}^1 \times \cdots \times \mathbf{A}^1$ by Thm.~3.3. We first show the map $\iota\colon d \mapsto d \cdot Z$ is injective. So suppose $d \cdot Z$ is principal for some $d \in \mathbf{Z}$; then, letting $K = K(X) = \Frac(A_i)$ as above, there exists $f \in K(X \times \mathbf{P}^n)^\times$ such that $v_Z(f) = d$ and $v_Y(f) = 0$ for all other prime divisors $Y$. This means $f$ is equal (up to unit factor in $\OO_{\eta(Z)}$, where $\eta(Z)$ is the generic point at $Z$) to
+  \begin{equation*}
+    f(x_0,\ldots,x_n) = \frac{x_0^dg(x_0,\ldots,x_n)}{h(x_0,\ldots,x_n)},
+  \end{equation*}
+  where $g,h$ are homogeneous polynomials in $K[x_0,\ldots,x_n]$ such that $x_0 \nmid g,h$ and such that they share no common factors, and moreover $d + \deg g = \deg h$. $g,h \in K$, since any irreducible factor of either defines a prime divisor on which $f$ would have nonzero valuation. But this contradicts that $d + \deg g = \deg h$. This means that we have the short exact sequence
+  \begin{equation*}
+    0 \longrightarrow \mathbf{Z} \overset{\iota}{\longrightarrow} \Cl(X \times \mathbf{P}^n) \overset{j}{\longrightarrow} \Cl(X) \longrightarrow 0
+  \end{equation*}
+  and to show the claim, it suffices to show this sequence splits; by the splitting lemma \cite[Prop.-Def.~2.10]{Rei95}, it suffices to show that $j$ has a section. Let $s \colon \Cl(X) \to \Cl(X \times \mathbf{P}^n)$ be defined by $\sum n_iY_i \mapsto \sum n_i p_1^{-1}(Y_i)$. Then, composing with $j$ gives $\sum n_i p_1^{-1}(Y_i) \mapsto \sum n_i (p_1^{-1}(Y_i) \cap (X \times \mathbf{A}^n)) \mapsto \sum n_iY_i$ since $p_1^{-1}(Y_i) \cap (X \times \mathbf{A}^n)$ is the preimage of $Y_i$ through the projection $X \times \mathbf{A}^n \to X$. Thus, the sequence splits and we have $\Cl(X \times \mathbf{P}^n) \cong (\Cl X) \times \mathbf{Z}$.
+\end{proof}
+
+\begin{problem}
+  \emph{Varieties in Projective Space.} Let $k$ be an algebraically closed field, and let $X$ be a closed subvariety of $\mathbf{P}^n_k$ which is nonsingular in codimension one (hence satisfies $(*)$). For any divisor $D = \sum n_iY_i$ on $X$, we define the \emph{degree} of $D$ to be $\sum n_i\deg Y_i$, where $\deg Y_i$ is the degree of $Y_i$, considered as a projective variety itself \emph{(I,\S7)}.
+  \begin{enuma}
+    \item Let $V$ be an irreducible hypersurface in $\mathbf{P}^n$ which does not contain $X$, and let $Y_i$ be the irreducible components of $V \cap X$. They all have codimension $1$ by \emph{(I, Ex.~1.8)}. For each $i$, let $f_i$ be a local equation for $V$ on some open set $U_i$ of $\mathbf{P}^n$ for which $Y_i \cap U_i \ne \emptyset$, and let $n_i = v_{Y_i}(\bar{f_i})$, where $\bar{f_i}$ is the restriction of $f_i$ to $U_i \cap X$. Then we define the \emph{divisor} $V.X$ to be $\sum n_iY_i$. Extend by linearity, and show that this gives a well-defined homomorphism from the subgroup of $\Div \mathbf{P}^n$ consisting of divisors, none of whose components contain $X$, to $\Div X$.
+    \item If $D$ is a principal divisor on $\mathbf{P}^n$, for which $D.X$ is defined as in $(a)$, show that $D.X$ is principal on $X$. Thus we get a homomorphism $\Cl\mathbf{P}^n \to \Cl X$.
+    \item Show that the integer $n_i$ defined in $(a)$ is the same as the intersection multiplicity $i(X,V;Y_i)$ defined in \emph{(I,\S7)}. Then use the generalized B\'ezout theorem \emph{(I,7.7)} to show that for any divisor $D$ on $\mathbf{P}^n$, none of whose components contain $X$,
+      \begin{equation*}
+        \deg(D.X) = (\deg D)\cdot(\deg X).
+      \end{equation*}
+    \item If $D$ is a principal divisor on $X$, show that there is a rational function $f$ on $\mathbf{P}^n$ such that $D = (f).X$. Conclude that $\deg D = 0$. Thus the degree function defines a homomorphism $\deg\colon \Cl X \to \mathbf{Z}$ (This gives another proof of $(6.10)$, since any complete nonsingular curve is projective.) Finally, there is a commutative diagram
+      \begin{equation*}
+        \begin{tikzcd}
+          \Cl \mathbf{P}^n \rar \dar{\deg}[swap]{\cong} & \Cl X \dar{\deg}\\
+          \mathbf{Z} \rar{\cdot(\deg X)} & \mathbf{Z}\mathrlap{,}
+        \end{tikzcd}
+      \end{equation*}
+      and in particular, we see that the map $\Cl\mathbf{P}^n \to \Cl X$ is injective.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  First, the numbers $n_i$ are well-defined since if we have different local equations $\overline{f_i}$ for $Y_i$, they must match on intersections up to units in $\OO_X(U_i \cap U_j)$, but the generic point of $Y_i$ will be contained in all $U_i \subset \mathbf{P}^n$ for which $Y_i \cap U_i \ne \emptyset$, hence the valuation of $\overline{f_i}$ will not depend on choice of $\overline{f_i}$. The map $V \mapsto V.X$ for $V \not\supset X$ is then clearly a well-defined homomorphism by extending linearly.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Since $X$ is a closed subvariety of $\mathbf{P}^n_k = \Proj k[x_0,\ldots,x_n] \eqqcolon \Proj S$ satisfying $(*)$, it is of the form $V(I)$ for homogeneous prime ideal $I \subset S$. Now let $D = (f)$ for $f \in S_{(0)}^\times$; using the fact that $S$ is a UFD, $f$ is (up to unit in $S_{(I)}$) of the form
+  \begin{equation}\label{princdiveq}
+    f(x_0,\ldots,x_n) = \frac{g_1^{d_1} \cdots g_r^{d_r}}{h_1^{e_1} \cdots h_s^{e_s}},
+  \end{equation}
+  where $g_p,h_q$ are homogeneous and irreducible polynomials in $k[x_0,\ldots,x_n]$, there are no shared common factors between the $g_p$ and $h_q$, and we have
+  \begin{equation*}
+    \sum_{p=1}^r d_p\deg g_p = \sum_{q=1}^s e_q \deg h_q.
+  \end{equation*}
+  Note this means that
+  \begin{equation*}
+    D = \sum_{p=1}^r d_p V(g_p) - \sum_{q=1}^s e_q V(h_q).
+  \end{equation*}
+  Now since $D.X$ is defined as in $(a)$, we know none of the prime divisors $V(g_p)$ or $V(h_q)$ contain $X$; thus, none of the $g_p$ or $h_q$ are in $I$. Then, the image $\bar{f}$ of $f$ in $K(X)^\times$ is still of the form \eqref{princdiveq}, except replacing $g_p$, $h_q$ with their images in $k[x_0,\ldots,x_n]/I$. Let $\bar{g}_p = \prod g'_{p\alpha}$ and $\bar{h}_q = \prod h'_{q\beta}$ be irreducible decompositions in $k[x_0,\ldots,x_n]/I$. Then, $D.X = (\bar{f})$ since
+  \begin{equation*}
+    D.X = \sum_{p=1}^r d_p \sum_\alpha V(g'_{p\alpha}) - \sum_{q=1}^s e_q \sum_\beta V(h'_{q\beta}),
+  \end{equation*}
+  and so $D.X$ is principal on $X$. We therefore get a homomorphism $\Cl_X \mathbf{P}^n \to \Cl X$ by the universal property of quotients, where $\Cl_X \mathbf{P}^n$ is the quotient of the subgroup of $\Div \mathbf{P}^n$ consisting of divisors none of whose components contain $X$ by the subgroup consisting of principal divisors in that subgroup.
+  \par To show this extends to a homomorphism $\Cl \mathbf{P}^n \to \Cl X$, it suffices to define a map $\Cl \mathbf{P}^n \to \Cl_X \mathbf{P}^n$. Let $D \in \Cl \mathbf{P}^n$. Picking a hyperplane $H$ containing a point $p \notin X$, $D \sim \deg D \cdot H$ by Prop.~$6.4(a)$, and so the map mapping $H$ to itself in $\Cl_X \mathbf{P}^n$ defines a homomorphism $\Cl \mathbf{P}^n \to \Cl_X \mathbf{P}^n$ by Prop.~$6.4(c)$ and extending linearly.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Let $v_{Y_i}(\bar{f}_i) = \ell$, i.e., if $Y_i \cap U_i = V(g_i) \subset X \cap U_i$, then $\bar{f}_i = g_i^\ell$ up to a unit in $\OO_{\eta(Y_i)} = \OO_{(g_i)}$; this last equality follows since we can first localize to a $U_i$ and then further to the local ring at $(g_i)$. Let $(g_i)_{(g_i)} = \mathfrak{m}$ denote the maximal ideal of this local ring. Then, we have the filtration
+  \begin{equation}\label{filtr}
+    0 \subset \mathfrak{m}^\ell\OO_{(g_i)}/(I_X + I_V) \subset \mathfrak{m}^{\ell-1}\OO_{(g_i)}/(I_X + I_V) \subset \cdots \subset \OO_{(g_i)}/(I_X + I_V)
+  \end{equation}
+  of length $\ell$, where the ideals we quotient out by are extended in $\OO_{(g_i)}$. Then, the quotient of adjacent terms is $\mathfrak{m}^{\ell-1}/\mathfrak{m}^\ell \cong \kappa(g_i)$ by \cite[Prop.~$2.1i$]{AM69}, which are simple as $\OO_{(g_i)}$-modules. We claim $\ell = i(X,V;Y_i)$. By I, Prop.~7.4 $S/(I_X + I_V)$ has a filtration $0 = M^0 \subset M^1 \subset \cdots \subset M^r = M$, where $M^j/M^{j-1} \cong (S/\mathfrak{p}_j)(l_j)$, for $l_j \in \mathbf{Z}$ and $\mathfrak{p}_j \subset S$ a homogeneous prime ideal; moreover, if $\mathfrak{p}$ is a minimal prime of $M$, then the number of times $\mathfrak{p}$ occurs in the set $\{\mathfrak{p}_j\}$ is equal to the length of $M_\mathfrak{p}$ over $S_\mathfrak{p}$, i.e., $\mu_{\mathfrak{p}}(M)$ times. Letting $\mathfrak{p}_i$ be the ideal defining $Y_i$, we see that $\mathfrak{p}_i$ is a minimal prime of $M$, and thus appears $i(X,V;Y_i) = \mu_{\mathfrak{p}_i}(M)$ times in the set $\{\mathfrak{p}_j\}$ by the above. But restricting to $U_i$ and then to the ideal $\mathfrak{p}_i$ (now defined by $g_i$) gives a filtration of length $i(X,V;Y_i)$. Thus, $\ell = v_{Y_i}(\bar{f}_i) \le i(X,V;Y_i)$. But $i(X,V;Y_i) \le \ell$ since the $\mathfrak{m}^{\ell-1}/\mathfrak{m}^\ell$ are simple and then by \cite[Prop.~6.7]{AM69}.
+  \par Finally, for any divisor $D$ on $\mathbf{P}^n$, none of whose components contain $X$, by I, Thm.~7.7 we have
+  \begin{equation*}
+    (\deg D) \cdot (\deg X) = \sum_i i(X,D;Y_i) \cdot \deg Y_i = \sum_i n_i \deg Y_i = \deg(D.X).\qedhere
+  \end{equation*}
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  Suppose $D = (g)$ on $X$, and so $g = p/q \in K(X)^\times = (S/I_X)_{(0)}^\times$ up to unit in $\OO_{\eta(D)}$, where $p,q \in S/I_X$ are of the same degree and share no common factors. Then, we can lift $p,q$ to $S$, giving a lift of $g$ in $K(\mathbf{P}^n) = S_{(0)}$. This lift $f$ is such that $D = (f).X$, for restricting the equation $f$ back to $K(X)$ gives $g$. By $(c)$, $\deg D = \deg ((f).X) = \deg (f) \cdot \deg X = 0$ by Prop.~$6.4(b)$. Thus, we have a homomorphism $\deg\colon \Cl X \to \mathbf{Z}$ by the universal property of the quotient from the degree homomorphism $\Div X \to \mathbf{Z}$ we have already from the problem statement.
+  \par Finally, we have the commutative diagram given where the top horizontal map is given by $D \mapsto dH \mapsto dH.X$ for $d = \deg D$ by the equation in $(c)$. $\Cl\mathbf{P}^n \to \Cl X$ is injective since $\deg X \ne 0$ in the definition of the bottom horizontal map, and so the composition in either direction around the square is injective.
+\end{proof}
+
+\begin{problem}
+  \emph{Cones.} In this exercise we compare the class group of a projective variety $V$ to the class group of its cone \emph{(I, Ex.~2.10)}. So let $V$ be a projective variety in $\mathbf{P}^n$, which is of dimension $\ge 1$ and nonsingular in codimension $1$. Let $X = C(V)$ be the affine cone over $V$ in $\mathbf{A}^{n+1}$, and let $\bar{X}$ be its projective closure in $\mathbf{P}^{n+1}$. Let $P \in X$ be the vertex of the cone.
+  \begin{enuma}
+    \item Let $\pi\colon\bar{X} - P \to V$ be the projection map. Show that $V$ can be covered by open subsets $U_i$ such that $\pi^{-1}(U_i) \cong U_i \times \mathbf{A}^1$ for each $i$, and then show as in $(6.6)$ that $\pi^*\colon\Cl V \to \Cl(\bar{X} - P)$ is an isomorphism. Since $\Cl \bar{X} \cong \Cl(\bar{X} - P)$, we have also $\Cl V \cong \Cl \bar{X}$.
+    \item We have $V \subseteq \bar{X}$ as the hyperplane section at infinity. Show that the class of the divisor $V$ in $\Cl \bar{X}$ is equal to $\pi^*(\text{class of}~V.H)$ where $H$ is any hyperplane of $\mathbf{P}^n$ not containing $V$. Thus conclude using $(6.5)$ that there is an exact sequence
+      \begin{equation*}
+        0 \to \mathbf{Z} \to \Cl V \to \Cl X \to 0,
+      \end{equation*}
+      where the first arrow sends $1 \mapsto V.H$, and the second is $\pi^*$ followed by the restriction to $X - P$ and inclusion in $X$. (The injectivity of the first arrow follows from the previous exercise.)
+    \item Let $S(V)$ be the homogeneous coordinate ring of $V$ (which is also the affine coordinate ring of $X$). Show that $S(V)$ is a unique factorization domain if and only if $(1)$ $V$ is projectively normal \emph{(Ex.~5.14)}, and $(2)$ $\Cl V \cong \mathbf{Z}$ and is generated by the class of $V.H$.
+    \item Let $\OO_P$ be the local ring of $P$ on $X$. Show that the natural restriction map induces an isomorphism $\Cl X \to \Cl(\Spec \OO_P)$.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  Let $S$ be the homogeneous coordinate ring of $V$ as in Problem $5.14$; it is generated by the images of $x_i \in k[x_0,\ldots,x_n]$ modulo the homogeneous ideal defining $V$, and so $V$ is covered by $U_i \coloneqq D_+(x_i)$. Then, $\bar{X} = \Proj S[t]$. Consider the maps $S_{(x_i)} \hookrightarrow S[t]_{(x_i)}$; these define a map $\psi_i \colon D_+(x_i) \to U_i \subset V$ where $D_+ \subset \bar{X}$ by Prop.~$2.3(b)$ and using Prop.~$2.5(b)$. These maps clearly glue together by the universal property for localization \cite[Prop.~3.1]{AM69} since the maps on $U_i \cap U_j$ arise from the dashed map in the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=scriptsize]
+      S_{(x_i)} \rar\dar & S[t]_{(x_i)}\dar\\
+      S_{(x_ix_j)}\rar[dashed] & S[t]_{(x_ix_j)}\\
+      S_{(x_j)} \rar\uar & S[t]_{(x_j)}\uar
+    \end{tikzcd}
+  \end{equation*}
+  to give a map $\pi\colon\bar{X} - P \to V$ since $\bar{X} \setminus \bigcup D_+(x_i) = \bigcap V(x_i) = V(x_0,\ldots,x_n) = P$. By construction, $D_+(x_i) \subset \pi^{-1}(U_i)$. In the other direction, suppose $\pi(Q) \in U_i$ but $Q \notin D_+(x_i)$, i.e., $Q \ni x_i$; then $Q \in D_+(x_j)$ for some $j$, and so $\pi(Q) = \varphi_j^{-1}(Q) \ni x_i/x_j$, and so $\pi(Q) \notin U_i$, a contradiction. So $\pi^{-1}(U_i) = D_+(x_i) = \Spec S[t]_{(x_i)}$. We claim the map obtained by letting
+  \begin{equation*}
+    S[t]_{(x_i)} \to S_{(x_i)}[t], \qquad \frac{ft^e}{x_i^{d+e}} \mapsto \frac{f}{x_i^d} t^e
+  \end{equation*}
+  is an isomorphism. It is clearly well-defined since other representatives
+  \begin{equation*}
+    \frac{x_i^cft^e}{x_i^{c+d+e}} \mapsto \frac{x_i^cf}{x_i^{c+d}} t^e = \frac{f}{x_i^d} t.
+  \end{equation*}
+  It is clearly unital, respects addition by definition since we extended linearly, and is multiplicative since
+  \begin{equation*}
+    \frac{ft^e}{x^{d+e}} \cdot \frac{f't^{e'}}{x^{d'+e'}} = \frac{ff't^{e+e'}}{x^{d+d'+e+e'}} \mapsto \frac{ff'}{x^{d+d'}}t^{e+e'} = \frac{f}{x^d}t^e \cdot \frac{f'}{x^{d'}}t^{e'},
+  \end{equation*}
+  hence is a morphism. It is clearly surjective since any element of $S_{(x_i)}[t]$ can be written as the sum of elements of the form on the right, and is injective since a polynomial in $t$ is zero if and only if all of its coefficients are zero, which implies $f=0$. Thus, applying Problem $2.4$, we have $\pi^{-1}(U_i) \cong U_i \times \mathbf{A}^1$ as claimed, since $U_i \times \mathbf{A}^1 = \Spec S_{(x_i)} \times \Spec \mathbf{Z}[t] \cong \Spec S_{(x_i)} \otimes \mathbf{Z}[t] \cong \Spec S_{(x_i)}[t]$ by Thm.~3.3. Note in particular this implies $U_i \times \mathbf{A}^1$ are affine open sets in $\bar{X} - P$.
+  \par Now to show $\Cl V \cong \Cl(\bar{X} - P)$, we define $\pi^*\colon\Cl V \to \Cl(\bar{X} - P)$ as in Prop.~6.6 to be $\sum n_iY_i \mapsto \sum n_i\pi^{-1}(Y_i)$ on divisors. We note that if $K = K(V)$, then $K(\bar{X} - P) = \Frac(S_{(x_i)}[t]) = \Frac(S_{(x_i)})(t) = K(t)$ using the fact that the $U_i \times \mathbf{A}^1$ are affine opens in $\bar{X} - P$, and the isomorphism above. Note also that the same argument implies $K(\bar{X} - P) = K(\bar{X}) = S[t]_{(0)}$ since $U_i \times \mathbf{A}^1$ are also open affines in $S_{(0)}$. So, if $f \in K^\times$, then $\pi^*((f))$ is the divisor of $f$ considered as an element of $K(t)$. Thus we have a homomorphism $\Cl V \to \Cl(\bar{X} - P)$.
+  \par To show $\pi^*$ is an isomorphism, we first note that as in the proof of Prop.~6.6, codimension one points in $\bar{X} - P$ have image in $V$ of either codimension zero (type 1) or one (type 2). To show that $\pi^*$ is injective, suppose $\pi^*D = (f)$ for some $f \in K(t)^\times$. $\pi^*D$ then involves prime divisors of type 1, and so $f \in K$. Otherwise we could write $f = g/h \in S[t]_{(0)}$ with $g,h \in S[t]$ relatively prime (up to unit factor in $\OO_{\eta(\pi^*D)}$), and of $g,h$ are not both in $S$, then $(f)$ will involve some prime divisor of type 2 on $\bar{X} - P$. Now if $f \in K$, then $D = (f)$, so $\pi^*$ is injective. To show that $\pi^*$ is surjective, it suffices as in the proof of Prop.~6.6 that any prime divisor of type 2 on $\bar{X} - P$ is linearly equivalent to a linear combination of prime divisors of type $1$. Let $\eta$ be the generic point for this divisor; it is then contained in some $U_i \times \mathbf{A}^1$ by the above, hence $\pi(\eta) \in U_i$. Localizing at the generic point of $V$, this gives a prime divisor in $\Spec K[t]$, corresponding to a prime ideal $\mathfrak{p} \subset K[t]$. This is principal by I, Prop.~1.13 since $K[t]$ is a UFD, so let $f$ be a generator. Then $f \in K(t)$, and $(f)$ consists of $Z$ plus perhaps something purely of type 1: it can't involve any other prime divisors of type 2 since otherwise $Z$ would not be irreducible. Thus $Z$ is linearly equivalent to a divisor purely of type 1.
+  \par Finally, since Prop.~$6.5(b)$ implies $\Cl \bar{X} \cong \Cl(\bar{X} - P)$, we have $\Cl V \cong \Cl \bar{X}$.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  $H_\ell$ is given by a linear equation $\ell$ in $\mathbf{P}^n$ and so the same equation in $\ell$ gives $\pi^*(H)$ in $\mathbf{P}^{n+1}$. The hyperplane at infinity $H_\infty$ is given by $t$ in $\mathbf{P}^{n+1}$ such that $H_\infty \cap \bar{X} = V$. Thus, $\bar{\ell} \in S$ and $\bar{t} \in S[t]$ define $V.H$ and $V$ respectively, and $\pi^*(V.H)$ is defined by $\bar{\ell}$ as an element of $S[t]$. Thus, letting $f = \bar{\ell} - \bar{t}$, we have that $\pi^*(V.H) - V = (f)$.
+  \par Now using Prop.~$6.5(c)$ with $Z = V \subset \bar{X}$, we claim we have the exact sequences
+  \begin{equation*}
+    \begin{tikzcd}
+      0 \rar & \mathbf{Z} \rar\dar[equal] & \Cl \bar{X} \rar\dar{\pi^*} & \Cl X \rar\dar[equal] & 0\\
+      0 \rar & \mathbf{Z} \rar & \Cl V \rar & \Cl X \rar & 0
+    \end{tikzcd}
+  \end{equation*}
+  In the first row, the first map $\mathbf{Z} \to \Cl \bar{X}$ is the composition $\mathbf{Z} \isoto \Cl \mathbf{P}^{n-1} \to \Cl \bar{X}$ mapping $1 \mapsto H \mapsto V.H$, which is injective by Problem $6.2(d)$. Thus, the bottom row is exact also since $\pi^*$ is an isomorphism by $(a)$.
+\end{proof}
+\begin{proof}[Proof of $(c)$]
+  Consider the exact sequence in $(b)$ for $X = \Spec S(V)$ the affine cone over $V$. $S(V)$ is a unique factorization domain if and only if $S(V)$ is integrally closed (i.e., $V$ is projectively normal by Problem $5.14$) and $\Cl S(V) = 0$ by Prop.~6.2. But then, $\Cl S(V) = 0 \iff \Cl V \cong \mathbf{Z}$ by $(b)$, and so we are done.
+\end{proof}
+\begin{proof}[Proof of $(d)$]
+  $X = \Spec S$, hence $\OO_P = S_P$. The localization map $S \to \OO_P$ then induces a map of spectra $\Spec \OO_P \to \Spec S$ by Prop.~$2.3(b)$. Recall that $\Spec \OO_P$ (as a set) consists of all prime ideals of $S$ that are contained in $P$ \cite[Cor.~3.13]{AM69}, and that the map $\Spec \OO_P \to \Spec S$ by construction is exactly this one-to-one correspondence.
+  \par We claim that the group homomorphism obtained by extending linearly the restriction of this correspondence to height one primes induces an isomorphism $\rho\colon \Cl \Spec \OO_P \isoto \Cl X$. Note that any principal divisor $(f) \in \Cl \Spec \OO_P$ with $f \in \Frac(\OO_P)^\times$ in fact defines a divisor on $\Cl X$, since $K(X) = \Frac(\OO_P)$ by Problem $3.6$. Thus, we have a homomorphism $\rho$ by the universal property of the quotient.
+  \par Now, we want to show $\rho$ is injective and surjective. It is clearly injective since if $D \in \Cl \Spec \OO_P$ is such that $\rho(D) = (f)$ for some $f \in \Frac(S)^\times$, then the equality $K(X) = \Frac(\OO_P)$ from above implies that in fact $D = (f)$. To show surjectivity, it suffices to show that any divisor in $\Cl X$ is linearly equivalent to one defined by a prime $\mathfrak{q}$ contained in the prime ideal $\mathfrak{p}$ associated to $P$.
+\end{proof}
+
+\begin{problem}
+  Let $k$ be a field of characteristic $\ne 2$. Let $f \in k[x_1,\ldots,x_n]$ be a \emph{square-free} nonconstant polynomial, i.e., in the unique factorization of $f$ into irreducible polynomials, there are no repeated factors. Let $A = k[x_1,\ldots,x_n,z](z^2-f)$. Show that $A$ is an integrally closed ring.
+\end{problem}
+\begin{proof}
+  We first compute the quotient field $K$ of $A$. Clearly $K \supset k(x_1,\ldots,x_n)[z]/(z^2-f)$; we claim these are equal. For, suppose we have an element $1/(g+zh) \in K$; then, we can write
+  \begin{equation*}
+    \frac{1}{g+zh}\frac{g-zh}{g-zh} = \frac{g-zh}{g^2-fh^2},
+  \end{equation*}
+  where we use $z^2 - f$; hence, every element in $K$ can be written in the form $g' + zh'$, where $g',h' \in k(x_1,\ldots,x_n)$. Hence $K = k(x_1,\ldots,x_n)[z]/(z^2-f)$, and this is a degree $2$ extension, thus Galois with automorphism $z \mapsto -z$. Let $\alpha = g + hz \in K$, where $g,h \in k(x_1,\ldots,x_n)$. Then, $\alpha$ has minimal polynomial $X^2 - 2gX + (g^2-h^2f)$, for
+  \begin{equation*}
+    (g+hz)^2 - 2g(g+hz) + (g^2 - h^2f) = g^2 + 2ghz + h^2z^2 - 2g^2 - 2ghz + g^2 - h^2f = 0.
+  \end{equation*}
+  Thus, $\alpha$ is integral over $k[x_1,\ldots,x_n]$ if and only if $2g,g^2-h^2f \in k[x_1,\ldots,x_n]$ if and only if $g, h^2f \in k[x_1,\ldots,x_n]$. Now if $\alpha$ is integral, and $h$ had nontrivial denominator, then $h^2 \notin k[x_1,\ldots,x_n]$ since $f$ is square-free; hence $h \in k[x_1,\ldots,x_n]$ so $\alpha \in A$. Conversely, if $\alpha \in A$, then $g,h^2f \in k[x_1,\ldots,x_n]$, hence $\alpha$ is integral over $k[x_1,\ldots,x_n]$. Thus $A$ is the integral closure of $k[x_1,\ldots,x_n]$ in $K$.
+\end{proof}
+
+\begin{problem}
+  \emph{Quadric Hypersurfaces.} Let $\Char k \ne 2$, and let $X$ be the affine quadric hypersurface $\Spec k[x_0,\ldots,x_n]/(x_0^2 + x_1^2 + \cdots + x_r^2)$---cf.~\emph{(I,Ex.~5.12)}.
+  \begin{enuma}
+    \item Show that $X$ is normal if $r \ge 2$ (use \emph{(Ex.~6.4)}).
+    \item Show by a suitable linear change of coordinates that the equation of $X$ could be written as $x_0x_1 = x_2^2 + \cdots + x_r^2$. Now imitate the method of $(6.5.2)$ to show that:
+      \begin{enumd}
+      \item If $r = 2$, then $\Cl X \cong \mathbf{Z}/2\mathbf{Z}$;
+      \item If $r = 3$, then $\Cl X \cong \mathbf{Z}$ (use $(6.6.1)$ and \emph{(Ex.~6.3)} above);
+      \item If $r \ge 4$ then $\Cl X = 0$.
+      \end{enumd}
+    \item Now let $Q$ be the projective quadric hypersurface in $\mathbf{P}^n$ defined by the same equation. Show that:
+      \begin{enumd}
+      \item If $r=2$, $\Cl Q \cong \mathbf{Z}$, and the class of a hyperplane section $Q.H$ is twice the generator;
+      \item If $r = 3$, $\Cl Q \cong \mathbf{Z} \oplus \mathbf{Z}$;
+      \item If $r \ge 4$, $\Cl Q \cong \mathbf{Z}$, generated by $Q.H$.
+      \end{enumd}
+    \item Prove Klein's theorem, which says that if $r \ge 4$, and if $Y$ is an irreducible subvariety of codimension $1$ on $Q$, then there is an irreducible hypersufrace $V \subseteq \mathbf{P}^n$ such that $V \cap Q = Y$, with multiplicity one. In other words, $Y$ is a complete intersection.
+  \end{enuma}
+\end{problem}
+\begin{proof}[Proof of $(a)$]
+  If $r \ge 2$, then $k[x_0,\ldots,x_n]/(x_0^2 + x_1^2 + \cdots + x_r^2)$ is of the form in Problem $6.4$, hence each $\OO_P$ is integrally closed by \cite[Prop.~5.13]{AM69}.
+\end{proof}
+\begin{proof}[Proof of $(b)$]
+  Assume there is a squareroot of $-1$, which we denote by $i$. Then, let
+  \begin{equation*}
+    x_0 \mapsto \frac{y_0+y_1}{2}, \quad x_1 \mapsto \frac{y_0-y_1}{2i},
+  \end{equation*}
+  and so
+  \begin{equation*}
+    x_0^2 + x_1^2 = 
+  \end{equation*}
+\end{proof}
+
+\printbibliography
+\end{document}

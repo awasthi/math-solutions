@@ -1,6 +1,7 @@
 \documentclass[12pt,letterpaper]{article}
 \usepackage{geometry}
 \geometry{letterpaper}
+\usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm,mathrsfs}
 \usepackage{mathtools}
 \usepackage{ifpdf}
@@ -22,10 +23,11 @@
 
 \usepackage{braket}
 
+\usepackage[utf8]{inputenc}
 \usepackage{csquotes}
 \usepackage[american]{babel}
 \usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
-\bibliography{../../../References}
+\bibliography{../Hartshorne}
 \AtEveryBibitem{\clearfield{url}}
 \AtEveryBibitem{\clearfield{doi}}
 \AtEveryBibitem{\clearfield{issn}}
@@ -41,11 +43,6 @@
 \newenvironment{enuma}
 {\begin{list}{$(\alph{enumacounter})$}{\usecounter{enumacounter} \parsep=0em \itemsep=0em \leftmargin=2.75em \labelwidth=1.5em \topsep=0em}}
 {\end{list}}
-\newcounter{enumicounter}
-\newenvironment{enumi}
-{\begin{list}{$(\roman{enumicounter})$}{\usecounter{enumicounter} \parsep=0em
-\itemsep=0em \leftmargin=2.5em \labelwidth=1.75em \topsep=0em}}
-{\end{list}}
 \newcounter{enumdcounter}
 \newenvironment{enumd}
 {\begin{list}{$(\arabic{enumdcounter})$}{\usecounter{enumdcounter} \parsep=0em \itemsep=0em \leftmargin=1.75em \labelwidth=1.5em \topsep=0em}}
@@ -53,7 +50,7 @@
 \newtheorem*{theorem}{Theorem}
 \newtheorem*{universalproperty}{Universal Property}
 \newtheorem{problem}{Exercise}[section]
-\newtheorem{subproblem}{Problem}[problem]
+\newtheorem{subproblem}{Exercise}[problem]
 \newtheorem{lemma}{Lemma}%[section]
 \newtheorem{proposition}{Proposition}
 \newtheorem{property}{Property}[problem]
@@ -81,8 +78,7 @@
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\Soc}{Soc}
 \DeclareMathOperator{\Ht}{ht}
-\let\AA\relax
-\DeclareMathOperator{\AA}{\mathbb{A}}
+\DeclareMathOperator{\A}{\mathcal{A}}
 \DeclareMathOperator{\V}{\mathbf{V}}
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\Char}{char}
@@ -99,7 +95,7 @@
 \DeclareMathOperator{\dv}{div}
 \DeclareMathOperator{\Gr}{Gr}
 \DeclareMathOperator{\pr}{pr}
-\DeclareMathOperator{\trdeg}{trdeg}
+\DeclareMathOperator{\trd}{tr.d.}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\codim}{codim}
 \DeclareMathOperator{\sgn}{sgn}
@@ -117,7 +113,7 @@
 \newcommand{\Ss}{\mathscr{S}}
 \newcommand{\Af}{\mathfrak{A}}
 \newcommand{\Aa}{\mathscr{A}}
-\newcommand{\PP}{\mathbb{P}}
+\newcommand{\PP}{\mathcal{P}}
 \newcommand{\red}{\mathrm{red}}
 \newcommand{\Sh}{\mathfrak{Sh}}
 \newcommand{\Psh}{\mathfrak{Psh}}
@@ -147,71 +143,63 @@
 \newcommand{\dashto}[2]{\smash{\hspace{-0.7em}\begin{tikzcd}[column sep=small,ampersand replacement=\&] {#1} \rar[dashed] \& {#2} \end{tikzcd}\hspace{-0.7em}}}
 
 \usepackage{todonotes}
+%\usepackage[notref,notcite]{showkeys}
 
-\title{Hartshorne Ch.~I, \S3 Morphisms}
+\title{Hartshorne Ch.~II,\\\S4 Separated and Proper Morphisms}
 \author{Takumi Murayama}
 
 \begin{document}
 \maketitle
-\setcounter{section}{3}
-\begin{problem}\mbox{}
-  \begin{enuma}
-    \item Show that any conic in $\AA^2$ is isomorphic either to $\AA^1$ or
-      $\AA^1 - \{0\}$ \emph{(cf.\ Ex.~$1.1$)}.
-    \item Show that $\AA^1$ is \emph{not} isomorphic to any proper open subset
-      of itself. (This result is generalized by \emph{(Ex.~$6.7$)} below.)
-    \item Any conic in $\PP^2$ is isomorphic to $\PP^1$.
-    \item We will see later \emph{(Ex.\ $4.8$)} that any two curves are
-      homeomorphic. But show now that $\AA^2$ is not even homeomorphic to
-      $\PP^2$.
-    \item If an affine variety is isomorphic to a projective variety, then it
-      consists of only one point.
-  \end{enuma}
+\setcounter{section}{4}
+\begin{problem}
+  Show that a finite morphism is proper.
 \end{problem}
-\begin{proof}[Proof of $(a)$]
-  By Exercise $1.1$, any conic $W$ has $A(W) \cong k[t]$ or $k[s,s^{-1}]$. But
-  $k[t] = A(\AA^1)$ and $k[s,s^{-1}] = A(\AA^1 - \{0\})$, so we are done by
-  Cor.~3.7.
+\begin{lemma}\label{lem:finitebasechange}
+  Finite morphisms are stable under base extension.
+\end{lemma}
+\begin{proof}[Proof of Lemma]
+  We want to show that if $f\colon X \to S$ is finite, and $g\colon S' \to S$ is any morphism, then $f'\colon X \times_S S' \to S'$ is also finite.
+  \par Cover $S$ with open affines $V_i = \Spec B_i$; then $g^{-1}(V_i)$ is a
+  cover for $S'$. Now cover these $g^{-1}(V_i)$ with open affines $V_{ij}' =
+  \Spec B_{ij}'$; then, $f^{\prime-1}(V_{ij}') = X \times_S V_{ij}' \cong f^{-1}(V_i)
+  \times_{V_i} V_{ij}'$ by Thm.~3.3 Step 7. But for each $i$, $f^{-1}(V_i) =
+  \Spec A_i \subset X$ for $A_{i}$ that are $B_i$-algebras, finitely
+  generated as modules over $B_i$. But since the three
+  schemes in this fibre product are affine, we see $f^{-1}(V_i) \times_{V_i}
+  V_{ij}' = \Spec (A_i \otimes_{B_i} B_{ij}')$. Since $A_i$ are $B_i$-algebras
+  finitely generated as modules over $B_i$, we have a surjection $B_i^{\oplus n} \to
+  A_{i}$, and tensoring with $B_{ij}'$ over $B_i$ gives a surjection
+  $B_{ij}^{\prime\oplus n} \to A_{i} \otimes_{B_i} B_{ij}'$ by the right-exactness of
+  the tensor product, and so $A_{i} \otimes_{B_i} B_{ij}'$ is a
+  $B_{ij}'$-algebra, finitely generated as a module over $B_{ij}'$.
 \end{proof}
-\begin{proof}[Proof of $(b)$]
-  By Ex.\ $1.1.1$, the proper open subsets of $\AA^1$ are the empty set and the
-  complements of finite subsets. $\OO(\emptyset)$ has one element, the unique
-  function $\emptyset \to k$, which is vacuously regular, so $\OO(\emptyset)
-  \not\cong k[x]$, and $\emptyset \not\cong \AA^1$.
-  \par Now suppose $U \subset \AA^1 \setminus \{p\} \subsetneq \AA^1$. Then, any
-  function of the form $f/(x-p)$ for $f \in k[x]$ is regular on $U$, hence
-  $k[x,(x-p)^{-1}] \subset \OO(U)$. But then $\OO(U) \not\cong k[x]$, since any
-  $k$-algebra homomorphism $\OO(U) \to k[x]$ must have $(x-p) \mapsto a \in k
-  \subset k[x]$, but the image of $a$ in $\OO(U)$ must be $a$. Hence $\OO(U)
-  \not\cong k[x]$, and so $U \not\cong \AA^1$.
+\begin{proof}[Main Proof]
+  Let $f\colon X \to Y$ be a finite morphism. A finite morphism is automatically
+  of finite type, and is universally closed since finite morphisms are stable
+  under base extension by Lemma \ref{lem:finitebasechange}, and finite morphisms
+  are closed by Exercise $3.5(b)$.
+  \par Thus, it suffices to show $f$ is separated. Let $U_i = \Spec A_i \coloneqq
+  f^{-1}(V_i)$ where $V_i = \Spec B_i$ is an affine open cover of $Y$, and $A_i$
+  is a $B_i$-algebra finitely generated as a module over $B_i$. Consider the diagonal
+  morphism $\Delta \colon X \to X \times_Y X$. By Thm.\ 3.3, $X \times_Y X$ is
+  covered by open affines $U_i \times_{V_i} U_i$. Now $U_i = \Delta^{-1}(U_i
+  \times_{V_i} U_i)$, and the property of being a closed immersion is local on
+  target by our proof of Exercise $3.11(a)$, hence $\Delta$ is a closed
+  immersion by Prop.\ $4.1$.
 \end{proof}
-\begin{proof}[Proof of $(c)$]
-  Denote our conic by $C = Z(f) \subset \PP^2$ for $f\in k[x,y,z]$ an
-  irreducible homogeneous degree $2$ polynomial. The dehomogenization
-  $\alpha(f)$ in the chart $z \ne 0$ is an irreducible quadratic polynomial in
-  $x,y$. By our analysis in Exercise $1.1$,
-  \begin{equation*}
-    \alpha(f) = \begin{cases}
-      x^2 - y\ \text{or}\ x^2 - y^2 - 1 & \text{if}\ \Char k \ne 2\\
-      x^2 - y\ \text{or}\ xy - 1 & \text{if}\ \Char k = 2
-    \end{cases}
-  \end{equation*}
-  after affine transformation in the chart $z \ne 0$; since any affine
-  transformation in $z \ne 0$ extends to a projective transformation of $\PP^2$,
-  we can therefore assume
-  \begin{equation*}
-    f = \begin{cases}
-      x^2 - yz\ \text{or}\ x^2 - y^2 - z^2 & \text{if}\ \Char k \ne 2\\
-      x^2 - yz\ \text{or}\ xy - z^2 & \text{if}\ \Char k = 2
-    \end{cases}
-  \end{equation*}
-  
-  Assume $\Char k \ne 2$. Then, by the structure theorem for symmetric
-  bilinear forms \cite[Ch.\ XV, Thm.\ 3.1]{Lan02}, and then by scaling, we can
-  assume $f$ is one of $x^2$, $x^2 + y^2$, or $x^2 + y^2 + z^2$. In the first
-  case, $Z(x^2) = Z(x) \cong \PP^1$ via the map $[0:y:z] \mapsto [y:z]$. In the
-  second case, $x^2 + y^2 = (x+iy)(x-iy)$, so $C$ is reducible, a contradiction.
-  Finally, if $f = x^2 + y^2 + z^2$, then 
+
+\begin{problem}
+  Let $S$ be a scheme, let $X$ be a reduced scheme over $S$, and let $Y$ be a
+  separated scheme over $S$. Let $f$ and $g$ be two $S$-morphisms of $X$ to $Y$
+  which agree on an open dense subset of $X$. Show that $f = g$. Give examples
+  to show that this result fails if either $(a)$ $X$ is nonreduced, or $(b)$ $Y$
+  is nonseparated.
+\end{problem}
+\begin{proof}
+  Consider the map $h \colon X \to Y \times_S Y$ obtained by the universal
+  property of fibre products from $f$ and $g$, and let $U$ be the open set in
+  $X$ on which $f$ and $g$ agree. Since $X$ is irreducible by Prop.\ $3.1$, $U$
+  contains the generic point of $X$.
 \end{proof}
 
 \printbibliography

@@ -1,0 +1,985 @@
+\documentclass[10pt,letterpaper]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{amssymb,mathrsfs}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{hyperref}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumcounter}
+\newenvironment{enum}
+{\begin{list}{$(\alph{enumcounter})$~}{\usecounter{enumcounter} \labelsep=0em \labelwidth=0em \leftmargin=0em \topsep=0em}}
+{\end{list}}
+
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage[american]{babel}
+\usepackage[style=alphabetic,firstinits=true,backend=biber,texencoding=utf8,bibencoding=utf8]{biblatex}
+\bibliography{../../References}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{equation}{exercise}
+\renewcommand{\theequation}{\thesection.\arabic{exercise}\alph{equation}}
+
+\title{Solutions to Walter Rudin's \emph{Real \&\ Complex Analysis}}
+\author{Takumi Murayama}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\begin{multicols}{2}
+  \section{Abstract Integration}
+  \begin{exercise}
+    Does there exist an infinite $\sigma$-algebra which has only countably many
+    members?
+    \begin{proof}[Solution]
+      We claim any infinite $\sigma$-algebra must be uncountable. For suppose
+      not, and $\mathcal{S} = \{A_i\}_{i=1}^\infty$ is our countable
+      $\sigma$-algebra on a set $X$. Then, for each $x \in X$, let $B_x \coloneqq
+      \bigcap_{x \in A_i} A_i$; then $B_x \in \mathcal{S}$. We first claim that
+      if $B_x \cap B_y \ne \emptyset$, then $B_x = B_y$. For suppose $z \in B_x
+      \cap B_y$. Then, $B_z \subset B_x$, and if $x \notin B_z$, then
+      $B_x \setminus B_z \subsetneq B_x$, contradicting the definition of $B_x$.
+      Thus, $B_x = B_z = B_y$.
+      \par Now consider $\{B_x\}_{x \in X}$. Then, $X = \bigcup_{x \in X} B_x$,
+      and if there are only finitely many distinct $B_x$, then $\mathcal{S}$ is
+      also finite, a contradiction. So, there are infinitely many $B_x$, and the
+      cardinality of $\mathcal{S}$ must be at least $2^\mathbf{N}$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Prove an analogue of Theorem $1.8$ for $n$ functions.
+    \begin{claim}
+      Let $u_1,\ldots,u_n$ be real measurable functions on a measurable space
+      $X$, let $\Phi$ be a continuous mapping of $\mathbf{R}^n$ into a
+      topological space $Y$, and define
+      \begin{equation*}
+        h(x) = \Phi(u_1(x),\ldots,u_n(x))
+      \end{equation*}
+      for $x \in X$. Then $h \colon X \to Y$ is measurable.
+    \end{claim}
+    \begin{proof}
+      Put $f(x) = (u_1(x),\ldots,u_n(x))$. Then $f$ maps $X$ into
+      $\mathbf{R}^n$. Since $h = \Phi \circ f$, by Theorem $1.7(b)$, it suffices
+      to show $f$ is measurable.
+      \par If $R$ is any cartesian product of open intervals $I_i$ in
+      $\mathbf{R}^n$, then
+      \[ f^{-1}(R) = \bigcap_{i=1}^n u_i^{-1}(I_i) \]
+      which is measurable. Every open set $V \subset mathbf{R}^n$ is the countable
+      union of such rectangles $R_j$, and so
+      \begin{equation*}
+        f^{-1}(V) = f^{-1}\!\left( \bigcup_{j=1}^\infty R_j \right) =
+        \bigcup_{j=1}^\infty f^{-1}(R_j)
+      \end{equation*}
+      is measurable.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Prove that if $f$ is a real function on a measurable space $X$ such that
+    $\{x : f(x) \ge r\}$ is measurable for every rational $r$, then $f$ is
+    measurable.
+    \begin{proof}
+      By Theorem $1.12(c)$, it suffices to show that $f^{-1}((\alpha,\infty))$
+      is measurable for every $\alpha \in \mathbf{R}$. So let $r_n$
+      be a sequence of rationals such that $r_n \to \alpha$ as $n \to \infty$.
+      Then, $(\alpha,\infty) = \bigcup_n [r_n,\infty)$, and the inverse image of
+      each $[r_n,\infty)$ is measurable, hence the inverse image of
+      $(\alpha,\infty)$ is also.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let $\{a_n\}$ and $\{b_n\}$ be sequences in $[-\infty,\infty]$, and prove
+    the following assertions:
+    \begin{enum}
+    \item $\limsup_{n \to \infty}(-a_n) = - \liminf_{n \to \infty} a_n$.
+    \item $\limsup_{n \to \infty}(a_n + b_n) \le \limsup_{n \to \infty} a_n +
+      \lim$ $\sup_{n\to\infty} b_n$
+      provided none of the sums is of the form $\infty - \infty$.
+    \item If $a_n \le b_n$ for all $n$, then
+      \begin{equation*}
+        \liminf_{n \to \infty} a_n \le \liminf_{n \to \infty} b_n.
+      \end{equation*}
+    \end{enum}
+    Show by an example that strict inequality can hold in $(b)$.
+    \begin{proof}[Proof of $(a)$]
+      We have
+      \begin{align*}
+        \limsup_{n \to \infty}(-a_n) &= \inf_{k \ge 1} \left\{\sup_{n \ge k}
+        -a_n\right\}
+        = \inf_{k \ge 1} \left\{- \inf_{n \ge k} a_n \right\}\\
+        &= -\sup_{k \ge 1} \left\{ \inf_{n \ge k} a_n \right\}
+        = - \liminf_{n \to \infty} a_n.\qedhere
+      \end{align*}
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      We have
+      \(
+        \sup_{n \ge k} (a_n + b_n) \le \sup_{n \ge k} a_n + \sup_{n \ge k} b_n
+      \)
+      and letting $k \to \infty$ gives the claim.
+      \par For strict inequality, if we have $a_{2n} = b_{2n+1} = 1$ and
+      $a_{2n+1} = b_{2n} = 0$ for each $n$, then
+      \begin{gather*}
+        \limsup_{n \to \infty} (a_n + b_n) = 1\\
+        \limsup_{n \to \infty} a_n + \limsup_{n \to \infty} b_n = 2.\qedhere
+      \end{gather*}
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+      We have the inequality $\inf_{n \ge k} a_n \le \inf_{n \ge k} b_n$ for all
+      $k$. Letting $k \to \infty$ gives the claim.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\mbox{}
+    \begin{enum}
+      \item Suppose $f\colon X \to [-\infty,\infty]$ and $g\colon X \to
+        [-\infty,\infty]$ are measurable. Prove that the sets
+        \begin{equation*}
+          \{x : f(x) < g(x)\},\ \{x : f(x) = g(x)\}
+        \end{equation*}
+        are measurable.
+      \item Prove that the set of points at which a sequence of measurable
+        real-valued functions converges (to a finite limit) is measurable.
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      The first set is $(g - f)^{-1}((0,\infty])$, and the second is
+      $(g-f)^{-1}(0)$, both of which are measurable.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      This set can be written as
+      \begin{equation*}
+        \bigcap_{k=1}^\infty \bigcup_{N = 1}^\infty \bigcap_{m,n \ge N} \{x \in X
+        \mid \lvert f_m(x) - f_n(x) \rvert < 1/k \}.\qedhere
+      \end{equation*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let $X$ be an uncountable set, let $\mathfrak{M}$ be the collection of all
+    sets $E \subset X$ such that either $E$ or $E^c$ is at most countable, and
+    define $\mu(E) = 0$ in the first case, $\mu(E) = 1$ in the second. Prove
+    that $\mathfrak{M}$ is a $\sigma$-algebra in $X$ and that $\mu$ is a measure
+    on $\mathfrak{M}$. Describe the corresponding measurable functions and their
+    integrals.
+    \begin{proof}
+      We need to verify the conditions in Definition $1.3(a)$.
+      $(i)$ $X \in \mathfrak{M}$ since $X^c = \emptyset$ is at most countable.
+      $(ii)$ If $E \in \mathfrak{M}$, then $E^c \in \mathfrak{M}$ since one of
+      $E,E^c$ is at most countable.
+      $(iii)$ Suppose $E_n \in \mathfrak{M}$. If all $E_n$ are at most
+      countable, then $\bigcup E_n$ is at most countable, hence $\bigcup E_n \in
+      \mathfrak{M}$. Otherwise, there is some $E_{n_0}$ such that $E_{n_0}$ is
+      not at most countable but $E_{n_0}^c$ is. Then, we have
+      \begin{equation*}
+        \left(\bigcup E_n\right)^c = \bigcap E_n^c \in \mathfrak{M}
+      \end{equation*}
+      since this intersection is contained in $E_{n_0}^c$.
+      \par We now want to show $\mu$ is a measure. We need to verify countable
+      additivity. Suppose $\{E_n\}$ is a disjoint countable collection of
+      members of $\mathfrak{M}$. If all the $E_n$ are countable, then we are
+      done since the countable union of countable sets is countable, hence
+      \begin{equation*}
+        \mu\!\left( \bigcup E_n \right) = \sum \mu(E_n) = 0.
+      \end{equation*}
+      So suppose some $E_{n_0}$ is not countable, but $E_{n_0}^c$ is. Then, by
+      the above $\left(\bigcup E_n\right)^c$ is countable, so
+      $\mu\!\left(\bigcup E_n\right) = 1$. Moreover, every other $E_n$ is
+      contained in $E_{n_0}^c$, which is countable, hence every other $E_n$ is
+      countable, and so $\sum \mu(E_n) = \mu(E_{n_0}) = 1$.
+      \par We now describe the corresponding measurable functions and their
+      integrals. Let $f \colon X \to \mathbf{R}^1$ be measurable. Then,
+      $f^{-1}([n,n+1])$ is measurable for each $n$, and since $X$ is
+      uncountable, $f^{-1}([n,n+1])$ must have countable complement for some
+      $n$. Similarly, we can keep partitioning $[n,n+1]$ into smaller and
+      smaller intervals of length $1/2^k$, and the preimage of one of these sets
+      must have countable complement. Thus, taking the intersection of all these
+      sets, $f^{-1}(x)$ has countable complement for some $x \in \mathbf{R}^1$.
+      In this way, we see $f$ is a constant $y \in \mathbf{R}^1$ for all but
+      countably many points in $X$. Finally, $\int_X f\,d\mu = y$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose $f_n \colon X \to [0,\infty]$ is measurable for $n = 1,2,3,\ldots$,
+    $f_1 \ge f_2 \ge f_3 \ge \cdots \ge 0$, $f_n(x) \to f(x)$ as $n \to \infty$,
+    for every $x \in X$, and $f_1 \in L^1(\mu)$. Prove that then
+    \begin{equation*}
+      \lim_{n \to \infty} \int_X f_n\,d\mu = \int_X f\,d\mu
+    \end{equation*}
+    and show that this conclusion does \emph{not} follow if the condition ``$f_1
+    \in L^1(\mu)$'' is omitted.
+    \begin{proof}
+      Let $g_n = f_1 - f_n \ge 0$. Then, $g_1 \le g_2 \le \cdots$ hence by the
+      monotone convergence theorem,
+      \begin{equation*}
+        \lim_{n \to \infty} \int_X (f_1 - f_n)\,d\mu = \int_X (f_1 - f)\,d\mu
+      \end{equation*}
+      and subtracting $\int_X f_1\,d\mu$ from both sides we are done.
+      \par On the other hand, suppose $X = \mathbf{R}$ and $f_n =
+      \chi_{[n,\infty)}$. Then,
+      \begin{equation*}
+        \lim_{n \to \infty} \int_X f_n\,d\mu = \infty \ne 0 = \int_X
+        f\,d\mu.\qedhere
+      \end{equation*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Put $f_n = \chi_E$ if $n$ is odd, $f_n = 1 - \chi_E$ if $n$ is even. What is
+    the relevance of this example to Fatou's lemma?
+    \begin{proof}[Solution]
+      Since we have
+      \begin{multline*}
+        \int_X \liminf_{n \to \infty} f_n\,d\mu = 0\\
+        \lneq \min\{\mu(E),\mu(E^c)\} = 
+        \liminf_{n \to \infty}
+        \int_X f_n\,d\mu
+      \end{multline*}
+      this example gives an example of when the inequality in Fatou's lemma is
+      strict.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose $\mu$ is a positive measure on $X$, $f \colon X \to [0,\infty]$ is
+    measurable, $\int_X f\,d\mu = c$, where $0 <c < \infty$ and $\alpha$ is a
+    constant. Prove that
+    \begin{equation*}
+      \lim_{n \to \infty} \int_X n\log[1+(f/n)^\alpha]\,d\mu = \begin{dcases*}
+        \infty & if $0 < \alpha < 1$,\\
+        c & if $\alpha = 1$,\\
+        0 & if $1 < \alpha < \infty$.
+      \end{dcases*}
+    \end{equation*}
+    \begin{proof}
+      Suppose $\alpha \ge 1$. Then, by the Taylor series for $e^x$, we have that
+      $1 + x^\alpha \le e^{\alpha x}$. Substituting $x = f/n$ and applying
+      $\log$, we get the inequality
+      \begin{equation*}
+        f_n \coloneqq n\log[1+(f/n)^\alpha] \le \alpha f.
+      \end{equation*}
+      Thus, we have that $\alpha f \ge f_n$ for all $n$. Now, by the dominated
+      convergence theorem, we have
+      \begin{equation*}
+        \lim_{n \to \infty} \int_X f_n\,d\mu = \int_X \lim_{n \to \infty}
+        f_n\,d\mu.
+      \end{equation*}
+      We now calculate $\lim_{n \to \infty} f_n$:
+      \begin{align*}
+        \lim_{n \to \infty} f_n &= \lim_{n \to \infty} n\log[1+(f/n)^\alpha]\\
+        &= \lim_{n \to \infty}
+        \frac{\log[1+(f/n)^\alpha]^{n^\alpha}}{n^{\alpha-1}}.
+      \end{align*}
+      If $\alpha > 1$, then the numerator converges to $f^\alpha$ using the
+      sequence definition of $e^x$, while the
+      denominator diverges to $\infty$, hence the limit is zero. On the other
+      hand, if $\alpha = 1$, then the denominator is $1$, and so the limit is
+      $f^\alpha = f$. Thus, we have that the integral we are interested in has
+      the desired values for $\alpha \ge 1$.
+      \par Now suppose $\alpha < 1$. By Fatou's lemma, we have
+      \begin{equation*}
+        \int_X \liminf_{n \to \infty} f_n\,d\mu \le \liminf_{n \to \infty}\int_X
+        f_n\,d\mu \le \lim_{n \to \infty} \int_X f_n\,d\mu,
+      \end{equation*}
+      and it suffices to show the integral on the very left diverges. But we
+      have
+      \begin{align*}
+        \liminf_{n \to \infty} f_n &= \liminf_{n \to \infty}
+        n\log[1+(f/n)^\alpha]\\
+        &= \liminf_{n \to \infty} n^{1-\alpha}\log[1+(f/n)^\alpha]^{n^\alpha}\\
+        &\ge f^\alpha\liminf_{n \to \infty} n^{1-\alpha} = \infty
+      \end{align*}
+      everywhere $f(x) \ne 0$, which happens on a set of positive measure since
+      we have $\int_X f\,d\mu > 0$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose $\mu(X) < \infty$, $\{f_n\}$ is a sequence of bounded complex
+    measurable functions on $X$, and $f_n \to f$ uniformly on $X$. Prove that
+    \begin{equation*}
+      \lim_{n \to \infty} \int_X f_n\,d\mu = \int_X f\,d\mu,
+    \end{equation*}
+    and show that the hypothesis ``$\mu(X) < \infty$'' cannot be omitted.
+    \begin{proof}
+      Let $\epsilon > 0$ be given, and let $N$ such that $\lvert f_n(x) - f(x)
+      \rvert < \epsilon/\mu(X)$ for all $n \ge N$ and for all $x \in X$.
+      Then, we have
+      \begin{equation*}
+        \left\lvert \int_X (f_n - f)\,d\mu \right\rvert \le \int_X \lvert f_n -
+        f \rvert\,d\mu < \epsilon.
+      \end{equation*}
+      \par Now let $f_n = \chi_{[0,n]}/n$. Then, $f_n \to 0$ uniformly, since
+      given $\epsilon > 0$, for all $n > 1/\epsilon$, we have $\lvert f_n(x)
+      \rvert \le 1/n < \epsilon$. On the other hand,
+      \begin{equation*}
+        \lim_{n \to \infty} \int_X f_n\,d\mu = 1 \ne 0 = \int_X 0\,d\mu.\qedhere
+      \end{equation*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Show that
+    \begin{equation*}
+      A = \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty E_k
+    \end{equation*}
+    in Theorem $1.41$, and hence prove the theorem without any reference to
+    integration.
+    \begin{proof}
+      $x \in A$ if and only if $x$ is in infinitely many $E_n$, which is
+      equivalent to saying that for all $n$, $x$ is in some $E_k$ for $k \ge n$.
+      Converting this to set notation we get the claim equality of sets.
+      \par Now we want to show $\mu(A) = 0$. But we have
+      \begin{align*}
+        \mu(A) &= \mu\!\left( \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty E_k
+        \right)\\
+        &\le \inf_{n \ge 1} \mu\!\left( \bigcup_{k=n}^\infty E_k \right)\\
+      &\le \int_{n \ge 1} \sum_{k=n}^\infty \mu(E_k) = 0.\qedhere
+      \end{align*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose $f \in L^1(\mu)$. Prove that to each $\epsilon > 0$ there exists a
+    $\delta > 0$ such that $\int_E\lvert f \rvert\,d\mu < \epsilon$ whenever
+    $\mu(E) < \delta$.
+    \begin{proof}
+      Let $E_N \coloneqq \{x \in X \mid \lvert f(x) \rvert \le N\}$. Then,
+      letting $f_N \coloneqq \lvert f \rvert \chi_{E_N}$, we have
+      $\lvert f_{N} \rvert \le f_{N+1}$, and the $f_N \to \lvert f \rvert$,
+      so by the monotone convergence
+      theorem, for every $\epsilon > 0$ there exists an $N$ such that
+      \begin{equation*}
+        \int_X (\lvert f \rvert - f_n) \,d\mu < \frac{\epsilon}{2}
+      \end{equation*}
+      for all $n \ge N$. Now let $\delta$ such that $N\delta < \epsilon/2$.
+      Then,
+      \begin{align*}
+        \int_E \lvert f \rvert\,d\mu &\le \int_E (\lvert f \rvert - f_n)\,d\mu +
+        \int_E f_n\,d\mu\\
+        &\le \int_X (\lvert f \rvert - f_n)\,d\mu + N\delta < \epsilon.\qedhere
+      \end{align*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Show that proposition $1.24(c)$ is also true when $c = \infty$.
+    \begin{proof}
+      We want to show that if $f \ge 0$ and $c = \infty$,
+      \begin{equation*}
+        \int_E cf\,d\mu = c\int_E f\,d\mu.
+      \end{equation*}
+      We can assume without loss of generality that $f > 0$ on $E$ by
+      restricting to $E$, since $0 \cdot \infty = 0$ by definition $(1.22)$.
+      Then, the integral of both sides is infinite, so we are done.
+    \end{proof}
+  \end{exercise}
+  \section{Positive Borel Measures}
+  \begin{exercise}
+    Let $\{f_n\}$ be a sequence of real nonnegative functions on $R^1$, and
+    consider the following four statements:
+    \begin{enum}
+      \item If $f_1$ and $f_2$ are upper semicontinuous, then $f_1 + f_2$ is
+        upper semicontinuous.
+      \item If $f_1$ and $f_2$ are lower semicontinuous, then $f_1 + f_2$ is
+        lower semicontinuous.
+      \item If each $f_n$ is upper semicontinuous, then $\sum_1^\infty f_n$ is
+        upper semicontinuous.
+      \item If each $f_n$ is lower semicontinuous, then $\sum_1^\infty f_n$ is
+        lower semicontinuous.
+    \end{enum}
+    Show that three of these are true and that one is false. What happens if the
+    word ``nonnegative'' is omitted? Is the truth of the statements affected if
+    $R^1$ is replaced by a general topological space?
+    \begin{proof}
+      $(a)$ is true without the nonnegative hypothesis nor assuming $f_i$ are
+      functions on $\mathbf{R}^1$ since
+      \begin{multline*}
+        (f_1+f_2)^{-1}([-\infty,\alpha)) = \{x \mid f_1(x) + f_2(x) < \alpha\}\\
+        = \bigcup_{N \in \mathbf{R}} f_1^{-1}([-\infty,N)) \cap
+        f_2^{-1}([-\infty,N-\alpha))
+      \end{multline*}
+      is open. Likewise, $(b)$ is true without the nonnegative hypothesis nor
+      assuming $f_i$ are functions on $\mathbf{R}^1$ since
+      \begin{multline*}
+        (f_1+f_2)^{-1}((\alpha,\infty]) = \{x \mid f_1(x) + f_2(x) > \alpha\}\\
+        = \bigcup_{N \in \mathbf{R}} f_1^{-1}((N,\infty]) \cap
+        f_2^{-1}((N-\alpha,\infty])
+      \end{multline*}
+      is open.
+      \par Now we claim $(c)$ is false even in the case stated. Let $h_n$ be the
+      function defined as
+      \begin{equation*}
+        h_n(x) = \begin{dcases*}
+          0 & if $x \le 0$,\\
+          nx & if $0 \le x \le 1/n$,\\
+          1 & if $x \ge 1/n$.
+        \end{dcases*}
+      \end{equation*}
+      Each $h_n$ is continuous by definition. Now let $f_n = h_{n} -
+      h_{n-1}$ where $h_0 = 0$. Then, $\sum_{1}^N f_n = h_N$, and so
+      \begin{equation*}
+        \sum_{n=1}^\infty f_n = \begin{dcases*}
+          0 & if $x \le 0$,\\
+          1 & if $x > 0$
+        \end{dcases*}
+      \end{equation*}
+      is not upper semicontinuous.
+      \par Now we claim $(d)$ is true even if $\mathbf{R}^1$ is replaced by a
+      general topological space, but not if we remove the condition that the
+      $f_n$ are nonnegative. $(d)$ is true under the stated hypotheses since
+      $\sum_1^\infty f_n$ is the infimum of the collection of partial sums
+      $\sum_1^N f_n$, and then by $(2.8(c))$. On the other hand, we can take the
+      negative of the example for $(c)$ to show the hypothesis that the $f_n$
+      are nonnegative is necessary.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let $f$ be an arbitrary complex function on $R^1$, and define
+    \begin{align*}
+      \varphi(x,\delta) &= \sup\left\{ \lvert f(s) - f(t) \rvert : s,t \in (x -
+      \delta, x + \delta) \right\},\\
+      \varphi(x) &= \inf\left\{ \varphi(x,\delta) : \delta > 0 \right\}.
+    \end{align*}
+    Prove that $\varphi$ is upper semicontinuous, that $f$ is continuous at a
+    point $x$ if and only if $\varphi(x) = 0$, and hence that the set of points
+    of continuity of an arbitrary complex functions is a $G_\delta$.
+    \par Formulate and prove an analogous statement for general topological
+    spaces in place of $R^1$.
+    \begin{proof}
+      We formulate and prove the statement for general topological spaces $X$,
+      namely that defining for each open set $V \subset X$ and each $x \in X$,
+      \begin{align*}
+        \varphi_V(x) &= \begin{dcases*}
+          \sup_{s,t \in V} \lvert f(s) - f(t)\rvert & if $x \in V$\\
+          \infty & otherwise
+        \end{dcases*}\\
+        \varphi(x) &= \inf_{V \subset X}\left\{ \varphi_V(x) \right\}
+      \end{align*}
+      that $\varphi(x)$ is upper
+      semicontinuous, and that $f$ is continuous at $x$ if and only if
+      $\varphi(x) = 0$, and the set of points where $f$ is continuous is a
+      $G_\delta$. Note this is equivalent to the definition given for
+      $\mathbf{R}^1$ as our topological space since the intervals $(x - \delta,
+      x + \delta)$ form a basis for the topology on $\mathbf{R}^1$.
+      \par Each $\varphi_V(x)$ is upper semicontinuous since
+      \begin{equation*}
+        \varphi_V^{-1}([-\infty,\alpha)) = \begin{dcases*}
+          V & if $\lvert f(s) - f(t) \rvert < \alpha$ $\exists s,t\in V$\\
+          \emptyset & otherwise
+        \end{dcases*}
+      \end{equation*}
+      and $\varphi(x)$ is upper semicontinuous since it is the infimum of a
+      family of upper semicontinuous functions.
+      \par We now claim $f$ is continuous at $x$ if and only if $\varphi(x) =
+      0$. $f$ is continuous at $x$ if and only if for all $\epsilon > 0$, there
+      exists an open neighborhood $V \ni x$ such that $\lvert f(s) - f(t) \rvert
+      < \epsilon$ for all $s,t \in V$, but this is true if and only if
+      there exists and open neighborhood $V \ni x$ such that
+      $\sup_{s,t \in V} \lvert f(s) - f(t) \rvert < \epsilon$. This in turn is
+      the same as saying $\varphi(x) < \epsilon$ for all $\epsilon > 0$, i.e.,
+      $\varphi(x) = 0$. The claim about the set where $f$ is continuous is a
+      $G_\delta$ follows since $f$ is continuous on
+      \begin{equation*}
+        \varphi^{-1}(0) = \bigcap_{n=1}^\infty \varphi^{-1}([-\infty,1/n)) 
+      \end{equation*}
+      and each $\varphi^{-1}([-\infty,1/n))$ is open since $\varphi$ is upper
+      semicontinuous.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let $X$ be a metric space, with metric $\rho$. For any nonempty $E \subset
+    X$, define
+    \begin{equation*}
+      \rho_E(x) = \inf\{\rho(x,y) : y \in E\}.
+    \end{equation*}
+    Show that $\rho_E$ is a uniformly continuous function on $X$. If $A$ and $B$
+    are disjoint nonempty closed subsets of $X$, examine the relevance of the
+    function
+    \begin{equation*}
+      f(x) = \frac{\rho_A(x)}{\rho_A(x) + \rho_B(x)}
+    \end{equation*}
+    to Urysohn's lemma.
+    \begin{proof}
+      Let $\epsilon > 0$ be given. Then, if $\rho(x,z) < \epsilon$, by the
+      triangle inequality we have
+      \begin{align*}
+        &\lvert \rho_E(x) - \rho_E(z) \rvert\\
+        &\quad= \left\lvert \inf_{y \in E}
+        \rho(x,y) - \inf_{y \in E} \rho(z,y) \right\rvert\\
+        &\quad\le \left\lvert \rho(x,z) + \inf_{y \in E}
+        \rho(z,y) - \inf_{y \in E} \rho(z,y) \right\rvert\\
+        &\quad= \rho(x,z) < \epsilon.
+      \end{align*}
+      \par Now let $K \subset X$ be compact, and $V$ be an open set containing
+      $K$. Let $\delta = \inf_{x \in K} \rho_{X \setminus V}(x) > 0$,
+      which is positive since
+      $\delta = \rho_{X \setminus V}(x_0)$ for some $x_0 \in K$ by compactness of
+      $K$, and $\rho_{X \setminus V}(x_0) = 0$ implies $x_0 \in X \setminus V$
+      by openness of $V$. We then claim that setting $B = K$ and
+      \begin{equation*}
+        A = \{x \in X \mid \rho_K(x) \ge \delta/3\},
+      \end{equation*}
+      in the definition of $f(x)$, we have $K \prec f \prec V$.
+      Note the first part of the problem implies $A$ is closed, and that $f(x)$
+      is continuous.
+      By definition, clearly $0 \le f(x) \le 1$.
+      Now if $x \in K$, then $f(x) = 1$ trivially. Moreover,
+      \begin{align*}
+        \{x \in X \mid f(x) \ne 0\} &= \{x \in X \mid \rho_K(x) <
+        \delta/3\}\\
+        &\subset \{x \in X \mid \rho_K(x) \le 2\delta/3\} \subset V
+      \end{align*}
+      and $\{x \in X \mid \rho_K(x) \le 2\delta/3\}$ is closed, hence the
+      support of $f$ is contained in $V$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Examine the proof of the Riesz theorem and prove the following two
+    statements:
+    \begin{enum}
+      \item If $E_1 \subset V_1$ and $E_2 \subset V_2$, where $V_1$ and $V_2$
+        are disjoint open sets, then $\mu(E_1 \cup E_2) = \mu(E_1) + \mu(E_2)$,
+        even if $E_1$ and $E_2$ are not in $\mathfrak{M}$.
+    \item If $E \in \mathfrak{M}_F$, then $E = N \cup K_1 \cup K_2 \cup \cdots$,
+      where $\{K_i\}$ is a disjoint countable collection of compact sets and
+      $\mu(N) = 0$.
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      By Step I of the proof, we have the inequality $\mu(E_1 \cup E_2) \le
+      \mu(E_1) + \mu(E_2)$, so it suffices to show the converse. Let $W \supset
+      E_1 \cup E_2$ be open. Then, $\mu(W) \ge \mu(W \cap V_1) + \mu(W \cap V_2)
+      \ge \mu(E_1) + \mu(E_2)$. Taking the infimum over all $W \supset E_1 \cup
+      E_2$, we have $\mu(E_1 \cup E_2) \ge \mu(E_1) + \mu(E_2)$.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      Since $E = E_0 \in \mathfrak{M}_F$, by Step V there is a compact $K_1$ and an
+      open $V_1$ such that $K_1 \subset E_0 \subset V_1$ and $\mu(V_1 \setminus
+      K_1) < 1$. By Step VI, since $K_1 \in \mathfrak{M}_F$, we have $E_1
+      \coloneqq E_0 \setminus K_1 \in \mathfrak{M}_F$. Inductively, we can
+      construct from $E_{n-1}$ a compact set $K_n$ and an open set $V_n$ such that
+      $\mu(V_n \setminus K_n) < 1/n$, and a new $E_n \coloneqq E_{n-1} \setminus
+      K_n \in \mathfrak{M}_F$. By construction, each $K_n$ is disjoint. We now
+      claim that $N \coloneqq E \setminus \bigcup_1^\infty K_n$ has measure zero.
+      But we have
+      \begin{equation*}
+        E \setminus \bigcup_{n=1}^\infty K_n = \bigcap_{n=1}^\infty E \setminus
+        K_n \subset \bigcap_{n=1}^\infty V_n \setminus K_n,
+      \end{equation*}
+      whose measure is $< 1/n$ for each $n$, so $\mu(N) = 0$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let $E$ be Cantor's familiar ``middle thirds'' set. Show that $m(E) = 0$,
+    even though $E$ and $R^1$ have the same cardinality.
+    \begin{proof}
+      Let $1 < c < 3/2$ be given. Then, for each $m$ let $E_m$ be the open
+      cover of $E$ formed by the union of $2^m$ intervals of length
+      $3^{-m}c^{m}$ covering each segment of $E$ \cite[2.44]{Rud76}.
+      Then, $E \subset \bigcap_1^\infty
+      E_m$, but since $\mu(E_m) = (2c/3)^m$ for each $m$, we have that $\mu(E) <
+      (2c/3)^m$ for all $m$. Since $1 < c < 3/2$, we see $\mu(E) = 0$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{2.6}
+    Construct a totally disconnected compact set $K \subset R^1$ such that $m(K)
+    > 0$. ($K$ is to have no connected subset consisting of more than one
+    point.)
+    \par If $v$ is lower semicontinuous and $v \le \chi_K$, show that actually
+    $v \le 0$. Hence $\chi_K$ cannot be approximated below by lower
+    semicontinuous functions, in the sense of the Vitali-Carath\'eodory theorem.
+    \begin{proof}[Solution]
+      Let $0 < \epsilon < 1$. Let $E_0 = [0,1]$, and let $E_1$ be $E_0$ with a
+      central interval of length $\epsilon/2$ removed. Inductively, from each
+      $E_{n-1}$ remove centrally situated intervals of length $\epsilon/(2 \cdot
+      4^{n-1})$; note we are removing $2^{n-1}$ of these. Thus, the intersection
+      $K = \bigcap_1^\infty E_n$ has measure $1 - \sum_1^\infty \epsilon/2^n = 1
+      - \epsilon$. $K$ is closed and bounded hence compact by construction.
+      \par Now to show $K$ is totally disconnected, it suffices by
+      \cite[Thm.\ 2.47]{Rud76} to show that for every
+      $x,y \in K$, there exists some $z \in \mathbf{R}^1$ such that $x < z < y$
+      but $z \notin K$. But this is obvious, for $(x,y)$ contains some interval
+      of length $\epsilon/(2 \cdot 4^{n-1})$, for some $n$, which would have been
+      removed at some stage in the construction.
+      \par Now we want to show if $v$ is lower semicontinuous and $v \le \chi_K$
+      for $K \subset \mathbf{R}^1$ a totally disconnected compact set, then $v
+      \le 0$. If $v$ is lower semicontinuous, then $v^{-1}((0,\infty])$
+      must be open, and since $v \le \chi_K$, we see that $v^{-1}((0,\infty])
+      \subset K$. But $K$ is totally disconnected, so has empty interior, and so
+      $v^{-1}((0,\infty]) = \emptyset$, that is, $v \le 0$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{2.7}
+    If $0 < \epsilon < 1$, construct an open set $E \subset [0,1]$ which is
+    dense in $[0,1]$, such that $m(E) = \epsilon$. (To say that $A$ is dense in
+    $B$ means that the closure of $A$ contains $B$).
+    \begin{proof}[Solution]
+      We claim the complement $E$ of $K$ we constructed in Exercise \ref{2.6}
+      suffices. We have $\mu(E) = \epsilon$ since $\mu(K) = 1 - \epsilon$. On
+      the other hand, $\overline{E} = [0,1]$ since $K$ has empty interior by
+      Exercise \ref{2.6}.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Construct a Borel set $E \subset R^1$ such that
+    \begin{equation*}
+      0 < m(E \cap I) < m(I)
+    \end{equation*}
+    for every nonempty segment $I$. Is it possible to have $m(E) < \infty$ for
+    such a set?
+    \begin{proof}[Solution]
+      Let $\{E_n\}_0^\infty$ be sets as constructed in Exercise \ref{2.7}
+      translated onto the set $[n,n+1]$ and also copied to $[-n-1,-n]$, with
+      parameter $\epsilon = 2^{-n-2}$. Then, $\bigcup_0^\infty E_n$ has measure $1$
+      and intersects every segment in positive measure, but $\mu(E \cap I) <
+      \mu(I)$ for any segment $I$ since every segment $I$ contains an interval
+      which was removed in the construction of some $E_n$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Construct a sequence of continuous functions $f_n$ on $[0,1]$ such that $0
+    \le f_n \le 1$, such that
+    \begin{equation*}
+      \lim_{n \to \infty} \int_0^1 f_n(x)\,dx = 0,
+    \end{equation*}
+    but such that the sequence $\{f_n(x)\}$ converges for no $x \in [0,1]$.
+    \begin{proof}
+      Let $E_n = \lfloor [\sum_1^n 1/k, \sum_1^{n+1} 1/k] \rfloor$, and let
+      $f_n$ be a modification of $\chi_{E_n}$ such that in the graph of $f_n$,
+      the images of the two endpoints $\lfloor \sum_1^n 1/k \rfloor$ and
+      $\lfloor \sum_1^{n+1} 1/k \rfloor$ of $E_n$ are connected to the $x$-axis
+      by line segments of slope $n$. Then, we have
+      \begin{equation*}
+        \int_0^1 f_n(x)\,dx = \frac{2}{n} \to 0\ \text{as}\ n \to \infty.
+      \end{equation*}
+      However, $\{f_n(x)\}$ does not converge for any $x \in [0,1]$ since every
+      $x \in [0,1]$ is contained in infinitely many set of the form $E_n$,
+      but is also contained in infinitely many sets of the form $E_n^c$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    If $\{f_n\}$ is a sequence of continuous functions on $[0,1]$ such that $0
+    \le f_n \le 1$ and such that $f_n(x) \to 0$ as $n \to \infty$, for every $x
+    \in [0,1]$, then
+    \begin{equation*}
+      \lim_{n \to \infty} \int_0^1 f_n(x)\,dx = 0.
+    \end{equation*}
+    Try to prove this without using any measure theory of any theorems about
+    Lebesgue integration.
+    \begin{proof}
+      See \cite{Ebe57}.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let $\mu$ be a regular Borel measure on a compact Hausdorff space $X$;
+    assume $\mu(X) = 1$. Prove that there is a compact set $K \subset X$ (the
+    \emph{carrier} or \emph{support} of $\mu$) such that $\mu(K) = 1$ but
+    $\mu(H) < 1$ for every proper compact subset $H$ of $K$.
+    \begin{proof}
+      %Let $K$ be the intersection of all compact $K_\alpha$ with $\mu(K_\alpha) =
+      %1$; then every open set $V$ which contains $K$ also contains some
+      %$K_\alpha$. Regularity of $\mu$ is needed. Show that $K^c$ is the largest
+      %open set in $X$ whose measure is $0$.
+      Let $K$ be the intersection of all compact $K_\alpha$ with
+      $\mu(K_\alpha) = 1$. We claim every open set $V$ containing $K$ contains
+      some $K_\alpha$, which implies $K$ has measure $1$.
+      For, if $V \supset K$,
+      then $V^c$ is covered by $\bigcup K_\alpha^c$, and since $V^c$ is closed
+      hence compact, it is covered by a finite union $\bigcup_1^N K_n^c$. But
+      $\bigcup_1^N K_n^c$ has measure $0$ since it is the finite union of sets
+      of measure $0$. Thus, $V$ contains $\bigcap_1^N K_n$, which is of measure
+      $1$, hence is of the form $K_\alpha$. Now suppose $H \subsetneq K$, and
+      suppose $\mu(H) = 1$. Then, $K \subset H$ by construction, which is a
+      contradiction.
+    \end{proof}
+  \end{exercise}
+  \section{\textnormal{\emph{L}\textsuperscript{\emph{p}}}-Spaces}
+  \setcounter{exercise}{2}
+  \begin{exercise}
+    Assume that $\varphi$ is a continuous real function defined in $(a,b)$ such that
+    \begin{equation*}
+      \varphi\!\left(\frac{x+y}{2}\right) \le \frac{1}{2} \varphi(x) +
+      \frac{1}{2} \varphi(y)
+    \end{equation*}
+    for all $x,y \in (a,b)$. Prove that $\varphi$ is convex.
+    \begin{proof}
+      Suppose that $\varphi$ is not convex. Then, for $a < x < b, a < y < b, 0 <
+      \lambda < 1$, $\varphi(\varphi(\lambda x + (1-\lambda)y) > \lambda
+      \varphi(x) + (1-\lambda)\varphi(y))$ by the definition of convex. Let $z =
+      \lambda x + (1-\lambda)y$. Assume, without a loss of generality, that $x <
+      y$. Then construct $A=\{p\in[x,z):\varphi(p) = \lambda x + (1-\lambda)y\}$. By
+      construction, $A$ is bounded by $x$ below and $z$ above, and $\varphi(x)
+      \le \lambda x + (1-\lambda)y < \varphi(z)$ implies that $A$ is not empty
+      from the Intermediate Value Theorem since $\varphi$ is continuous. The
+      boundedness of $A$ means that we can let $\alpha = \sup A$. Now construct
+      $B=\{p\in(z,y]:\varphi(p) = \lambda x + (1-\lambda)y\}$. By construction,
+      $B$ is bounded by $z$ below and $y$ above, and $\varphi(z) < \lambda x +
+      (1-\lambda)y \le \varphi(x)$ implies that $B$ is not empty from the
+      intermediate value theorem since $\varphi$ is continuous. The boundedness
+      of $B$ means that we can let $\beta = \sup B$. Next, by construction, we
+      also know that $\alpha \le z \le \beta$. However, we know that both
+      $\alpha = z$ and $\beta = z$ cannot be true because then we would have a
+      simple discontinuity at $z$, which contradicts that $\varphi$ is
+      continuous. So, $\alpha < z < \beta$. By construction, we can then say
+      that for all $c \in (\alpha,\beta)$, $\varphi(c) > \lambda \varphi(\alpha)
+      + (1-\lambda)\varphi(\beta)$. Specifically for $\lambda = 1/2$, for all $c
+      \in (\alpha,\beta)$, $\varphi(c) > (\varphi(\alpha) + \varphi(\beta))/2$.
+      However, this is a contradiction since the values of $\varphi$ over an
+      interval cannot be strictly greater than the average value of $\varphi$
+      over this interval since $\varphi$ is continuous. Therefore, $\varphi$ must
+      be convex.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{3.4}
+    Suppose $f$ is a complex measurable function on $X$, $\mu$ is a positive
+    measure on $X$, and
+    \begin{equation*}
+      \varphi(p) = \int_X \lvert f \rvert\,d\mu = \lVert f \rVert_p^p \quad (0 <
+      p < \infty).
+    \end{equation*}
+    Let $E = \{p : \varphi(p) < \infty\}$. Assume $\lVert f \rVert_\infty <
+    \infty$.
+    \begin{enum}
+      \item If $r < p < s$, $r \in E$, and $s \in E$, prove that $p \in E$.
+      \item Prove that $\log \varphi$ is convex in the interior of $E$ and that
+        $\varphi$ is continuous on $E$.
+      \item By $(a)$, $E$ is connected. Is $E$ necessarily open? Closed? Can $E$
+        consist of a single point? Can $E$ be any connected subset of
+        $(0,\infty)$?
+      \item If $r < p < s$, prove that $\lVert f \rVert_p \le \max(\lVert f
+        \rVert_r,\lVert f \rVert_s)$. Show that this implies the inclusion
+        $L^r(\mu) \cap L^s(\mu) \subset L^p(\mu)$.
+      \item Assume that $\lVert f \rVert_r < \infty$ for some $r < \infty$ and
+        prove that
+        \begin{equation*}
+          \lVert f \rVert_p \to \lVert f \rVert_\infty \quad \text{as}\ p \to
+          \infty.
+        \end{equation*}
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      Write $p = (1-\lambda) r + \lambda s$ for $0 < \lambda < 1$. By H\"older's
+      inequality,
+      \begin{align*}
+        \int_X \lvert f \rvert^p\,d\mu &= \int_X \lvert f \rvert^{(1-\lambda)r}
+        \lvert f \rvert^{\lambda s}\,d\mu\\
+        &\le \left(\int_X \rvert f \rvert^r\,d\mu\right)^{1-\lambda}
+        \left(\int_X \rvert f \rvert^s\,d\mu\right)^{\lambda}
+      \end{align*}
+      which is finite.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      We want to show the inequality $3.1(1)$ for all $r < s$ inside $E$.
+      By our proof in $(a)$, we have the inequality
+      \begin{equation*}
+        \varphi((1-\lambda) r + \lambda s) \le \varphi(r)^{1-\lambda} \cdot \varphi(s)^{\lambda}
+      \end{equation*}
+      and taking logarithms gives
+      \begin{equation*}
+        \log \varphi((1-\lambda) r + \lambda s) \le (1-\lambda)\log \varphi(r) + \lambda \log \varphi(s)
+      \end{equation*}
+      which holds for all $\lambda \in [0,1]$. This implies $\log\varphi$ and
+      also $\varphi$ are continuous on the interior of $E$ by Theorem $3.2$.
+      $\varphi$ is also continuous on the boundary of $E$ since if $r$ is the
+      lower limit of $E$,
+      \begin{equation*}
+        \lim_{p \to r^+} \varphi(p) = \int_{\lvert f \rvert \ge 1} \lvert f
+        \rvert^p\,d\mu + \int_{\lvert f \rvert < 1} \lvert f
+        \rvert^p\,d\mu,
+      \end{equation*}
+      and then first (resp.\ second) term on the right decreases (resp.\
+      increases) monotonically to the corresponding integral for $p=r$, hence
+      $\lim_{p \to r^+} \varphi(p) = \varphi(r)$. The same argument works for $p
+      \to s^-$.
+    \end{proof}
+    \begin{proof}[Solution for $(c)$]
+      We claim $E$ can be an arbitrary connected subset of $(0,\infty)$.
+      Consider if $X = (0,\infty)$ with the Lebesgue measure.
+      \par We first write down some functions. For $r > 0$, the function
+      \begin{equation*}
+        a_r = \frac{\chi_{[1,\infty)}}{x^{1/r}}
+      \end{equation*}
+      is in $L^p$ for all $p > r$ but not any $p \le r$. For $s < \infty$, the
+      function
+      \begin{equation*}
+        b_s = \frac{\chi_{(0,1]}}{x^{1/s}}
+      \end{equation*}
+      is in $L^p$ for all $p < s$ but not any $p \ge s$.
+      \par First, $f = \chi_{(0,1]}$ gives $E = (0,\infty]$. Next, $a_r$ gives
+      $E = (r,\infty]$. Also, $b_s$ gives $E = (0,s)$. And $a_r + b_s$ gives $E
+      = (r,s)$. So it suffices to show we can get $E$ that are closed on one
+      side.
+      \par For intervals of the form $[r,\infty]$, then function
+      \begin{equation*}
+        \sum_{n=0}^\infty 2^{-n} a_{r-1/n}(x-n)
+      \end{equation*}
+      works. For intervals of the form $(0,s]$, we can do a similar trick with
+      the $b_s$:
+      \begin{equation*}
+        \sum_{n=0}^\infty 2^{-n} b_{r+1/n}(x-n).
+      \end{equation*}
+      Finally, for intervals of the form $(r,s],[r,s),[r,s]$, we can add the above
+      examples together.
+    \end{proof}
+    \begin{proof}[Proof of $(d)$]
+      By $(a)$, we have
+      \begin{equation*}
+        \lVert f \rVert_p \le \lVert f \rVert_r^{1 - \lambda s/p} \lVert f
+        \rVert_s^{1 - (1-\lambda)r/p}.
+      \end{equation*}
+      By dividing up into cases when the $L^r$ or $L^s$ norms are larger, we
+      then have
+      \begin{equation*}
+        \lVert f \rVert_r^{1 - \lambda s/p} \lVert f
+        \rVert_s^{1 - (1-\lambda)r/p} \le \max(\lVert f \rVert_r,\lVert f
+        \rVert_s).
+      \end{equation*}
+      The inclusion is then trivial.
+    \end{proof}
+    \begin{proof}[Proof of $(e)$]
+      For every $p$, we have
+      \begin{align*}
+        \lVert f \rVert_p &= \left(\int_X \lvert f \rvert^{p-r}\lvert f
+        \rvert^r\,d\mu\right)^{1/p}\\
+        &\le \lVert \lvert f \rvert^{p-r} \rVert_\infty^{1/p} \lVert f
+        \rVert_r^{r/p}\\
+        &\le \lVert f \rVert_\infty^{1-r/p} \lVert f \rVert_r^{r/p}.
+      \end{align*}
+      Passing to limits, $\limsup_{p \to \infty} \lVert f \rVert_p
+      \le \lVert f \rVert_\infty$.
+      \par On the other hand, let $\beta = \lVert f \rVert_\infty - \epsilon$.
+      Then,
+      \begin{align*}
+        \lVert f \rVert_r = \left( \int_X \lvert f \rvert^r\,d\mu
+        \right)^{1/r}
+        &\ge \left( \int_{\{\lvert f \rvert \ge \beta\}} \lvert f
+        \rvert^r\,d\mu\right)^{1/r}\\
+        &\ge \beta \mu(\lvert f \rvert \ge \beta)^{1/r}
+      \end{align*}
+      for all $r$, and passing to limits, we have
+      \begin{equation*}
+        \liminf_{r \to \infty} \lVert f \rVert_r \ge \beta = \lVert f
+        \rVert_\infty - \epsilon
+      \end{equation*}
+      for arbitrary $\epsilon$, hence $\liminf_{p \to \infty} \lVert f \rVert_p
+      \ge \lVert f \rVert_\infty$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Assume, in addition to the hypotheses of Exercise \hyperref[3.4]{$4$}, that
+    \[ \mu(X) = 1. \]
+    \begin{enum}
+      \item Prove that $\lVert f \rVert_r \le \lVert f \rVert_s$ if $0 < r < s
+        \le \infty$.
+      \item Under what conditions does it happen that $0 < r < s \le \infty$ and
+        $\lVert f \rVert_r = \lVert f \rVert_s < \infty$?
+      \item Prove that $L^r(\mu) \supset L^s(\mu)$ if $0 < r < s$. Under what
+        conditions do these two spaces contain the same functions?
+      \item Assume that $\lVert f \rVert_r < \infty$ for some $r > 0$, and prove
+        \begin{equation*}
+          \lim_{p \to 0} \lVert f \rVert_p = \exp\!\left\{ \int_X \log
+          \lvert f \rvert\,d\mu \right\}
+        \end{equation*}
+        if $\exp\{-\infty\}$ is defined to be $0$.
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      By H\"older's inequality using the conjugate exponents $s/r$, $s/(s-r)$, 
+      \begin{equation*}
+        \int_X \lvert f \rvert^r\,d\mu \le \left(\int_X \lvert f
+        \rvert^s\,d\mu\right)^{r/s}\left(\int_X d\mu\right)^{(s-r)/s} = \lVert f
+        \rVert_s^r
+      \end{equation*}
+      and taking $r$th roots we get the claim.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      By the remark on p.\ 65, we see that equality holds if and only if $\alpha
+      f^s = \beta$ almost everywhere, for some constants $\alpha,\beta$.
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+    The first claim is just part $(a)$. We now claim that $L^r(\mu) \subset
+      L^s(\mu)$ if and only if there exists $a$ such that $\mu(E) > a$ for any
+      measurable set $E$ of positive measure.
+      \par $\Leftarrow$. Let $f \in L^r(\mu)$, and let $E_n = \{x \colon \lvert
+      f \rvert \ge n\}$. We claim there exists $N$ such that $E_{n} = 0$ for
+      all $n \ge N$. For, if not, then $\lVert f \rvert_\infty = \infty$, hence
+      $f \notin L^\infty$, contradicting that $f \in L^r$ and part $(a)$.
+      \par $\Rightarrow$. We show the contrapositive.
+      Suppose there is a sequence of measurable sets
+      $\{E_n\}$ such that $0 < \mu(E_n) < 3^{-n}$; we can assume without of
+      generality that the $E_n$ are disjoint. Then, if $s < \infty$, define
+      \begin{equation*}
+        f = \begin{dcases*}
+          \sum_{n=1}^\infty \frac{\chi_{E_n}}{\mu(E_n)^{1/s}} & if $s <
+          \infty$,\\
+          \sum_{n=1}^\infty \frac{\chi_{E_n}}{\mu(E_n)^{1/2r}} & if $s =
+          \infty$.
+        \end{dcases*}
+      \end{equation*}
+      Then, $f \in L^r \setminus L^s$.
+    \end{proof}
+    \begin{proof}[Proof of $(d)$]
+      We first have
+      \begin{align*}
+        \lVert f \rVert_p &= \exp(\log(\lVert f \rVert_p))\\
+        &= \exp\!\left\{ \frac{1}{p} \log \int_X \lvert f \rvert^p\,d\mu \right\}\\
+        &\ge \exp\!\left\{ \int_X \log \lvert f \rvert\,d\mu \right\}
+      \end{align*}
+      and letting $p \to \infty$ gives us $\ge$ in the equation desired.
+      Conversely, sine $x \ge \log x + 1$ on $[0,\infty)$, we have $(\lVert f
+      \rVert_p^p - 1)/p \ge \log \lVert f \rVert_p$, and so
+      \begin{equation*}
+        \log \lVert f \rVert_p \le \int_X \frac{\lvert f \rvert_p^p -
+        1}{p}\,d\mu.
+      \end{equation*}
+      Now split up the integral and take the limit as $p \to 0$:
+      \begin{align*}
+        &\lim_{p \to 0}\int_{\lvert f \rvert \ge 1} \frac{\lvert f \rvert^p -
+        1}{p}\,d\mu + \lim_{p \to 0}\int_{\lvert f \rvert < 1} \frac{\lvert f
+        \rvert^p - 1}{p}\,d\mu\\
+        &~= \int_{\lvert f \rvert \ge 1} \log \lvert f \rvert\,d\mu +
+        \int_{\lvert f \rvert < 1} \log \lvert f \rvert\,d\mu = 
+        \int_X \log \lvert f \rvert\,d\mu
+      \end{align*}
+      by dominating the left function by $(\lvert f \rvert^r - 1)/r$ and by
+      using the monotone convergence theoreom for the right function. Combining
+      the previous two equations, we get $\lVert f \rVert_p \le \exp\left\{
+      \int_X \log \lvert f \rvert\,d\mu \right\}$.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{17}
+  \begin{exercise}
+    Let $\mu$ be a positive measure on $X$. A sequence $\{f_n\}$ of complex
+    measurable functions on $X$ is said to \emph{converge in measure} to the
+    measurable function $f$ if to every $\epsilon > 0$ there corresponds an
+    $N$ such that
+    \[ \mu(\{x : \lvert f_n(x) - f(x) \rvert > \epsilon \}) < \epsilon \]
+    for all $n > N$. Assume $\mu(X) < \infty$ and prove the following
+    statements:
+    \begin{enum}
+      \item If $f_n(x) \to f(x)$ a.e., then $f_n \to f$ in measure.
+      \item If $f_n \in L^p(\mu)$ and $\lVert f_n - f \rVert_p \to 0$, then $f_n
+        \to f$ in measure; here $1 \le p \le \infty$.
+      \item If $f_n \to f$ in measure, then $\{f_n\}$ has a subsequence which
+        converges to $f$ a.e.
+    \end{enum}
+    Invetigate the converses of $(a)$ and $(b)$. What happens to $(a)$, $(b)$,
+    and $(c)$ if $\mu(X) = \infty$, for instance, if $\mu$ is Lebesgue measure
+    on $R^1$?
+  \end{exercise}
+\end{multicols}
+\printbibliography
+\end{document}

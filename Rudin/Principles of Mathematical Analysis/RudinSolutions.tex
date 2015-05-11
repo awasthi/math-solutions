@@ -1,0 +1,1628 @@
+\documentclass[10pt,letterpaper]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{ifpdf}
+  \ifpdf
+    \setlength{\pdfpagewidth}{8.5in}
+    \setlength{\pdfpageheight}{11in}
+  \else
+\fi
+\usepackage{amssymb,mathrsfs}
+\usepackage{multicol}
+\usepackage{hyperref}
+
+\renewcommand{\theenumi}{$(\alph{enumi})$}
+\renewcommand{\labelenumi}{\theenumi}
+
+\newcounter{enumcounter}
+\newenvironment{enum}
+{\begin{list}{$(\alph{enumcounter})$~}{\usecounter{enumcounter} \labelsep=0em \labelwidth=0em \leftmargin=0em \topsep=0em}}
+{\end{list}}
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem*{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\numberwithin{equation}{exercise}
+\renewcommand{\theequation}{\thesection.\arabic{exercise}\alph{equation}}
+
+\title{Solutions to Walter Rudin's \emph{Principles of Mathematical Analysis}}
+\author{Takumi Murayama}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\begin{multicols}{2}
+  \section{The Real and Complex Number Systems}
+  \begin{exercise}\label{1.1}
+    If $r$ is rational ($r \ne 0$) and $x$ is irrational, prove that $r+x$ and $rx$ are irrational.
+    \begin{proof}[Proof that $r+x \in \mathbb{Q}^c$]
+      Assume, to get a contradiction, that $r+x \in \mathbb{Q}$. Then, $r = a/b$, $r + x = c/d$ for $a,b,c,d \in \mathbb{Z}$, by the definition of rationals. So, $a/b + x = c/d$, and $x = (bc - ad)/bd \in \mathbb{Q}$, which is a contradiction since $x \in \mathbb{Q}^c$.
+    \end{proof}
+    \begin{proof}[Proof that $rx \in \mathbb{Q}^c$]
+      Assume, to get a contradiction, that $rx \in \mathbb{Q}$. Then, $r = a/b$, $rx + c/d$ for $a,b,c,d \in \mathbb{Z}$, by the definition of rationals. So, $ax/b = c/d$, and $x = bc/ad \in \mathbb{Q}$, which is a contradiction since $x \in \mathbb{Q}^c$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.2}
+    Prove that there is no rational number whose square is $12$.
+    \begin{proof}
+      Assume $\sqrt{12} \in \mathbb{Q}$. Then, $\sqrt{12} = a/b$ for $a,b \in \mathbb{Z}$, by the definition of rationals, where $a,b$ are not both divisible by 3. So, $12 = a^2/b^2$, and $a^2 = 12b^2$. Since $12 | a^2$, $6 | a$, and so $3 | a$. So let $a = 6a'$. Then, $12b^2 = 36a'^2$, and $b^2 = 3a'^2$. Since $3 | b^2$, $3 | b$. This is a contradiction since $a,b$ are not both divisible by 3.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.3}
+    Prove Proposition 1.15, that is, that the axioms for multiplication imply the following statements.
+    \begin{enum}
+      \item If $x \ne 0$ and $xy = xz$ then $y = z$.
+      \item If $x \ne 0$ and $xy = x$ then $y = 1$.
+      \item If $x \ne 0$ and $xy = 1$ then $y = 1/x$.
+      \item If $x \ne 0$ then $1/(1/x) = x$.
+    \end{enum}
+    \begin{proof}
+      If $xy = xz$, the axioms (M) from Definition 1.12 give
+      \begin{equation*}
+        y = 1y = \frac{x}{x} y = \frac{xy}{x} = \frac{xz}{x} = \frac{x}{x} z = 1z = z.
+      \end{equation*}
+      This proves $(a)$. Take $z = 1$ in $(a)$ to obtain $(b)$. Take $z = 1/x$ in $(a)$ to obtain $(c)$. Since $x(1/x) = 1$, $(c)$ with $1/x$ in place of $x$ gives $(d)$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.4}
+    Let $E$ be a nonempty subset of an ordered set; suppose $\alpha$ is a lower bound of $E$ and $\beta$ is an upper bound of $E$. Prove that $\alpha \le \beta$.
+    \begin{proof}
+      Assume $\alpha > \beta$. Since $E \ne \emptyset$, there is some $\gamma \in E$ such that $\gamma \ge \alpha$. This implies $\gamma \ge \alpha > \beta$, which is a contradiction since $\beta$ is an upper bound.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.5}
+    Let $A$ be a nonempty set of real numbers which is bounded below. Let $-A$ be the set of all numbers $-x$, where $x \in A$. Prove that 
+    \begin{equation*}
+      \inf A = - \sup (-A).
+    \end{equation*}
+    \begin{proof}
+      Since $A$ is bounded below, $\inf A$ exists, and implies $\inf A \le x$ for all $x \in A$. Then $-\inf A \ge -x$ for all $x \in A$ and so $-\inf A$ is an upper bound of $-A$.
+      \par Now prove this is the \emph{least} upper bound. Assume there is an upper bound $y$ of $-A$ such that $-x \le y < -\inf A$ for all $x \in A$. This implies $x \ge y > \inf A$, which is a contradiction.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.6}
+    Fix $b > 1$.
+    \begin{enum}
+      \item If $m$, $n$, $p$, $q$ are integers, $n>0$, $q>0$, and $r = m/n = p/q$, prove that 
+        \begin{equation*}
+          (b^m)^{1/n} = (b^p)^{1/q}.
+        \end{equation*}
+        Hence it makes sense to define $b^r = (b^m)^{1/n}$.
+      \item Prove that $b^{r+s} = b^rb^s$ if $r$ and $s$ are rational.
+      \item If $x$ is real, define $B(x)$ to be the set of all numbers $b^t$, where $t$ is rational and $t \le x$. Prove that
+        \begin{equation*}
+          b^r = \sup B(r)
+        \end{equation*}
+        when $r$ is rational. Hence it makes sense to define
+        \begin{equation*}
+          b^x = \sup B(x)
+        \end{equation*}
+        for every real $x$.
+      \item Prove that $b^{x+y} = b^xb^y$ for all real $x$ and $y$.
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      $m/n = p/q$ implies $mq = np$. So, $b^{mq} = b^{np}$. By Theorem 1.21, $(b^{mq})^{1/nq} = (b^{np})^{1/nq}$, and so $(b^m)^{1/n} = (b^p)^{1/q}$, and $b^r$ is well-defined.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      Let $r = m/n$, $s = p/q$ where $m,n,p,q \in \mathbb{Z}$, and $n>0$, $q>0$. Then,
+      \begin{align*}
+        (b^{r+s})^{nq} &= (b^{m/n + p/q})^{nq}\\
+        &= b^{mq+np} = b^{mq}b^{np}\\
+        &= (b^{m/n})^{nq}(b^{p/q})^{nq}\\
+        &= (b^{m/n}b^{p/q})^{nq}\\
+        &= (b^rb^s)^{nq}.
+      \end{align*}
+      By Theorem 1.21,
+      \begin{equation*}
+        [(b^{r+s})^{nq}]^{1/nq} = [(b^rb^s)^{nq}]^{1/nq},
+      \end{equation*}
+      and so $b^{r+s} = b^rb^s$.
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+      $b^r = b^tb^{r-t} \ge b^t$ since $b > 1$ and $r-t > 0$, and so $b^r$ is an upper bound of $B(r)$. To prove $b^r$ is the \emph{least} upper bound, assume there is an upper bound $b^s$ of $B(r)$ such that $b^t \le b^s < b^r$. However, by the archimedean property, there is a $t$ such that $s < t < r$, which is a contradiction since it implies $b^s < b^t < b^r$ since $b > 1$ and $b^s$ is an upper bound of $B(r)$. Thus, $b^r = \sup B(r)$. The same proof applies for any real $x$.
+    \end{proof}
+    \begin{proof}[Proof of $(d)$]
+      By $(c)$,
+      \[ b^{x+y} = \sup B(x+y) = \sup \left\{ b^t \right\}. \]
+      For $t \le x+y, t \in \mathbb{Q}$. Letting $r + s = t$, $r \le x$, $s \le
+      y$, $r,s \in \mathbb{Q}$, we have 
+      \( b^{x+y} = \sup \left\{ b^{r+s} \right\} \).
+      Since $b^{r+s} = b^rb^s$ by $(b)$,
+      \begin{align*}
+        b^{x+y} &= \sup \left\{ b^r \right\}\sup \left\{ b^s \right\}\\
+        &= \sup B(x) \sup B(y)
+        = b^xb^y.\qedhere
+      \end{align*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.7}
+    Fix $b > 1$, $y > 0$, and prove that there is a unique real $x$ such that $b^x = y$, by completing the following outline.
+    \begin{enum}
+      \item For any positive integer $n$, $b^n - 1 \ge n(b-1)$.
+      \item Hence $b-1 \ge n(b^{1/n}-1)$.
+      \item If $t > 1$ and $n > (b-1)/(t-1)$, then $b^{1/n} < t$.
+      \item If $w$ is such that $b^w < y$, then $b^{w+(1/n)} < y$ for sufficiently large $n$.
+      \item If $b^w > y$, then $b^{w-(1/n)} > y$ for sufficiently large $n$.
+      \item Let $A$ be the set of all $w$ such that $b^w < y$, and show that $x = \sup A$ satisfies $b^x = y$.
+      \item Prove that this $x$ is unique.
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      Since $b > 1$, and thus $b^{n-1} \ge 1$, for $n \ne 1$,
+      \begin{align*}
+        b &> \frac{1-n}{b^{n-1}-n}\\
+        b^n - bn &> 1 - n\\
+        b^n - 1 &> n(b-1).
+      \end{align*}
+      For $n = 1$, $b - 1 = b - 1$. Therefore, for $n \in \mathbb{N}$, $b^n - 1 \ge n(b-1)$.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      Since $(a)$ is true for arbitrary $b > 1$, we can substitute $b^{1/n}$ for $b$ since $b^{1/n} > 1$ as well. Thus, $b - 1 \ge n(b^{1/n} - 1)$.
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+      From $(b)$ and that $n > (b-1)/(t-1)$, we get
+      \begin{align*}
+        b - 1 &\ge n(b^{1/n} - 1)\\
+        b-1 &> \frac{b-1}{t-1}(b^{1/n} - 1)\\
+        1 &> \frac{b^{1/n} - 1}{t-1}\\
+        t &> b^{1/n}.\qedhere
+      \end{align*}
+    \end{proof}
+    \begin{proof}[Proof of $(d)$]
+      Since $b^w < y$, $yb^{-w} > 1$, and let $t = yb^{-w}$. Then apply $(c)$:
+      \begin{align*}
+        b^{1/n} &< yb^{-w}\\
+        b^{w + (1/n)} &< y
+      \end{align*}
+      for $n > (b-1)/(yb^{-w} - 1)$.
+    \end{proof}
+    \begin{proof}[Proof of $(e)$]
+      Since $b^w > y$, $b^w/y > 1$, and let $t = b^w/y$. Then apply $(c)$:
+      \begin{align*}
+        \frac{b^w}{y} &> b^{1/n}\\
+        b^{w-1/n} &> y
+      \end{align*}
+      for $n > (b-1)/[(b^w/y) - 1]$.
+    \end{proof}
+    \begin{proof}[Proof of $(f)$]
+      Assume $b^x < y$. Then, by $(b)$, there is an $n > (b-1)/(yb^{-x} - 1)$ such that $b^{x+1/n} < y$. This contradicts that $x$ is an upper bound.
+      \par Now assume $b^x > y$. Then, by $(c)$, there is an $n > (b-1)/[(b^w/y) - 1]$ such that $b^{x-1/n} > y$. This contradicts that $x$ is the least upper bound. Thus, $b^x = y$.
+    \end{proof}
+    \begin{proof}[Proof of $(g)$]
+      Assume there is a $z \ne x$ such that $b^x = y$. If $z < x$, $b^{z-x} < 1$, and $b^z < b^x$. If $z > x$, $b^{x-z} < 1$, and $b^x > b^z$. Thus, $z = x$, and $x$ is unique.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.8}
+    Prove that no order can be defined in the complex field that turns it into an ordered field.
+    \begin{proof}
+      Assume $\mathbb{C}$ is an ordered field. By Proposition $1.18(d)$, if $x \ne 0$, $x^2 > 0$. By Theorem 1.27, $i \ne 0$, but by Theorem 1.28, $i^2 = -1 < 0$, which is a contradiction.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.9}
+    Suppose $z = a+bi$, $w = c+di$. Define $z < w$ if $a < c$, and also if $a = c$ but $b < d$. Prove that this turns the set of all complex numbers into an ordered set. Does this set have the least-upper-bound property?
+    \begin{proof}[Proof of ordering]
+      First prove Definition 1.5(i) holds. Consider $z = a+bi$, $w = c+di$. Since $a,b,c,d \in \mathbb{R}$ which is an ordered set, there are 5 cases:
+      \begin{enumerate}
+        \item If $a < c$ then $z < w$.
+        \item If $a > c$ then $z > w$.
+        \item If $a = c$ and $b < d$ then $z < w$. 
+        \item If $a = c$ and $b > d$ then $z > w$.
+        \item If $a=c$ and $b=d$ then $z = w$. 
+      \end{enumerate}
+      So one and only one of the statements $z < w$, $z = w$, $z > w$ is true.
+      \par Now prove Definition 1.5(ii) holds. Consider $z_1,z_2,z_3$ such that $z_1 < z_2$, $z_2 < z_3$. $z_1 < z_2$ implies either 
+      \begin{enumerate}
+        \item $\text{Re}(z_1) < \text{Re}(z_2)$, or
+        \item $\text{Re}(z_1) = \text{Re}(z_2)$ and $\text{Im}(z_1) < \text{Im}(z_2)$.
+      \end{enumerate}
+      Similarly, $z_2 < z_3$ implies either
+      \begin{enumerate}
+        \item $\text{Re}(z_2) < \text{Re}(z_3)$, or
+        \item $\text{Re}(z_2) = \text{Re}(z_3)$ and $\text{Im}(z_2) < \text{Im}(z_3)$.
+      \end{enumerate}
+      Then, there are two cases for the relation between $z_1$ and $z_3$:
+      \begin{enumerate}
+        \item $\text{Re}(z_1) < \text{Re}(z_3)$, so $z_1 < z_3$, or
+        \item $\text{Re}(z_1) = \text{Re}(z_2) = \text{Re}(z_3)$ and $\text{Im}(z_1) < \text{Im}(z_3)$, so $z_1 < z_3$.
+      \end{enumerate}
+      So $z_1 < z_2$, $z_2 < z_3$ implies $z_1 < z_3$.
+    \end{proof}
+    \begin{claim}
+      This ordered set of complex numbers does not have the least-upper-bound-property.
+    \end{claim}
+    \begin{proof}
+      Let $A = \left\{ in : n \in \mathbb{N} \right\}$, which is bounded above by 1. Suppose $a + bi = \sup A$. Since if $a > 0$, we can find $a'$ such that $a > a' > 0$ by the archimedean property, $a = 0$, and $bi = \sup A$. However, we can always find $n > b$, which contradicts that $bi$ is an upper bound. Thus, $\mathbb{C}$ with order as defined above does not have the least-upper-bound property.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.10}
+    Suppose $z = a+bi$, $w = u+iv$, and
+    \begin{equation*}
+      a = \left( \frac{|w| + u}{2} \right)^{1/2},\ b = \left( \frac{|w| - u}{2} \right)^{1/2}.
+    \end{equation*}
+    Prove that $z^2 = w$ if $v \ge 0$ and that $(\overline{z})^2 = w$ if $v \le 0$. Conclude that every complex number (with one exception!) has two complex square roots.
+    \begin{proof}
+      Consider $z^2$ when $v \ge 0$:
+      \begin{align*}
+        z^2 &= (a+bi)^2 = a^2 + 2abi - b^2\\
+        &= u + i\left( |w| + u \right)^{1/2}\left( |w| - u \right)^{1/2}\\
+        &= u + i\left( |w|^2 - u^2 \right)^{1/2}\\
+        &= u + i\left( (u+iv)(u-iv) - u^2 \right)^{1/2}\\
+        &= u + i\left( v^2 \right)^{1/2} = u + iv = w.
+        \intertext{Consider $(\overline{z})^2$ when $v \le 0$:}
+        (\overline{z})^2 &= (a-bi)^2 = a^2 - 2abi - b^2\\
+        &= u - i\left( |w| + u \right)^{1/2}\left( |w| - u \right)^{1/2}\\
+        &= u - i\left( |w|^2 - u^2 \right)^{1/2}\\
+        &= u - i\left( (u+iv)(u-iv) - u^2 \right)^{1/2}\\
+        &= u - i\left( v^2 \right)^{1/2} = u + iv = w.
+      \end{align*}
+      Thus, every complex number $w = u + iv$ has two roots $z,-z$ when $v \ge 0$, or two roots $\overline{z},-\overline{z}$ when $v \le 0$, unless $z = -z$ or $\overline{z} = -\overline{z}$, that is, $u = v = 0$ which implies $w = 0$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.11}
+    If $z$ is a complex number, prove that there exists an $r \ge 0$ and a complex number $w$ with $|w| = 1$ such that $z = rw$. Are $w$ and $r$ always uniquely determined by $z$?
+    \begin{proof}
+      Let $z = a + bi$, and let
+      \begin{equation*}
+        r = |z| = \sqrt{a^2 + b^2} \ge 0.
+      \end{equation*}
+      Let $w = a/r + bi/r$ when $r > 0$. Then,
+      \begin{equation*}
+        |w| = \sqrt{\left(\frac{a}{r}\right)^2+\left(\frac{b}{r}\right)^2} = \frac{\sqrt{a^2+b^2}}{r} = 1,
+      \end{equation*}
+      and $z = rw$ by construction. $r$ is uniquely determined since $|z| = |rw| = r$ since $r \ge 0$. $w$ is uniquely determined when $|z| = r > 0$ by construction. When $|z| = r = 0$, however, $w$ is not uniquely determined since we can choose $w$ to be any complex number such that $|w| = 1$ since $z = 0 = 0w = rw$ for all such $w$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.12}
+    If $z_1,\ldots,z_n$ are complex, prove that
+    \begin{equation*}
+      |z_1 + z_2 + \cdots + z_n| \le |z_1| + |z_2| + \cdots + |z_n|.
+    \end{equation*}
+    \begin{proof}[Proof by induction]
+      For $n = 1$, there is nothing to show since $|z_1| = |z_1|$. For $n = 2$, $|z_1 + z_2| \le |z_1| + |z_2|$, which is true by Theorem $1.33(e)$. Suppose the inequality holds for $n$. Then,
+      \begin{multline*}
+        |(z_1 + \cdots + z_n) + z_{n+1}|\\
+        \le |z_1 + \cdots + z_n| + |z_{n+1}|\\
+        \le |z_1| + \cdots + |z_n| + |z_{n+1}|,
+      \end{multline*}
+      where the last inequality holds by applying the inductive hypothesis to $|z_2 + \cdots + z_n|$, and the inequality at each iteration holds by Theorem $1.33(e)$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.13}
+    If $x$, $y$ are complex, prove that
+    \begin{equation*}
+      \big||x|-|y|\big|\le |x-y|.
+    \end{equation*}
+    \begin{proof}
+      By Theorem $1.33(e)$ we know, for $z = y-x$,
+      \begin{align*}
+        |x + z| &\le |x| + |z|\\
+        |x + z| - |x| &\le |z|\\
+        |y| - |x| &\le |y-x|.
+        \intertext{Similarly, for $z = x-y$,}
+        |y + z| &\le |y| + |z|\\
+        |y + z| - |y| &\le |z|\\
+        |x| - |y| &\le |x-y|.
+        \intertext{Since $\max(|y| - |x|,|x| - |y|) = \big||x|-|y|\big|$,}
+        \big||x|-|y|\big| &\le |x-y|.\qedhere
+      \end{align*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.14}
+    If $z$ is a complex number such that $|z| = 1$, that is, such that $z\overline{z} = 1$, compute
+    \begin{equation*}
+      |1 + z|^2 + |1 - z|^2.
+    \end{equation*}
+    \begin{proof}[Computation] Since by Theorem $1.31(a)$ and Definition 1.32,
+      \begin{align*}
+        |1 + z|^2 &= (1+z)\overline{(1+z)}\\
+        & = (1+z)(1+\overline{z})\\
+        &= 1 + z + \overline{z} + z\overline{z} = 2 + z + \overline{z},
+        \intertext{and}
+        |1 - z|^2 &= (1-z)\overline{(1-z)}\\
+        &= (1-z)(1-\overline{z})\\
+        &= 1 - z - \overline{z} + z\overline{z} = 2 - z - \overline{z},
+      \end{align*}
+      we get
+      \begin{equation*}
+        |1 + z|^2 + |1 - z|^2 = 4.\qedhere
+      \end{equation*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.15}
+    Under what conditions does equality hold in the Schwarz inequality?
+    \begin{claim}
+      If $\mathbf{a} = (a_1,\ldots,a_n) \in \mathbb{C}^n$, $\mathbf{b} = (b_1,\ldots,b_n) \in \mathbb{C}^n$, and $||\mathbf{b}|| \ne 0$, $|\langle \mathbf{a},\mathbf{b} \rangle| = ||\mathbf{a}|| \cdot ||\mathbf{b}||$ if and only if $\mathbf{a} = \lambda \mathbf{b}$ for $\lambda \in \mathbb{R}$. If $||\mathbf{b}|| = 0$, this equality always holds.
+    \end{claim}
+    \begin{proof}
+      For $||\mathbf{b}|| = 0$, $|\langle \mathbf{a},\mathbf{b} \rangle| = 0 = ||\mathbf{a}|| \cdot ||\mathbf{b}||$, and we are done. For $||\mathbf{b}|| \ne 0$, first assume $\mathbf{a} = \lambda \mathbf{b}$ for $\lambda \in \mathbb{R}$. Then, $|\langle \mathbf{a},\mathbf{b} \rangle| = |\langle \lambda\mathbf{b},\mathbf{b} \rangle| = \lambda ||\mathbf{b}|| \cdot ||\mathbf{b}|| = ||\mathbf{a}|| \cdot ||\mathbf{b}||$.
+      \par Now assume $|\langle \mathbf{a},\mathbf{b} \rangle|^2 = ||\mathbf{a}|| \cdot ||\mathbf{b}||$. Since $||\mathbf{b}|| \ne 0$, let
+      \begin{equation*}
+        \lambda = \frac{|\langle \mathbf{a},\mathbf{b} \rangle|}{||\mathbf{b}||^2},\ \mathbf{c} = \mathbf{a} - \lambda\mathbf{b}.
+      \end{equation*}
+      Since
+      \begin{equation*}
+        \langle \mathbf{b},\mathbf{c} \rangle = \langle \mathbf{b},\mathbf{a} - \lambda\mathbf{b}\rangle = \langle \mathbf{a},\mathbf{b}\rangle - \lambda\langle \mathbf{b},\mathbf{b} \rangle = 0,
+      \end{equation*}
+      we know $||\mathbf{a}||^2 = ||\lambda\mathbf{b} + \mathbf{c}||^2 = ||\lambda\mathbf{b}||^2 + ||\mathbf{c}||^2$. However, for $|\langle \mathbf{a},\mathbf{b} \rangle| = ||\mathbf{a}|| \cdot ||\mathbf{b}||$ to be true, $||\mathbf{c}|| = 0$, and thus $\mathbf{a} = \lambda \mathbf{b}$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.16}
+    Suppose $k \ge 3$, $\mathbf{x},\mathbf{y} \in \mathbb{R}^k$, $|\mathbf{x} - \mathbf{y}| = d > 0$, and $r > 0$. Prove:
+    \begin{enum}
+      \item If $2r > d$, there are infinitely many $\mathbf{z} \in \mathbb{R}^k$ such that
+        \begin{equation}\label{1.16a}
+          |\mathbf{z} - \mathbf{x}| = |\mathbf{z} - \mathbf{y}| = r.
+        \end{equation}
+      \item If $2r = d$, there is exactly one such $\mathbf{z}$.
+      \item If $2r < d$, there is no such $\mathbf{z}$.
+    \end{enum}
+    How must these statements be modified if $k$ is 2 or 1?
+    \begin{remark}
+      We will assume, without a loss of generality, that $\mathbf{x} = 0$, $\mathbf{y} = (d,0,\ldots,0)$. This takes care of any situation since we can always redefine our coordinate system such that this is true.
+    \end{remark}
+    \begin{lemma}
+      For any $\mathbf{z}$ such that $|\mathbf{z} - \mathbf{x}| = |\mathbf{z} - \mathbf{y}|$, $z_1 = d/2$.
+    \end{lemma}
+    \begin{proof}[Proof of Lemma]
+      From Definition 1.36, \eqref{1.16a} implies,
+      \begin{equation*}
+        \sum_{i=1}^k z_i^2 = \sum_{i=1}^k (z_i-y_i)^2.
+      \end{equation*}
+      For $k=1$, this becomes $z_1^2 = (z_1-d)^2$, and so $z_1 = d/2$. For $k\ge2$, subtracting $(z_2^2+\cdots+z_k^2)$, we get $z_1^2 = (z_1-d)^2$, and so $z_1 = d/2$.
+    \end{proof}
+    \begin{proof}[Proof of $(a)$]
+      If $2r > d$, by \eqref{1.16a}, $r^2 = |\mathbf{z}|^2 > d^2/4$.
+      Then, if $k\ge3$, by Definition 1.36 and the Lemma above,
+      \begin{align}\label{1.16b}
+        r^2 = \sum_{i=1}^k z_i^2 = \frac{d^2}{4} + \sum_{i=2}^k z_i^2 &> \frac{d^2}{4}\nonumber\\
+        r^2 - \frac{d^2}{4} = \sum_{i=2}^k z_i^2 &> 0,
+      \end{align}
+      which has infinitely many solutions for $\mathbf{z}$.
+      If $k=2$, \eqref{1.16b} becomes $r^2 - d^2/4 = z_2^2 > 0$, which only has two solutions for $\mathbf{z}$,
+      \begin{equation*}
+        \mathbf{z} = \left(\frac{d}{2},\pm\sqrt{r^2 - \frac{d^2}{4}}\right).
+      \end{equation*}
+      If $k=1$, there is no such $\mathbf{z}$ since by the Lemma above, $z_1 = d/2$, and so $|\mathbf{z}| = d/2 \not> d/2$.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      If $2r = d$, by \eqref{1.16a}, $r^2 = |\mathbf{z}|^2 = d^2/4$. Then, \eqref{1.16b} becomes
+      \begin{equation*}
+        r^2 - \frac{d^2}{4} = \sum_{i=2}^k z_i^2 = 0.
+      \end{equation*}
+      Then, there is only one value of $\mathbf{z}$ for any $k$, which is $\mathbf{z} = (d/2,0,0,\ldots)$.
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+      If $2r < d$, we get
+      \begin{equation*}
+        |\mathbf{z} - \mathbf{x}| + |\mathbf{z} - \mathbf{y}| < |\mathbf{x} - \mathbf{y}|,
+      \end{equation*}
+      which contradicts Theorem $1.37(f)$. Therefore, there are no solutions for $\mathbf{z}$ for any $k$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.17}
+    Prove that
+    \begin{equation*}
+      |\mathbf{x} + \mathbf{y}|^2 + |\mathbf{x} - \mathbf{y}|^2 = 2|\mathbf{x}|^2 + 2|\mathbf{y}|^2
+    \end{equation*}
+    if $\mathbf{x} \in \mathbb{R}^k$ and $\mathbf{y} \in \mathbb{R}^k$. Interpret this geometrically, as a statement about parallelograms.
+    \begin{proof}
+      Consider each term of the left side of the equation:
+      \begin{align*}
+        |\mathbf{x} + \mathbf{y}|^2 &= (\mathbf{x}+\mathbf{y})\cdot(\mathbf{x}+\mathbf{y})\\
+        &= \mathbf{x}\cdot\mathbf{x} + 2\mathbf{x}\cdot\mathbf{y} + \mathbf{y}\cdot\mathbf{y},\\
+        |\mathbf{x} - \mathbf{y}|^2 &= (\mathbf{x}-\mathbf{y})\cdot(\mathbf{x}-\mathbf{y})\\
+        &= \mathbf{x}\cdot\mathbf{x} - 2\mathbf{x}\cdot\mathbf{y} + \mathbf{y}\cdot\mathbf{y}.
+      \end{align*}
+      Adding the two together we get
+      \begin{equation*}
+        |\mathbf{x} + \mathbf{y}|^2 + |\mathbf{x} - \mathbf{y}|^2 = 2|\mathbf{x}|^2 + 2|\mathbf{y}|^2.\qedhere
+      \end{equation*}
+    \end{proof}
+    \begin{remark}
+      Geometrically, if we let $\mathbf{x}$ and $\mathbf{y}$ represent the sides of a parallelogram, $\mathbf{x}+\mathbf{y}$ and $\mathbf{x}-\mathbf{y}$ represent the diagonals of the parallelogram. The the area found by summing the squares of the diagonals and the area found by multiplying the sum of the squares of the sides by 2 are the same. When $\mathbf{x}\cdot\mathbf{y} = 0$, i.e., the parallelogram is a rectangle, we get the Pythagorean theorem for two different triangles. When $|\mathbf{x}| = |\mathbf{y}|$ as well, i.e., the parallelogram is a square, we get the Pythagorean theorem multiplied by 2.
+    \end{remark}
+  \end{exercise}
+  \begin{exercise}\label{1.18}
+    If $k \ge 2$ and $\mathbf{x} \in \mathbb{R}^k$, prove that there exists a $\mathbf{y} \in \mathbb{R}^k$ such that $\mathbf{y} \ne 0$ but $\mathbf{x}\cdot\mathbf{y} = 0$. Is this also true if $k = 1$?
+    \begin{proof}
+      Let $\mathbf{x}$ be given. We will construct such a $\mathbf{y}$. By Definition 1.36,
+      \begin{equation}\label{18}
+        \mathbf{x}\cdot\mathbf{y} = \sum_{i=1}^k x_iy_i.
+      \end{equation}
+      Now there are two cases for $\mathbf{x}$. If $2|k$, then we can let
+      \begin{equation*}
+        \mathbf{y} = (x_2,-x_1,\ldots,x_k,-x_{k-1}).
+      \end{equation*}
+      By construction we see that $\eqref{18} = 0$. Now consider the case where $2\nmid k$. Then, we can construct $\mathbf{y}$ as above, except for one index $y_j$ which will be 0. Then,
+      \begin{equation*}
+        \mathbf{y} = (x_2,\ldots,-x_{j-2},0,x_{j+2},\ldots,-x_{k-1}).
+      \end{equation*}
+      By construction we see that $\eqref{18} = 0$. This construction, however, does not work for $k = 1$, since if $\mathbf{x} \ne 0$, there is no number it could be multiplied by to get 0.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.19}
+    Suppose $\mathbf{a} \in \mathbb{R}^k$, $\mathbf{b} \in \mathbb{R}^k$. Find $\mathbf{c} \in \mathbb{R}^k$ and $r > 0$ such that
+    \begin{equation*}
+      |\mathbf{x} - \mathbf{a}| = 2|\mathbf{x} - \mathbf{b}|
+    \end{equation*}
+    if and only if $|\mathbf{x} - \mathbf{c}| = r$.
+    \begin{proof}
+      First prove $|\mathbf{x} - \mathbf{a}| = 2|\mathbf{x} - \mathbf{b}|$ implies $|\mathbf{x} - \mathbf{c}| = r$. Squaring both sides of the former, we obtain $|\mathbf{x} - \mathbf{a}|^2 = 4|\mathbf{x} - \mathbf{b}|^2$. By Definition 1.36, we get
+      \begin{gather}
+        \sum_{i=1}^k (x_i-a_i)^2 = 4\sum_{i=1}^k (x_i-b_i)^2.\nonumber
+        \intertext{Solving for $\Sigma x_i$,}
+        \sum_{i=1}^k x_i^2 = \frac{1}{3} \sum_{i=1}^k
+        \left[\begin{aligned}
+          2x_i&(-a_i + 4b_i)\\
+          &+(a_i^2 - 4b_i^2)
+        \end{aligned}\right].\label{1.19a}
+      \end{gather}
+      Similarly, for $|\mathbf{x} - \mathbf{c}| = r$,
+      \begin{gather}
+        \sum_{i=1}^k (x_i-c_i)^2 = r^2.\nonumber
+        \intertext{Solving for $\Sigma x_i$,}
+        \sum_{i=1}^k x_i^2 = r^2 + \sum_{i=1}^k (2c_ix_i - c_i^2).\label{1.19b}
+      \end{gather}
+      Setting \eqref{1.19a} and \eqref{1.19b} equal to each other, and solving for $r^2$, we get
+      \begin{equation}
+        r^2 = \frac{1}{3} \sum_{i=1}^k \left[
+        \begin{aligned}
+          2x_i&(- a_i + 4b_i - 3c_i)\\
+          &+(a_i^2 - 4b_i^2 + 3c_i^2)
+        \end{aligned}\right].\label{1.19c}
+      \end{equation}
+      Since we want $r$ to be independent of $\mathbf{x}$, we set $(- a_i + 4b_i - 3c_i) = 0$ for all $i \le k$, that is $3\mathbf{c} = 4\mathbf{b}-\mathbf{a}$. Then \eqref{1.19c} becomes
+      \begin{equation*}
+        r^2 = \sum_{i=1}^k \left( \frac{1}{3}a_i^2 - \frac{4}{3}b_i^2 + c_i^2 \right).
+      \end{equation*}
+      By the construction of $\mathbf{c}$,
+      \begin{align*}
+        r^2 &= \sum_{i=1}^k \left[ \frac{1}{3}a_i^2 - \frac{4}{3}b_i^2 + \left( \frac{4}{3} b_i - \frac{1}{3}a_i \right)^2 \right]\\
+        &= \sum_{i=1}^k \left( \frac{4}{9}a_i^2 - \frac{8}{9} a_ib_i + \frac{4}{9}b_i^2 \right)\\
+        3r &= 2\Bigg(\sum_{i=1}^k (a_i-b_i)^2\Bigg)^{1/2} = 2|\mathbf{a}-\mathbf{b}|,
+      \end{align*}
+      by Definition 1.36, and we get $3r = 2|\mathbf{a}-\mathbf{b}|$.
+      \par Now prove the converse, i.e. that $|\mathbf{x} - \mathbf{c}| = r$ implies $|\mathbf{x} - \mathbf{a}| = 2|\mathbf{x} - \mathbf{b}|$. By our construction of $\mathbf{c}$ and $r$ above, we get
+      \begin{equation*}
+        |3\mathbf{x} - 4\mathbf{b} + \mathbf{a}| = 2|\mathbf{a}-\mathbf{b}| = |2\mathbf{a}-2\mathbf{b}|,
+      \end{equation*}
+      by Theorem $1.33(c)$. Squaring both sides and applying Definition 1.36,
+      \begin{align*}
+        \sum_{i=1}^k (3x_i-4b_i+a_i)^2 &= 4\sum_{i=1}^k (a_i-b_i)^2\\
+        \sum_{i=1}^k (3x_i-4b_i+a_i)^2 &= \sum_{i=1}^k (2a_i-2b_i)^2.
+      \end{align*}
+      Since this is a difference of squares,
+      \begin{align*}
+        0 &= \sum_{i=1}^k \left[
+        \begin{aligned}
+          &(3x_i-6b_i+3a_i)\\
+          &\cdot(3x_i-2b_i-a_i)
+        \end{aligned} \right]\\
+        &= \sum_{i=1}^k \left[
+        \begin{aligned}
+          &(x_i-2b_i+a_i)\\
+          &\cdot(3x_i-2b_i-a_i)
+        \end{aligned} \right]\\
+        &= \sum_{i=1}^k \left[
+        \begin{aligned}
+          &4(x_i^2 - 2b_ix_i - b_i^2)\\
+          &- (x_i^2 - 2a_ix_i + a_i^2)
+        \end{aligned} \right]\\
+        &= \sum_{i=1}^k \left[ 4(x-b)^2 - (x-a)^2 \right].
+      \end{align*}
+      And so,
+      \begin{align*}
+        \sum_{i=1}^k (x-a)^2 &= \sum_{i=1}^k 4(x-b)^2 \\
+        |\mathbf{x}-\mathbf{a}| &= 2|\mathbf{x}-\mathbf{b}|.
+      \end{align*}
+      by taking the squareroot for both sides and applying Definition 1.36.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{1.20}
+    With reference to the Appendix, suppose that property \emph{(III)} were omitted from the definition of a cut. Keep the same definitions of order and addition. Show that the resulting ordered set has the least-upper-bound property, that addition satisfies axioms \emph{(A1)} to \emph{(A4)} (with a slightly different zero-element!) but that \emph{(A5)} fails.
+    \begin{definition}
+      The members of our set $X$ will be certain subsets of $\mathbb{Q}$, called \emph{cuts}. Our version of the cut is any set $\alpha \subset \mathbb{Q}$ with the following two properties.
+      \begin{enumerate}
+        \item[(I)] $\alpha$ is not empty, and $\alpha \ne \mathbb{Q}$.
+        \item[(II)] If $p \in \alpha$, $q\in \mathbb{Q}$, and $q < p$, then $q \in \alpha$.
+      \end{enumerate}
+      Note $p,q,r,\ldots \in \mathbb{Q}$ and $\alpha,\beta,\gamma,\ldots$ denote these cuts.
+    \end{definition}
+    \begin{definition}
+      ``$\alpha < \beta$'' means $\alpha \subsetneq \beta$ ($\alpha$ is a proper subset of $\beta$).
+    \end{definition}
+    \begin{lemma}
+      $X$ is an ordered set, with the order as defined above.
+    \end{lemma}
+    \begin{proof}[Proof of Lemma]
+      By Definition 1.6, we must prove that the order as defined above meets Definition 1.5. Definition 1.5(ii) holds since $\alpha < \beta$ and $\beta < \gamma$ implies $\alpha < \beta$ since $\alpha \subsetneq \beta$ and $\beta \subsetneq \gamma$ implies $\alpha \subsetneq \gamma$. By (II) and the properties of sets, at most one of the three relations $\alpha < \beta,\ \alpha = \beta,\ \beta < \alpha$ is true for any pair $\alpha,\beta$. To show that at least one holds, assume that the first two fail. Then $\alpha \not\subset \beta$. Hence there is a $p \in \alpha$ where $p \notin \beta$. If $q \in \beta$, $q < p$ by (II) since $p \notin \beta$, and so $q \in \alpha$. Thus, $\beta \subset \alpha$. Since $\beta \ne \alpha$, $\beta < \alpha$. Thus Definition 1.5(i) holds.
+    \end{proof}
+    \begin{proof}[Proof of least-upper-bound]
+      Let $A \subset X$ where $A \ne \emptyset$, and let $\beta \in X$ such that $\alpha < \beta$ for all $\alpha \in A$. Let
+      \begin{equation*}
+        \gamma = \bigcup_{\alpha \in A} \alpha.
+      \end{equation*}
+      First prove $\gamma \in X$. Since $A \ne \emptyset$, there is an $\alpha_0 \in A$ such that $\alpha_0 \ne \emptyset$. $\alpha_0 \subset \gamma$, so $\gamma \ne \emptyset$. $\gamma \subset \beta$ since $\alpha \subset \beta$ for all $\alpha \in A$, so $\gamma \ne \mathbb{Q}$ and (I) is met. For some $p \in \gamma$, $p \in \alpha_1$ for some $\alpha_1 \in A$. If $q < p$, then $q \in \alpha_1$, so $q \in \gamma$ and (II) is met, and so $\gamma \in X$. Now prove $\gamma = \sup A$. By construction, $\alpha \le \gamma$ for all $\alpha \in A$. Suppose $\delta < \gamma$ is an upper bound of $A$. Then there is an $s \in \gamma$ such that $s \notin \delta$. Since $s \in \gamma$, $s \in \alpha_2$ for some $\alpha_2 \in \gamma$. Thus, $\delta < \alpha_2$, which is a contradiction.
+    \end{proof}
+    \begin{definition}
+      If $\alpha,\beta \in X$, ``$\alpha+\beta$'' denotes the set of all $r + s$ where $r \in \alpha$, $s \in \beta$.
+    \end{definition}
+    \begin{remark}
+      Omitting property (III) from the definition of a cut on page 17, which is that if $p \in \alpha$, then $p < r$ for some $r \in \alpha$, allows $\alpha$ to contain a largest member $r$ such that for all $p \in \alpha$, $p \le r$, since $r < p$ would contradict (II), and $r \ne p$ would contradict (I).
+    \end{remark}
+    \begin{definition}
+      $0^*$ is the set of all negative rational numbers and $0$, justified by the remark above. $0^*$ is a cut since $0^* \ne \emptyset$ and $0^* \ne \mathbb{Q}$, satisfying (I), and if $p \in 0^*$, $q \in \mathbb{Q}$, and $p < q$, then $q \in 0^*$, satisfying (II).
+    \end{definition}
+    \begin{claim}
+      Addition as defined above satisfies axioms \emph{(A1)} to \emph{(A4)}, but \emph{(A5)} fails, with $0^*$ as defined above serving as our identity.
+    \end{claim}
+    \begin{proof}[Proof of \emph{(A1)}]
+      We have to prove $\alpha + \beta \subset X$. Since $\alpha,\beta \ne \emptyset$, $\alpha + \beta \ne \emptyset$. Take $r' \notin \alpha$, $s' \notin \beta$. Then, $r' + s' > r + s$ for all $r \in \alpha$, $s \in \beta$ by (II). Thus, $r' + s' \notin \alpha + \beta$, and (I) is met. If we take $p \in \alpha + \beta$, $p = r + s$ for some $r \in \alpha$, $s \in \beta$ by the definition of addition above. If $q < p$, then $q - s < r$, so $q-s \in \alpha$ by (II), and $q = (q-s) + s \in \alpha + \beta$, and (II) is met.
+    \end{proof}
+    \begin{proof}[Proof of \emph{(A2)}]
+      We have to prove $\alpha + \beta = \beta + \alpha$. By the definition of addition above, $\alpha + \beta$ is the set of all $r + s$ where $r \in \alpha$, $s \in \beta$. Likewise, $\beta + \alpha$ is the set of all $s + r$. Since $r + s = s + r$ for all $r,s \in \mathbb{Q}$ by Remark $1.13(b)$, $\alpha + \beta = \beta + \alpha$.
+    \end{proof}
+    \begin{proof}[Proof of \emph{(A3)}]
+      We have to prove $(\alpha + \beta) + \gamma = \alpha + (\beta + \gamma)$. By the defintion of addition above, $(\alpha + \beta) + \gamma$ is the set of all $(r+s)+t$ where $r \in \alpha$, $s \in \beta$, $t \in \gamma$. Likewise, $\alpha + (\beta + \gamma)$ is the set of all $r+(s+t)$. Since $(r+s)+t = r+(s+t)$ for all $r,s,t \in \mathbb{Q}$ by Remark $1.13(b)$, $(\alpha + \beta) + \gamma = \alpha + (\beta + \gamma)$.
+    \end{proof}
+    \begin{proof}[Proof of \emph{(A4)}]
+      We have to prove $0^* + \alpha = \alpha$. If $r \in \alpha$ and $s \in 0^*$, then $r + s \le r$, hence $r + s \in \alpha$ by our remark above. Thus $\alpha + 0^* \subset \alpha$. Now pick $p \in \alpha$, and pick $r \in \alpha$, $r \ge p$. Then $p - r \in 0^*$ by definition of $0^*$, and $p = r + (p-r) \in \alpha + 0^*$. Thus $\alpha \subset \alpha + 0^*$. By Definition 1.3, this implies $0^* + \alpha = \alpha$.
+    \end{proof}
+    \begin{proof}[Proof that \emph{(A5)} fails]
+      We have to prove that for some $\alpha \in X$, there is no element $\beta \in X$ such that $\alpha + \beta = 0^*$. Choose an $\alpha$ such that it does not contain a largest member, i.e., if $p \in \alpha$, $p < r$ for some $r \in \alpha$. Suppose, to get a contradiction, that $\alpha + \beta = 0^*$. Then for some $s \in \alpha$, there exists an $t \in \beta$ such that $s + t = 0$, by the definition of addition above. By assumption for $\alpha$, we know $0 = s + t < r + t \in \alpha + \beta$. Since $0 < r+t$, $r+t \notin \alpha + \beta$, which is a contradiction since $r + t \notin 0^*$.
+    \end{proof}
+  \end{exercise}
+  \section{Basic Topology}
+  \begin{exercise}\label{2.1}
+    Prove that the empty set is a subset of every set.
+    \begin{proof}
+      To prove $\emptyset \subset A$ for all sets $A$, we have to prove that every element $x \in \emptyset$ is also in $A$ by Definition 1.3. Since there are no points in $\emptyset$ by Definition 1.3, $\emptyset$ is a subset of every set.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{2}
+  %\begin{exercise}\label{2.2}
+  %  A complex number $z$ is said to be \emph{algebraic} if there are integers $a_0,\ldots,a_n$, not all zero, such that
+  %  \begin{equation*}
+  %    a_0z^n + a_1z^{n-1} + \cdots + a_{n-1}z + a_n = 0.
+  %  \end{equation*}
+  %  Prove that the set of all algebraic numbers is countable.
+  %\end{exercise}
+  \begin{exercise}\label{2.3}
+    Prove that there exist real numbers which are not algebraic.
+    \begin{proof}
+      By Exercise 2.2, we know the set of all algebraic complex numbers is countable. Since the set of algebraic real numbers is a subset of this countable set, we know that it is also countable by Theorem 2.8. This means that the complement set $A^c$ of nonalgebraic real numbers is not countable, since its union with the set of algebraic real numbers has to equal all of the reals, which are uncountable by Theorem 2.43 ($\mathbb{R} = A \cup A^c$). Thus, nonalgebraic numbers ($A^c$) exist in $\mathbb{R}$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{2.4}
+    Is the set of all irrational real numbers countable?
+    \begin{claim}
+      The set of all irrational real numbers is not countable.
+    \end{claim}
+    \begin{proof}
+      Assume the set of all irrational real numbers $\mathbb{Q}^c$ is countable. By the definition of irrational numbers, $\mathbb{R} = \mathbb{Q} \cup \mathbb{Q}^c$. $\mathbb{Q}$ is countable by the Corollary of Theorem 2.13. Then, by Theorem 2.12, $\mathbb{R}$ is a union of two countable sets, and is therefore countable. However, this is a contradiction since $\mathbb{R}$ is uncountable by the Corollary of Theorem 2.43.
+    \end{proof}
+  \end{exercise}
+  %\begin{exercise}\label{2.5}
+  %  Construct a bounded set of real numbers with exactly three limit points.
+  %\end{exercise}
+  %\begin{exercise}\label{2.6}
+  %  Let $E'$ be the set of all limit points of a set $E$. Prove that $E'$ is closed. Prove that $E$ and $\overline{E}$ have the same limit points. Do $E$ and $E'$ always have the same limit points?
+  %\end{exercise}
+  %\begin{exercise}\label{2.7}
+  %  Let $A_1,A_2,A_3,\ldots$ be subsets of a metric space.
+  %  \begin{enumerate}
+  %    \item If $B_n = \bigcup_{i=1}^n A_i$, prove that $\overline{B}_n$ $= \bigcup_{i=1}^n \overline{A}_i$, for $n = 1, 2, 3, \ldots$.
+  %    \item If $B = \bigcup_{i=1}^\infty A_i$, prove that $\overline{B}_n \supset \bigcup_{i=1}^\infty \overline{A}_i$.
+  %  \end{enumerate}
+  %\end{exercise}
+  %\begin{exercise}\label{2.8}
+  %  Is every point of every open set $E \subset \mathbb{R}^2$ a limit point of $E$? Answer the same question for closed sets in $\mathbb{R}^2$.
+  %\end{exercise}
+  %\begin{exercise}\label{2.9}
+  %  Let $E^{\circ}$ denote the set of all interior points of a set $E$.
+  %  \begin{enum}
+  %    \item Prove that $E^{\circ}$ is always open.
+  %    \item Prove that $E$ is open if and only if $E^{\circ} = e$.
+  %    \item If $G \subset E$ and $G$ is open, prove that $G \subset E^{\circ}$.
+  %    \item Prove that the complement of $E^{\circ}$ is the closure of the complement of $E$.
+  %    \item Do $E$ and $\overline{E}$ always have the same interiors?
+  %    \item Do $E$ and $E^{\circ}$ always have the same closures?
+  %  \end{enum}
+  %\end{exercise}
+  \setcounter{exercise}{9}
+  \begin{exercise}\label{2.10}
+    Let $X$ be an infinite set. For $p \in X$ and $q \in X$, define
+    \begin{equation*}
+      d(p,q) = \begin{cases}
+        1 & (\mathrm{if}\ p \ne q)\\
+        0 & (\mathrm{if}\ p = q).
+      \end{cases}
+    \end{equation*}
+    Prove that this is a metric. Which subsets of the resulting metric space are open? Which are closed? Which are compact?
+    \begin{proof}[Proof that $d$ is a metric]
+      We must prove $d$ satisfies Definition 2.15. Let $p,r,q \in X$. $d$ satisfies Definition $2.15(a)$ by the definition of $d$ above, since $d(p,q) = 1 > 0$ when $p \ne q$, and $d(p,p) = 0$. $d$ satisfies Definition $2.15(b)$, because if $p = q$, $d(p,q) = d(q,p) = 0$, and if $p \ne q$, $d(p,q) = d(q,p) = 1$, as shown above. To prove $d$ satisfies Definition $2.15(c)$, we consider a few cases:
+      \begin{enumerate}
+        \item When $p = q = r$, $d(p,q) = 0$ and $d(p,r) + d(r,q) = 0$, so $d(p,q) = d(p,r) + d(r,q)$.
+        \item When $p = q$, but $p \ne r \ne q$, $d(p,q) = 0$ and $d(p,r) + d(r,q) = 2$, so $d(p,q) < d(p,r) + d(r,q)$.
+        \item When $p \ne q$, and $r$ is equal to either $p$ or $q$, $d(p,q) = 1$ and $d(p,r) + d(r,q) = 1$, so $d(p,q) = d(p,r) + d(r,q)$.
+        \item When $p \ne q \ne r \ne p$, $d(p,q) = 1$ and $d(p,r) + d(r,q) = 2$, so $d(p,q) < d(p,r) + d(r,q)$.
+      \end{enumerate}
+      Thus, $d(p,q) \le d(p,r) + d(r,q)$, and $d$ satisfies Definition $2.15(c)$.
+    \end{proof}
+    \begin{claim}
+      Every set $A \subset X$ is open and closed.
+    \end{claim}
+    \begin{proof}
+      Let $A \subset X$ be given. Then, $A$ is open because we can construct balls $B(x,r)$ around $x \in A$ with $r < 1$ such that $B(x,r) \subset A$. However, $A$ is also closed because we can apply the same argument to $A^c$ making $A^c$ open, and therefore $A$ would be closed by Theorem 2.23.
+    \end{proof}
+    \begin{claim}
+      Every finite set $A \subset X$ is compact. Every infinite set $A \subset X$ is not compact.
+    \end{claim}
+    \begin{proof}
+      Every finite set $A \subset X$ is compact by the notes under Definition 2.32. Every infinite set $A \subset X$ is not compact by Theorem 2.37, since there are no limit points in $A$ because for any $a \in A$, $B(a,r<1) \cap A = \emptyset$.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{12}
+  \begin{exercise}\label{2.13}
+    Construct a compact set of real numbers whose limit points form a countable set.
+    \begin{theorem}[Sequential Compactness]
+      If the metric space $X$ is separable, then $K \subset X$ is compact if and only if every sequence $\{x_n\} \subset K$ has a convergent subsequence that converges to an element of $K$. This property will be referred to as ``sequential compactness.''
+    \end{theorem}
+    \begin{proof}
+      First prove the compactness $K$ implies sequential compactness. Suppose not. Then, for every $k \in K$ we can find an $r_k > 0$ such that the ball centered at $k$ of radius $r_k$, $B(k,r_k)$, has only finitely many $x_n$'s. These balls form an open cover of $K$, and by the compactness of $K$, there is a finite subcover. This implies $\{x_n\}$ is a finite sequence, which is a contradiction.
+      \par Now prove sequential compactness implies compactness. There is a countable open cover of $K$, that is, $K \subset \bigcup_{j=1}^\infty U_j$, which is possible because $X$ is assumed to be separable, and therefore we can construct an open set $U_j$ which is a ball around every member of the countable subset of $K$ with radius $\delta > 0$, whose union forms an open cover of $K$. Suppose, to get a contradiction, that for every $N$, $K \nsubseteq \bigcup_{j=1}^N U_j$, which implies for every $N$ there is an $x_n \in K$ such that $x_n \notin \bigcup_{j=1}^N U_j$; $\{x_n\}$ forms an infinite sequence in $K$. By sequential compactness, there is a subsequence of this sequence $\{x_{nj}\}$ such that $x_{nj} \to x \in K$ as $j \to \infty$. This implies $x$ is a member of some set $U_{j0}$ which is part of the open cover of $K$. By the definition of convergence, this implies there is some $M$ such that $|x_{nm} - x| < \delta$ for $m > M$ with $\delta$ as given above, and therefore $x_{nm} \in U_{j0}$ for $m > M$. This is a contradiction, since $\{x_n\}$ was constructed such that all $x_n \notin \bigcup_{j=1}^N U_j$.
+    \end{proof}
+    \begin{claim}
+      Construct our set $X'$ as follows. First, let $X$ be defined as
+      \begin{equation*}
+        X = \left\{\frac{1}{2^j}\right\}^\infty_{j=1} \bigcup \left\{0\right\}.
+      \end{equation*}
+      Then let $X'$ be the union of $X$ and smaller versions of $X$ in between each $1/2^n$, i.e.:
+      \begin{equation*}
+        X' = X \bigcup^\infty_{n=1}\left\{\frac{1}{2^{m+n+1}}+\frac{1}{2^{n+1}}\right\}^\infty_{m=1}.
+      \end{equation*}
+      This $X'$ is our compact set of real numbers whose limit points form a countable set.
+    \end{claim}
+    \begin{proof}
+      The limit points of $X'$ form a countable set because by construction, the limit points are the points in $X$, which is countable since $j \in \mathbb{N}$.
+      \par Now prove $X'$ is compact. Given any sequence $\{x_i\} \subset X'$, every $x_i$ is within the neighborhood of the closest number in the set $X$. This implies there is a subsequence $\{x_{ik}\}$ that converges to itself (if it is constant), or to a member of $X$. By the Sequential Compactness Theorem, this implies compactness since $\mathbb{R}$ is separable.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{20}
+  \begin{exercise}\label{2.21}
+    Let $A$ and $B$ be separated subsets of some $\mathbb{R}^k$, suppose $\mathbf{a} \in A, \mathbf{b} \in B$, and define $\mathbf{p}(t) = (1-t)\mathbf{a} + t\mathbf{b}$ for $t \in \mathbb{R}^1$. Put $A_0 = \mathbf{p}^{-1}(A), B_0 = \mathbf{p}^{-1}(B)$.
+    \begin{enum}
+      \item Prove $A_0$ and $B_0$ are separated subsets of $\mathbb{R}^1$.
+      \item Prove that there exists $t_0 \in (0,1)$ such that $\mathbf{p}(t_0) \notin A \cup B$.
+      \item Prove that every convex subset of $\mathbb{R}^k$ is connected.
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      Assume not. Then, there is a $t$ such that $t \in A_0 \cap \overline{B}_0$. This means $\mathbf{p}(t) \in A \cap B$. But since $A$ and $B$ are separated subsets of $\mathbb{R}^k$, $\overline{A} \cap B = \emptyset = A \cap \overline{B}$, which contradicts that $\mathbf{p}(t) \in A \cap B$ since $\mathbf{p}(t)$ cannot be a member of the empty set.
+    \end{proof}
+    \begin{lemma}
+      If a set $X$ is path connected then it is connected.
+    \end{lemma}
+    \begin{proof}[Proof of Lemma]
+      The definition of path connectedness says there is a continuous map $f:[0,1] \rightarrow X$ where $f(0) = x, f(1) = y$ for any given $x,y \in X$. Suppose $X$ is not connected, and let $X = A \cup B$ where $A, B$ are disjoint open sets. Then let $x \in A$ and $y \in B$. Since $X = A \cup B$, $[0,1] = f^{-1}(A) \cup f^{-1}(B)$ by the continuity of $f$, and this would be a separation of $[0,1]$ because they are disjoint in $[0,1]$ and are open because the inverse image of an open set is open by Theorem 4.8, which is a contradiction since $[0,1]$ is connected.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      Assume there is no such point $t_0$. This would mean the function $\mathbf{p}(t)$ would be a continuous map where $\mathbf{p}(1) = a$ and $\mathbf{p}(0) = b$, and thus $A$ and $B$ are path connected. However, by our Lemma above above path connectedness implies connectedness, which contradicts that $A$ and $B$ are separated, so $t_0$ must exist.
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+      Let $X$ be a convex subset of $\mathbb{R}^k$, which means $\lambda \mathbf{x} + (1 - \lambda) \mathbf{y} \in X$ whenever $\mathbf{x} \in X, \mathbf{y} \in Y$, and $0 < \lambda < 1$. Assume it is not connected, which means $X = A \cup B$ where $A$ and $B$ are separated. Then, we can construct a function $\mathbf{p}(t) = \lambda \mathbf{x} + (1 - \lambda) \mathbf{y}$, where $\mathbf{x} \in A$ and $\mathbf{y} \in B$. However, from $(b)$, we know that there is some $\lambda \in (0,1)$ where $\mathbf{\lambda} \notin A \cup B$, which contradicts the fact that $X$ is convex. So, $X$ is connected.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{29}
+  \begin{exercise}\label{2.30}
+    Imitate the proof of Theorem $2.43$ to obtain the following result: If $\mathbb{R}^k = \bigcup_1^\infty F_n$, where each $F_n$ is a closed subset of $\mathbb{R}^k$, then at least one $F_n$ has a nonempty interior.
+    \begin{proof}
+      Assume all $F_n$ have empty interiors. We will construct a sequence $\{V_n\}$ of neighborhoods as follows. Let $V_1$ be any neighborhood of $x_1 \notin F_1$, where $V_1 \bigcap F_1 = \emptyset$. If $V_1$ consists of all $y \in \mathbb{R}^k$ such that $|y-x_1| < r$, the closure $\overline{V}_1$ of $V_1$ is the set of all $y \in \mathbb{R}^k$ such that $|y-x_1| \le r$. Suppose $V_n$ has been constructed so that $V_n \bigcap F_n = \emptyset$. Then, there is a neighborhood $V_{n+1}$ such that (i) $\overline{V}_{n+1} \subset V_n$, (ii) $x_n \notin F_{n+1}$, (iii) $V_{n+1} \bigcap F_{n+1} = \emptyset$. By (iii), $V_{n+1}$ satisfies our induction hypothesis, and the construction can proceed. Then, $\bigcap^\infty_{n=1} \overline{V}_n \neq \emptyset$ by our construction, and the points in $\overline{V}_n$ are not in $F_n$ for any $n$. However, $\overline{V}_n \subset \mathbb{R}^k$ for all $n$ which contradicts that all $F_n$ have empty interiors.
+    \end{proof}
+  \end{exercise}
+  \section{Numerical Sequences and Series}
+  \setcounter{exercise}{3}
+  \begin{exercise}\label{3.4}
+    Find the upper and lower limits of the sequence $\{s_n\}$ defined by
+    \begin{equation*}
+      s_1 = 0;\ s_{2m} = \frac{s_{2m-1}}{2};\ s_{2m+1} = \frac{1}{2} + s_{2m}.
+    \end{equation*}
+    \begin{claim}
+      $\{s_n\}$ has a lower limit of 0, and an upper limit of 1.
+    \end{claim}
+    \begin{proof}
+      By definition above, we can see that $\{s_n\} = \{0,0,1/2,1/4,3/4,3/8,\ldots\}$. We can then define this sequence discretely as two subsequences:
+      \begin{align*}
+        s_{2m-1} &= 1 - \frac{1}{2^{m-1}}\\
+        s_{2m} &= \frac{1}{2} - \frac{1}{2^m},
+      \end{align*}
+      where $m \ge 1$. Each of these subsequences is monotonic and nondecreasing, since the amount we subtract from 1 and $1/2$ respectively both tend to 0 as $m \to \infty$. We can then analyze the limits of each subsequence separately. For $s_{2m-1}$, we know its limit is its value as $m \rightarrow \infty$, which equals 1. For $s_{2m}$, we know its limit is its value as $m \rightarrow \infty$, which equals $\frac{1}{2}$. Thus, we know that for the original sequence $s_n$, its lower limit is $\frac{1}{2}$ (since any other subsequence of $s_n$ that differs from $\{s_{2m}\}$ and has infinite number of terms, has terms greater than $\frac{1}{2}$ as $n \rightarrow \infty$) and its upper limit is 1 (since any other subsequence of $s_n$ that differs from $s_{2m-1}$ and has infinite number of terms, has terms less than 1 as $n \rightarrow \infty$).
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{6}
+  \begin{exercise}\label{3.7}
+    Prove that the convergence of $\Sigma a_n$ implies the convergence of
+    \begin{equation*}
+      \sum \frac{\sqrt{a_n}}{n},
+    \end{equation*}
+    if $a_n \ge 0$.
+    \begin{proof}
+      Consider the terms of the sequence $\left\{\left(\sqrt{a_n} - 1/n\right)^2\right\}$:
+      \begin{align*}
+        \left(\sqrt{a_n} - \frac{1}{n}\right)^2 &\ge 0\\
+        a_n - 2 \frac{\sqrt{a_n}}{n} + \frac{1}{n^2} &\ge 0\\
+        a_n + \frac{1}{n^2} &\ge 2\frac{\sqrt{a_n}}{n}\\
+        \frac{a_n}{2} + \frac{1}{2n^2} &\ge \frac{\sqrt{a_n}}{n}.
+      \end{align*}
+      Since the sum of two convergent series is convergent, $\Sigma \sqrt{a_n}/n$ converges via the comparison test.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{3.8}
+    If $\Sigma a_n$ converges, and if $\{b_n\}$ is monotonic and bounded, prove that $\Sigma a_nb_n$ converges.
+    \begin{proof}
+      Let $\{A_n\} = \sum^n_{k=0} a_n$ if $n \ge 0, A_{-1} = 0$. Choose $M$ such that $M \ge A_n$ for all $n$. Given $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that $|b_p - b_q| < \epsilon/2M$ for $N < p < q$ since $\{b_n\}$ monotonic and bounded implies it is Cauchy. Then apply summation by parts:
+      \begin{align*}
+        \left| \sum^q_{n=p} a_nb_n \right| &= \left[
+        \begin{aligned}
+          &\left| \sum^{q-1}_{n=p} A_n(b_n - b_{n+1}) \right|\\
+          &\quad+ | A_qb_q - A_{p-1}b_p|
+        \end{aligned} \right]\\
+        &\le M\left[
+        \begin{aligned}
+          &\left| \sum^{q-1}_{n=p} (b_n - b_{n+1}) \right|\\
+          &\quad+ | b_q - b_p|
+        \end{aligned}\right]\\
+        &= M\left(|b_p-b_q| + |b_q-b_p|\right)\\
+        &= 2M|b_p-b_q| < \epsilon
+      \end{align*}
+      Thus, $\Sigma a_nb_n$ converges.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{15}
+  \begin{exercise}\label{3.16}
+    Fix a positive number $\alpha$. Choose $x_1 > \sqrt{\alpha}$, and define $x_2, x_3, x_4, \ldots$, by the recursion formula
+    \begin{equation}\label{3.16a}
+      x_{n+1} = \frac{1}{2} \left( x_n + \frac{\alpha}{x_n} \right)
+    \end{equation}
+    \begin{enum}
+      \item Prove that $\{x_n\}$ decreases monotonically and that $\lim x_n = \sqrt{\alpha}$.
+      \item Put $\epsilon_n = x_n - \sqrt{\alpha}$, and show that
+        \begin{equation*}
+          \epsilon_{n+1} = \frac{\epsilon_n^2}{2x_n} < \frac{\epsilon_n^2}{2\sqrt{\alpha}}
+        \end{equation*}
+        so that, setting $\beta = 2\sqrt{\alpha}$,
+        \begin{equation*}
+          \epsilon_{n+1} < \beta\left( \frac{\epsilon_1}{\beta} \right)^{2n} \quad (n = 1,2,3,\ldots).
+        \end{equation*}
+      \item If $\alpha = 3$ and $x_1 = 2$, show that $\frac{\epsilon_1}{\beta} < \frac{1}{10}$ and that therefore
+        \begin{equation*}
+          \epsilon_5 < 4 \cdot 10^{-16}, \quad \epsilon_6 < 4 \cdot 10^{-32}.
+        \end{equation*}
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      First, we show that $x_n > \sqrt{\alpha}$ for all $n$ by contradiction by assuming $x_{n+1} = \left( x_n + \alpha/x_n \right)/2 < \sqrt{\alpha}$. Then,
+      \begin{align*}
+        x_n + \frac{\alpha}{x_n} &< 2\sqrt{\alpha}\\
+        (x_n - \sqrt{\alpha})^2 &< 0,
+      \end{align*}
+      but this is a contradiction since a square of a real number is always greater than or equal to 0. So, $x_{n+1} > \sqrt{\alpha}$ for all $n$, and we already know $x_1 > \sqrt{\alpha}$, so $x_n > \sqrt{\alpha}$ for all $n$.
+      \par Next to show that $\{x_n\}$ decreases monotonically we have to show $x_n - x_{n+1} > 0$ for all $n$. So substituting in \eqref{3.16a}, we get
+      \begin{equation*}
+        x_n - x_{n+1} = x_n - \frac{1}{2}\left( x_n + \frac{\alpha}{x_n} \right)
+        = \frac{x_n^2 - \alpha}{2x_n},
+      \end{equation*}
+      and since $x_n > \sqrt{\alpha}$, we have \(x_n - x_{n+1} > 0\).
+      \par Next we know the limit of $\{x_n\}$ exists since it is monotonic and bounded since $x_n > \sqrt{\alpha}$. So, we know that $\lim x_n = \lim x_{n+1}$, and let $l$ equal this limit. Then, substituting into \eqref{3.16a},
+      \begin{align*}
+        l &= \frac{1}{2} \left( l + \frac{\alpha}{l} \right)\\
+        2l &= l + \frac{\alpha}{l} = \frac{\alpha}{l} = \sqrt{\alpha}.\qedhere
+      \end{align*}
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      Since $\epsilon_n = x_n - \sqrt{\alpha}$,
+      \begin{align*}
+        \epsilon_{n+1} &= x_{n+1} - \sqrt{\alpha}\\
+        &= \frac{1}{2}\left( x_n + \frac{\alpha}{x_n} \right) - \sqrt{\alpha}\\
+        &= \frac{x_n^2}{2x_n} + \frac{\alpha}{2x_n} - \frac{2x_n\sqrt{\alpha}}{2x_n}\\
+        &= \frac{(x_n - \sqrt{\alpha})^2}{2x_n}
+        = \frac{\epsilon_n^2}{2x_n}
+        < \frac{\epsilon_n^2}{2\sqrt{\alpha}}.
+      \end{align*}
+      Next, setting $\beta = 2\sqrt{\alpha}$, and when $n=1$,
+      \begin{equation*}
+        \epsilon_2 < \frac{\epsilon_1^2}{\beta} = \beta \left( \frac{\epsilon_1}{\beta} \right)^2.
+      \end{equation*}
+      Now suppose that $\epsilon_n < \beta\left(\epsilon_1/\beta \right)^{2^n}$. Then, for the case $n+1$,
+      \begin{equation*}
+        \epsilon_{n+1} < \frac{\epsilon_n^2}{\beta} = \beta \left( \frac{\epsilon_n}{\beta} \right)^2 < \beta\left( \frac{\epsilon_1}{\beta} \right)^{2^{n+1}},
+      \end{equation*}
+      and so our proof follows by induction since the inequality is satisfied for $n+1$.
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+      If $\alpha = 3$ and $x_1 = 2$, $\epsilon_1/\beta = (2 - \sqrt{3})/2\sqrt{3} = 1/\sqrt{3} - 1/2$. We have to prove this value is less than $1/10$:
+      \begin{align*}
+        \frac{1}{3} &< \frac{9}{25}\\
+        \frac{1}{\sqrt{3}} &< \frac{3}{5}\\
+        \frac{1}{\sqrt{3}} - \frac{1}{2} &< \frac{1}{10}.
+      \end{align*}
+      Next, since $3 < 4$, $\sqrt{3} < 2$, and so $\beta = 2\sqrt{3} < 4$. Then, for $n=4$ and $n=5$,
+      \begin{align*}
+        \epsilon_{5} &< \beta \left( \frac{1}{10} \right)^{2^4} < 4 \cdot 10^{-16},\\
+        \epsilon_{6} &< \beta \left( \frac{1}{10} \right)^{2^5} < 4 \cdot 10^{-32}.\qedhere
+      \end{align*}
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{20}
+  \begin{exercise}\label{3.21}
+    Prove the following analogue of Theorem $3.10(b)$: If ${E_n}$ is a sequence of closed nonempty and bounded sets in a \emph{complete} metric space $X$, if $E_n \supset E_{n+1}$, and if
+    \begin{equation*}
+      \lim_{n \rightarrow \infty} \mathrm{diam}\ E_n = 0
+    \end{equation*}
+    then $\bigcap^\infty_1 E_n$ consists of exactly one point.
+    \begin{proof}
+      Construct sequence $\{x_j\}$ such that $x_j \in E_n$ for $j = n$. Because of the limit above, $\{x_j\}$ is Cauchy by definition 3.9 in Rudin. This Cauchy sequence converges to a limit point since $X$ is complete, and this limit point must be in $E_n$ since $E_n$ is closed for all $n$. Inductively, this means the subsequence of $\{x_j\}$ that starts on $n$ must be contained in $E_n$, since that is how we constructed them. Now, as $n = j \rightarrow \infty$, $x_j \rightarrow x$, $x$ being the limit point of the Cauchy sequence, and $x \in E_n$. Since we constructed $\{x_j\}$ to be contained in every $E_n$ such that $n \le j$, $x \in \bigcap^\infty_1 E_n$. And because of the limit given, $E_n$ as $n \rightarrow \infty$ only contains the one point $x$ since the diameter goes to 0.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{3.22}
+    Suppose $X$ is a non\-empty complete metric space, and $\{G_n\}$ is a sequence of dense open subsets of $X$. Prove Baire's theorem, namely, that $\bigcap^\infty_1 G_n$ is not empty. (In fact, it is dense in $X$.)
+    \begin{proof}
+      We will construct a sequence $\{V_n\}$ of neighborhoods as follows. Let $V_1$ be any neighborhood of $x_1 \in G_0 \bigcap G_1$, which is possible since $G_0$ is a dense open subset of $X$ and $G_1$ is nonempty and open; their intersection is nonempty and also open, so we can construct a neighborhood inside of it. Suppose $V_n$ has been constructed such that $\overline{V}_n \subset \overline{V}_{n-1} \bigcap G_n$. Then, there is a neighborhood $V_{n+1}$ such that $\overline{V}_{n+1} \subset V_n \bigcap G_{n+1}$, an our induction can proceed. Then, if we take the sequence $\{\overline{V}_n\}$, we know that $\bigcap^\infty_1 \overline{V}_n$ contains a point $y$ by Exercise \ref{3.21} since $\overline{V}_n$ is closed and bounded for all $n$ and $X$ is complete. Since $\overline{V}_n \subset G_n$, we know that $y \in \bigcap^\infty_1 G_n$ by our construction and so $\bigcap^\infty_1 G_n \neq \emptyset$.
+    \end{proof}
+  \end{exercise}
+  \section{Continuity}
+  \begin{exercise}\label{4.1}
+    Suppose $f$ is a real function defined on $\mathbb{R}^1$ which satisfies
+    \begin{equation*}
+      \lim_{h \rightarrow 0} \left[ f\left(x+h\right) - f\left(x-h\right) \right] = 0
+    \end{equation*}
+    for every $x \in \mathbb{R}^1$. Does this imply that $f$ is continuous?
+    \begin{claim}
+      $f$ is not necessarily continuous.
+    \end{claim}
+    \begin{proof}
+      We can separate the equation into two limits to give:
+      \begin{equation*}
+        \lim_{h \rightarrow 0} f(x+h) = \lim_{h \rightarrow 0} f(x-h)
+      \end{equation*}
+      However, this does not imply continuity since $f(x)$ need not equal the limits on either side.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{2}
+  \begin{exercise}\label{4.3}
+    Let $f$ be a continuous real function on a metric space $X$. Let $Z(f)$ (the \emph{zero set} of $f$) be the set of all $p \in X$ at which $f(p) = 0$. Prove that $Z(f)$ is closed.
+    \begin{proof}
+      Let $A$ be the set of all $f(p)$ with $p \in Z(f)$. $A$ only contains 0, since that is how we defined $Z(f)$ above. Now consider $A^c$. This set is open since it is the union of two open sets, i.e. $A^c = (-\infty,0) \cup (0,\infty)$. Since $f$ is continuous, the set $B$ which maps onto $A^c$ is open in $X$. Since $Z(f) = B^c$, we know that $Z(f)$ is closed.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{5}
+  \begin{exercise}\label{4.6}
+    If $f$ is defined on $E$, the \emph{graph} of $f$ is the set of points $(x,f(x))$, for $x \in E$. Suppose $E$ is compact, and prove that $f$ is continuous on $E$ if and only if its graph is compact.
+    \begin{proof}
+      First prove that the continuity of $f$ implies the graph of $f$ is compact. Let $g(x) = (x,f(x))$. $g(x)$ is continuous since given $\epsilon > 0$ and $x \in E$, there exists $\delta > 0$ such that $d(x,y) < \delta$ implies $d(f(x),f(y)) < \epsilon / 2$ since $f(x)$ is continuous. In particular let $d(x,y) < \mathrm{min}(\delta,\epsilon/2)$. Then,
+      \begin{align*}
+        &d(g(x),g(y))\\
+        &\quad=((x,f(x),(y,f(y)))\\
+        &\quad\quad\le d((x,f(x)),(x,f(y)) + d((x,f(x)),(y,f(x))\\
+        &\quad\quad\quad\quad= d(f(x),f(y)) + d(x,y)\\
+        &\quad\quad\quad\quad\quad< \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.
+      \end{align*}
+      Thus, $g(x)$ is continuous. Since $E$ is compact and $g(x)$ is continuous, $g(E)$, the graph of $f$, is compact.
+      \par Now prove that the compactness of the graph of $f$ implies the continuity of $f$ on $E$. Let $g(x) = (x,f(x))$. We can construct a sequence $\{x_n\}$ where $x_n \in E$ for all $n \in \mathbb{N}$. We can also construct a sequence $\{(x_n,f(x_n))\}$ where $(x_n,f(x_n)) \in g(E)$ for all $n \in \mathbb{N}$. Now, without a loss generality, we can take subsequences of both $\{x_n\}$ and $\{x_n,f(x_n)\}$ such that both subsequences converge because $E$ and $g(E)$ are both compact. These subsequences converge to some point $x \in E$ and $(x,f(x)) \in g(E)$ respectively. Now we can consider only the second coordinate of $\{x_n,f(x_n)\}$, $\{f(x_n)\}$, which converges since this coordinate converges to point $f(x) \in f(E)$. Then, the continuity of $f(x)$ follows since for $\epsilon > 0$, we can find a $\delta > 0$ such that $|f(x_n) - f(x_m)| < \epsilon$ since $0 < |x_n - x_m| < \delta$ where $N=\mathrm{max}(N(\epsilon),N(\delta))$ and $n,m \ge N$. Thus, $f(x)$ is continuous.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{14}
+  \begin{exercise}\label{4.15}
+    Prove that every continuous open mapping of $\mathbb{R}^1$ into $\mathbb{R}^1$ is monotonic.
+    \begin{proof}
+      Let $f:\mathbb{R}^1 \rightarrow \mathbb{R}^1$ be a continuous open mapping. Assume it is not monotonic. Then, there exists two cases: there exist $x_1 < x_2 < x_3$ such that $f(x_1) < f(x_2)$ and $f(x_3) < f(x_2)$, or there exist $x_1 < x_2 < x_3$ such that $f(x_1) > f(x_2)$ and $f(x_3) > f(x_2)$.
+      \par Consider the first case. By the extreme value theorem, $f([x_1,x_3])$ has a maximum attained in this interval; since $f(x_1) < f(x_2)$ and $f(x_3) < f(x_2)$, this maximum is attained in the open interval $(x_1,x_3)$. Now assume that $f( (x_1,x_3) )$ forms an open set. However, this is a contradiction since if this set were open, we could draw a neighborhood around $f(x_2)$ that is contained in $f( (x_1,x_3) )$, but this means that there is a value of $f$ that is greater than $f(x_2)$ that is still in $f( (x_1,x_3) )$. This contradicts the fact that $f(x_2)$ was the maximum. So, the values for $f$ on the interval $(x_1,x_3)$ is not open, which contradicts that $f$ is an open mapping.
+      \par Consider the second case. By the extreme value theorem, $f([x_1,x_3])$ has a minimum attained in this interval; since $f(x_1) > f(x_2)$ and $f(x_3) > f(x_2)$, this minimum is attained in the open interval $(x_1,x_3)$. Now assume that $f( (x_1,x_3) )$ forms an open set. However, this is a contradiction since if this set were open, we could draw a neighborhood around $f(x_2)$ that is contained in $f( (x_1,x_3) )$, but this means that there is a value of $f$ that is less than $f(x_2)$ that is still in $f( (x_1,x_3) )$. This contradicts the fact that $f(x_2)$ was the minimum. So, the values for $f$ on the interval $(x_1,x_3)$ is not open, which contradicts that $f$ is an open mapping.
+      \par Thus, $f$ must be monotonic.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{19}
+  \begin{exercise}\label{4.20}
+    If $E$ is a nonempty subset of a metric space $X$, define the distance from $x \in X$ to $E$ by
+    \begin{equation*}
+      \rho_E(X) = \inf_{z \in E} d(x,z).
+    \end{equation*}
+    \begin{enum}
+      \item Prove that $\rho_E(x) = 0$ if and only if $x \in \overline{E}$.
+      \item Prove that $\rho_E$ is a uniformly continuous function on $X$, by showing that
+        \begin{equation*}
+          |\rho_E(x) - \rho_E(y)| \le d(x,y)
+        \end{equation*}
+        for all $x \in X$, $y \in X$.
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      First prove that $\rho_E(x) = 0$ if $x \in \overline{E}$. Since $E \subset X$, this means $x \in \overline{E} \subset X$. Then, since $x \in \overline{E}$, given $\epsilon > 0$ we can find a $z \in E$ such that $d(x,z) < \epsilon$. So, $\mathrm{inf}_{z \in E} d(x,z) = \rho_E(x) = 0$.
+      \par Now prove the converse, that if $\rho_E(x) = 0$, $x \in \overline{E}$. This means that $\mathrm{inf}_{z \in E} d(x,z) = 0$ which is only possible when $z = x$. However, for $z = x$, $x \in E$ must be true. Since $E \subset \overline{E}$, this also means $x \in \overline{E}$.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      From the definition of $\rho_E$, it follows that
+      \begin{equation*}
+        \rho_E(x) \le d(x,z) \le d(x,y) + d(y,z)
+      \end{equation*}
+      for any $z \in E$. Then,
+      \begin{align*}
+        \rho_E(x) &= \mathrm{inf}_{z \in E} d(x,z)\\
+        &\le \mathrm{inf}_{z \in E} (d(x,y)+d(y,z)) = d(x,y) + \rho_E(y),
+      \end{align*}
+      so
+      \begin{equation}\label{4.20a}
+        \rho_E(x) - \rho_E(y) \le d(x,y).
+      \end{equation}
+      Also,
+      \begin{equation*}
+        \rho_E(y) \le d(y,z) \le d(y,x) + d(x,z)
+      \end{equation*}
+      for any $z \in E$. Then,
+      \begin{align*}
+        \rho_E(y) &= \mathrm{inf}_{z \in E}(d(y,z))\\
+        &\le \mathrm{inf}_{z \in E}(d(x,y)+d(x,z)) = d(x,y) + \rho_E(x),
+      \end{align*}
+      so
+      \begin{equation}\label{4.20b}
+        \rho_E(y) - \rho_E(x) \le d(x,y).
+      \end{equation}
+      Since both \eqref{4.20a} and \eqref{4.20b} have to be true, it follows that
+      \begin{multline*}
+        \mathrm{max}\left( \rho_E(x) - \rho_E(y),\rho_E(y) - \rho_E(x)\right)\\
+        = |\rho_E(x) - \rho_E(y)| \le d(x,y)
+      \end{multline*}
+      \par Now prove that $\rho_E$ is a uniformly continuous on $X$. For every $\epsilon > 0$, let $\delta = \epsilon$, so $d(x,y) < \delta$ implies $d(x,y) < \epsilon$, so $|\rho_E(x) - \rho_E(y)| < d(x,y) < \epsilon$ for all $x,y \in X$. Thus, $\rho_E$ is uniformly continuous on $X$.
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{22}
+  \begin{exercise}\label{4.23}
+    A real-valued function $f$ defined in $(a,b)$ is said to be \emph{convex} if $f(\lambda x + (1-\lambda)y) \le \lambda f(x) + (1-\lambda)f(y)$ whenever $a < x < b, a < y < b, 0 < \lambda < 1$. Prove that every convex function is continuous. Prove that every increasing convex function of a convex function is convex.
+    \par If $f$ is convex in $(a,b)$ and if $a < s < t < u < b$, show that
+    \begin{equation*}
+      \frac{f(t)-f(s)}{t-s} \le \frac{f(u)-f(s)}{u-s} \le \frac{f(u)-f(t)}{u-t}.
+    \end{equation*}
+    \begin{lemma}
+      For a convex function $f$ over interval $(a,b)$, there can be no point $y$ such that $x < y < z$ where $x,y,z \in (a,b)$ and $f(x) < f(y)$ and $f(z) < f(y)$.
+    \end{lemma}
+    \begin{proof}
+      For this function $f$,
+      \begin{multline*}
+        (x-z)f(y) = (z-y)f(y) + (y-x)f(y)\\
+        > (z-y)f(x) + (y-x)f(x)
+      \end{multline*}
+      so
+      \begin{equation*}
+        f(y) > \frac{z-y}{z-x}f(x) + \frac{y-x}{z-x}f(x).
+      \end{equation*}
+      If $\lambda = (z-y)/(z-x)$, it is evidently in the interval $(0,1)$. Also, $\lambda x + (1 - \lambda)z = y$. This means
+      \begin{equation*}
+        f(\lambda x + (1-\lambda)z) > \lambda f(x) + (1-\lambda)f(z),
+      \end{equation*}
+      which contradicts that $f$ is convex.
+    \end{proof}
+    \begin{lemma}
+      For a convex function $f$ over interval $(a,b)$, the function is monotonic for some $\epsilon > 0$ on the interval $(x,x+\epsilon)$ for any $x \in (a,b)$.
+    \end{lemma}
+    \begin{proof}
+      Suppose not, and let the point $x$ be the point that makes the value of $f$ over this interval not monotone. From the previous proof, there must be some points $a,b,c \in (x,x+\epsilon)$ such that
+      \begin{gather*}
+        f(a) \le f(b) < f(c)
+        \intertext{or}
+        f(a) < f(b) \le f(c).
+      \end{gather*}
+      Put $0 < \epsilon' < a-x$, there must exist $a',b' \in (x,x+\epsilon')$ such that
+      \begin{align*}
+        f(a') \le f(b')\ &\text{and}\ f(c') < f(b'),\\
+        \intertext{or}
+        f(a') < f(b')\ &\text{and}\ f(c') \le f(b'),
+      \end{align*}
+      so that $f$ is not monotone in $(x,x+\epsilon')$. However, this gives for $b' < a < b$,
+      \begin{align*}
+        f(b') \le f(a)\ \text{and}\ f(a) > f(b),
+        \intertext{or}
+        f(b') < f(a)\ \text{and}\ f(a) \ge f(b),
+      \end{align*}
+      which forms a contradiction. Thus, $f$ must be monotonic on $(x,x+\epsilon)$.
+    \end{proof}
+    \begin{lemma}
+      A convex function $f$ over a monotone interval $(a,b)$ cannot have any simple discontinuities, and thus, cannot have any discontinuities.
+    \end{lemma}
+    \begin{proof}
+      Assume that $z$ produces a simple discontinuity at $f(z)$. First $f(z)$ must be defined since otherwise
+      \begin{equation*}
+        f(\lambda x + (1-\lambda)y) \le \lambda f(x) + (1-\lambda)f(y)
+      \end{equation*}
+      would not hold when $z = \lambda x + (1-\lambda)y$, which means $f(p)$ is defined on all $p \in (a,b)$. Since $f(z)$ is a simple discontinuity, therefore, either $f(z-) \ne f(z)$ or $f(z+) \ne f(z)$.
+      \par Now assume, without a loss of generality, that $f(z-) > f(z)$. Then, given $\epsilon > 0$ that is arbitrarily close to $0$ we can construct $\lambda f(z-\epsilon) + (1-\lambda)f(z)$. However, for $f(\lambda x + (1-\lambda)y)$, when $z - \epsilon = \lambda x + (1-\lambda)y$ and $\epsilon \rightarrow 0$, $\lambda \rightarrow 0$, 
+      \begin{multline*}
+        f(\lambda x + (1-\lambda)y) = f(z-\epsilon) = f(z-)\\
+        > f(z) = \lambda f(z-\epsilon) + (1-\lambda)f(z),
+      \end{multline*}
+      which contradicts the convexity of $f$. The other cases, for $f(z-) < f(z)$, $f(z+) > f(z)$, $f(z+) < f(z)$ follow by the same argument. Thus, monotonic subintervals of a convex function $f$ must not have any simple discontinuities, and therefore, discontinuities in general since monotonic functions can only have simple discontinuities.
+    \end{proof}
+    \begin{proof}[Proof of $(a)$]
+      Since the monontonic sub\-in\-ter\-vals of $f$ are continuous since $f$ itself has no discontinuities, then $f$ is continuous.
+    \end{proof}
+    \begin{proof}[Proof of $(b)$]
+      Let $f(x), g(x)$ be increasing and convex. Then, for $f(x)$,
+      \begin{equation*}
+        f(\lambda x + (1-\lambda) y) \le \lambda f(x) + (1-\lambda)f(y).
+      \end{equation*}
+      Since $g(x)$ is increasing, we can say
+      \begin{equation*}
+        g(f(\lambda x + (1-\lambda) y))
+        \le g(\lambda f(x) + (1-\lambda)f(y)).
+      \end{equation*}
+      Also, since $g(x)$ itself is convex, we can say
+      \begin{equation*}
+        g(\lambda f(x) + (1-\lambda) g(y))
+        \le \lambda g(f(x)) + (1-\lambda)g(f(y)).
+      \end{equation*}
+      Therefore,
+      \begin{equation*}
+        g(f(\lambda x + (1-\lambda) y))
+        \le \lambda g(f(x)) + (1-\lambda)g(f(y)),
+      \end{equation*}
+      and $g(f(x))$ is convex.
+    \end{proof}
+    \begin{proof}[Proof of $(c)$]
+      For the first inequality, let $\lambda = (u-t)/(u-s)$. Because of the convexity of $f$ we can say that:
+      \begin{align*}
+        f(t) - f(s) &\le (1-\lambda)\left(f(u)-f(s)\right)\\
+        &\quad= \frac{t-s}{u-s} \left( f(u) - f(s) \right)
+      \end{align*}
+      so
+      \begin{equation*}
+        \frac{f(t) - f(s)}{t-s} \le \frac{f(u) - f(s)}{u-s},
+      \end{equation*}
+      and we have the first inequality. Then, for the second one let $t = \lambda s + (1-\lambda) u$. Then, from the convexity of $f$:
+      \begin{gather*}
+        f(t) \le \frac{u-t}{u-s}f(s) + \left(1 - \frac{u-t}{u-s}\right) f(u)\\
+        \frac{f(t)}{u-t} \le \frac{f(s)}{u-s} - \frac{f(u)}{u-s}+ \frac{f(u)}{u-t}\\
+        \frac{f(u)-f(s)}{u-s} \le \frac{f(u)-f(t)}{u-t},
+      \end{gather*}
+      and we have the second inequality.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Assume that $f$ is a continuous real function defined in $(a,b)$ such that
+    \begin{equation*}
+      f\left(\frac{x+y}{2}\right) \le \frac{f(x)+f(y)}{2}
+    \end{equation*}
+    for all $x,y \in (a,b)$. Prove that $f$ is convex.
+    \begin{proof}
+      Suppose that $f$ is not convex. Then, for $a < x < b, a < y < b, 0 < \lambda < 1$, $f(f(\lambda x + (1-\lambda)y) > \lambda f(x) + (1-\lambda)f(y))$ by the definition of convex. Let $z = \lambda x + (1-\lambda)y$. Assume, without a loss of generality, that $x < y$. Then construct $A=\{p\in[x,z):f(p) = \lambda x + (1-\lambda)y\}$. By construction, $A$ is bounded by $x$ below and $z$ above, and $f(x) \le \lambda x + (1-\lambda)y < f(z)$ implies that $A$ is not empty from the Intermediate Value Theorem since $f$ is continuous. The boundedness of $A$ means that we can let $\alpha = \mathrm{sup} A$. Now construct $B=\{p\in(z,y]:f(p) = \lambda x + (1-\lambda)y\}$. By construction, $B$ is bounded by $z$ below and $y$ above, and $f(z) < \lambda x + (1-\lambda)y \le f(x)$ implies that $B$ is not empty from the Intermediate Value Theorem since $f$ is continuous. The boundedness of $B$ means that we can let $\beta = \mathrm{sup} B$. Next, by construction, we also know that $\alpha \le z \le \beta$. However, we know that both $\alpha = z$ and $\beta = z$ cannot be true because then we would have a simple discontinuity at $z$, which contradicts that $f$ is continuous. So, $\alpha < z < \beta$. By construction, we can then say that for all $c \in (\alpha,\beta)$, $f(c) > \lambda f(\alpha) + (1-\lambda)f(\beta)$. Specifically for $\lambda = 1/2$, for all $c \in (\alpha,\beta)$, $f(c) > (f(\alpha) + f(\beta))/2$. However, this is a contradiction since the values of $f$ over an interval cannot be strictly greater than the average value of $f$ over this interval since $f$ is continuous. Therefore, $f$ must be convex.
+    \end{proof}
+  \end{exercise}
+  \section{Differentiation}
+  \section{The Riemann-Stieltjes Integral}
+  \begin{exercise}\label{6.1}
+    Suppose $\alpha$ increases on $[a,b]$, $a \le x_0 \le b$, $\alpha$ is continuous at $x_0$, $f(x_0) = 1$, and $f(x) = 0$ if $x \ne x_0$. Prove that $f \in \mathscr{R}(\alpha)$ and that $\int f d\alpha = 0$.
+    \begin{proof}[Proof that $f \in \mathscr{R}(\alpha)$]
+      Since $0 \le f \le 1$ on $[a,b]$, and $\alpha$ is continuous at the one discontinuity of $f$ (at $x_0$), $f \in \mathscr{R}(\alpha)$ by Theorem 6.10.
+    \end{proof}
+    \begin{proof}[Proof that $\int f d\alpha = 0$]
+      Let our partition $P = {x_1,\ldots,x_n}$ be such that $x_0 \in (x_{j-1},x_j)$ for some $j \le n$, and every $x_i$ is distinct. Then, by Definition 6.2,
+      \begin{align*}
+        L(P,f,\alpha) &= \sum_{i=1}^n m_i \Delta \alpha_i = 0,
+      \end{align*}
+      where $m_i$ is as defined by Definition 6.1, since the $\inf$ over any interval of $f$ is 0. Since $f \in \mathscr{R}(\alpha)$ by the proof above, $\int f d\alpha = L(P,f,\alpha) = 0$ by Definition 6.2.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{6.2}
+    Suppose $f \ge 0$, $f$ is continuous on $[a,b]$, and $\int_a^b f(x) dx = 0$. Prove that $f(x) = 0$ for all $x \in [a,b]$.
+    \begin{proof}
+      Suppose, to get a contradiction, that $f(x_0) > 0$ for some $x_0 \in [a,b]$. By the definition of continuity, given $0 < \epsilon < f(x_0)$, there is an interval $(x_0-\delta,x_0+\delta)$ such that $f > 0$ on this interval. Then, by Theorem $6.12(c)$,
+      \begin{equation*}
+        \int_a^b f(x) dx = \left(
+        \begin{aligned}
+          &\int_a^{x_0-\delta} f(x) dx\\
+          &+ \int_{x_0-\delta}^{x_0+\delta} f(x) dx\\
+          &\quad + \int_{x_0+\delta}^b f(x) dx
+        \end{aligned} \right)
+        > 0
+      \end{equation*}
+      since $\int_{x_0-\delta}^{x_0+\delta} f(x) dx \ge (f(x_0) - \epsilon)\delta > 0$ by our choice of $\epsilon$ and Definition 6.1, which is a contradiction.
+    \end{proof}
+    \begin{remark}
+      Exercise \ref{6.1} above shows that $\int_a^b f(x) d\alpha$ can be 0 even if $f(x) \ne 0$ for some $x \in [a,b]$, but only when $f$ is discontinuous, since the continuity of $f$ would make $\int_a^b f(x) d\alpha \ne 0$ by Exercise \ref{6.2}.
+    \end{remark}
+  \end{exercise}
+  \begin{exercise}\label{6.3}
+    Define three functions $\beta_1$, $\beta_2$, $\beta_3$ as follows: $\beta_j(x) = 0$ if $x < 0$, $\beta_j(x) = 1$ if $x > 0$ for $j = 1, 2, 3$; and $\beta_1(0) = 0$, $\beta_2(0) = 1$, $\beta_3(0) = \frac{1}{2}$. Let $f$ be a bounded function on $[-1,1]$.
+    \begin{enum}
+      \item Prove that $f \in \mathscr{R}(\beta_1)$ if and only if $f(0+) = f(0)$ and that then
+        \begin{equation*}
+          \int f d\beta_1 = f(0).
+        \end{equation*}
+      \item State and prove a similar result for $\beta_2$.
+      \item Prove that $f \in \mathscr{R}(\beta_3)$ if and only if $f$ is continuous at 0.
+      \item If $f$ is continuous at 0 prove that
+        \begin{equation*}
+          \int f d\beta_1 = \int f d\beta_2 = \int f d\beta_3 = f(0).
+        \end{equation*}
+    \end{enum}
+    \begin{proof}[Proof of $(a)$]
+      Let our partition $P$ include the point $x_{j-1} = 0$ and put $\delta = x_j - x_{j-1}$. By Definition 6.1,
+      \begin{align*}
+        U(P,f,\beta_1) &= \sup_{x \in [0,\delta]} f(x)\\
+        L(P,f,\beta_1) &= \inf_{x \in [0,\delta]} f(x)
+      \end{align*}
+      since $\Delta\beta_1 = 1$ on the interval $[0,\delta]$, and 0 otherwise.
+      \par If we assume $f \in \mathscr{R}(\beta_1)$, then given $\epsilon > 0$, we can find a refinement $P^*$ with a value of $x_j = \delta$ such that
+      \begin{equation*}
+        \sup_{x \in [0,\delta]} f(x) - \inf_{x \in [0,\delta]} f(x) < \epsilon,
+      \end{equation*}
+      by Theorem 6.6. Since $|f(0) - f(\delta)| \le \sup f(x) - \inf f(x)$ over this interval,
+      \begin{equation*}
+        |f(0) - f(\delta)| < \epsilon,
+      \end{equation*}
+      and so $f(0+) = f(0)$ since $\epsilon$ is arbitrary.
+      \par If we assume $f(0+) = f(0)$, then given $\epsilon > 0$, we can find a $\delta > 0$ such that
+      \begin{equation*}
+        |f(x) - f(0)| < \epsilon,
+      \end{equation*}
+      for $0 < x < \delta$, so $f$ is continuous at $x = 0$, and therefore $\int_0^\delta f d\beta_1$ exists. Since $\int f d\beta_1 = 0$ for any other subinterval of $\mathbb{R}$, $f \in \mathscr{R}(\beta_1)$.
+      \par Now evaluate $\int f d\beta_1$. Since $f \in \mathscr{R}(\beta_1)$,
+      \begin{equation*}
+        \int f d\beta_1 = \sup_{x \in [0,\delta]} f(x) = \inf_{x \in [0,\delta]} f(x),
+      \end{equation*}
+      and since $f(0+) = f(0)$,
+      \begin{equation*}
+        \int f d\beta_1 = f(0).\qedhere
+      \end{equation*}
+    \end{proof}
+    \begin{claim}[$b$]
+      $f \in \mathscr{R}(\beta_2)$ if and only if $f(0-) = f(0)$ and
+      \begin{equation*}
+        \int f d\beta_2 = f(0).
+      \end{equation*}
+    \end{claim}
+    \begin{proof}[Proof of $(b)$]
+      Let our partition $P$ include the point $x_{j+1} = 0$ and put $\delta = x_j - x_{j+1}$. By Definition 6.1,
+      \begin{align*}
+        U(P,f,\beta_2) &= \sup_{x \in [\delta,0]} f(x)\\
+        L(P,f,\beta_2) &= \inf_{x \in [\delta,0]} f(x)
+      \end{align*}
+      since $\Delta\beta_2 = 1$ on the interval $[\delta,0]$, and 0 otherwise.
+      \par If we assume $f \in \mathscr{R}(\beta_2)$, then given $\epsilon > 0$, we can find a refinement $P^*$ with a value of $x_j = \delta$ such that
+      \begin{equation*}
+        \sup_{x \in [\delta,0]} f(x) - \inf_{x \in [\delta,0]} f(x) < \epsilon,
+      \end{equation*}
+      by Theorem 6.6. Since $|f(0) - f(\delta)| \le \sup f(x) - \inf f(x)$ over this interval,
+      \begin{equation*}
+        |f(0) - f(\delta)| < \epsilon,
+      \end{equation*}
+      and so $f(0-) = f(0)$ since $\epsilon$ is arbitrary.
+      \par If we assume $f(0-) = f(0)$, then given $\epsilon > 0$, we can find a $\delta < 0$ such that
+      \begin{equation*}
+        |f(\delta) - f(0)| < \epsilon,
+      \end{equation*}
+      so $f$ is continuous at $x = 0$, and therefore $\int_\delta^0 f d\beta_2$ exists. Since $\int f d\beta_2 = 0$ for any other subinterval of $\mathbb{R}$, $f \in \mathscr{R}(\beta_2)$.
+      \par Now evaluate $\int f d\beta_2$. Since $f \in \mathscr{R}(\beta_2)$,
+      \begin{equation*}
+        \int f d\beta_1 = \sup_{x \in [\delta,0]} f(x) = \inf_{x \in [\delta,0]} f(x),
+      \end{equation*}
+      and since $f(0-) = f(0)$,
+      \begin{equation*}
+        \int f d\beta_1 = f(0).\qedhere
+      \end{equation*}
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{3}
+  \begin{exercise}\label{6.4}
+    If $f(x) = 0$ for all irrational $x$, $f(x) = 1$ for all rational $x$, prove that $f \notin \mathscr{R}$ on $[a,b]$ for any $a < b$.
+    \begin{proof}
+      Let our partition $P$ be as follows
+      \begin{equation*}
+        P = \{a=x_1,x_2,\ldots,x_{n-1},x_n = b\}
+      \end{equation*}
+      where $x_{n-1} < x_n$ for all $n$. Then,
+      \begin{align*}
+        U(P,f,\alpha) &= \sum_{i=1}^n M_i \Delta \alpha_i = b-a,\\
+        L(P,f,\alpha) &= \sum_{i=1}^n m_i \Delta \alpha_i = 0,
+      \end{align*}
+      for $P$, and all refinements of $P$, since both the rationals and the irrationals are dense in $\mathbb{R}$, and therefore any subinterval of $[a,b]$ would contain both a rational and an irrational.
+    \end{proof}
+  \end{exercise}
+  \section{Sequences and Series of Functions}
+  \section{Some Special Functions}
+  \setcounter{exercise}{12}\label{8.13}
+  \begin{exercise}\label{9.13}
+    Put $f(x) = x$ if $0 \le x < 2\pi$, and apply Parseval's theorem to conclude that
+    \begin{equation*}
+      \sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}.
+    \end{equation*}
+    \begin{proof}
+      First find the Fourier coefficients $c_n$ for $f$. For $n \ne 0$, using integration by parts,
+      \begin{align*}
+        c_n &= \frac{1}{2\pi} \int_0^{2\pi} f(x) e^{-inx} dx\\
+        &= \frac{1}{2\pi} \left( 2\pi \frac{e^{-2\pi in}}{-in} - \int_0^{2\pi} \frac{e^{-inx}}{-in} dx \right) = \frac{i}{n}.
+      \end{align*}
+      Then, for $n = 0$,
+      \begin{equation*}
+        c_0 = \frac{1}{2\pi} \int_0^{2\pi} f(x) dx = \pi.
+      \end{equation*}
+      Now apply Parseval's theorem. This gives us the equation:
+      \begin{align*}
+        \frac{1}{2\pi} \int_0^{2\pi} |f(x)| dx &= \sum_{-\infty}^\infty |c_n|^2\\
+        \frac{4\pi^2}{3} &= \sum_{|n| \ne 0} \frac{1}{n^2} + \pi^2\\
+        \frac{\pi^2}{6} &= \sum_{n = 1}^\infty \frac{1}{n^2}.\qedhere
+      \end{align*} 
+    \end{proof}
+  \end{exercise}
+  \setcounter{exercise}{27}
+  \begin{exercise}\label{8.28}
+    Let $\overline{D}$ be the closed unit disc in the complex plane. Let $g$ be a continuous mapping of $\overline{D}$ into the unit circle $T$. Prove that $g(z) = -z$ for at least one $z \in T$.
+    \begin{proof}
+      For $0 \le r \le 1,0 \le t \le 2\pi$, put $\psi_r(t) = e^{-it}g(re^{it})$ for $0 \le r \le 1$. $\psi_r(t) \ne 0$ for all $t \in [0,2\pi)$. Now assume, to get a contradiction, that $g(z) \ne -z$ for all $z \in T$. Then, $\psi_1{t} \ne -1$ for all $t \in [0,2\pi)$, since otherwise $g(e^{it}) = -e^{it}$. So the winding number of $\psi_1$ with respect to the origin is 0. However, the winding number of $\psi_0$ is $-1$. Since $\psi_r(t)$ and therefore the winding number of $\psi_r$ are continuous with respect to $r$, but the winding number has to be an integer, this is a contradiction. Thus, $g(z) = -z$ for some $z \in T$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{8.29}
+    Prove that every continuous mapping $f$ of $\overline{D}$ into $\overline{D}$ has a fixed point in $\overline{D}$.
+    \begin{proof}
+      Assume, to get a contradiction, that $f(z) \ne z$ for every $z \in \overline{D}$. Now associate to each $z \in \overline{D}$ the point $g(z) \in T$ which lies on the ray that starts at $f(z)$ and passes through $z$. Then, $g$ is continuous because
+      \begin{equation*}
+        g(z) = z - s(z) \{ f(z) - z \}
+      \end{equation*}
+      where $s(z)$ is the nonnegative root of $-1 + |z|^2 + 2t(z(f(z)-z)) + |f(z) - z|^2t^2$, which corresponds to the value of $t$ at which the ray starting from $z$ intersects $T$. $g$ is continuous because because $f$ is, and therefore also $s(z)$, since its denominator $2|f(z) - z|^2$ is never 0. By construction, $g(z) = z$ for all $z \in T$. Then, by Exercise \ref{8.28} there exists a $z$ such that $g(z) = -z$; however, this contradicts that $g(z) = z$ if $z \in T$. Thus, $f(z) = z$ for at least 1 value of $z \in \overline{D}$.
+    \end{proof}
+  \end{exercise}
+  \section{Functions of Several Variables}
+  \section{Integration of Differential Forms}
+  \section{The Lebesgue Theory}
+  \begin{exercise}\label{11.1}
+    If $f \ge 0$ and $\int_E f\,d\mu = 0$, prove that $f(x) = 0$ almost
+    everywhere on $E$.
+    \begin{proof}
+      Let $E_n = \{ x \in E \mid f(x) > 1/n \}$, and write $A = \bigcup E_n$.
+      We want to show $\mu(A)= 0$. Now $\mu(A) = 0$ if and only if
+      $\mu(E_n) = 0$ for all $n$: the forward direction is clear since $E_n
+      \subset A$, and by monotonicity $(8)$, and the converse is Theorem
+      $11.8(b)$. Now $f(x) = 0$ if and only if $\mu(A) = 0$, which is equivalent
+      to $\mu(E_n) = 0$ for all $n$. But this is equivalent to having
+      $\int_{E_n} f\,d\mu = 0$ for all $n$, which is in turn equivalent to
+      having $\int_E f \,d\mu = 0$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}\label{11.2}
+    If $\int_A f\,d\mu = 0$ for every measurable subset $A$ of a measurable set
+    $E$, then $f(x) = 0$ almost everywhere on $E$.
+    \begin{proof}
+      Let $f(x) \ge 0$ on a measurable set $A$ and $f(x) \le 0$ on a measurable set
+      $B$. Then, by Exercise \ref{11.1}, after restriction to $A$ and $B$,
+      we see $f(x) = 0$ almost everywhere in $A$ and $B$, hence almost everywhere
+      in $E$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    If $\{f_n\}$ is a sequence of measurable functions, prove that the set of
+    points $x$ at which $\{f_n(x)\}$ converges is measurable.
+    \begin{proof}
+      We can write this set as
+      \begin{equation*}
+        \bigcap_{k=1}^\infty \bigcup_{N=1}^\infty \bigcap_{m,n \ge N}
+        \{x \in E \mid \lvert f_m(x) - f_n(x) \rvert < 1/k\}.\qedhere
+      \end{equation*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    If $f \in \mathscr{L}(\mu)$ on $E$ and $g$ is bounded and measurable on $E$,
+    then $fg \in \mathscr{L}(\mu)$ on $E$.
+    \begin{proof}
+      If $\lvert g(x) \rvert \le M$ for all $x$,
+      then $\int_E \lvert fg \rvert\,d\mu \le M\int_E \lvert
+      f \rvert\,d\mu < \infty$ so $fg \in \mathscr{L}(\mu)$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Put
+    \begin{align*}
+      g(x) &= \begin{cases}
+        0 & \qquad(0 \le x \le \frac{1}{2}),\\
+        1 & \qquad(\frac{1}{2} < x \le 1),
+      \end{cases}\\
+      f_{2k}(x) &= g(x) \quad\quad\quad\!\!\!(0 \le x \le 1),\\
+      f_{2k+1}(x) &= g(1-x) \!\quad (0 \le x \le 1).
+    \end{align*}
+    Show that
+    \begin{equation*}
+      \liminf_{n \to \infty} f_n(x) = 0 \quad (0 \le x \le 1),
+    \end{equation*}
+    but
+    \begin{equation*}
+      \int_0^1 f_n(x)\,dx = \frac{1}{2}.
+    \end{equation*}
+    \begin{proof}
+      $\liminf_{n \to \infty} f_n(x) = 0$ since for any $N$ and any $x \in E$,
+      either $f_{2k}(x) = 0$ or $f_{2k+1}(x) = 0$ for all $2k+1 \ge N$. On the
+      other hand, $\int_0^1 f_n(x)\,dx = \int_0^1 g(x)\,dx = \frac{1}{2}$ by
+      construction.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let
+    \begin{equation*}
+      f_n(x) = \begin{cases}
+        \dfrac{1}{n} & (\lvert x \rvert \le n),\\
+        0 & (\lvert x \rvert > n).
+      \end{cases}
+    \end{equation*}
+    Then $f_n(x) \to 0$ uniformly on $R^1$, but
+    \begin{equation*}
+      \int_{-\infty}^\infty f_n\,dx = 2 \quad (n = 1,2,3,\ldots).
+    \end{equation*}
+    \begin{proof}
+      The integral being $2$ is obvious. For uniform convergence, note that
+      given any $\epsilon > 0$, letting $N$ be such that $1/N < \epsilon$, we
+      have that $\lvert f_n(x) - f_m(x) \rvert < 1/N$ for any $m,n \ge N$ and
+      $x \in E$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Find a necessary and sufficient condition that $f \in \mathscr{R}(\alpha)$
+    on $[a,b]$.
+    \begin{claim}
+      Suppose $f \in \mathscr{R}(\alpha)$ is bounded. Then $f \in
+      \mathscr{R}(\alpha)$ on $[a,b]$ if and only if it is continuous
+      $\alpha$-almost everywhere on $[a,b]$.
+    \end{claim}
+    \begin{proof}
+      The proof is identical to Theorem $11.33$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    If $f \in \mathscr{R}$ on $[a,b]$ and if $F(x) = \int_a^x f(t)\,dt$, prove
+    that $F'(x) = f(x)$ almost everywhere on $[a,b]$.
+    \begin{proof}
+      This follows by Theorem $11.33$ since $f$ is continuous almost everywhere
+      on $[a,b]$, so by Theorem $6.20$, $F$ is differentiable almost everywhere,
+      and $F'(x) = f(x)$ at those points.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Prove that the function $F$ given by $(96)$ is continuous on $[a,b]$.
+    \begin{proof}
+      Let $\varphi$ be a simple function such that $\int_a^b \lvert F - \varphi
+      \rvert < \epsilon/2$. Then the function $\Phi = \int_a^x \phi\,dt$ is
+      continuous on $[a,b]$ by Theorem $6.20$ since $\varphi \in \mathscr{R}$.
+      Now, if $y$ is such that $\lvert\Phi(y) - \Phi(x)\rvert < \epsilon/2$,
+      then
+      \begin{align*}
+        &\lvert F(y) - F(x) \rvert\\
+        &\qquad= \left\lvert F(y) - \Phi(y) + \Phi(y) - \Phi(x) + F(x)
+        \right\rvert\\
+        &\qquad< \int_x^y \lvert f(t) - \phi(t) \rvert\,dt + \epsilon/2 \le
+        \epsilon.\qedhere
+      \end{align*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    If $\mu(X) < +\infty$ and $f \in \mathscr{L}^2(\mu)$ on $X$, prove that $f
+    \in \mathscr{L}(\mu)$ on $X$. If
+    \begin{equation*}
+      \mu(X) = +\infty,
+    \end{equation*}
+    this is false. For instance, if
+    \begin{equation*}
+      f(x) = \frac{1}{1+\lvert x \rvert},
+    \end{equation*}
+    then $f \in \mathscr{L}^2$ on $R^1$, but $f \notin \mathscr{L}$ on $R^1$.
+    \begin{proof}
+      We have, by Theorem $11.35$,
+      \begin{equation*}
+        \int_X \lvert f \rvert\,d\mu \le \lVert f \rVert \cdot \lVert 1 \rVert =
+        \lVert f \rVert \mu(X) < \infty.\qedhere
+      \end{equation*}
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    If $f,g \in \mathscr{L}(\mu)$, define the distance between $f$ and $g$ by
+    \begin{equation*}
+      \int_X \lvert f - g \rvert \, d\mu.
+    \end{equation*}
+    Prove that $\mathscr{L}(\mu)$ is a complete metric space.
+    \begin{proof}
+      Let $\{f_n\}$ be a Cauchy sequence, and $f$ the function constructed from
+      a subsequence $\{f_{n_k}\}$ as in the proof of Theorem $11.42$. We want to
+      first show $f - f_{n_k} \in \mathscr{L}(\mu)$ for $k$ large enough. Let
+      $N$ such that $\int_X \lvert f_n - f_m \rvert < \epsilon$ for all $n,m \ge 
+      N$. Then, if $n_k > N$, by Fatou's theorem (Theorem $11.31$),
+      \begin{equation*}
+        \int_X \lvert f - f_{n_k} \rvert\,d\mu \le \liminf_{i \to \infty}
+        \int_X \lvert f_{n_i} - f_{n_k} \rvert\,d\mu < \epsilon.
+      \end{equation*}
+      Thus, $f - f_{n_k} \in \mathscr{L}(\mu)$ and so $f$ is as well. Moreover,
+      since $\epsilon$ was arbitrary, we see
+      \[\lim_{k \to \infty} \int_X \lvert f - f_{n_k} \rvert\,d\mu = 0.\]
+      We finally know $\{f_n\}$ converges to $f$ in $\mathscr{L}(\mu)$ since
+      \begin{equation*}
+        \int_X \lvert f - f_n \rvert\,d\mu \le \int_X \lvert f - f_{n_k}
+        \rvert\,d\mu + \int_X \lvert f_{n_k} - f_n \rvert\,d\mu,
+      \end{equation*}
+      and both terms on the right hand side can be made arbitrarily small.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose
+    \begin{enum}
+      \item $\lvert f(x,y) \rvert \le 1$ if $0 \le x \le 1$, $0 \le y \le 1$,
+      \item for fixed $x$, $f(x,y)$ is a continuous function of $y$,
+      \item for fixed $y$, $f(x,y)$ is a continuous function of $x$.
+    \end{enum}
+    Put
+    \begin{equation*}
+      g(x) = \int_0^1 f(x,y)\,dy \qquad (0 \le x \le 1).
+    \end{equation*}
+    Is $g$ continuous?
+    \begin{proof}
+      We have, for any sequence $x_n \to x$,
+      \begin{equation*}
+        g(x_n) = \int_0^1 f(x_n,y)\,dy.
+      \end{equation*}
+      By $(a)$, the dominated convergence theorem applies, giving
+      \begin{multline*}
+        \lim_{n \to \infty} g(x_n) = \int_0^1 \lim_{n\to\infty}f(x_n,y)\,dy\\
+        = \int_0^1 f(x,y)\,dy = g(x),
+      \end{multline*}
+      i.e., $g$ is continuous.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Consider the functions
+    \[ f_n(x) = \sin nx \quad (n = 1,2,3,\ldots,\ -\pi \le x \le \pi) \]
+    as points of $\mathscr{L}^2$. Prove that the set of these points is closed
+    and bounded, but not compact.
+    \begin{proof}
+      We have
+      \begin{align*}
+        \lVert f_n \rVert = \int_{-\pi}^\pi \sin^2(nx)\,dx
+        &= \frac{1}{n} \int_{-n\pi}^{n\pi} \sin^2(u)\,du\\
+        &= \int_{-\pi}^\pi \sin^2(u)\,du = \pi.
+      \end{align*}
+      Moreover,
+      \begin{align*}
+        &\lVert f_n - f_m \rVert\\
+        &\quad= \int_{-\pi}^\pi (f_n - f_m)^2\,dx\\
+        &\quad= \lVert f_n \rVert + \lVert f_m \rVert - 2\int_{-\pi}^\pi
+        \sin(nx)\sin(mx)\,dx\\
+        &\quad= 2\pi (1-\delta_{nm}),
+      \end{align*}
+      so the set of $f_n$'s is bounded. Since every point is isolated, it
+      contains all limit points, hence the set is also closed.
+      The set of $f_n$'s is not compact since the cover consisting of balls
+      of radius $\pi$ arond each $f_n$ does not have a finite subcover.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Prove that a complex function $f$ is measurable if and only if $f^{-1}(V)$ is
+    measurable for every open set $V$ in the plane.
+    \begin{proof}
+      Let $f = u + iv$. Then $f$ is measurable if and only if both $u$ and $v$
+      are measurable.
+      \par Now the $\Leftarrow$ direction is trivial since letting $V =
+      (a,\infty) + i(b,\infty)$, we see that $f^{-1}(V) = u^{-1}(A,\infty)
+      + iv^{-1}(b,\infty)$ is measurable.
+      \par Conversely, if $V$ is an arbitrary open set in the plane, we can tile
+      it by a countable number of rectangles, and a similar argument as above
+      works.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Let $\mathscr{R}$ be the ring of all elementary subsets of $(0,1]$. If $0 <
+    a \le b \le 1$, define
+    \begin{equation*}
+      \phi([a,b]) = \phi([a,b)) = \phi((a,b]) = \phi((a,b)) = b-a,
+    \end{equation*}
+    but define
+    \begin{equation*}
+      \phi((0,b)) = \phi((0,b]) = 1 + b
+    \end{equation*}
+    if $0 < b \le 1$. Show that this gives an additive set function $\phi$ on
+    $\mathscr{R}$, which is not regular and which cannot be extended to a
+    countably additive set function on a $\sigma$-ring.
+    \begin{proof}
+      To show the function is additive, we only have to note there cannot be two
+      disjoint intervals $A,B$ that share $0$ as the lower endpoint.
+      \par $\phi$ is not regular since for any set $(0,a]$ where $a < 1$, we
+      we have $\phi((0,a]) = 1+a$ but any closed subset $F \subset (0,a]$ does not
+      contain $0$, hence $\phi(F) \le a$. $\phi$ cannot be extended to a
+      countably additive set function since
+      \begin{equation*}
+        (0,1] = \bigcup_{n=0}^\infty \left(
+        \frac{1}{2^{n+1}},\frac{1}{2^{n}}\right]
+      \end{equation*}
+      but $\phi((0,1]) = 2$ while $\phi$ on the right set is $1$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose $\{n_k\}$ is an increasing sequence of positive integers and $E$ is
+    the set of all $x \in (-\pi,\pi)$ at which $\{\sin n_k x\}$ converges. Prove
+    that $m(E) = 0$.
+    \begin{proof}
+      For any $A \subset E$, we have
+      \begin{equation*}
+        \int_A \sin n_kx\,dx \to 0
+      \end{equation*}
+      as $k \to \infty$
+      since this gives Fourier coefficients for $\chi_A$, and then by Theorem
+      $8.12$; similarly
+      \begin{equation*}
+        2\int_A (\sin n_kx)^2\,dx = \int_A (1-2\cos 2n_kx) \,dx \to m(A).
+      \end{equation*}
+      \par Now for the actual problem, let $f(x)$ be the limit of the $\sin
+      n_kx$ on $E$. Then, by the first fact above,
+      \begin{equation*}
+        \int_A f(x)\,dx = \lim_{k \to \infty} \int_A \sin n_kx\,dx = 0
+      \end{equation*}
+      using the dominated convergence theorem, hence $f(x) = 0$ almost
+      everywhere on $E$ by Exericse \ref{1.2}. Let $A$ be where $f(x) = 0$.
+      We then have
+      \begin{equation*}
+        \int_A \left(f(x)^2 - \frac{1}{2}\right)dx
+        = \lim_{k \to \infty} \int_A \left(\sin^2 n_kx - \frac{1}{2}\right) = 0
+      \end{equation*}
+      using the dominated convergence theorem and the second fact above, and 
+      this implies $f(x) = 1/\sqrt{2}$ almost everywhere on $A$. Combining these
+      two facts, we have that $m(A) = 0$. Similarly, the set on which $f(x) =
+      1/\sqrt{2}$ also has measure zero, so $m(E) = 0$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose $E \subset (-\pi,\pi)$, $m(E) > 0$, $\delta > 0$. Use the Bessel
+    inequality to prove that there are at most finitely many integers $n$ such
+    that $\sin nx \ge \delta$ for all $x \in E$.
+    \begin{proof}
+      By the Bessel inequality (Theorem $8.12$) applied to the function $\chi_E$,
+      we have
+      \begin{equation*}
+        \sum_{n=1}^\infty \left\lvert \int_E \sin nx\,dx \right\rvert \le m(E) <
+        \infty.
+      \end{equation*}
+      Now if there are infinitely many $n$ such that $\sin nx \ge \delta$ for
+      all $x \in E$, then the sum on the left would be infinite, contradicting
+      that $m(E) < \infty$.
+    \end{proof}
+  \end{exercise}
+  \begin{exercise}
+    Suppose $f \in \mathscr{L}^2(\mu)$, $g \in \mathscr{L}^2(\mu)$. Prove that
+    \begin{equation*}
+      \left\lvert \int f\overline{g}\,d\mu \right\rvert^2 = \int \lvert f
+      \rvert^2\,d\mu\int\lvert g \rvert^2\,d\mu
+    \end{equation*}
+    if and only if there is a constant $c$ such that $g(x) = cf(x)$ almost
+    everywhere.
+    \begin{proof}
+      We claim the equality holds if and only if either $g(x) = 0$ for almost
+      all $x$, or ther exists a constant $c$ such that $g(x) = cf(x)$.
+      The $\Leftarrow$ direction is clear, so we show the converse.
+      We have
+      \begin{equation*}
+        0 \le \int (\lvert f \rvert + \lambda \lvert g \rvert )^2\,d\mu = \lVert
+        f \rVert^2 + 2\lambda\int\lvert fg \rvert\,d\mu + \lambda^2 \lVert g
+        \rVert^2.
+      \end{equation*}
+      Take $\lambda = - \lvert \int f\overline{g}\,d\mu \rvert/\lVert g \rVert^2$.
+      Then,
+      \begin{equation*}
+        \int (f + \lambda g)\overline{g}\,d\mu = \int f\overline{g}\,d\mu +
+        \lambda \lVert g \rVert^2 = 0,
+      \end{equation*}
+      so we also know
+      \begin{align*}
+        \lVert f \rVert^2 &= \int \lvert (f+\lambda g) + \lambda
+        g\rvert^2\,d\mu\\
+        &= \lVert f + \lambda g \rVert^2 + \lVert \lambda g \rVert^2\\
+        &= \lVert f + \lambda g \rVert^2 + \frac{\left\lvert f \overline{g}\,d\mu
+        \right\rvert}{\lVert g \rVert^2}\\
+        &= \lVert f + \lambda g \rVert^2 + \lVert f \rVert^2
+      \end{align*}
+      and this implies by Exercise \ref{11.2} that $f + \lambda g = 0$ almost
+      everywhere as claimed.
+    \end{proof}
+  \end{exercise}
+\end{multicols}
+\end{document}
